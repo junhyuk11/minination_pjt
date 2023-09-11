@@ -16,9 +16,45 @@ export const useNavigation = () => {
         navigate('/admin/officefix');
     };
 
+    // Bank
+    const navigateToBankPage = () => {
+        navigate('/bank/bankpage');
+    };
+
     // Home
+    const navigateToDashboard = () => {
+        navigate('/home/dashboard');
+    };
+
     const navigateToLanding = () => {
         navigate('/');
+    };
+
+    // Market
+    const navigateToStudentMarket = () => {
+        navigate('/market/studentmarket');
+    };
+
+    const navigateToTeacherMarket = () => {
+        navigate('/market/teachermarket');
+    };
+
+    // Member
+    const navigateToLogin = () => {
+        navigate('/member/login');
+    };
+
+    const navigateToNationality = () => {
+        navigate('/member/nationality');
+    };
+
+    const navigateToSignup = () => {
+        navigate('/member/signup');
+    };
+
+    // Production
+    const navigateToJobPosting = () => {
+        navigate('/production/jobposting');
     };
 
     // StockExchange
@@ -30,7 +66,15 @@ export const useNavigation = () => {
         navigateToFoundation,
         navigateToOffice,
         navigateToOfficeFix,
+        navigateToBankPage,
+        navigateToDashboard,
         navigateToLanding,
+        navigateToStudentMarket,
+        navigateToTeacherMarket,
+        navigateToLogin,
+        navigateToNationality,
+        navigateToSignup,
+        navigateToJobPosting,
         navigateToStock,
     };
 };
