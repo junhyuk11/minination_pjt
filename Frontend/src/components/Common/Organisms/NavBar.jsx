@@ -2,7 +2,7 @@ import React from 'react';
 import './NavBar.css';
 import logoimage from '../../../assets/images/header_logo.png';
 
-function NavBar({ username, balance }) {
+function NavBar({ username, totalBalance }) {
     return (
         <div className="header">
             <a href="/home/dashboard">
@@ -16,7 +16,7 @@ function NavBar({ username, balance }) {
             </div>
             <div className="user-info">
                 <span>{username}</span>
-                <span>통장 잔고: {balance}원</span>
+                <span>통장 잔고: {totalBalance}원</span>
             </div>
         </div>
     );
