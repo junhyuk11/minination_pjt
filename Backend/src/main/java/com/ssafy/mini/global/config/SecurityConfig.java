@@ -2,22 +2,25 @@ package com.ssafy.mini.global.config;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.security.reactive.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.annotation.web.configurers.RequestCacheConfigurer;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
-
 
     @Bean
     protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -41,7 +44,11 @@ public class SecurityConfig {
     @Bean
     @Order(0)
     public SecurityFilterChain resources(HttpSecurity http) throws Exception {
-        return http.requestMatchers(matchers -> matchers.antMatchers("/resources/**"))
+        return http
+                .httpBasic().disable()
+                .csrf().disable()
+
+        .requestMatchers(matchers -> matchers.antMatchers("/resources/**"))
                 .authorizeRequests(authorize -> authorize
                         .anyRequest().permitAll())
                 .requestCache(RequestCacheConfigurer::disable)
