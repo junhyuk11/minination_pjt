@@ -1,21 +1,20 @@
 import React from 'react';
+import './NavBar.css';
+import logoimage from '../../../assets/images/header_logo.png';
 
-function NavBar({ prop1, prop2 }) {
-    const varExample = '예시입니다';
-    const one = 1;
-    const two = 2;
-    const functionExample = (var1, var2) => {
-        return var1 + var2;
-    };
+function NavBar({ username, balance }) {
     return (
-        <div>
-            {/* variable 사용 예시 */}
-            <div>{varExample}</div>
-            {/* props 사용 예시 */}
-            <div>{prop1}</div>
-            <div>{prop2}</div>
-            <div>
-                {one}+{two}={functionExample(one, two)}
+        <div className="header">
+            <img src={logoimage} alt="로고" className="logo" />
+            <div className="links">
+                <a href="/stockexchange/stock">증권거래소</a>
+                <a href="/job">채용공고</a>
+                <a href="/department_store">백화점</a>
+                <a href="/bank">은행</a>
+            </div>
+            <div className="user-info">
+                <span>{username}</span>
+                <span>통장 잔고: {balance}원</span>
             </div>
         </div>
     );
