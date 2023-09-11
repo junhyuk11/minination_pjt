@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigation } from '../../../hooks/useNavigation';
+import { useNavigation } from '../../../hooks/useNavigation.jsx';
 
 const Landing = () => {
     const {
