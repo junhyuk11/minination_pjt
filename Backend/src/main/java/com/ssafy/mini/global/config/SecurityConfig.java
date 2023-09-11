@@ -24,7 +24,10 @@ public class SecurityConfig {
         http.authorizeRequests()
                 .mvcMatchers(HttpMethod.OPTIONS).permitAll() // preflight 요청은 모두 허용
 
-                // member 요청은 보안 설정
+                // swagger 요청은 모두 허용
+                .antMatchers("/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**").permitAll()
+
+                // member 요청은 모두 허용
                 .mvcMatchers(HttpMethod.POST, "/member/login").permitAll()
                 .mvcMatchers(HttpMethod.POST, "/member/join").permitAll()
                 .mvcMatchers(HttpMethod.POST, "/member/id").permitAll()
