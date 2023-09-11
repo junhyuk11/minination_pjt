@@ -5,7 +5,7 @@
     "es6": true,
     "node": true
   },
-  "extends": ["airbnb", "plugin:prettier/recommended"],
+  "extends": ["airbnb", "airbnb-base", "plugin:prettier/recommended"],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -19,6 +19,7 @@
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
     "react/no-unknown-property": "off",
+    "react/function-component-definition": "off",
     "prettier/prettier": [
       "error",
       {

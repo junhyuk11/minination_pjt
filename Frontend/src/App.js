@@ -1,23 +1,30 @@
+import React from 'react';
 import './App.css';
+import { Routes, Route } from 'react-router-dom';
 
-function App() {
+// Admin
+import Foundation from './components/Admin/pages/Foundation';
+import Office from './components/Admin/pages/Office';
+import OfficeFix from './components/Admin/pages/OfficeFix';
+
+// Home
+import Landing from './components/Home/pages/Landing';
+
+// StockExchange
+import Stock from './components/StockExchange/pages/Stock';
+
+const App = () => {
     return (
         <div className="App">
-            <header className="App-header">
-                <p>
-                    Edit <code>src/App.js</code> and save to reload.
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </a>
-            </header>
+            <Routes>
+                <Route path="/" element={<Landing />} />
+                <Route path="/admin/foundation'" element={<Foundation />} />
+                <Route path="/admin/office" element={<Office />} />
+                <Route path="/admin/officefix" element={<OfficeFix />} />
+                <Route path="/stockexchange/stock" element={<Stock />} />
+            </Routes>
         </div>
     );
-}
+};
 
 export default App;
