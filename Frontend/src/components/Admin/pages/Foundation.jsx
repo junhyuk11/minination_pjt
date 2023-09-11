@@ -1,11 +1,15 @@
 import React from 'react';
+import { useNavigation } from '../../../hooks/useNavigation.jsx';
 
 const Foundation = () => {
-    const username = 'super';
+    const { navigateToDashboard } = useNavigation();
 
     return (
         <div>
-            <p>Foundation 페이지입니다. 하이하이 {username}</p>
+            <p>국가건설 페이지입니다. </p>
+            <button type="button" onClick={navigateToDashboard}>
+                생성 완료하기
+            </button>
         </div>
     );
 };
