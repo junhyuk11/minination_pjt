@@ -1,24 +1,26 @@
 import React from 'react';
 
-function ButtonLarge1({ prop1, prop2 }) {
-    const varExample = '예시입니다';
-    const one = 1;
-    const two = 2;
-    const functionExample = (var1, var2) => {
-        return var1 + var2;
+function ButtonLending1({ title, onClick }) {
+    const buttonStyle = {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '300px',
+        height: '40px',
+        borderRadius: '2rem',
+        border: 'none',
+        backgroundColor: '#029664',
+        color: 'white',
+        cursor: 'pointer',
     };
+
     return (
         <div>
-            {/* variable 사용 예시 */}
-            <div>{varExample}</div>
-            {/* props 사용 예시 */}
-            <div>{prop1}</div>
-            <div>{prop2}</div>
-            <div>
-                {one}+{two}={functionExample(one, two)}
-            </div>
+            <button type="button" style={buttonStyle} onClick={onClick}>
+                {title}
+            </button>
         </div>
     );
 }
 
-export default ButtonLarge1;
+export default ButtonLending1;
