@@ -1,22 +1,33 @@
 import React from 'react';
 
-function InputBox2({ prop1, prop2 }) {
-    const varExample = '예시입니다';
-    const one = 1;
-    const two = 2;
-    const functionExample = (var1, var2) => {
-        return var1 + var2;
+function InputBox2({ title, placeholder, inputText, onChange }) {
+    const containerStyle = {
+        width: '432px',
+        margin: 'auto',
+        textAlign: 'left',
+        paddingBottom: '10px',
+        paddingLeft: '20px',
     };
+
+    const inputStyle = {
+        width: '402px',
+        maxWidth: '400px',
+        padding: '1rem',
+        borderRadius: '1rem',
+        border: 'none',
+        boxShadow: '2px 2px 30px 2px lightgrey',
+    };
+
     return (
         <div>
-            {/* variable 사용 예시 */}
-            <div>{varExample}</div>
-            {/* props 사용 예시 */}
-            <div>{prop1}</div>
-            <div>{prop2}</div>
-            <div>
-                {one}+{two}={functionExample(one, two)}
-            </div>
+            <div style={containerStyle}>{title}</div>
+            <input
+                value={inputText}
+                placeholder={placeholder}
+                name="text"
+                style={inputStyle}
+                onChange={onChange}
+            />
         </div>
     );
 }
