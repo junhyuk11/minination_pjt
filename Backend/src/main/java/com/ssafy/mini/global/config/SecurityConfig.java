@@ -1,8 +1,6 @@
 package com.ssafy.mini.global.config;
 
 
-import com.ssafy.mini.global.jwt.JwtAuthenticationFilter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -21,7 +19,10 @@ public class SecurityConfig {
 
     @Bean
     protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http
+                .httpBasic().disable()
+                .csrf().disable()
+                .authorizeRequests()
                 .mvcMatchers(HttpMethod.OPTIONS).permitAll() // preflight 요청은 모두 허용
 
                 // swagger 요청은 모두 허용
@@ -45,8 +46,6 @@ public class SecurityConfig {
     @Order(0)
     public SecurityFilterChain resources(HttpSecurity http) throws Exception {
         return http
-                .httpBasic().disable()
-                .csrf().disable()
                 .requestMatchers(matchers -> matchers.antMatchers("/resources/**"))
                 .authorizeRequests(authorize -> authorize
                         .anyRequest().permitAll())

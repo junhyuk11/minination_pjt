@@ -25,6 +25,11 @@ public class SwaggerConfig {
 
     // http://localhost:8080/swagger-ui.html
 
+    @Bean Docket memberApi() {
+        return getDocket("com.ssafy.mini.domain.member.controller", "회원 관리", Predicates.or(
+                PathSelectors.ant("/member/**")
+        ));
+    }
     @Bean Docket authApi() {
         return getDocket("com.ssafy.mini.domain.auth.controller", "토큰 갱신", Predicates.or(
                 PathSelectors.ant("/auth/**")
