@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import InputBox1 from '../../Common/Atoms/InputBox1.jsx';
-import InputBox2 from '../../Common/Atoms/InputBox2.jsx';
+import InputBox1 from '../../Common/atoms/InputBox1.jsx';
+import InputBox2 from '../../Common/atoms/InputBox2.jsx';
 import NavBar from '../../Common/organisms/NavBar.jsx';
 
 const Dashboard = () => {

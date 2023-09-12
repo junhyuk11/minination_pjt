@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigation } from '../../../hooks/useNavigation.jsx';
-import InputSearch1 from '../../Common/Atoms/InputSearch1.jsx';
+import InputSearch1 from '../../Common/atoms/InputSearch1.jsx';
 
 const Nationality = () => {
     const { navigateToDashboard } = useNavigation();
