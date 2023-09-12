@@ -1,5 +1,5 @@
 import React from 'react';
-import './Example.scss';
+import './Example.css';
 import { useNavigate } from 'react-router-dom';
 
 function Example({ prop1, prop2 }) {

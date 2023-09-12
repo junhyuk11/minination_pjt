@@ -1,22 +1,42 @@
 import React from 'react';
+import { ReactComponent as Dotbogi } from '../../../assets/icons/Dotbogi.svg';
 
-function InputSearch1({ prop1, prop2 }) {
-    const varExample = '예시입니다';
-    const one = 1;
-    const two = 2;
-    const functionExample = (var1, var2) => {
-        return var1 + var2;
+// eslint-disable-next-line no-unused-vars
+function InputSearch1({ text, onClick, onChange }) {
+    const containerStyle = {
+        width: '400px',
+        height: '40px',
+        borderRadius: '100px',
+        border: '1px solid #000',
+        background: '#FFF',
+        margin: 'auto',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '0px 20px',
     };
+
+    const inputStyle = {
+        width: '350px',
+        height: '35px',
+        border: 'none',
+        outline: 'none',
+    };
+
+    const dotbogiIconStyle = {
+        width: '30px',
+        height: '30px',
+    };
+
     return (
-        <div>
-            {/* variable 사용 예시 */}
-            <div>{varExample}</div>
-            {/* props 사용 예시 */}
-            <div>{prop1}</div>
-            <div>{prop2}</div>
-            <div>
-                {one}+{two}={functionExample(one, two)}
-            </div>
+        <div style={containerStyle}>
+            <input
+                value={text}
+                name="text"
+                onChange={onChange}
+                style={inputStyle}
+            />
+            <Dotbogi style={dotbogiIconStyle} onClick={onClick} />
         </div>
     );
 }
