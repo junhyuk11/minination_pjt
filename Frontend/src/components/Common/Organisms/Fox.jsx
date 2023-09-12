@@ -1,21 +1,18 @@
 import React from 'react';
+import './Fox.css';
+import foxlogo from '../../../assets/images/fox_logo.png';
 
-function Fox({ prop1, prop2 }) {
-    const varExample = '예시입니다';
-    const one = 1;
-    const two = 2;
-    const functionExample = (var1, var2) => {
-        return var1 + var2;
-    };
+function Fox({ comments }) {
     return (
-        <div>
-            {/* variable 사용 예시 */}
-            <div>{varExample}</div>
-            {/* props 사용 예시 */}
-            <div>{prop1}</div>
-            <div>{prop2}</div>
-            <div>
-                {one}+{two}={functionExample(one, two)}
+        <div className="fox-box">
+            <div className="fox-title">
+                <div className="logo-container">
+                    <img src={foxlogo} alt="로고" className="logo" />
+                    <p>경제여우쌤의 꿀팁</p>
+                </div>
+                <div className="fox-text">
+                    <p>{comments}</p>
+                </div>
             </div>
         </div>
     );
