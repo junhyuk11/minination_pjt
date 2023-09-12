@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import { Routes, Route } from 'react-router-dom';
 
 // Admin
@@ -32,27 +31,35 @@ import Stock from './components/StockExchange/pages/Stock.jsx';
 const App = () => {
     return (
         <div className="App">
-            <Routes>
-                <Route path="/" element={<Landing />} />
-                <Route path="/admin/foundation" element={<Foundation />} />
-                <Route path="/admin/office" element={<Office />} />
-                <Route path="/admin/officefix" element={<OfficeFix />} />
-                <Route path="/bank/bankpage" element={<BankPage />} />
-                <Route path="/home/dashboard" element={<Dashboard />} />
-                <Route
-                    path="/market/studentmarket"
-                    element={<StudentMarket />}
-                />
-                <Route
-                    path="/market/teachermarket"
-                    element={<TeacherMarket />}
-                />
-                <Route path="/member/login" element={<Login />} />
-                <Route path="/member/nationality" element={<Nationality />} />
-                <Route path="/member/signup" element={<Signup />} />
-                <Route path="/production/jobposting" element={<JobPosting />} />
-                <Route path="/stockexchange/stock" element={<Stock />} />
-            </Routes>
+            <div className="main-container">
+                <Routes>
+                    <Route path="/" element={<Landing />} />
+                    <Route path="/admin/foundation" element={<Foundation />} />
+                    <Route path="/admin/office" element={<Office />} />
+                    <Route path="/admin/officefix" element={<OfficeFix />} />
+                    <Route path="/bank/bankpage" element={<BankPage />} />
+                    <Route path="/home/dashboard" element={<Dashboard />} />
+                    <Route
+                        path="/market/studentmarket"
+                        element={<StudentMarket />}
+                    />
+                    <Route
+                        path="/market/teachermarket"
+                        element={<TeacherMarket />}
+                    />
+                    <Route path="/member/login" element={<Login />} />
+                    <Route
+                        path="/member/nationality"
+                        element={<Nationality />}
+                    />
+                    <Route path="/member/signup" element={<Signup />} />
+                    <Route
+                        path="/production/jobposting"
+                        element={<JobPosting />}
+                    />
+                    <Route path="/stockexchange/stock" element={<Stock />} />
+                </Routes>
+            </div>
         </div>
     );
 };
