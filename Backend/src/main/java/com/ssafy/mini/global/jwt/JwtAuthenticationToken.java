@@ -5,11 +5,11 @@ import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
 
-public class JwtAuthentication extends AbstractAuthenticationToken {
+public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
     private final String id;
 
-    public JwtAuthentication(Collection<? extends GrantedAuthority> authorities, String id) {
+    public JwtAuthenticationToken(Collection<? extends GrantedAuthority> authorities, String id) {
         super(authorities);
         this.id = id;
     }

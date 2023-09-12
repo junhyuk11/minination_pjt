@@ -1,8 +1,8 @@
 package com.ssafy.mini.global.config;
 
 
+import com.ssafy.mini.global.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.security.reactive.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -10,16 +10,13 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.RequestCacheConfigurer;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
-@RequiredArgsConstructor
 public class SecurityConfig {
 
     @Bean
@@ -35,6 +32,9 @@ public class SecurityConfig {
                 .mvcMatchers(HttpMethod.POST, "/member/join").permitAll()
                 .mvcMatchers(HttpMethod.POST, "/member/id").permitAll()
 
+                // auth 테스트
+                .mvcMatchers(HttpMethod.GET, "/auth/test").permitAll()
+
                 // 그 외의 요청은 모두 인증 필요
                 .anyRequest().authenticated();
 
@@ -47,8 +47,7 @@ public class SecurityConfig {
         return http
                 .httpBasic().disable()
                 .csrf().disable()
-
-        .requestMatchers(matchers -> matchers.antMatchers("/resources/**"))
+                .requestMatchers(matchers -> matchers.antMatchers("/resources/**"))
                 .authorizeRequests(authorize -> authorize
                         .anyRequest().permitAll())
                 .requestCache(RequestCacheConfigurer::disable)

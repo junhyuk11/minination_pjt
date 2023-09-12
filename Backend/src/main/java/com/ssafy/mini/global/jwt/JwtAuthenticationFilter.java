@@ -2,7 +2,6 @@ package com.ssafy.mini.global.jwt;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,7 +19,7 @@ import java.util.List;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class JwtFilter extends OncePerRequestFilter {
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtProvider jwtProvider;
 
@@ -44,7 +43,7 @@ public class JwtFilter extends OncePerRequestFilter {
             String id = jwtProvider.extractMemberId(accessToken);
             List<GrantedAuthority> grantedAuthorities = Collections.singletonList(
                     new SimpleGrantedAuthority("ROLE_USER"));
-            JwtAuthentication authentication = new JwtAuthentication(grantedAuthorities, id);
+            JwtAuthenticationToken authentication = new JwtAuthenticationToken(grantedAuthorities, id);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 
