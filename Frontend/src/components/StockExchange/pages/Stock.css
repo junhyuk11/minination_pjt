@@ -1,0 +1,134 @@
+:root {
+  --height: 50px;
+  --speed: 20s;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 10px;
+  grid-template-areas:
+    "company-info company-info stock-chart"
+    "company-info company-info stock-price";
+  height: calc(100vh - 60px); /* 60px은 NavBar의 높이에 따라 조절하세요. */
+
+  margin: 0 auto;
+  max-width: 1100px;
+  width: 100%;
+}
+
+.company-info {
+  grid-area: company-info;
+  background-color: #E6E9EE;
+  border-radius: 20px;
+  overflow: hidden; /* 추가 */
+}
+
+.stock-chart {
+  grid-area: stock-chart;
+  background-color: #2ecc71;
+  overflow: hidden; /* 추가 */
+}
+
+.stock-price {
+  grid-area: stock-price;
+  background-color: #f39c12;
+  overflow: hidden; /* 추가 */
+}
+
+.stock-trading {
+  grid-area: stock-trading;
+  background-color: #9b59b6;
+}
+
+/* ---------------------------------- TICKER TAPE ------------------------------------- */
+
+.ticker-tape {
+  display: flex;
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui,
+    helvetica neue, helvetica, Ubuntu, roboto, noto, arial, sans-serif;
+  width: 100%;
+  overflow: hidden;
+  height: var(--height);
+  padding-left: 100%;
+}
+
+.ticker-tape .ticker {
+  height: var(--height);
+  line-height: var(--height);
+  white-space: nowrap;
+  padding-right: 100%;
+  
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-name: ticker;
+  -webkit-animation-duration: var(--speed);
+  
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-name: ticker;
+  animation-duration: var(--speed);
+  
+}
+
+.ticker-tape .ticker__item {
+  display: inline-block;
+  padding: 0 2rem;
+  font-size: 1rem;
+  font-weight: 900;
+  color: rgba(0,0,0,0.2);
+}
+
+@-webkit-keyframes ticker {
+  0% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    visibility: visible;
+  }
+  100% {
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes ticker {
+  0% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    visibility: visible;
+  }
+  100% {
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+}
+
+
+/* ------------------------------------------- ORGANISM CARD ---------------------------------------------------- */
+.stockprice-card {
+  width: 100%;
+  height: 254px;
+  background: lightgrey;
+  border: 3px inset white;
+  background: #e8e8e8;
+  box-shadow: inset 20px 20px 60px #c5c5c5, inset -20px -20px 60px #ffffff;
+  transition: all .5s ease-in-out;
+  border-radius: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bolder;
+  color: #8a8989;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.stockprice-card:hover {
+  transform: translateY(-5px);
+  transition: all .5s ease-in-out;
+}
