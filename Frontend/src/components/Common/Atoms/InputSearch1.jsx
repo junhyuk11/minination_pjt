@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { ReactComponent as Dotbogi } from '../../../assets/icons/Dotbogi.svg';
 
-// eslint-disable-next-line no-unused-vars
 function InputSearch1({ text, onClick, onChange }) {
     const containerStyle = {
         width: '400px',
@@ -26,6 +25,22 @@ function InputSearch1({ text, onClick, onChange }) {
     const dotbogiIconStyle = {
         width: '30px',
         height: '30px',
+        cursor: 'pointer',
+        outline: 'none',
+    };
+
+    const inputRef = useRef(null);
+
+    const handleDotbogiClick = () => {
+        if (onClick) {
+            onClick();
+        }
+    };
+
+    const handleInputKeyPress = e => {
+        if (e.key === 'Enter' && onClick) {
+            onClick();
+        }
     };
 
     return (
@@ -35,8 +50,21 @@ function InputSearch1({ text, onClick, onChange }) {
                 name="text"
                 onChange={onChange}
                 style={inputStyle}
+                ref={inputRef}
+                onKeyDown={handleInputKeyPress}
             />
-            <Dotbogi style={dotbogiIconStyle} onClick={onClick} />
+            <Dotbogi
+                style={dotbogiIconStyle}
+                onClick={handleDotbogiClick}
+                tabIndex="0" // 포커스 가능하도록 tabIndex 추가
+                onKeyDown={e => {
+                    if (e.key === 'Enter') {
+                        if (inputRef.current) {
+                            inputRef.current.focus();
+                        }
+                    }
+                }}
+            />
         </div>
     );
 }

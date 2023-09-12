@@ -1,5 +1,5 @@
 import React from 'react';
-import NavBar from '../../Common/organisms/NavBar.jsx';
+import NavBar from '../../Common/Organisms/NavBar.jsx';
 
 const TeacherMarket = () => {
     return (

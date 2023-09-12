@@ -1,14 +1,14 @@
 import React from 'react';
-import NavBar from '../../Common/organisms/NavBar.jsx';
-import Fox from '../../Common/organisms/Fox.jsx';
-import ButtonLending1 from '../../Common/atoms/ButtonLending1.jsx';
-import ButtonLarge1 from '../../Common/atoms/ButtonLarge1.jsx';
-import ButtonMiddle1 from '../../Common/atoms/ButtonMiddle1.jsx';
-import ButtonSmall1 from '../../Common/atoms/ButtonSmall1.jsx';
-import ButtonRadio1 from '../../Common/atoms/ButtonRadio1.jsx';
-import DropDown1 from '../../Common/atoms/DropDown1.jsx';
-import SavingAccount from '../../Common/atoms/SavingAccount.jsx';
-import InputNumber1 from '../../Common/atoms/InputNumber1.jsx';
+import NavBar from '../../Common/Organisms/NavBar.jsx';
+import Fox from '../../Common/Organisms/Fox.jsx';
+import ButtonLending1 from '../../Common/Atoms/ButtonLending1.jsx';
+import ButtonLarge1 from '../../Common/Atoms/ButtonLarge1.jsx';
+import ButtonMiddle1 from '../../Common/Atoms/ButtonMiddle1.jsx';
+import ButtonSmall1 from '../../Common/Atoms/ButtonSmall1.jsx';
+import ButtonRadio1 from '../../Common/Atoms/ButtonRadio1.jsx';
+import DropDown1 from '../../Common/Atoms/DropDown1.jsx';
+import SavingAccount from '../../Common/Atoms/SavingAccount.jsx';
+import InputNumber1 from '../../Common/Atoms/InputNumber1.jsx';
 
 const BankPage = () => {
     const dropDownOptions = [

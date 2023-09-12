@@ -19,7 +19,7 @@ const Stock = () => {
 
             <div className="grid-container">
                 <div className="company-info">
-                    <div style={{ overflowY: 'scroll', height: '50vh' }}>
+                    <div>
                         <CompanyInfo />
                     </div>
                 </div>

@@ -2,16 +2,22 @@ import React from 'react';
 
 function InputBox2({ title, placeholder, inputText, onChange }) {
     const containerStyle = {
-        width: '432px',
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'column', // 세로로 배치
+        width: '450px',
         margin: 'auto',
+    };
+
+    const titleStyle = {
+        width: '412px',
         textAlign: 'left',
         paddingBottom: '10px',
-        paddingLeft: '20px',
+        paddingLeft: '10px',
     };
 
     const inputStyle = {
         width: '402px',
-        maxWidth: '400px',
         padding: '1rem',
         borderRadius: '1rem',
         border: 'none',
@@ -19,14 +25,15 @@ function InputBox2({ title, placeholder, inputText, onChange }) {
     };
 
     return (
-        <div>
-            <div style={containerStyle}>{title}</div>
+        <div style={containerStyle}>
+            <div style={titleStyle}>{title}</div>
             <input
                 value={inputText}
                 placeholder={placeholder}
                 name="text"
                 style={inputStyle}
                 onChange={onChange}
+                type="password"
             />
         </div>
     );

@@ -16,16 +16,26 @@
 .company-coverimage {
   width: 100%;
   margin: 0 auto;
-  border-radius: 20px;
+  border-radius: 20px 0 20px 0;
+  transition: transform 0.3s;
+}
+
+.company-coverimage:hover {
+  transform: scale(1.02);
 }
 
 .company-logo1 {
   width: 100px;
   border-radius: 20px;
+  transition: transform 0.3s;
+}
+.company-logo1:hover {
+  transform: scale(1.02);
 }
 
-.compnany-description {
+.company-description {
   font-size: 1em;
+  margin: 50px 30px 5px;
 }
 
 

@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
-import InputBox1 from '../../Common/atoms/InputBox1.jsx';
-import InputBox2 from '../../Common/atoms/InputBox2.jsx';
-import NavBar from '../../Common/organisms/NavBar.jsx';
+import InputBox1 from '../../Common/Atoms/InputBox1.jsx';
+import InputBox2 from '../../Common/Atoms/InputBox2.jsx';
+import NavBar from '../../Common/Organisms/NavBar.jsx';
 
 const Dashboard = () => {
-    // 초기값 설정 가능, setText로 텍스트 변경 가능
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
 
-    // InputBox1 컴포넌트의 값이 변경될 때마다 text 상태를 업데이트
     const handleChange1 = event => {
         setId(event.target.value);
     };

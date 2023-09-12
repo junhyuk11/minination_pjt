@@ -2,31 +2,31 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 // Admin
-import Foundation from './components/Admin/pages/Foundation.jsx';
-import Office from './components/Admin/pages/Office.jsx';
-import OfficeFix from './components/Admin/pages/OfficeFix.jsx';
+import Foundation from './components/Admin/Pages/Foundation.jsx';
+import Office from './components/Admin/Pages/Office.jsx';
+import OfficeFix from './components/Admin/Pages/OfficeFix.jsx';
 
 // Bank
-import BankPage from './components/Bank/pages/BankPage.jsx';
+import BankPage from './components/Bank/Pages/BankPage.jsx';
 
 // Home
-import Dashboard from './components/Home/pages/Dashboard.jsx';
-import Landing from './components/Home/pages/Landing.jsx';
+import Dashboard from './components/Home/Pages/Dashboard.jsx';
+import Landing from './components/Home/Pages/Landing.jsx';
 
 // Market
-import StudentMarket from './components/Market/pages/StudentMarket.jsx';
-import TeacherMarket from './components/Market/pages/TeacherMarket.jsx';
+import StudentMarket from './components/Market/Pages/StudentMarket.jsx';
+import TeacherMarket from './components/Market/Pages/TeacherMarket.jsx';
 
 // Member
-import Login from './components/Member/pages/Login.jsx';
-import Nationality from './components/Member/pages/Nationality.jsx';
-import Signup from './components/Member/pages/Signup.jsx';
+import Login from './components/Member/Pages/Login.jsx';
+import Nationality from './components/Member/Pages/Nationality.jsx';
+import Signup from './components/Member/Pages/Signup.jsx';
 
 // Production
-import JobPosting from './components/Production/pages/JobPosting.jsx';
+import JobPosting from './components/Production/Pages/JobPosting.jsx';
 
 // StockExchange
-import Stock from './components/StockExchange/pages/Stock.jsx';
+import Stock from './components/StockExchange/Pages/Stock.jsx';
 
 const App = () => {
     return (
