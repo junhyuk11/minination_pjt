@@ -4,16 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.http.HttpStatus;
 
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class EnvelopeResponse<T> {
+public class SuccessResponse<T> {
 
     @Builder.Default
-    private HttpStatus code = HttpStatus.OK;
+    private int code = 200;
 
     @Builder.Default
     private String message = "success";
