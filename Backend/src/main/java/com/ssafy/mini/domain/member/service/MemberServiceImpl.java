@@ -4,6 +4,7 @@ import com.ssafy.mini.domain.master.entity.Master;
 import com.ssafy.mini.domain.master.enums.MemberType;
 import com.ssafy.mini.domain.master.repository.MasterRepository;
 import com.ssafy.mini.domain.member.dto.request.MemberJoinRequest;
+import com.ssafy.mini.domain.member.dto.request.MemberLoginRequest;
 import com.ssafy.mini.domain.member.entity.Member;
 import com.ssafy.mini.domain.member.mapper.MemberMapper;
 import com.ssafy.mini.domain.member.repository.MemberRepository;
@@ -35,6 +36,11 @@ public class MemberServiceImpl implements MemberService{
         log.info("Service Layer::join() called");
 
         Member member = memberMapper.memberJoinRequestToMember(memberJoinRequest);
+
+        // 아이디 중복 검사
+        idCheck(member.getMemId());
+
+        // 비밀번호 암호화
         member.changePwd(passwordEncoder.encode(member.getMemPwd()));
 
         // 회원 타입 저장
@@ -46,6 +52,15 @@ public class MemberServiceImpl implements MemberService{
         member.setCardNo(generateCardNumber());
 
         memberRepository.save(member);
+    }
+
+    @Override
+    public void idCheck(String id) {
+        log.info("Service Layer::idCheck() called");
+
+        if (memberRepository.existsByMemId(id)) {
+            throw new MNException(ErrorCode.DUPLICATED_ID);
+        }
     }
 
     /**

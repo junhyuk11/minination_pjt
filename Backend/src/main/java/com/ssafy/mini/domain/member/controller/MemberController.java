@@ -1,8 +1,9 @@
 package com.ssafy.mini.domain.member.controller;
 
 import com.ssafy.mini.domain.member.dto.request.MemberJoinRequest;
+import com.ssafy.mini.domain.member.dto.request.MemberLoginRequest;
 import com.ssafy.mini.domain.member.service.MemberService;
-import com.ssafy.mini.global.response.EnvelopeResponse;
+import com.ssafy.mini.global.response.SuccessResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -23,15 +24,31 @@ public class MemberController {
     @ApiOperation(value = "회원가입")
     @ApiResponses({
             @ApiResponse(code = 200, message = "회원가입 성공"),
-            @ApiResponse(code = 400, message = "회원가입 실패"),
+            @ApiResponse(code = 404, message = "회원가입 실패"),
             @ApiResponse(code = 409, message = "중복된 아이디")
     })
-    public EnvelopeResponse join(
+    public SuccessResponse join(
             @RequestBody @ApiParam(value = "회원가입 정보", required = true) MemberJoinRequest memberJoinRequest
             ) {
         log.info("Controller Layer::join() called");
         memberService.join(memberJoinRequest);
-        return EnvelopeResponse.builder()
+        return SuccessResponse.builder()
+                .build();
+    }
+
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "회원가입 성공"),
+            @ApiResponse(code = 409, message = "중복된 아이디")
+    })
+    @PostMapping("/id")
+    @ApiOperation(value = "아이디 중복 체크")
+
+    public SuccessResponse idCheck(
+            @RequestBody @ApiParam(value = "아이디", required = true)MemberLoginRequest memberLoginRequest
+            ) {
+        log.info("Controller Layer::idCheck() called");
+        memberService.idCheck(memberLoginRequest.getId());
+        return SuccessResponse.builder()
                 .build();
     }
 
