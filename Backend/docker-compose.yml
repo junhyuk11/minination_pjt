@@ -9,9 +9,6 @@ services:
       - /var/mini:/data
     networks:
       - deploy
-    build:
-      context: /var/jenkins_home/util/pipeline/ ## build Docker file location
-      dockerfile: Dockerfile ## build file name
 
 networks:
   deploy:
