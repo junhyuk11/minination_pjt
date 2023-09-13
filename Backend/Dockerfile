@@ -1,6 +1,5 @@
 FROM gradle:8.2.1-jdk11 as builder
 WORKDIR /app
-RUN ls
 
 # 그래들 파일이 변경되었을 때만 새롭게 의존패키지 다운로드 받게함.
 COPY ./Backend/build.gradle ./
@@ -8,10 +7,8 @@ COPY ./Backend/settings.gradle ./
 RUN gradle build -x test --parallel --continue > /dev/null 2>&1 || true
 
 # 빌더 이미지에서 애플리케이션 빌드
-COPY . ./
+COPY ./Backend ./
 RUN gradle build -x test --parallel
-RUN ls
-RUN ls ./build/libs
 
 # APP
 FROM azul/zulu-openjdk:11
