@@ -1,9 +1,12 @@
 package com.ssafy.mini.domain.master.entity;
 
+import lombok.Getter;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "master")
+@Getter
 public class Master {
 
     @Id

@@ -2,6 +2,7 @@ package com.ssafy.mini.domain.member.controller;
 
 import com.ssafy.mini.domain.member.dto.request.MemberJoinRequest;
 import com.ssafy.mini.domain.member.service.MemberService;
+import com.ssafy.mini.global.response.EnvelopeResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -25,10 +26,13 @@ public class MemberController {
             @ApiResponse(code = 400, message = "회원가입 실패"),
             @ApiResponse(code = 409, message = "중복된 아이디")
     })
-    public void join(
+    public EnvelopeResponse join(
             @RequestBody @ApiParam(value = "회원가입 정보", required = true) MemberJoinRequest memberJoinRequest
             ) {
+        log.info("Controller Layer::join() called");
         memberService.join(memberJoinRequest);
+        return EnvelopeResponse.builder()
+                .build();
     }
 
 }
