@@ -8,7 +8,6 @@ import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -36,18 +35,16 @@ public class JwtProvider {
      * @param id String
      * @return accessToken String
      */
-    private String generateAccessToken(String id) {
+    public String generateAccessToken(String id) {
         Claims claims = Jwts.claims().setSubject(id);
         Date now = new Date();
 
-        final String accessToken = Jwts.builder()
+        return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + jwtProperties.getAccessTokenValidityInSeconds()))
                 .signWith(getSecretKey(), SignatureAlgorithm.HS256)
                 .compact();
-        storeToken(accessToken, id, jwtProperties.getAccessTokenValidityInSeconds());
-        return accessToken;
     }
 
     /**
@@ -55,29 +52,30 @@ public class JwtProvider {
      * @param id String
      * @return refreshToken String
      */
-    private String generateRefreshToken(String id) {
+    public String generateRefreshToken(String id) {
         Claims claims = Jwts.claims().setSubject(id);
         Date now = new Date();
 
-        return Jwts.builder()
+        final String refreshToken = Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + jwtProperties.getRefreshTokenValidityInSeconds()))
                 .signWith(getSecretKey(), SignatureAlgorithm.HS256)
                 .compact();
+        storeToken(id, refreshToken);
+        return refreshToken;
     }
 
     /**
      * cache에 토큰 저장
      * @param token String
      * @param id String
-     * @param period long
      */
-    private void storeToken(String token, String id, long period) {
+    private void storeToken(String token, String id) {
         redisTemplate.opsForValue().set(
                 token,
                 id,
-                period,
+                jwtProperties.getRefreshTokenValidityInSeconds(),
                 TimeUnit.SECONDS);
     }
 
@@ -117,13 +115,13 @@ public class JwtProvider {
 
     /**
      * refresh token 유효성 검증
-     * @param refreshoken
+     * @param refreshToken
      * @return
      */
-    public String validateRefreshToken (String refreshoken) {
-        final String id = validateToken(refreshoken);
+    public String validateRefreshToken (String refreshToken) {
+        final String id = validateToken(refreshToken);
         final String storedRefreshToken = redisTemplate.opsForValue().get(id);
-        if(!Objects.equals(refreshoken, storedRefreshToken)) {
+        if(!Objects.equals(refreshToken, storedRefreshToken)) {
             throw new MNException(ErrorCode.INVALID_TOKEN);
         }
         return id;

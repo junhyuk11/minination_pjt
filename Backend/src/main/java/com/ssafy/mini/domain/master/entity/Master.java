@@ -1,9 +1,12 @@
 package com.ssafy.mini.domain.master.entity;
 
+import lombok.Getter;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "master")
+@Getter
 public class Master {
 
     @Id
@@ -12,6 +15,9 @@ public class Master {
 
     @Column(name = "category", length = 7)
     private String category;
+
+    @Column(name = "expression", length = 2)
+    private String expression;
 
     @Column(name = "code_nm", length = 10)
     private String codeName;
@@ -22,4 +28,5 @@ public class Master {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_cd")
     private Master parentCode;
+
 }

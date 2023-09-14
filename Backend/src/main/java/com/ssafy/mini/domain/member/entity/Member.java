@@ -6,17 +6,15 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "member")
+@Entity(name = "member")
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"mem_id"})})
 @Getter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "mem_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer memSeq;
 
     @Column(name = "mem_id", nullable = false, unique = true, length = 20)
@@ -28,9 +26,8 @@ public class Member extends BaseEntity {
     @Column(name = "mem_nm", nullable = false, length = 10)
     private String memName;
 
-    @Builder.Default
     @Column(name = "mem_bal", nullable = false)
-    private Integer memBalance = 0;
+    private Integer memBalance;
 
     @Column(name = "card_no", nullable = false, length = 16)
     private String cardNo;
@@ -39,12 +36,51 @@ public class Member extends BaseEntity {
      * MEM01: 선생님
      * MEM02: 학생
      */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mem_tp")
     private Master memType;
 
     // 소속 국가 추가하기
+//    @ManyToOne
+//    @JoinColumn(name = "iso_seq")
+//    private Nation isoSeq;
 
     // 현재 직업 추가하기
+//    @ManyToOne
+//    @JoinColumn(name = "job_seq")
+//    private Job jobSeq;
+
+    @Builder
+    public Member(String memId, String memPwd, String memName) {
+        this.memId = memId;
+        this.memPwd = memPwd;
+        this.memName = memName;
+        this.memBalance = 0;
+        this.cardNo = null;
+        this.memType = null;
+    }
+
+    @Builder
+    public Member(int memSeq, String memId, String memPwd, String memName, int memBalance, String cardNo, Master memType) {
+        this.memSeq = memSeq;
+        this.memId = memId;
+        this.memPwd = memPwd;
+        this.memName = memName;
+        this.memBalance = memBalance;
+        this.cardNo = cardNo;
+        this.memType = memType;
+    }
+
+    public void changePwd(String pwd) {
+        this.memPwd = pwd;
+    }
+
+    public void setCardNo(String cardNo) {
+        this.cardNo = cardNo;
+    }
+
+    public void setMemType(Master memType) {
+        this.memType = memType;
+    }
 
 }

@@ -14,6 +14,7 @@ public interface MemberMapper {
     @Mapping(source = "password", target = "memPwd")
     @Mapping(source = "name", target = "memName")
 //    @Mapping(source = "type", target = "memType")
-    public Member memberJoinRequestToMember(MemberJoinRequest request);
+    Member memberJoinRequestToMember(MemberJoinRequest request);
+
 
 }
