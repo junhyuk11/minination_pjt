@@ -16,6 +16,9 @@ public class Master {
     @Column(name = "category", length = 7)
     private String category;
 
+    @Column(name = "expression", length = 2)
+    private String expression;
+
     @Column(name = "code_nm", length = 10)
     private String codeName;
 

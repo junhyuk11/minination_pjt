@@ -18,6 +18,9 @@ public enum ErrorCode {
     INVALID_TOKEN(404, "유효하지 않은 토큰입니다."),
     EXPIRED_TOKEN(403, "만료된 토큰입니다."),
 
+    // Master code
+    NO_SUCH_CODE(404, "존재하지 않는 코드입니다."),
+
     ;
 
     private final int code;

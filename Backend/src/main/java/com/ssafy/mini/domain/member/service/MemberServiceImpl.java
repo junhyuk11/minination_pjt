@@ -1,7 +1,6 @@
 package com.ssafy.mini.domain.member.service;
 
 import com.ssafy.mini.domain.master.entity.Master;
-import com.ssafy.mini.domain.master.enums.MemberType;
 import com.ssafy.mini.domain.master.repository.MasterRepository;
 import com.ssafy.mini.domain.member.dto.request.MemberJoinRequest;
 import com.ssafy.mini.domain.member.dto.request.MemberLoginRequest;
@@ -43,8 +42,9 @@ public class MemberServiceImpl implements MemberService{
         member.changePwd(encodePassword(member.getMemPwd())); // 비밀번호 암호화
 
         // 회원 타입 저장
-        Master memberMaster = getMemberCode(memberJoinRequest.getType());
-        member.setMemType(memberMaster);
+        String memberCode = masterRepository.findCodeByExpression(memberJoinRequest.getType());
+        member.setMemType(masterRepository.findById(memberCode)
+                .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_CODE)));
 
         member.setCardNo(generateCardNumber()); // 카드 번호 랜덤 생성
         memberRepository.save(member);
@@ -72,7 +72,7 @@ public class MemberServiceImpl implements MemberService{
         }
 
         // 토큰 발급
-        char type = getMemberType(masterRepository.findCodeByCodeName(member.getMemType()));
+        String type = member.getMemType().getExpression();
         String accessToken = jwtProvider.generateAccessToken(member.getMemId());
         String refreshToken = jwtProvider.generateRefreshToken(member.getMemId());
 
@@ -106,23 +106,5 @@ public class MemberServiceImpl implements MemberService{
         return cardNumber.toString();
     }
 
-    /**
-     * 회원 타입 코드 조회
-     * @param type T: Teacher, S: Student
-     * @return 회원 타입 코드
-     */
-    private Master getMemberCode(char type) {
-        String memCode = MemberType.findByReqType(type).getMasterCode();
-        return masterRepository.findById(memCode).orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER_TYPE));
-    }
-
-    /**
-     * 회원 타입 반환
-     * @param memCode 회원 타입 코드
-     * @return T: Teacher, S: Student
-     */
-    private Character getMemberType(String memCode) {
-        return MemberType.findByMasterCode(memCode);
-    }
 
 }

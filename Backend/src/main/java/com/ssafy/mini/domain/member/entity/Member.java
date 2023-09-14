@@ -36,7 +36,7 @@ public class Member extends BaseEntity {
      * MEM01: 선생님
      * MEM02: 학생
      */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mem_tp")
     private Master memType;
 

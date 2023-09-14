@@ -5,10 +5,8 @@ import lombok.Getter;
 
 @Getter
 public class MemberJoinRequest {
-
     private String id;
     private String password;
     private String name;
-    private Character type;
-
+    private String type;
 }
