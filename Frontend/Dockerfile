@@ -3,7 +3,7 @@ WORKDIR /app
 COPY ./Frontend/package*.json ./
 RUN npm install
 COPY ./Frontend/ ./
-RUN npm run build
+RUN npm run start
 
 FROM nginx:stable-alpine
 COPY --from=build /app/build /usr/share/nginx/html
