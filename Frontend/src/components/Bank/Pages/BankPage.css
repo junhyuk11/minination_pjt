@@ -1,9 +1,16 @@
 .blackBackground {
-    position: absolute; 
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: black;
-    z-index: 1; 
+    position: absolute;
+    height: 20%;
+    width: 100%;
+    background-color: #747474;
+    color: white;
+    font-size: 36px;
+    z-index: -1;
+    display: flex; /* Flexbox를 사용 */
+    justify-content: flex-end; /* 내용물을 우측으로 정렬 */
+    align-items: center; /* 내용물을 세로 중앙으로 정렬 (필요하다면) */
+}
+
+.blackBackground > * {
+    margin-left: 100px;
 }
