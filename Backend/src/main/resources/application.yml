@@ -6,6 +6,10 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
 
+  mvc: # Swagger 설정
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
 server:
   port: 8080 # 구동 포트
   error: # error code: Exception handler 처리

@@ -21,6 +21,11 @@ public enum ErrorCode {
     // Master code
     NO_SUCH_CODE(404, "존재하지 않는 코드입니다."),
 
+
+    // JWT
+    INVALID_TOKEN(HttpStatus.NOT_FOUND, "유효하지 않은 토큰입니다."),
+    EXPIRED_TOKEN(HttpStatus.FORBIDDEN, "만료된 토큰입니다."),
+
     ;
 
     private final int code;
