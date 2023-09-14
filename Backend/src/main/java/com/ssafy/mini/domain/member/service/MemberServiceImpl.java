@@ -5,11 +5,13 @@ import com.ssafy.mini.domain.master.enums.MemberType;
 import com.ssafy.mini.domain.master.repository.MasterRepository;
 import com.ssafy.mini.domain.member.dto.request.MemberJoinRequest;
 import com.ssafy.mini.domain.member.dto.request.MemberLoginRequest;
+import com.ssafy.mini.domain.member.dto.response.MemberLoginResponse;
 import com.ssafy.mini.domain.member.entity.Member;
 import com.ssafy.mini.domain.member.mapper.MemberMapper;
 import com.ssafy.mini.domain.member.repository.MemberRepository;
 import com.ssafy.mini.global.exception.ErrorCode;
 import com.ssafy.mini.global.exception.MNException;
+import com.ssafy.mini.global.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -29,28 +31,22 @@ public class MemberServiceImpl implements MemberService{
 
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     private final MemberMapper memberMapper;
+    private final JwtProvider jwtProvider;
 
     @Override
     @Transactional
     public void join(MemberJoinRequest memberJoinRequest) {
         log.info("Service Layer::join() called");
-
         Member member = memberMapper.memberJoinRequestToMember(memberJoinRequest);
 
-        // 아이디 중복 검사
-        idCheck(member.getMemId());
-
-        // 비밀번호 암호화
-        member.changePwd(passwordEncoder.encode(member.getMemPwd()));
+        idCheck(member.getMemId()); // 아이디 중복 검사
+        member.changePwd(encodePassword(member.getMemPwd())); // 비밀번호 암호화
 
         // 회원 타입 저장
-        String memCode = MemberType.findByReqType(memberJoinRequest.getType()).getMasterCode();
-        Master memberMaster = masterRepository.findById(memCode).orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER_TYPE));
+        Master memberMaster = getMemberCode(memberJoinRequest.getType());
         member.setMemType(memberMaster);
 
-        // 카드 번호 랜덤 생성
-        member.setCardNo(generateCardNumber());
-
+        member.setCardNo(generateCardNumber()); // 카드 번호 랜덤 생성
         memberRepository.save(member);
     }
 
@@ -61,6 +57,39 @@ public class MemberServiceImpl implements MemberService{
         if (memberRepository.existsByMemId(id)) {
             throw new MNException(ErrorCode.DUPLICATED_ID);
         }
+    }
+
+    @Override
+    public MemberLoginResponse login(MemberLoginRequest memberLoginRequest) {
+        log.info("Service Layer::login() called");
+
+        Member member = memberRepository.findByMemId(memberLoginRequest.getId())
+                .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
+
+        // 비밀번호 일치 여부 확인
+        if (!passwordEncoder.matches(memberLoginRequest.getPassword(), member.getMemPwd())) {
+            throw new MNException(ErrorCode.WRONG_PASSWORD);
+        }
+
+        // 토큰 발급
+        char type = getMemberType(masterRepository.findCodeByCodeName(member.getMemType()));
+        String accessToken = jwtProvider.generateAccessToken(member.getMemId());
+        String refreshToken = jwtProvider.generateRefreshToken(member.getMemId());
+
+        return MemberLoginResponse.builder()
+                .memType(type)
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
+    }
+
+    /**
+     * 비밀번호 암호화
+     * @param password 비밀번호
+     * @return 암호화된 비밀번호
+     */
+    private String encodePassword(String password) {
+        return passwordEncoder.encode(password);
     }
 
     /**
@@ -75,6 +104,25 @@ public class MemberServiceImpl implements MemberService{
             cardNumber.append(rnd.nextInt(10));
         }
         return cardNumber.toString();
+    }
+
+    /**
+     * 회원 타입 코드 조회
+     * @param type T: Teacher, S: Student
+     * @return 회원 타입 코드
+     */
+    private Master getMemberCode(char type) {
+        String memCode = MemberType.findByReqType(type).getMasterCode();
+        return masterRepository.findById(memCode).orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER_TYPE));
+    }
+
+    /**
+     * 회원 타입 반환
+     * @param memCode 회원 타입 코드
+     * @return T: Teacher, S: Student
+     */
+    private Character getMemberType(String memCode) {
+        return MemberType.findByMasterCode(memCode);
     }
 
 }

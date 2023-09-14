@@ -8,7 +8,6 @@ import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -36,7 +35,7 @@ public class JwtProvider {
      * @param id String
      * @return accessToken String
      */
-    private String generateAccessToken(String id) {
+    public String generateAccessToken(String id) {
         Claims claims = Jwts.claims().setSubject(id);
         Date now = new Date();
 
@@ -55,7 +54,7 @@ public class JwtProvider {
      * @param id String
      * @return refreshToken String
      */
-    private String generateRefreshToken(String id) {
+    public String generateRefreshToken(String id) {
         Claims claims = Jwts.claims().setSubject(id);
         Date now = new Date();
 

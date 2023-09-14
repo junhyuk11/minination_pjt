@@ -25,4 +25,5 @@ public class Master {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_cd")
     private Master parentCode;
+
 }
