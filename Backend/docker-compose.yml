@@ -7,9 +7,3 @@ services:
       - 8080:8080
     volumes:
       - /var/mini:/data
-    networks:
-      - deploy
-
-networks:
-  deploy:
-    external: true
