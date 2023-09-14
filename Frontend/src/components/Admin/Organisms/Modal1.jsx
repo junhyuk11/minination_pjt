@@ -5,7 +5,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
 import styles from './Modal1.module.css'; // CSS 모듈 가져오기
-import Title from '../Atoms/Title.jsx';
+import AdminTitle from '../Atoms/AdminTitle.jsx';
 import { ReactComponent as Flag1 } from '../../../assets/icons/Foundation/Flag1.svg';
 import { ReactComponent as Flag2 } from '../../../assets/icons/Foundation/Flag2.svg';
 import { ReactComponent as Flag3 } from '../../../assets/icons/Foundation/Flag3.svg';
@@ -115,7 +115,7 @@ const Modal1 = ({
                 >
                     X
                 </button>
-                <Title title="국기 선택" className={styles.modalTitle} />
+                <AdminTitle title="국기 선택" className={styles.modalTitle} />
                 <div className={styles.modalCards1}>
                     <FlagWithCheck
                         flagNumber={1}

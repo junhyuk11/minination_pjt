@@ -13,6 +13,7 @@ function NavBar({ username, totalBalance }) {
                 <a href="/production/jobposting">채용공고</a>
                 <a href="/market/studentmarket">백화점</a>
                 <a href="/bank/bankpage">은행</a>
+                <a href="/admin/office">집무실</a>
             </div>
             <div className="user-info">
                 <span>{username}</span>

@@ -23,7 +23,6 @@ const Info = () => {
 
     const closeOtherDropdowns = currentDropdown => {
         const updatedDropdownStates = {};
-        // eslint-disable-next-line no-restricted-syntax
         for (const key in dropdownStates) {
             if (key === currentDropdown) {
                 updatedDropdownStates[key] = true;
