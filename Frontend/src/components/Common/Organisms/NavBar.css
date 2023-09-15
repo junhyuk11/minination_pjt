@@ -13,6 +13,7 @@
   .left-side, .right-side {
     display: flex;
     align-items: center;
+    gap: 10px;
   }
   
   .header .logo {
@@ -28,57 +29,39 @@
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
   }
 
-  /* 자산 카드 */
-  .asset-card p {
-    font-size: 11px;
-    font-weight: 400;
-    line-height: 20px;
+
+
+  .asset-card {
+    width: 100px;
+    height: 50px;
+    background: rgb(17, 4, 134);
+    border-radius: 15px;
+    box-shadow: rgba(4, 30, 8, 0.7) 5px 10px 50px ,rgba(39, 128, 40, 0.7) -5px 0px 250px;
+    display: flex;
     color: white;
-  }
-  
-  .asset-card p.small {
-    font-size: 13px;
-  }
-  
-  .card1 {
-    display: block;
+    justify-content: center;
+    align-items: center;
     position: relative;
-    max-width: 262px;
-    background-color: black;
-    border-radius: 4px;
-    padding: 3px 40px;
-    margin: 12px;
-    text-decoration: none;
-    z-index: 0;
+    background: linear-gradient(to right, rgb(20, 30, 48), rgb(36, 59, 85));
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
     overflow: hidden;
   }
   
-  .card1:before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    top: -16px;
-    right: -16px;
-    background: #00838d;
-    height: 32px;
-    width: 32px;
-    border-radius: 32px;
-    transform: scale(1);
-    transform-origin: 50% 50%;
-    transition: transform 0.25s ease-out;
+  .asset-card:hover {
+    box-shadow: rgba(17, 154, 38, 0.7) 5px 10px 10px ,rgba(21, 155, 39, 0.7) -5px 0px 20px;
   }
   
-  .card1:hover:before {
-    transform: scale(21);
+  .asset-key {
+    font-size: 0.8em;
+    margin-left: 5px;
   }
   
-  .card1:hover p {
-    transition: all 0.3s ease-out;
-    color: rgba(255, 255, 255, 0.8);
+  .asset-value {
+    font-size: 1em;
+    margin-left: 15px;
+    font-weight: 500;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   }
-  
-  .card1:hover h3 {
-    transition: all 0.3s ease-out;
-    color: #fff;
-  }
+
   

@@ -20,11 +20,10 @@ function NavBar({ username, totalBalance }) {
                 </div>
                 <div className="right-side">
                     <span>{username}</span>
+
                     <div class="asset-card">
-                        <div class="card1" href="#">
-                            <p>내 자산</p>
-                            <p class="small">{totalBalance} 메소</p>
-                        </div>
+                        <p class="asset-key">잔고</p>
+                        <span class="asset-value">123미소</span>
                     </div>
                 </div>
             </div>

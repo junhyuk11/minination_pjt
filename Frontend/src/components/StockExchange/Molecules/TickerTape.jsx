@@ -7,8 +7,8 @@ const TickerTape = () => {
                 <div class="ticker">
                     <div class="ticker__item">
                         SAMSUNG
-                        <div>52853</div>
-                        <div>(up 500)</div>
+                        <span className="ticker__price">345345</span>
+                        <span className="ticker__flucrate">+54%</span>
                     </div>
                     <div class="ticker__item">HYUNDAI</div>
                     <div class="ticker__item">NEXON</div>

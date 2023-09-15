@@ -13,7 +13,7 @@ import './Stock.css';
 const Stock = () => {
     return (
         <div>
-            <NavBar username="사용자명" balance={1000} />
+            <NavBar username="휘진" balance={1000} />
             <TickerTape />
 
             <div className="grid-container">

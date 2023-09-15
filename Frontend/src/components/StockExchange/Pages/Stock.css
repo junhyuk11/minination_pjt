@@ -1,13 +1,3 @@
-:root {
-  --height: 50px;
-  --speed: 20s;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-}
-
 .grid-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -38,16 +28,14 @@
 
 .stock-price {
   grid-area: stock-price;
-  background-color: #f39c12;
   overflow: hidden; /* 추가 */
-}
+} 
 
-.stock-trading {
-  grid-area: stock-trading;
-  background-color: #9b59b6;
+/* -------------- TICKER TAPE ------------------ */
+:root {
+  --height: 30px;
+  --speed: 20s;
 }
-
-/* ---------------------------------- TICKER TAPE ------------------------------------- */
 
 .ticker-tape {
   display: flex;
@@ -110,25 +98,12 @@
 }
 
 
-/* ------------------------------------------- ORGANISM CARD ---------------------------------------------------- */
+/* ----- ORGANISM CARD ---------- */
 .stockprice-card {
-  width: 100%;
+  width: 90%;
   height: 254px;
-  background: lightgrey;
-  border: 3px inset white;
-  background: #e8e8e8;
-  box-shadow: inset 20px 20px 60px #c5c5c5, inset -20px -20px 60px #ffffff;
-  transition: all .5s ease-in-out;
-  border-radius: 1.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: bolder;
-  color: #8a8989;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-}
-
-.stockprice-card:hover {
-  transform: translateY(-5px);
-  transition: all .5s ease-in-out;
+  border-radius: 25px;
+  background: #e0e0e0;
+  box-shadow: 20px 20px 20px #bebebe,
+                -20px -20px 20px #ffffff;
 }
