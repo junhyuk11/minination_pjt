@@ -17,7 +17,6 @@ const OfficeFix = () => {
     const [selectedDay, setSelectedDay] = useState('월요일');
     const [selectedIncomeTax, setSelectedIncomeTax] = useState(10);
     const [selectedVAT, setSelectedVAT] = useState(5);
-    
     const [dropdownStates, setDropdownStates] = useState({
         dropdown1: false,
         dropdown2: false,
@@ -34,7 +33,7 @@ const OfficeFix = () => {
             }
         }
         setDropdownStates(updatedDropdownStates);
-    };    
+    };
 
     const handleInputTextChange = value => {
         setInputText(value);
@@ -76,9 +75,7 @@ const OfficeFix = () => {
                                 />
                             }
                             thirdComp={
-                                <RowDescription
-                                    text="한글, 영문, 숫자 혼용가능 (한글 기준 8자 이내)"
-                                />
+                                <RowDescription text="한글, 영문, 숫자 혼용가능 (한글 기준 8자 이내)" />
                             }
                         />
                         <InfoRow
@@ -89,11 +86,7 @@ const OfficeFix = () => {
                                     onTextChange={handleCurrencyNameChange}
                                 />
                             }
-                            thirdComp={
-                                <RowDescription
-                                    text="한글 2자 이내"
-                                />
-                            }
+                            thirdComp={<RowDescription text="한글 2자 이내" />}
                         />
                         {/* 주급 수령일 드롭다운 추가 */}
                         <InfoRow
@@ -112,7 +105,9 @@ const OfficeFix = () => {
                                     selectedValue={selectedDay}
                                     onValueChange={handleDayChange}
                                     isOpen={dropdownStates.dropdown1}
-                                    closeOtherDropdowns={() => closeOtherDropdowns('dropdown1')}
+                                    closeOtherDropdowns={() =>
+                                        closeOtherDropdowns('dropdown1')
+                                    }
                                 />
                             }
                             thirdComp={
@@ -123,34 +118,40 @@ const OfficeFix = () => {
                             title="소득세"
                             secondComp={
                                 <DropDown2
-                                    options={Array.from({ length: 101 }, (_, i) => `${i}`)} // 0%부터 100%까지 배열 생성
+                                    options={Array.from(
+                                        { length: 101 },
+                                        (_, i) => `${i}`,
+                                    )} // 0%부터 100%까지 배열 생성
                                     selectedValue={`${selectedIncomeTax}%`}
                                     onValueChange={handleIncomeTaxChange}
                                     isOpen={dropdownStates.dropdown2}
-                                    closeOtherDropdowns={() => closeOtherDropdowns('dropdown2')}
+                                    closeOtherDropdowns={() =>
+                                        closeOtherDropdowns('dropdown2')
+                                    }
                                 />
                             }
                             thirdComp={
-                                <RowDescription
-                                    text="세율을 선택하세요"
-                                />
+                                <RowDescription text="세율을 선택하세요" />
                             }
                         />
                         <InfoRow
                             title="부가가치세"
                             secondComp={
                                 <DropDown2
-                                options={Array.from({ length: 101 }, (_, i) => `${i}`)}
-                                selectedValue={`${selectedVAT}%`}
-                                onValueChange={handleVATChange}
-                                isOpen={dropdownStates.dropdown3}
-                                closeOtherDropdowns={() => closeOtherDropdowns('dropdown3')}
-                            />
+                                    options={Array.from(
+                                        { length: 101 },
+                                        (_, i) => `${i}`,
+                                    )}
+                                    selectedValue={`${selectedVAT}%`}
+                                    onValueChange={handleVATChange}
+                                    isOpen={dropdownStates.dropdown3}
+                                    closeOtherDropdowns={() =>
+                                        closeOtherDropdowns('dropdown3')
+                                    }
+                                />
                             }
                             thirdComp={
-                                <RowDescription
-                                    text="세율을 선택하세요"
-                                />
+                                <RowDescription text="세율을 선택하세요" />
                             }
                         />
                         <div style={{ display: 'flex', justifyContent: 'end' }}>
