@@ -8,4 +8,8 @@ services:
     volumes:
       - /var/mini:/data
     networks:
-      - default
+      - deploy
+
+networks:
+  deploy:
+    external: true
