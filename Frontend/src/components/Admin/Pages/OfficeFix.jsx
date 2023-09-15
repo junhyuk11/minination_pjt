@@ -3,7 +3,7 @@ import { useNavigation } from '../../../hooks/useNavigation.jsx';
 import NavBar from '../../Common/Organisms/NavBar.jsx';
 import styles from './OfficeFix.module.css';
 import AdminTitle from '../Atoms/AdminTitle.jsx';
-import backgroundImage from '../../../assets/images/Office.png';
+import backgroundImage from '../../../assets/images/office.png';
 import InfoRow from '../Molecules/InfoRow.jsx';
 import ButtonMiddle1 from '../../Common/Atoms/ButtonMiddle1.jsx';
 import RowInput from '../Atoms/RowInput.jsx';
@@ -17,6 +17,7 @@ const OfficeFix = () => {
     const [selectedDay, setSelectedDay] = useState('월요일');
     const [selectedIncomeTax, setSelectedIncomeTax] = useState(10);
     const [selectedVAT, setSelectedVAT] = useState(5);
+
     const [dropdownStates, setDropdownStates] = useState({
         dropdown1: false,
         dropdown2: false,
@@ -25,7 +26,8 @@ const OfficeFix = () => {
 
     const closeOtherDropdowns = currentDropdown => {
         const updatedDropdownStates = {};
-        for (const key in dropdownStates) {
+        // eslint-disable-next-line no-restricted-syntax
+        for (const key of Object.keys(dropdownStates)) {
             if (key === currentDropdown) {
                 updatedDropdownStates[key] = true;
             } else {

@@ -3,7 +3,6 @@ import { ReactComponent as Dotbogi } from '../../../assets/icons/Dotbogi.svg';
 
 function InputSearch1({ text, onClick, onChange }) {
     const containerStyle = {
-        width: '400px',
         height: '40px',
         borderRadius: '100px',
         border: '1px solid #000',
@@ -16,7 +15,7 @@ function InputSearch1({ text, onClick, onChange }) {
     };
 
     const inputStyle = {
-        width: '350px',
+        width: '80%',
         height: '35px',
         border: 'none',
         outline: 'none',
@@ -38,7 +37,7 @@ function InputSearch1({ text, onClick, onChange }) {
     };
 
     const handleInputKeyPress = e => {
-        if (e.key === 'Enter' && onClick) {
+        if (e.key === 'Enter') {
             onClick();
         }
     };

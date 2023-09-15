@@ -23,13 +23,9 @@ const Info = () => {
 
     const closeOtherDropdowns = currentDropdown => {
         const updatedDropdownStates = {};
-        for (const key in dropdownStates) {
-            if (key === currentDropdown) {
-                updatedDropdownStates[key] = true;
-            } else {
-                updatedDropdownStates[key] = false;
-            }
-        }
+        Object.keys(dropdownStates).forEach(key => {
+            updatedDropdownStates[key] = key === currentDropdown;
+        });
         setDropdownStates(updatedDropdownStates);
     };
 
