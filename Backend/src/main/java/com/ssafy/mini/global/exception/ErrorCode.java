@@ -20,6 +20,7 @@ public enum ErrorCode {
 
     // Master code
     NO_SUCH_CODE(404, "존재하지 않는 코드입니다."),
+    
 
     ;
 
