@@ -1,6 +1,6 @@
 import React from 'react';
 import ButtonMiddle from '../../Common/Atoms/ButtonMiddle1.jsx';
-import './BankSelect.css';
+import './BankContent.css';
 
 const BankSelect = () => {
     return (
