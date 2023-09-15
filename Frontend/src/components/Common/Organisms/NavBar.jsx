@@ -1,6 +1,6 @@
 import React from 'react';
 import './NavBar.css';
-import logoimage from '../../../assets/images/header_logo.png';
+import logoimage from '../../../assets/images/header-logo.png';
 
 function NavBar({ username, totalBalance }) {
     return (

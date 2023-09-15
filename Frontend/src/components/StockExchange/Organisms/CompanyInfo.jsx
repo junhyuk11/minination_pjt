@@ -1,8 +1,8 @@
 import React from 'react';
 import './CompanyInfo.css';
 // API 불러오면 아래는 삭제
-import SamsungCover from '../../../assets/images/samsung_cover.png';
-import SamsungLogo from '../../../assets/images/samsung_logo.png';
+import SamsungCover from '../../../assets/images/samsung-cover.png';
+import SamsungLogo from '../../../assets/images/samsung-logo.png';
 
 const CompanyInfo = () => {
     return (
