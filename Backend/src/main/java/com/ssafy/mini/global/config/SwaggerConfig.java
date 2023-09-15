@@ -25,6 +25,9 @@ public class SwaggerConfig {
 
     // http://localhost:8080/swagger-ui.html
 
+    private static final String SECURITY_SCHEME_NAME = "authorization";
+
+
     @Bean Docket memberApi() {
         return getDocket("com.ssafy.mini.domain.member.controller", "회원 관리", Predicates.or(
                 PathSelectors.ant("/member/**")
