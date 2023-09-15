@@ -105,12 +105,16 @@ public class JwtProvider {
      * @return
      */
     public String extractMemberId(String token) {
-        return Jwts.parserBuilder()
+        log.debug("extractMemberId() called");
+
+        String id = Jwts.parserBuilder()
                 .setSigningKey(getSecretKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
+        System.out.println("id: " + id);
+        return id;
     }
 
     /**
