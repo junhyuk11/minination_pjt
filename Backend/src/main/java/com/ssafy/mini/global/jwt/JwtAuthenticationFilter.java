@@ -2,9 +2,12 @@ package com.ssafy.mini.global.jwt;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.core.annotation.Order;
+import org.springframework.security.authentication.AbstractAuthenticationToken;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -14,37 +17,38 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.List;
 
 @Slf4j
+@Order(0)
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtProvider jwtProvider;
 
-        @Override
-        protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-            final String token = request.getHeader("Authorization");
+    // TODO: 현재는 role이 USER로 고정되어 있음
 
-            // token이 없으면 로그인하지 않은 상태
-            if (token == null) {
-                filterChain.doFilter(request, response);
-                return;
-            }
+    // JWT Token 유효성 검증 filter
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        log.debug("JwtAuthenticationFilter::doFilterInternal() called");
+        String token = request.getHeader("Authorization"); // header에서 token 꺼내기
 
-            jwtProvider.validateToken(token);
-            setAuthentication(token);
-
+        if (token == null) {
             filterChain.doFilter(request, response);
+            return;
         }
 
-        private void setAuthentication(final String accessToken) {
-            String id = jwtProvider.extractMemberId(accessToken);
-            List<GrantedAuthority> grantedAuthorities = Collections.singletonList(
-                    new SimpleGrantedAuthority("ROLE_USER"));
-            JwtAuthenticationToken authentication = new JwtAuthenticationToken(grantedAuthorities, id);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        }
+        String memberId = jwtProvider.validateToken(token);
+        AbstractAuthenticationToken authentication = UsernamePasswordAuthenticationToken.authenticated(
+                memberId,
+                token,
+                Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"))
+        );
+        authentication.setDetails(new WebAuthenticationDetails(request));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        filterChain.doFilter(request, response);
+    }
 
 }

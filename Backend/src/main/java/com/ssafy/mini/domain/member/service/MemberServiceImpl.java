@@ -83,6 +83,11 @@ public class MemberServiceImpl implements MemberService{
                 .build();
     }
 
+    @Override
+    public void update(MemberJoinRequest memberJoinRequest) {
+
+    }
+
     /**
      * 비밀번호 암호화
      * @param password 비밀번호
