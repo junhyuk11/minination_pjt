@@ -1,15 +1,11 @@
 import React from 'react';
-import { useNavigation } from '../../../hooks/useNavigation.jsx';
+import LandingLayout from '../Molecules/LandingLayout.jsx';
+import styles from './Landing.module.css';
 
 const Landing = () => {
-    const { navigateToLogin } = useNavigation();
-
     return (
-        <div>
-            <p>Landing 페이지입니다. </p>
-            <button type="button" onClick={navigateToLogin}>
-                지금 시작하기(로그인 화면으로)
-            </button>
+        <div className={styles.background}>
+            <LandingLayout />
         </div>
     );
 };
