@@ -12,6 +12,6 @@ public interface MemberService {
 
     MemberLoginResponse login(MemberLoginRequest memberLoginRequest);
 
-    void update(MemberJoinRequest memberJoinRequest);
+    void update(String memberId, String newPwd);
 
 }

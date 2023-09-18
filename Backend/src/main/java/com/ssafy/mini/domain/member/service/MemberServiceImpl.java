@@ -1,6 +1,5 @@
 package com.ssafy.mini.domain.member.service;
 
-import com.ssafy.mini.domain.master.entity.Master;
 import com.ssafy.mini.domain.master.repository.MasterRepository;
 import com.ssafy.mini.domain.member.dto.request.MemberJoinRequest;
 import com.ssafy.mini.domain.member.dto.request.MemberLoginRequest;
@@ -31,6 +30,8 @@ public class MemberServiceImpl implements MemberService{
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     private final MemberMapper memberMapper;
     private final JwtProvider jwtProvider;
+
+    private final Random rnd = new Random();
 
     @Override
     @Transactional
@@ -84,7 +85,14 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public void update(MemberJoinRequest memberJoinRequest) {
+    public void update(String memberId, String newPwd) {
+        log.info("Service Layer::update() called");
+
+        Member member = memberRepository.findByMemId(memberId)
+                .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
+
+        member.changePwd(encodePassword(newPwd));
+        memberRepository.save(member);
 
     }
 
@@ -103,7 +111,6 @@ public class MemberServiceImpl implements MemberService{
      */
     private String generateCardNumber() {
         StringBuilder cardNumber = new StringBuilder();
-        Random rnd = new Random();
 
         for (int i = 0; i < 16; ++i) {
             cardNumber.append(rnd.nextInt(10));
