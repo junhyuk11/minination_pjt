@@ -12,6 +12,7 @@ import com.ssafy.mini.global.exception.MNException;
 import com.ssafy.mini.global.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,9 +28,10 @@ public class MemberServiceImpl implements MemberService{
     private final MemberRepository memberRepository;
     private final MasterRepository masterRepository;
 
-    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     private final MemberMapper memberMapper;
     private final JwtProvider jwtProvider;
+
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     private final Random rnd = new Random();
 
@@ -94,6 +96,17 @@ public class MemberServiceImpl implements MemberService{
         member.changePwd(encodePassword(newPwd));
         memberRepository.save(member);
 
+    }
+
+    @Override
+    public void logout(String accessToken, String memberId) {
+        log.info("Service Layer::logout() called");
+
+        // 사용된 accessToken 블랙리스트에 저장
+        jwtProvider.storeBlacklist(accessToken, memberId);
+
+        // redis에 저장된 refresh token 토큰 삭제
+        jwtProvider.deleteToken(memberId);
     }
 
     /**
