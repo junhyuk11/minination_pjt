@@ -1,6 +1,6 @@
 import React from 'react';
 import './Fox.css';
-import foxlogo from '../../../assets/images/fox_logo.png';
+import foxlogo from '../../../assets/images/fox-logo.png';
 
 function Fox({ comments }) {
     return (
