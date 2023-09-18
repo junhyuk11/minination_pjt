@@ -1,6 +1,6 @@
 import React from 'react';
 
-function MovingSignup({ title, onClick }) {
+function MovingSignup({ description, title, onClick }) {
     const contanierStyle = {
         display: 'flex',
         justifyContent: 'flex-end',
@@ -20,7 +20,7 @@ function MovingSignup({ title, onClick }) {
 
     return (
         <div style={contanierStyle}>
-            <p style={pStyle}>아직 회원이 아니신가요?</p>
+            <p style={pStyle}>{description}</p>
             <button style={buttonStyle} type="button" onClick={onClick}>
                 {title}
             </button>
