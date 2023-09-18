@@ -5,7 +5,7 @@ import ButtonLarge1 from '../../Common/Atoms/ButtonLarge1.jsx';
 import { useNavigation } from '../../../hooks/useNavigation';
 import styles from '../Pages/Login.module.css';
 import headerLogo from '../../../assets/images/header-logo.png';
-import MovingSignup from '../Atoms/MovingSignup.jsx';
+import MovingLoginOrSignup from '../Atoms/MovingLoginOrSignup.jsx';
 
 const LoginInputForm = () => {
     const { navigateToSignup, navigateToDashboard } = useNavigation();
@@ -40,7 +40,11 @@ const LoginInputForm = () => {
             />
             <br />
             <ButtonLarge1 title="Login" onClick={navigateToDashboard} />
-            <MovingSignup title="회원가입" onClick={navigateToSignup} />
+            <MovingLoginOrSignup
+                description="아직 회원이 아니신가요?"
+                title="회원가입"
+                onClick={navigateToSignup}
+            />
         </div>
     );
 };

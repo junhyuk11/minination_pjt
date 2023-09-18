@@ -1,6 +1,6 @@
 import React from 'react';
 
-function InputBox1({ title, placeholder, inputText, onChange, type }) {
+function InputBox2({ title, placeholder, inputText, onChange, onBlur, type }) {
     const containerStyle = {
         alignItems: 'center',
         display: 'flex',
@@ -28,10 +28,11 @@ function InputBox1({ title, placeholder, inputText, onChange, type }) {
                 name="text"
                 style={inputStyle}
                 onChange={onChange}
+                onBlur={onBlur}
                 type={type}
             />
         </div>
     );
 }
 
-export default InputBox1;
+export default InputBox2;

@@ -1,18 +1,23 @@
 import React from 'react';
-import { useNavigation } from '../../../hooks/useNavigation.jsx';
+import SignupInputForm from '../Molecules/SignupInputForm.jsx';
+import styles from './Login.module.css';
+import signupImage from '../../../assets/images/signup.png';
 
 const Signup = () => {
-    const { navigateToFoundation, navigateToNationality } = useNavigation();
-
     return (
-        <div>
-            <p>회원가입 페이지입니다. </p>
-            <button type="button" onClick={navigateToNationality}>
-                학생 회원가입
-            </button>
-            <button type="button" onClick={navigateToFoundation}>
-                선생 회원가입
-            </button>
+        <div className={styles.background}>
+            <div className={styles.container}>
+                <div className={styles.inputContainer}>
+                    <SignupInputForm />
+                </div>
+                <div className={styles.imageContainer}>
+                    <img
+                        className={styles.img}
+                        src={signupImage}
+                        alt="signup"
+                    />
+                </div>
+            </div>
         </div>
     );
 };
