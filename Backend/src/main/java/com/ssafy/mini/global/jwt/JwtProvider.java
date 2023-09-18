@@ -113,7 +113,7 @@ public class JwtProvider {
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
-        System.out.println("id: " + id);
+        log.debug("Token 추출 memberId: {}", id);
         return id;
     }
 

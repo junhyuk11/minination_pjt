@@ -2,6 +2,7 @@ package com.ssafy.mini.domain.member.controller;
 
 import com.ssafy.mini.domain.member.dto.request.MemberJoinRequest;
 import com.ssafy.mini.domain.member.dto.request.MemberLoginRequest;
+import com.ssafy.mini.domain.member.dto.request.MemberUpdateRequest;
 import com.ssafy.mini.domain.member.dto.response.MemberLoginResponse;
 import com.ssafy.mini.domain.member.service.MemberService;
 import com.ssafy.mini.global.jwt.JwtProvider;
@@ -79,12 +80,12 @@ public class MemberController {
     })
     public SuccessResponse update(
             @RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
-            @RequestBody @ApiParam(value = "회원 정보", required = true) MemberJoinRequest memberJoinRequest
-    ) {
+            @RequestBody @ApiParam(value = "회원 정보", required = true) MemberUpdateRequest memberUpdateRequest
+            ) {
         log.info("Controller Layer::update() called");
         String memberId = jwtProvider.validateToken(accessToken);
         log.debug("memberId: {}", memberId);
-        memberService.update(memberJoinRequest);
+        memberService.update(memberId, memberUpdateRequest.getPassword());
         return SuccessResponse.builder()
                 .build();
     }
