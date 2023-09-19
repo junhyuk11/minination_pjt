@@ -1,5 +1,6 @@
-package com.ssafy.mini.global.config;
+package com.ssafy.mini.global.infra.redis;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +9,8 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 import org.springframework.data.redis.core.RedisTemplate;
 
 @Configuration
+@RequiredArgsConstructor
+//@EnableConfigurationProperties(RedisProperties.class)
 public class RedisConfig {
 
     @Value("${spring.redis.host}")
@@ -16,9 +19,16 @@ public class RedisConfig {
     @Value("${spring.redis.port}")
     private int port;
 
+    @Value("${spring.redis.password}")
+    private String password;
+
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
-        return new LettuceConnectionFactory(host, port);
+        LettuceConnectionFactory factory = new LettuceConnectionFactory();
+        factory.setHostName(host);
+        factory.setPort(port);
+        factory.setPassword(password);
+        return factory;
     }
 
     @Bean
