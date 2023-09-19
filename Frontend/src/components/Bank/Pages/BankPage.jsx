@@ -4,7 +4,7 @@ import NavBar from '../../Common/Organisms/NavBar.jsx';
 import bankImage from '../../../assets/images/bank-main.png';
 import BankBar from '../Organisms/BankBar.jsx';
 import BankCard from '../Organisms/BankCard.jsx';
-import BankSelect from '../Molecules/BankSelect.jsx';
+import BankContent from '../Organisms/BankContent.jsx';
 
 const BankPage = () => {
     const totalBalance = '20000';
@@ -26,7 +26,7 @@ const BankPage = () => {
             <div>
                 <BankBar />
                 <BankCard />
-                <BankSelect />
+                <BankContent />
             </div>
         </div>
     );
