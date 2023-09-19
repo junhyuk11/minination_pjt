@@ -1,10 +1,9 @@
 import React from 'react';
-import './CompanyInfo.css';
-// API 불러오면 아래는 삭제
-import SamsungCover from '../../../assets/images/samsung-cover.png';
-import SamsungLogo from '../../../assets/images/samsung-logo.png';
+import './CompanyContent.css';
 
-const CompanyInfo = () => {
+import SamsungCover from '../../../assets/images/samsung-cover.png';
+
+const CompanyContent1 = () => {
     return (
         <div>
             <div class="company-name">삼성전자</div>
@@ -14,13 +13,6 @@ const CompanyInfo = () => {
                     alt="삼성배경"
                     class="company-coverimage"
                 />
-                <div class="company-image-child">
-                    <img
-                        src={SamsungLogo}
-                        alt="삼성배경"
-                        class="company-logo1"
-                    />
-                </div>
             </div>
             <div class="company-description">
                 삼성전자는 전 세계에서 전자제품을 만드는 큰 회사에요. 이 회사는
@@ -34,11 +26,15 @@ const CompanyInfo = () => {
             <div class="outlink-btns">
                 <div class="outlink-btn">
                     <span class="tooltip">uiverse.io</span>
-                    <span>Tooltip</span>
+                    <span>재무제표</span>
+                </div>
+                <div class="outlink-btn">
+                    <span class="tooltip">uiverse.io</span>
+                    <span>재무제표</span>
                 </div>
             </div>
         </div>
     );
 };
 
-export default CompanyInfo;
+export default CompanyContent1;
