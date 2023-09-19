@@ -1,0 +1,17 @@
+/* Landing.module.css */
+.background {
+    background-color: #a2d6ab;
+    height: 100vh;
+}
+
+.landingLayout {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.img {
+    width: 30vw; /* 가로 크기를 viewport 가로 길이의 30%로 설정 */
+    height: auto; /* 세로 크기를 viewport 가로 길이의 30%로 설정 */
+    border-radius: 15px 0px 0px 15px;
+}
