@@ -23,7 +23,7 @@ function NavBar({ username, totalBalance }) {
 
                     <div class="asset-card">
                         <p class="asset-key">잔고</p>
-                        <span class="asset-value">123미소</span>
+                        <span class="asset-value">{totalBalance}미소</span>
                     </div>
                 </div>
             </div>
