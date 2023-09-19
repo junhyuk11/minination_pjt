@@ -62,21 +62,42 @@ public class JwtProvider {
                 .setExpiration(new Date(now.getTime() + jwtProperties.getRefreshTokenValidityInSeconds()))
                 .signWith(getSecretKey(), SignatureAlgorithm.HS256)
                 .compact();
-        storeToken(id, refreshToken);
+        storeToken(refreshToken, id);
         return refreshToken;
     }
 
     /**
-     * cache에 토큰 저장
+     * cache에 refresh 토큰 저장
      * @param token String
      * @param id String
      */
     private void storeToken(String token, String id) {
         redisTemplate.opsForValue().set(
-                token,
                 id,
+                token,
                 jwtProperties.getRefreshTokenValidityInSeconds(),
                 TimeUnit.SECONDS);
+    }
+
+    /**
+     * cache에 blacklist 저장
+     * @param token
+     * @param id
+     */
+    public void storeBlacklist(String token, String id) {
+        redisTemplate.opsForValue().set(
+                token,
+                id,
+                jwtProperties.getAccessTokenValidityInSeconds(),
+                TimeUnit.SECONDS);
+    }
+
+    /**
+     * cache에서 refreshToken 삭제
+     * @param id
+     */
+    public void deleteToken(String id) {
+        redisTemplate.delete(id);
     }
 
 
@@ -91,6 +112,12 @@ public class JwtProvider {
                 .build();
         try {
             jwtParser.parse(token);
+
+            // blacklist 확인
+            if (redisTemplate.hasKey(token)) {
+                throw new MNException(ErrorCode.INVALID_TOKEN);
+            }
+
             return extractMemberId(token);
         } catch (MalformedJwtException | SignatureException | IllegalArgumentException e) {
             throw new MNException(ErrorCode.INVALID_TOKEN);
