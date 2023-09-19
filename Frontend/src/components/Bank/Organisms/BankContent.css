@@ -21,3 +21,8 @@
 .bankSelectButtonWrapperStyle {
     margin-right: 20px;
 }
+
+.bankSelectButtonStyle.active {
+    background-color: blue;
+    color: white;  
+}
