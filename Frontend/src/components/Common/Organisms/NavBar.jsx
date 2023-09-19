@@ -13,7 +13,7 @@ function NavBar({ username, totalBalance }) {
                     <div className="links">
                         <a href="/stockexchange/stock">증권거래소</a>
                         <a href="/production/jobposting">채용공고</a>
-                        <a href="/market/studentmarket">백화점</a>
+                        <a href="/market/marketpage">백화점</a>
                         <a href="/bank/bankpage">은행</a>
                         <a href="/admin/office">집무실</a>
                     </div>

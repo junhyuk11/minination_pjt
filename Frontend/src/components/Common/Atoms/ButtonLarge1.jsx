@@ -1,12 +1,12 @@
 import React from 'react';
 
-function ButtonLending1({ title, onClick }) {
+function ButtonLarge1({ title, onClick }) {
     const buttonStyle = {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        // width: '300px',
-        width: '100%',
+        width: '300px',
+        // width: '100%',
         height: '40px',
         borderRadius: '2rem',
         border: 'none',
@@ -24,4 +24,4 @@ function ButtonLending1({ title, onClick }) {
     );
 }
 
-export default ButtonLending1;
+export default ButtonLarge1;

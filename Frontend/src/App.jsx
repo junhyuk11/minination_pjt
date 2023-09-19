@@ -14,8 +14,7 @@ import Dashboard from './components/Home/Pages/Dashboard.jsx';
 import Landing from './components/Home/Pages/Landing.jsx';
 
 // Market
-import StudentMarket from './components/Market/Pages/StudentMarket.jsx';
-import TeacherMarket from './components/Market/Pages/TeacherMarket.jsx';
+import MarketPage from './components/Market/Pages/MarketPage.jsx';
 
 // Member
 import Login from './components/Member/Pages/Login.jsx';
@@ -38,14 +37,7 @@ const App = () => {
                 <Route path="/admin/officefix" element={<OfficeFix />} />
                 <Route path="/bank/bankpage" element={<BankPage />} />
                 <Route path="/home/dashboard" element={<Dashboard />} />
-                <Route
-                    path="/market/studentmarket"
-                    element={<StudentMarket />}
-                />
-                <Route
-                    path="/market/teachermarket"
-                    element={<TeacherMarket />}
-                />
+                <Route path="/market/marketpage" element={<MarketPage />} />
                 <Route path="/member/login" element={<Login />} />
                 <Route path="/member/nationality" element={<Nationality />} />
                 <Route path="/member/signup" element={<Signup />} />
