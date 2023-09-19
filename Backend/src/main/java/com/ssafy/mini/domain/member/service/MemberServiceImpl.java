@@ -109,6 +109,19 @@ public class MemberServiceImpl implements MemberService{
         jwtProvider.deleteToken(memberId);
     }
 
+    @Override
+    public void delete(String accessToken, String memberId) {
+        log.info("Service Layer::delete() called");
+
+        // 블랙리스트 저장 + refresh token 삭제
+        logout(accessToken, memberId);
+
+        Member member = memberRepository.findByMemId(memberId)
+                .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
+
+        memberRepository.delete(member);
+    }
+
     /**
      * 비밀번호 암호화
      * @param password 비밀번호

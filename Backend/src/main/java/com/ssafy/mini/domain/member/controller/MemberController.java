@@ -107,4 +107,21 @@ public class MemberController {
                 .build();
     }
 
+    @DeleteMapping
+    @ApiOperation(value = "회원 탈퇴")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "회원 탈퇴 성공"),
+            @ApiResponse(code = 403, message = "유효하지 않은 토큰"),
+            @ApiResponse(code = 404, message = "회원 탈퇴 실패")
+    })
+    public SuccessResponse delete(
+            @RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken
+    ) {
+        log.info("Controller Layer::delete() called");
+        String memberId = jwtProvider.validateToken(accessToken);
+        memberService.delete(accessToken, memberId);
+        return SuccessResponse.builder()
+                .build();
+    }
+
 }
