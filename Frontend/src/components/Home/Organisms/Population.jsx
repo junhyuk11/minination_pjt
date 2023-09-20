@@ -5,7 +5,22 @@ import HomeCard from '../Molecules/HomeCard';
 const Population = () => {
     const response = {
         president: '이정화',
-        citizen: ['김싸피', '박싸피'],
+        citizen: [
+            '김싸피',
+            '박싸피',
+            '김싸피',
+            '박싸피',
+            '김싸피',
+            '박싸피',
+            '김싸피',
+            '박싸피',
+            '김싸피',
+            '박싸피',
+            '김싸피',
+            '박싸피',
+            '김싸피',
+            '박싸피',
+        ],
     };
     const { president, citizen } = response;
     const contentDom = (

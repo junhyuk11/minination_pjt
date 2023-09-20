@@ -34,15 +34,10 @@ const Dashboard = () => {
         ],
     };
 
-    const layoutStyle = {
-        display: 'flex',
-        flexWrap: 'wrap',
-    };
-
     return (
-        <div>
+        <div className={styles.body}>
             <NavBar username="준혁" totalBalance="30000" />
-            <div className={layoutStyle}>
+            <div className={styles.layoutStyle}>
                 <Nation response={response} />
                 <Constitution />
                 <Population />
