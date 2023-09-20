@@ -4,6 +4,7 @@ import Nation from '../Organisms/Nation.jsx';
 import Constitution from '../Organisms/Constitution.jsx';
 import Population from '../Organisms/Population.jsx';
 import styles from './Dashboard.module.css';
+import Ranking from '../Organisms/Ranking.jsx';
 
 const Dashboard = () => {
     const response = {
@@ -41,6 +42,7 @@ const Dashboard = () => {
                 <Nation response={response} />
                 <Constitution />
                 <Population />
+                <Ranking />
             </div>
         </div>
     );
