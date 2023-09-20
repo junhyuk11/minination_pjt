@@ -40,6 +40,7 @@ public class SecurityConfig {
 
                         // s3 이미지 업로드
                         .antMatchers(HttpMethod.POST, "/s3/upload").permitAll()
+                        .antMatchers(HttpMethod.POST, "/corporation/register").permitAll()
 
                         // 그 외 요청은 모두 인증 필요
                         .anyRequest().authenticated()

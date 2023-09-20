@@ -45,6 +45,12 @@ public class SwaggerConfig {
         ));
     }
 
+    @Bean Docket corporationApi() {
+        return getDocket("com.ssafy.mini.domain.corporation.controller", "주식회사 관리", Predicates.or(
+                PathSelectors.ant("/corporation/**")
+        ));
+    }
+
     public Docket getDocket(String base, String groupName, Predicate<String> predicate) {
         ParameterBuilder aParameterBuilder = new ParameterBuilder();
         aParameterBuilder.name("Authorization")
