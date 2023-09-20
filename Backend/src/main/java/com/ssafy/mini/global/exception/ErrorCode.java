@@ -24,6 +24,9 @@ public enum ErrorCode {
     // S3
     S3_UPLOAD_FAIL(500, "S3 업로드에 실패했습니다."),
 
+    // 주가 정보 api
+    NO_SUCH_STOCK(404, "존재하지 않는 주식 데이터입니다."),
+
     ;
 
     private final int code;
