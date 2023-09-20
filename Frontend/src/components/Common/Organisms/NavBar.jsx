@@ -11,11 +11,21 @@ function NavBar({ username, totalBalance }) {
                         <img src={logoimage} alt="로고" className="logo" />
                     </a>
                     <div className="links">
-                        <a href="/stockexchange/stock">증권거래소</a>
-                        <a href="/production/jobposting">채용공고</a>
-                        <a href="/market/marketpage">백화점</a>
-                        <a href="/bank/bankpage">은행</a>
-                        <a href="/admin/office">집무실</a>
+                        <a href="/stockexchange/stock" className="navbar-btn">
+                            증권거래소
+                        </a>
+                        <a href="/production/jobposting" className="navbar-btn">
+                            채용공고
+                        </a>
+                        <a href="/market/marketpage" className="navbar-btn">
+                            백화점
+                        </a>
+                        <a href="/bank/bankpage" className="navbar-btn">
+                            은행
+                        </a>
+                        <a href="/admin/office" className="navbar-btn">
+                            집무실
+                        </a>
                     </div>
                 </div>
                 <div className="right-side">

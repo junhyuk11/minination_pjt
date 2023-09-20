@@ -9,6 +9,7 @@ import TabButton from '../Atoms/TabButton.jsx';
 
 // MoleCules
 import TickerTape from '../Molecules/TickerTape.jsx';
+import StockChart from '../Molecules/StockChart.jsx';
 
 // Organisms
 import CompanyContent1 from '../Organisms/CompanyContent1.jsx';
@@ -94,6 +95,7 @@ const Stock = () => {
                     {selectedButton === 'button3' && <CompanyContent3 />}
                     {selectedButton === 'button4' && <CompanyContent4 />}
                     {selectedButton === 'button5' && <CompanyContent5 />}
+                    <StockChart />
                 </div>
 
                 {/* Stock-Trading-Section */}
