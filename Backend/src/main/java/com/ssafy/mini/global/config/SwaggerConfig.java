@@ -39,6 +39,12 @@ public class SwaggerConfig {
         ));
     }
 
+    @Bean Docket s3Api() {
+        return getDocket("com.ssafy.mini.global.infra.s3", "S3", Predicates.or(
+                PathSelectors.ant("/s3/**")
+        ));
+    }
+
     public Docket getDocket(String base, String groupName, Predicate<String> predicate) {
         ParameterBuilder aParameterBuilder = new ParameterBuilder();
         aParameterBuilder.name("Authorization")

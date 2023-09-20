@@ -21,6 +21,9 @@ public enum ErrorCode {
     // Master code
     NO_SUCH_CODE(404, "존재하지 않는 코드입니다."),
 
+    // S3
+    S3_UPLOAD_FAIL(500, "S3 업로드에 실패했습니다."),
+
     ;
 
     private final int code;
