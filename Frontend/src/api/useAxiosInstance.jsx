@@ -1,5 +1,5 @@
 // import axios from 'axios';
-// import { API_URL, CONTENT_TYPE_JSON } from '../constants/constants';
+// import { API_URL, CONTENT_TYPE_JSON } from '../constants/constants.jsx';
 
 // const apiClient = axios.create({
 //     baseURL: API_URL,

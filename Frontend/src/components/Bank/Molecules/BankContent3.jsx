@@ -1,5 +1,6 @@
 import React from 'react';
 import './BankContent1.css';
+import BankButtonSmall from '../Atoms/BankButtonSmall.jsx';
 
 function BankContent1() {
     const transactions = [
@@ -7,9 +8,10 @@ function BankContent1() {
             id: 1,
             account: '청구계좌',
             category: '식비',
-            amount: 5000,
-            balance: 95000,
             date: '2023-09-19',
+            rate: '40%',
+            balance: 95000,
+            button: <BankButtonSmall />,
         },
     ];
 
@@ -18,11 +20,12 @@ function BankContent1() {
             <table border="1">
                 <thead>
                     <tr>
-                        <th>입출금처</th>
+                        <th>상품이름</th>
                         <th>분류</th>
-                        <th>입출금금액</th>
-                        <th>잔액</th>
-                        <th>날짜</th>
+                        <th>기간</th>
+                        <th>이자율</th>
+                        <th>금액</th>
+                        <th> </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -30,9 +33,10 @@ function BankContent1() {
                         <tr key={transaction.id}>
                             <td>{transaction.account}</td>
                             <td>{transaction.category}</td>
-                            <td>{transaction.amount}</td>
-                            <td>{transaction.balance}</td>
                             <td>{transaction.date}</td>
+                            <td>{transaction.rate}</td>
+                            <td>{transaction.balance}</td>
+                            <td>{transaction.button}</td>
                         </tr>
                     ))}
                 </tbody>

@@ -1,0 +1,28 @@
+.marketSelectBlackBackground {
+    position: absolute;
+    height: 5%;
+    width: 20%;
+    top: 65%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    color: black;
+    font-size: 24px;
+    display: flex;
+    justify-content: left;
+    align-items: left;
+    border-radius: 30px;
+}
+
+.marketSelectButtonStyle {
+    color: green;
+}
+
+.marketSelectButtonWrapperStyle {
+    margin-right: 20px;
+}
+
+.marketSelectButtonStyle.active {
+    background-color: blue;
+    color: white;  
+}

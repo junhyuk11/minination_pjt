@@ -5,7 +5,6 @@ function InputBox1({ title, placeholder, inputText, onChange, type }) {
         alignItems: 'center',
         display: 'flex',
         flexDirection: 'column', // 세로로 배치
-        //width: '80%',
         margin: 'auto',
     };
     const titleStyle = {
@@ -29,6 +28,7 @@ function InputBox1({ title, placeholder, inputText, onChange, type }) {
                 style={inputStyle}
                 onChange={onChange}
                 type={type}
+                autoComplete="off"
             />
         </div>
     );

@@ -31,12 +31,8 @@ export const useNavigation = () => {
     };
 
     // Market
-    const navigateToStudentMarket = () => {
-        navigate('/market/studentmarket');
-    };
-
-    const navigateToTeacherMarket = () => {
-        navigate('/market/teachermarket');
+    const navigateToMarketPage = () => {
+        navigate('/market/marketpage');
     };
 
     // Member
@@ -69,8 +65,7 @@ export const useNavigation = () => {
         navigateToBankPage,
         navigateToDashboard,
         navigateToLanding,
-        navigateToStudentMarket,
-        navigateToTeacherMarket,
+        navigateToMarketPage,
         navigateToLogin,
         navigateToNationality,
         navigateToSignup,

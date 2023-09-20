@@ -6,7 +6,7 @@ import BankContent2 from '../Molecules/BankContent2.jsx';
 import BankContent3 from '../Molecules/BankContent3.jsx';
 
 const BankContent = () => {
-    const [selectedButton, setSelectedButton] = useState('button1'); // 초기에는 어떤 버튼도 선택되지 않았다고 가정
+    const [selectedButton, setSelectedButton] = useState('button1');
 
     const handleButtonClick = buttonName => {
         setSelectedButton(buttonName);
