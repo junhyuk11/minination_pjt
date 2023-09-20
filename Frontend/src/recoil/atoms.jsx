@@ -7,8 +7,7 @@ export const identityState = atom({
     default: '',
     effects_UNSTABLE: [persistAtom],
 });
-// 아래처럼 추가하세용가뤼.
-export const somethingState = atom({
+export const companyState = atom({
     key: 'somethingState',
     default: '',
     effects_UNSTABLE: [persistAtom],
