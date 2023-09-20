@@ -1,6 +1,9 @@
 import React from 'react';
 import NavBar from '../../Common/Organisms/NavBar.jsx';
 import Nation from '../Organisms/Nation.jsx';
+import Constitution from '../Organisms/Constitution.jsx';
+import Population from '../Organisms/Population.jsx';
+import styles from './Dashboard.module.css';
 
 const Dashboard = () => {
     const response = {
@@ -32,10 +35,13 @@ const Dashboard = () => {
     };
 
     return (
-        <div>
+        <div className={styles.body}>
             <NavBar username="준혁" totalBalance="30000" />
-            <p>Dashboard 페이지입니다. </p>
-            <Nation response={response} />
+            <div className={styles.layoutStyle}>
+                <Nation response={response} />
+                <Constitution />
+                <Population />
+            </div>
         </div>
     );
 };

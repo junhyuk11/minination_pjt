@@ -1,4 +1,5 @@
 import React from 'react';
+import './TickerTape.css';
 
 const TickerTape = () => {
     return (

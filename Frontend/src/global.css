@@ -3,7 +3,7 @@ body {
     font-family: netmarbleB, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 code {
@@ -11,17 +11,17 @@ code {
         monospace;
 }
 
-
 /* Webkit 관련 스타일 무효화 */
 *::-webkit-scrollbar {
-    width: 0;  
+    width: 0;
     height: 0;
 }
 
 /* 폰트 */
 @font-face {
     font-family: 'netmarbleB';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.1/netmarbleB.woff') format('woff');
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.1/netmarbleB.woff')
+        format('woff');
     font-weight: normal;
     font-style: normal;
 }
