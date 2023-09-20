@@ -5,13 +5,14 @@ import NationTitle from '../Atoms/NationTitle';
 const Nation = ({ response }) => {
     // TODO: api 연결 후 img src를 flag로 수정하기
     const { flag, nation } = response;
-    const style = {
+    const nationStyle = {
         display: 'flex',
         alignItems: 'center',
+        margin: '2vw',
     };
 
     return (
-        <div style={style}>
+        <div style={nationStyle}>
             <img src={flag1} alt="flag" />
             <NationTitle title={nation} />
         </div>
