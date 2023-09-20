@@ -1,6 +1,7 @@
 import React from 'react';
 import NavBar from '../../Common/Organisms/NavBar.jsx';
 import Nation from '../Organisms/Nation.jsx';
+import Constitution from '../Organisms/Constitution.jsx';
 
 const Dashboard = () => {
     const response = {
@@ -36,6 +37,7 @@ const Dashboard = () => {
             <NavBar username="준혁" totalBalance="30000" />
             <p>Dashboard 페이지입니다. </p>
             <Nation response={response} />
+            <Constitution />
         </div>
     );
 };
