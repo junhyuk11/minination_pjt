@@ -20,11 +20,10 @@ public class s3Service {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    public void upload(MultipartFile file) {
+    public String upload(MultipartFile file) {
+        String fileName = file.getOriginalFilename();
+        String fileUrl = "https://" + bucket + "/company" + fileName;
         try{
-            String fileName = file.getOriginalFilename();
-            String fileUrl = "https://" + bucket + "/company" + fileName;
-
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(file.getContentType());
             metadata.setContentLength(file.getSize());
@@ -33,6 +32,7 @@ public class s3Service {
         } catch (IOException e) {
             throw new MNException(ErrorCode.S3_UPLOAD_FAIL);
         }
+        return amazonS3.getUrl(bucket, fileName).toString();
     }
 
 }
