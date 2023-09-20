@@ -13,7 +13,7 @@ import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
-public class s3Service {
+public class S3Service {
 
     private final AmazonS3 amazonS3;
 
@@ -22,7 +22,6 @@ public class s3Service {
 
     public String upload(MultipartFile file) {
         String fileName = file.getOriginalFilename();
-        String fileUrl = "https://" + bucket + "/company" + fileName;
         try{
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(file.getContentType());
