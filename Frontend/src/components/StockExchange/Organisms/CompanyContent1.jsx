@@ -5,7 +5,7 @@ import SamsungCover from '../../../assets/images/samsung-cover.png';
 
 const CompanyContent1 = () => {
     return (
-        <div>
+        <div class="company-content-container">
             <div class="company-name">삼성전자</div>
             <div class="company-image-parent">
                 <img
@@ -18,8 +18,7 @@ const CompanyContent1 = () => {
                 삼성전자는 전자제품을 만들고 전세계에 판매하는 큰 회사에요.
                 판매하는 다양한 물건 중에는 TV, 컴퓨터, 모니터, 냉장고, 세탁기,
                 에어컨, 스마트폰, 네트워크 장치, 그리고 컴퓨터와 같은 것들이
-                있어요. 또한 작은 컴퓨터 칩과 같은 것들도 만들어요. 그 중에는
-                기억장치 칩, 모바일 프로세서(AP)와 같은 것이 있어요.
+                있어요. 또한 작은 컴퓨터 칩과 같은 것들도 만들어요.
             </div>
 
             <div class="outlink-btns">
