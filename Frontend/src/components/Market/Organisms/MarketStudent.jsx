@@ -37,7 +37,7 @@ const MarketStudent = () => {
         {
             id: 101,
             product: '사용한 계좌',
-            description: '간장공장공장장은 간장공장장이고',
+            description: '간장공장공장장은 간장공장장이고간장공장공장장은 간장공장장이고간장공장공장장은 간장공장장이고간장공장공장장은 간장공장장이고',
             price: 3000,
             amount: 12000,
             button: '2023-09-18',

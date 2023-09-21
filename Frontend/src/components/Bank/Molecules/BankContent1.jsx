@@ -11,10 +11,50 @@ function BankContent1() {
             balance: 95000,
             date: '2023-09-19',
         },
+        {
+            id: 1,
+            account: '청구계좌',
+            category: '식비',
+            amount: 5000,
+            balance: 95000,
+            date: '2023-09-19',
+        },
+        {
+            id: 1,
+            account: '청구계좌',
+            category: '식비',
+            amount: 3000,
+            balance: 95000,
+            date: '2023-09-19',
+        },
+        {
+            id: 1,
+            account: '청구계좌',
+            category: '식비',
+            amount: 5000,
+            balance: 95000,
+            date: '2023-09-19',
+        },
+        {
+            id: 1,
+            account: '청구계좌',
+            category: '식비',
+            amount: 5000,
+            balance: 95000,
+            date: '2023-09-19',
+        },
+        {
+            id: 1,
+            account: '청구계좌',
+            category: '식비',
+            amount: 99000,
+            balance: 95000,
+            date: '2023-09-19',
+        },
     ];
 
     return (
-        <div className="tableWrapper">
+        <div className="bankContentTableWrapper">
             <table border="1">
                 <thead>
                     <tr>

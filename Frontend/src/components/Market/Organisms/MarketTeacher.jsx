@@ -14,7 +14,8 @@ const MarketTeacher = () => {
         {
             id: 1,
             product: '청구계좌',
-            description: '식비',
+            description:
+                '이 편지는 영국에서 시작했을 수도 잇고 아닐 수도 잇으며 어쩌ㅓ고 저쩌고이 편지는 영국에서 시작했을 수도 잇고 아닐 수도 잇으며 어쩌ㅓ고 저쩌고이 편지는 영국에서 시작했을 수도 잇고 아닐 수도 잇으며 어쩌ㅓ고 저쩌고이 편지는 영국에서 시작했을 수도 잇고 아닐 수도 잇으며 어쩌ㅓ고 저쩌고',
             price: 5000,
             amount: '-',
             button: <ButtonMiddle1 title="삭제하기" onClick={handleDelete} />,

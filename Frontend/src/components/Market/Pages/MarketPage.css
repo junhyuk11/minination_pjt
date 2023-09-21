@@ -1,28 +1,26 @@
-.marketSelectBlackBackground {
-    position: absolute;
-    height: 5%;
-    width: 20%;
-    top: 65%;
-    left: 30%;
-    transform: translate(-50%, -50%);
-    background-color: #ffffff;
-    color: black;
-    font-size: 24px;
+/* MarketPage.css */
+.marketContainer {
     display: flex;
-    justify-content: left;
-    align-items: left;
-    border-radius: 30px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.buttonWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
 }
 
 .marketSelectButtonStyle {
     color: green;
-}
-
-.marketSelectButtonWrapperStyle {
-    margin-right: 20px;
+    margin: 0 10px;
 }
 
 .marketSelectButtonStyle.active {
     background-color: blue;
-    color: white;  
+    color: white;
 }
