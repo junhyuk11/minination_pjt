@@ -18,6 +18,7 @@ import CompanyContent3 from '../Organisms/CompanyContent3.jsx';
 import CompanyContent4 from '../Organisms/CompanyContent4.jsx';
 import CompanyContent5 from '../Organisms/CompanyContent5.jsx';
 import StockTrading from '../Organisms/StockTrading.jsx';
+import PortFolio from '../Organisms/PortFolio.jsx';
 
 // Images
 import samsungLogo from '../../../assets/images/samsung-logo.png';
@@ -100,6 +101,7 @@ const Stock = () => {
 
                 {/* Stock-Trading-Section */}
                 <div className="stock-trading-section">
+                    <PortFolio />
                     <StockTrading />
                 </div>
             </div>

@@ -19,6 +19,7 @@ const StockTrading = () => {
                 {/* 매수하기 */}
                 <OrderTab
                     type="button"
+                    menu="매수하기"
                     className={`stockSelectButtonStyle ${
                         selectedButton === 'button1' ? 'active' : ''
                     }`}
@@ -27,6 +28,7 @@ const StockTrading = () => {
                 {/* 매도하기 */}
                 <OrderTab
                     type="button"
+                    menu="매도하기"
                     className={`stockSelectButtonStyle ${
                         selectedButton === 'button2' ? 'active' : ''
                     }`}

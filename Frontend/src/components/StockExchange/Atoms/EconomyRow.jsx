@@ -27,7 +27,7 @@ function EconomyRow({ data }) {
             // Configure price scale
             chartRef.current.applyOptions({
                 layout: {
-                    backgroundColor: '#F9F9F9',
+                    backgroundColor: '#262E3A',
                     textColor: '#191919',
                 },
                 rightPriceScale: {

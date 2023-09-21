@@ -12,7 +12,6 @@
 
 .tab-section {
   flex: 1;
-  background-color: #ffffff;
   padding: 10px;
   
   display: flex;
@@ -26,25 +25,12 @@
   background-color: #262E3A;
   padding: 20px;
   overflow-y: auto; /* 세로 스크롤 허용 */
-  max-height: 1000px;
+  max-height: 550px;
 
-  border-radius: 25px 25px 0 0;
+  border-radius: 25px;
 }
 
 .stock-trading-section {
   flex: 3;
-  background-color: #d0d0d0;
-  padding: 20px;
   overflow: hidden; 
-}
-
-
-/* ----- ORGANISM CARD ---------- */
-.stockprice-card {
-  width: 90%;
-  height: 254px;
-  border-radius: 25px;
-  background: #e0e0e0;
-  box-shadow: 20px 20px 20px #bebebe,
-                -20px -20px 20px #ffffff;
 }

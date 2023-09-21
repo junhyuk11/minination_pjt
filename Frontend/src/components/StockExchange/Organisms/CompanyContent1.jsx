@@ -1,3 +1,4 @@
+/* eslint-disable react/style-prop-object */
 import React from 'react';
 import './CompanyContent.css';
 
@@ -25,11 +26,16 @@ const CompanyContent1 = () => {
                 <a
                     href="https://comp.fnguide.com/SVO2/ASP/SVD_Finance.asp?pGB=1&gicode="
                     class="outlink-btn"
+                    style={{ textDecoration: 'none' }}
                 >
                     <span class="tooltip">FN가이드 페이지로 이동할께요</span>
                     <span>재무제표</span>
                 </a>
-                <a href="https://www.samsung.com/sec/" class="outlink-btn">
+                <a
+                    href="https://www.samsung.com/sec/"
+                    class="outlink-btn"
+                    style={{ textDecoration: 'none' }}
+                >
                     <span class="tooltip">
                         삼성전자 판매 페이지로 이동할께요
                     </span>
@@ -38,6 +44,7 @@ const CompanyContent1 = () => {
                 <a
                     href="https://www.samsung.com/sec/about-us/company-info/"
                     class="outlink-btn"
+                    style={{ textDecoration: 'none' }}
                 >
                     <span class="tooltip">
                         삼성전자 홍보 페이지로 이동할께요
