@@ -2,7 +2,7 @@ import React from 'react';
 import './BankContent1.css';
 import BankButtonSmall from '../Atoms/BankButtonSmall.jsx';
 
-function BankContent1() {
+function BankContent2() {
     const transactions = [
         {
             id: 1,
@@ -25,7 +25,7 @@ function BankContent1() {
     ];
 
     return (
-        <div className="tableWrapper">
+        <div className="bankContentTableWrapper">
             <table border="1">
                 <thead>
                     <tr>
@@ -54,4 +54,4 @@ function BankContent1() {
     );
 }
 
-export default BankContent1;
+export default BankContent2;
