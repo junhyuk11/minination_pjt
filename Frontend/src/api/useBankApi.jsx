@@ -1,7 +1,5 @@
-import useAxiosInstance from './useAxiosInstance.jsx';
+// import useAxiosInstance from './useAxiosInstance.jsx';
 
+// export default {
 
-export default {
-    planetsGetPlanetList,
-    planetsGetStarList,
-  };
+//   };
