@@ -1,0 +1,16 @@
+.productionTeacher::-webkit-scrollbar {
+    width: 8px !important;
+    height: 8px !important;
+}
+.productionTeacher::-webkit-scrollbar-thumb {
+    background: #888; 
+}
+.productionTeacher::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+.productionTeacher {
+    max-height: 70vh; 
+    overflow-y: auto;   
+    width: 80%;
+    margin: auto;
+}

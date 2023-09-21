@@ -29,6 +29,14 @@ const Info = () => {
         setDropdownStates(updatedDropdownStates);
     };
 
+    const closeAllDropdowns = () => {
+        setDropdownStates({
+            dropdown1: false,
+            dropdown2: false,
+            dropdown3: false,
+        });
+    };
+
     const handleDayChange = value => {
         setSelectedDay(value);
     };
@@ -50,6 +58,7 @@ const Info = () => {
     };
 
     const handleCompleteClick = () => {
+        closeAllDropdowns();
         setIsModalOpen(true);
     };
 
