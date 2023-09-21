@@ -15,8 +15,9 @@ public class Flag extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Byte flag_seq;
+    private Byte flagSeq;
 
     @Column(name = "flag_url", nullable = false, length = 50)
-    private String flag_url;
+    private String flagUrl;
+
 }
