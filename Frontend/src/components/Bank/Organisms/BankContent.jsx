@@ -35,14 +35,16 @@ const BankContent = () => {
                         onClick={() => handleButtonClick('button2')}
                     />
                 </div>
-                <BankButtonMiddle
-                    type="button"
-                    title="금융상품 조회"
-                    className={`bankSelectButtonStyle ${
-                        selectedButton === 'button3' ? 'active' : ''
-                    }`}
-                    onClick={() => handleButtonClick('button3')}
-                />
+                <div className="bankSelectButtonWrapperStyle">
+                    <BankButtonMiddle
+                        type="button"
+                        title="금융상품 조회"
+                        className={`bankSelectButtonStyle ${
+                            selectedButton === 'button3' ? 'active' : ''
+                        }`}
+                        onClick={() => handleButtonClick('button3')}
+                    />
+                </div>
             </div>
             {selectedButton === 'button1' && <BankContent1 />}
             {selectedButton === 'button2' && <BankContent2 />}

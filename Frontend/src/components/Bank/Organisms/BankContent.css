@@ -1,16 +1,13 @@
 .bankSelectBlackBackground {
-    position: absolute;
-    height: 5%;
-    width: 20%;
-    top: 65%;
-    left: 30%;
-    transform: translate(-50%, -50%);
+    display: flex;
+    height: 15vh;
+    width: 40vh;
     background-color: #ffffff;
     color: black;
     font-size: 24px;
-    display: flex;
-    justify-content: left;
-    align-items: left;
+    margin-left: 40vh;
+    justify-content: flex-start; /* 왼쪽 정렬을 위해 */
+    align-items: center; /* 버튼을 가로선 중앙에 배치 */
     border-radius: 30px;
 }
 

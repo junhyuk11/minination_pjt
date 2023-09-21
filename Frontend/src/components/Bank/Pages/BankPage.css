@@ -1,16 +1,6 @@
-.blackBackground {
-    position: absolute;
-    height: 15%;
-    width: 100%;
-    background-color: #747474;
-    color: white;
-    font-size: 24px;
-    z-index: -1;
-    display: flex; /* Flexbox를 사용 */
-    justify-content: flex-end; /* 내용물을 우측으로 정렬 */
-    align-items: center; /* 내용물을 세로 중앙으로 정렬 (필요하다면) */
-}   
-
-.blackBackground > * {
-    margin-left: 50px;
+.bankPageContainer {
+    display: flex;
+    flex-direction: column;  /* 수직 방향으로 아이템 배치 */
+    align-items: stretch;    /* 아이템들이 컨테이너의 너비를 꽉 채우도록 설정 */
+    height: 100vh;           /* 뷰포트의 높이로 설정 */
 }
