@@ -14,4 +14,6 @@ public interface MemberService {
 
     void update(String memberId, String newPwd);
 
+    String getMemberType(String memberId);
+
 }

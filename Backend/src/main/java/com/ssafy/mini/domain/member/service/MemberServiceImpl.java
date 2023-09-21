@@ -118,5 +118,13 @@ public class MemberServiceImpl implements MemberService{
         return cardNumber.toString();
     }
 
+    @Override
+    public String getMemberType(String memberId){
+        Member member = memberRepository.findByMemId(memberId)
+                .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
+
+        return member.getMemType().getExpression();
+    }
+
 
 }
