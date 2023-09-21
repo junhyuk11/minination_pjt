@@ -46,7 +46,8 @@ function NavBar({ username, totalBalance }) {
                         </div>
                         <div class="data">
                             <p>
-                                {totalBalance}802030 <span>미소</span>
+                                {totalBalance}
+                                <span> 미소</span>
                             </p>
                         </div>
                     </div>

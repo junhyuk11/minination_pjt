@@ -117,11 +117,12 @@
   }
 
   .asset-card .data p {
+    text-align: right;
     color: #1F2937;
     font-size: 1rem;
     font-weight: 700;
     margin-top: -10px;
-    margin-left: 10px;
+    margin-right: 10px;
   }
   
   .asset-card .data p span {
