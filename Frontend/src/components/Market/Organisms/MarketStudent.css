@@ -1,5 +1,6 @@
 .marketStudentTableWrapper {
-    width: 60%; /* 원하는 너비로 조절 */
+    width: 100%; /* 원하는 너비로 조절 */
+    max-width: 60%;
     margin: 0% auto 0 auto; /* 중앙 정렬 */
     max-height: 300px; 
     overflow-y: auto;    

@@ -16,24 +16,10 @@ const MarketPage = () => {
     return (
         <div>
             <NavBar username="준혁" totalBalance="30000" />
-            <ButtonMiddle1
-                type="button"
-                title="선생님이 되어라"
-                className={`marketSelectButtonStyle ${
-                    identity === 'teacher' ? 'active' : ''
-                }`}
-                onClick={() => handleButtonClick('teacher')}
-            />
-            <ButtonMiddle1
-                type="button"
-                title="학생이 되어라"
-                className={`marketSelectButtonStyle ${
-                    identity === 'teacher' ? 'active' : ''
-                }`}
-                onClick={() => handleButtonClick('student')}
-            />
-            {identity === 'student' && <MarketStudent />}
-            {identity === 'teacher' && <MarketTeacher />}
+            <div className="marketContainer">
+                {identity === '학생' && <MarketStudent />}
+                {identity === '선생님' && <MarketTeacher />}
+            </div>
         </div>
     );
 };
