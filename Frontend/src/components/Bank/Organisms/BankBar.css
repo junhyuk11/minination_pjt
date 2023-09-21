@@ -1,10 +1,13 @@
+.bankBarContainer {
+    display: flex;
+    justify-content: center;  /* 가로 중앙 정렬 */
+    align-items: top;      /* 세로 중앙 정렬 */
+    height: 100vh;            /* 뷰포트 높이로 설정 */
+}
+
 .bankBarBlackBackground {
-    position: absolute;
-    height: 15%;
-    width: 50%;
-    top: 25%;
-    left: 45%;
-    transform: translate(-50%, -50%);
+    height: 15vh;   /* 뷰포트 높이의 15%로 수정 */
+    width: 70vw;   /* 뷰포트 너비의 50%로 수정 */
     background-color: #D9D9D9;
     color: black;
     font-size: 24px;

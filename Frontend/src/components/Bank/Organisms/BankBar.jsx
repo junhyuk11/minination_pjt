@@ -7,7 +7,7 @@ import './BankBar.css';
 const BankBar = () => {
     const totalBalance = '20,000';
     return (
-        <div>
+        <div className="bankBarContainer">
             <div className="bankBarBlackBackground">
                 <img
                     src={bank1}
