@@ -1,8 +1,11 @@
 import React from 'react';
 import './NavBar.css';
+import { useNavigation } from '../../../hooks/useNavigation.jsx';
 import logoimage from '../../../assets/images/header-logo.png';
 
 function NavBar({ username, totalBalance }) {
+    const { navigateToBankPage } = useNavigation();
+
     return (
         <div className="header">
             <div class="inner">
@@ -29,7 +32,7 @@ function NavBar({ username, totalBalance }) {
                     </div>
                 </div>
                 <div className="right-side">
-                    <div className="asset-card">
+                    <div className="asset-card " onClick={navigateToBankPage}>
                         <div className="title">
                             <span>
                                 <svg
