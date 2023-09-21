@@ -66,37 +66,65 @@
     transition-property: width, left;
   }
 
+  /* --------- ASSET CARD --------- */
   .asset-card {
-    width: 100px;
-    height: 50px;
-    background: rgb(17, 4, 134);
+    background-color: #fff;
+    box-shadow: 0 30px 30px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     border-radius: 15px;
-    box-shadow: rgba(4, 30, 8, 0.7) 5px 10px 50px ,rgba(39, 128, 40, 0.7) -5px 0px 250px;
-    display: flex;
-    color: white;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    background: linear-gradient(to right, rgb(20, 30, 48), rgb(36, 59, 85));
+    width: 140px;
+    max-height: 65px;
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    overflow: hidden;
-  }
-  
-  .asset-card:hover {
-    box-shadow: rgba(17, 154, 38, 0.7) 5px 10px 10px ,rgba(21, 155, 39, 0.7) -5px 0px 20px;
-  }
-  
-  .asset-key {
-    font-size: 0.8em;
-    margin-left: 5px;
-  }
-  
-  .asset-value {
-    font-size: 1em;
-    margin-left: 15px;
-    font-weight: 500;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    transition: background-color 0.3s ease, transform 0.3s ease;
   }
 
+  .asset-card:hover {
+    background-color: #f0f4f8;
+    transform: translateY(2px);
+}
+
+  .asset-card:active {
+      transform: translateY(0);
+  }
+    
+  .asset-card .title {
+    display: flex;
+    align-items: center;
+    margin: -5px 5px 0 5px;
+  }
   
+  .asset-card .title span {
+    position: relative;
+    padding: 0.5rem;
+    background-color: #10B981;
+    width: 0.3rem;
+    height: 0.3rem;
+    border-radius: 9999px;
+  }
+  
+  .asset-card .title span svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ffffff;
+    height: 0.8rem;
+  }
+  
+  .asset-card .title-text {
+    margin-left: 0.5rem;
+    color: #374151;
+    font-size: 15px;
+  }
+
+  .asset-card .data p {
+    text-align: right;
+    color: #1F2937;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-top: -10px;
+    margin-right: 10px;
+  }
+  
+  .asset-card .data p span {
+    color: #10B981;
+  }

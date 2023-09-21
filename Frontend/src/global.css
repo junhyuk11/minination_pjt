@@ -4,6 +4,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow: hidden;
+    text-decoration: none;
 }
 
 code {
@@ -13,8 +14,8 @@ code {
 
 /* Webkit 관련 스타일 무효화 */
 *::-webkit-scrollbar {
-    width: 0;
-    height: 0;
+    width: 0;  
+    height: 0; 
 }
 
 /* 폰트 */

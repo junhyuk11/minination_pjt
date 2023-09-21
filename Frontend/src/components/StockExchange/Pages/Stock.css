@@ -1,17 +1,19 @@
-/* -------------- TICKER TAPE ---------------- */
+.section-master {
+  position: relative;
+}
+
 .section-container {
   display: flex;
-  height: 100%;
   margin: 0 auto;
   max-width: 1100px;
   width: 100%;
-  background-color: #F3F6FB;
+  height:100vh;
 }
 
 .tab-section {
   flex: 1;
-  background-color: #f0f0f0;
-  padding: 20px;
+  background-color: #ffffff;
+  padding: 10px;
   
   display: flex;
   gap: 15px;
@@ -23,12 +25,17 @@
   flex: 6;
   background-color: #262E3A;
   padding: 20px;
+  overflow-y: auto; /* 세로 스크롤 허용 */
+  max-height: 1000px;
+
+  border-radius: 25px 25px 0 0;
 }
 
 .stock-trading-section {
   flex: 3;
   background-color: #d0d0d0;
   padding: 20px;
+  overflow: hidden; 
 }
 
 

@@ -34,8 +34,8 @@ const Stock = () => {
     };
 
     return (
-        <div>
-            <NavBar username="휘진" balance={1000} />
+        <div className="section-master">
+            <NavBar username="휘진" totalBalancebalance={1000} />
             <TickerTape />
 
             <div className="section-container">

@@ -1,11 +1,18 @@
+.company-content-container {
+  position: relative;
+}
+
 .company-name {
   color: #ffffff;
   font-size: 1.5em;
-  padding: 10px;
+  margin: 10px;
+  width: 100%;
+  height: 30px;
+  z-index: 9999;
 }
 
 .company-image-parent {
-  position: relative;
+  position: relative; /* 상대적인 위치로 설정합니다. */
 }
 .company-image-child {
   position: absolute;
