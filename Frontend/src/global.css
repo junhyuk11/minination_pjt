@@ -13,8 +13,8 @@ code {
 
 /* Webkit 관련 스타일 무효화 */
 *::-webkit-scrollbar {
-    width: 0;
-    height: 0;
+    width: 0;  
+    height: 0; 
 }
 
 /* 폰트 */
