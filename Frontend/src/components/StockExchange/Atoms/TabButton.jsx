@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable no-nested-ternary */
+import React, { useState } from 'react';
 
 function TabButton({ imgsrc, onClick, className }) {
     const defaultButtonStyle = {
@@ -25,16 +26,30 @@ function TabButton({ imgsrc, onClick, className }) {
         filter: 'grayscale(0%)',
     };
 
+    const buttonHoverStyle = {
+        ...defaultButtonStyle,
+        transform: 'scale(1.1)', // 버튼이 1.1배로 확대됨
+    };
+
     // className에 'active'가 포함되어 있는지 확인
     const isButtonActive = className && className.includes('active');
+    const [isHovered, setIsHovered] = useState(false);
 
     return (
         <div>
             <button
                 type="button"
-                style={isButtonActive ? activeButtonStyle : defaultButtonStyle}
+                style={
+                    isButtonActive
+                        ? activeButtonStyle
+                        : isHovered
+                        ? buttonHoverStyle
+                        : defaultButtonStyle
+                }
                 onClick={onClick}
                 className="tab-button"
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
             >
                 <img
                     src={imgsrc}

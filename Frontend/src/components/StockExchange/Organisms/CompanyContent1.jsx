@@ -22,22 +22,28 @@ const CompanyContent1 = () => {
             </div>
 
             <div class="outlink-btns">
-                <div class="outlink-btn">
-                    <span class="tooltip">네이버 증권 사이트로 이동할께요</span>
+                <a
+                    href="https://comp.fnguide.com/SVO2/ASP/SVD_Finance.asp?pGB=1&gicode="
+                    class="outlink-btn"
+                >
+                    <span class="tooltip">FN가이드 페이지로 이동할께요</span>
                     <span>재무제표</span>
-                </div>
-                <div class="outlink-btn">
+                </a>
+                <a href="https://www.samsung.com/sec/" class="outlink-btn">
                     <span class="tooltip">
-                        삼성전자 판매 사이트로 이동할께요
+                        삼성전자 판매 페이지로 이동할께요
                     </span>
                     <span>제품정보</span>
-                </div>
-                <div class="outlink-btn">
+                </a>
+                <a
+                    href="https://www.samsung.com/sec/about-us/company-info/"
+                    class="outlink-btn"
+                >
                     <span class="tooltip">
-                        삼성전자 홍보 사이트로 이동할께요
+                        삼성전자 홍보 페이지로 이동할께요
                     </span>
                     <span>기업정보</span>
-                </div>
+                </a>
             </div>
         </div>
     );
