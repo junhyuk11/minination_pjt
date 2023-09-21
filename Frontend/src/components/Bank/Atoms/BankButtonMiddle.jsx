@@ -5,7 +5,7 @@ function BankButtonMiddle({ title, onClick, className }) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width: '100px',
+        width: '110px',
         height: '50px',
         borderRadius: '2rem',
         border: 'none',
