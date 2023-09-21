@@ -14,6 +14,10 @@ public interface MemberService {
 
     void update(String memberId, String newPwd);
 
+    void logout(String accessToken, String memberId);
+
+    void delete(String memberId, String accessToken);
+
     String getMemberType(String memberId);
 
 }
