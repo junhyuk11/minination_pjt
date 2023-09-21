@@ -1,6 +1,7 @@
 package com.ssafy.mini.domain.nation.controller;
 
 import com.ssafy.mini.domain.nation.dto.request.NationCreateRequest;
+import com.ssafy.mini.domain.nation.dto.request.NationSearchRequest;
 import com.ssafy.mini.domain.nation.service.NationService;
 import com.ssafy.mini.global.jwt.JwtProvider;
 import com.ssafy.mini.global.response.SuccessResponse;
@@ -29,11 +30,28 @@ public class NationController {
             @ApiResponse(code = 404, message = "국가 생성 실패")
     })
     public SuccessResponse create(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken, @RequestBody @ApiParam(value = "국가 생성 정보", required = true) NationCreateRequest nationCreateRequest) {
-        log.info("Controller Layer::create() called");
+        log.info("Nation Controller Layer:: create() called");
 
         String memberId = jwtProvider.extractMemberId(accessToken);
 
         nationService.create(memberId, nationCreateRequest);
+        return SuccessResponse.builder()
+                .build();
+    }
+
+    @PostMapping("/search")
+    @ApiOperation(value = "국가 검색")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "국가 검색 성공"),
+            @ApiResponse(code = 404, message = "국가 검색 실패")
+    })
+    public SuccessResponse search(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken, @RequestBody @ApiParam(value = "국가 검색 정보", required = true) NationSearchRequest nationSearchRequest) {
+        log.info("Nation Controller Layer::search() called");
+
+        String nationName = nationSearchRequest.getNationName();
+
+        nationService.search(nationName);
+
         return SuccessResponse.builder()
                 .build();
     }

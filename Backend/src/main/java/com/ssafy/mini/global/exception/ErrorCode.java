@@ -25,6 +25,8 @@ public enum ErrorCode {
     // 국기 관련 에러
     NO_SUCH_FLAG(404, "존재하지 않는 국기입니다."),
 
+    // 국가 관련 에러
+    NO_SUCH_NATION(404, "존재하지 않는 국가입니다."),
     ;
 
     private final int code;

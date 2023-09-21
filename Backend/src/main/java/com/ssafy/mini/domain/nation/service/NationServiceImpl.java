@@ -32,7 +32,7 @@ public class NationServiceImpl implements NationService {
 
     @Override
     public void create(String memberId, NationCreateRequest nationCreateRequest) {
-        log.info("Service Layer(Nation)::Create() called");
+        log.info("Nation Service Layer::Create() called");
 
         String memberType = memberService.getMemberType(memberId);
         log.info("memberType: " + memberType);
@@ -71,5 +71,14 @@ public class NationServiceImpl implements NationService {
 
         taxRepository.save(incomeTax);
         taxRepository.save(vat);
+    }
+
+    @Override
+    public void search(String nationName) {
+        log.info("Nation Service Layer::search() called");
+
+        nationRepository.findByIsoName(nationName)
+                .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_NATION));
+
     }
 }
