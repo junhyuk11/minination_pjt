@@ -1,6 +1,7 @@
 package com.ssafy.mini.domain.member.entity;
 
 import com.ssafy.mini.domain.master.entity.Master;
+import com.ssafy.mini.domain.nation.entity.Nation;
 import com.ssafy.mini.global.db.BaseEntity;
 import lombok.*;
 
@@ -40,10 +41,9 @@ public class Member extends BaseEntity {
     @JoinColumn(name = "mem_tp")
     private Master memType;
 
-    // 소속 국가 추가하기
-//    @ManyToOne
-//    @JoinColumn(name = "iso_seq")
-//    private Nation isoSeq;
+    @ManyToOne
+    @JoinColumn(name = "iso_seq")
+    private Nation isoSeq;
 
     // 현재 직업 추가하기
 //    @ManyToOne
@@ -81,6 +81,10 @@ public class Member extends BaseEntity {
 
     public void setMemType(Master memType) {
         this.memType = memType;
+    }
+
+    public void setIsoSeq(Nation isoSeq) {
+        this.isoSeq = isoSeq;
     }
 
 }

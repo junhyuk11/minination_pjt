@@ -17,4 +17,7 @@ public interface MemberService {
     void logout(String accessToken, String memberId);
 
     void delete(String memberId, String accessToken);
+
+    String getMemberType(String memberId);
+
 }
