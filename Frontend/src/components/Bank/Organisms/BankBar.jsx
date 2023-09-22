@@ -9,39 +9,42 @@ const BankBar = () => {
     return (
         <div className="bankBarContainer">
             <div className="bankBarBlackBackground">
-                <img
-                    src={bank1}
-                    alt="Bank"
-                    style={{
-                        marginRight: '3vh',
-                        marginLeft: '3vh',
-                        width: '15vh',
-                        height: '15vh',
-                    }}
-                />
-                내 현금 자산 : {totalBalance}
-                <img
-                    src={bank2}
-                    alt="Bank"
-                    style={{
-                        marginRight: '3vh',
-                        marginLeft: '3vh',
-                        width: '15vh',
-                        height: '15vh',
-                    }}
-                />
-                내 주식 자산 : {totalBalance}
-                <img
-                    src={bank3}
-                    alt="Bank"
-                    style={{
-                        marginRight: '3vh',
-                        marginLeft: '3vh',
-                        width: '15vh',
-                        height: '15vh',
-                    }}
-                />
-                내 저축 자산 : {totalBalance}
+                <div className="assetItem">
+                    <img
+                        src={bank1}
+                        alt="Bank"
+                        style={{
+                            marginRight: '3vh',
+                            width: '15vh',
+                            height: '15vh',
+                        }}
+                    />
+                    내 현금 자산 : {totalBalance}
+                </div>
+                <div className="assetItem">
+                    <img
+                        src={bank2}
+                        alt="Bank"
+                        style={{
+                            marginRight: '3vh',
+                            width: '15vh',
+                            height: '15vh',
+                        }}
+                    />
+                    내 주식 자산 : {totalBalance}
+                </div>
+                <div className="assetItem">
+                    <img
+                        src={bank3}
+                        alt="Bank"
+                        style={{
+                            marginRight: '3vh',
+                            width: '15vh',
+                            height: '15vh',
+                        }}
+                    />
+                    내 저축 자산 : {totalBalance}
+                </div>
             </div>
         </div>
     );
