@@ -9,7 +9,7 @@ function BankChartRow({ data }) {
         if (chartContainerRef.current && data && !chartRef.current) {
             chartRef.current = createChart(chartContainerRef.current, {
                 width: chartContainerRef.current.width,
-                height: 150,
+                height: 200,
             });
 
             const lineSeries = chartRef.current.addLineSeries();
