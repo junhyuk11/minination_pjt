@@ -27,7 +27,7 @@ function BankChartRow({ data }) {
         if (chartContainerRef.current && data) {
             chartRef.current = createChart(chartContainerRef.current, {
                 width: chartWidth,
-                height: 400,
+                height: 200,
             });
 
             const lineSeries = chartRef.current.addLineSeries();

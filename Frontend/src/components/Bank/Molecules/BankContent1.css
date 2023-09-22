@@ -2,7 +2,7 @@
     width: 60%;         /* 원하는 너비로 조절 */
     height: 30vh;      /* 높이를 뷰포트 높이로 설정 */
     margin: auto;       /* 가운데 정렬 */
-    max-height: 20vh; 
+    max-height: 24vh; 
     overflow-y: auto;  
     overflow-x: auto;   /* 필요한 경우 수평 스크롤 표시 */
 }

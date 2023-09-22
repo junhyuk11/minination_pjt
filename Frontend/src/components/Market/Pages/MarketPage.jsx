@@ -12,8 +12,8 @@ const MarketPage = () => {
     return (
         <div>
             <NavBar username="준혁" totalBalance="30000" />
-            {identity === '학생' && <MarketStudent />}
-            {identity === '선생님' && <MarketTeacher />}
+            {identity === 'ST' && <MarketStudent />}
+            {identity === 'TC' && <MarketTeacher />}
         </div>
     );
 };
