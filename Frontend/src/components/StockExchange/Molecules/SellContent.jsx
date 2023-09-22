@@ -102,7 +102,7 @@ const SellContent = () => {
                 </div>
                 <span>=</span>
                 <div className="calc-price">
-                    <span>최종 가격</span>
+                    <div className="calc-price-heading">매매금액</div>
                     {/* 최종가격이 null 일 때는 빈 문자열 표시 */}
                     <div className="calc-price-result">
                         {finalPrice !== null ? finalPrice : ''}

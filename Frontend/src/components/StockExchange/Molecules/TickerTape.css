@@ -37,7 +37,7 @@
   padding: 0 2rem;
   font-size: 1rem;
   font-weight: 900;
-  color: rgba(0,0,0,0.2);
+  color: rgba(0,0,0,0.4);
 }
 
 @-webkit-keyframes ticker {
@@ -62,4 +62,9 @@
     -webkit-transform: translateX(-100%);
     transform: translateX(-100%);
   }
+}
+
+
+.ticker__changesratio {
+  color: red;
 }

@@ -122,6 +122,7 @@
   padding: 0 0.5rem;
   border: 2px solid transparent;
   font-size: 0.8rem;
+  font-family: 'GmarketSansMedium', cursive;
   transition: border-color .3s cubic-bezier(.25,.01,.25,1) 0s, color .3s cubic-bezier(.25,.01,.25,1) 0s,background .2s cubic-bezier(.25,.01,.25,1) 0s;
 }
 
@@ -134,6 +135,7 @@
   padding: 0 0.5rem;
   border: 2px solid transparent;
   font-size: 0.8rem;
+  font-family: 'GmarketSansMedium', cursive;
   transition: border-color .3s cubic-bezier(.25,.01,.25,1) 0s, color .3s cubic-bezier(.25,.01,.25,1) 0s,background .2s cubic-bezier(.25,.01,.25,1) 0s;
 }
 
@@ -155,13 +157,17 @@
   color: #05060fc2;
 }
 
-.calc-price span {
+.calc-price-heading {
   font-size: 0.8em;
+  color: #05060fc2;
+  padding-bottom: 4px;
+  text-align: center;
 }
 
 .calc-price-result {
   width: 55px;
   height: 35px;
+  color: #05060f;
   background-color: #05060f0a;
   border-radius: .5rem;
   padding: 0 1rem;
