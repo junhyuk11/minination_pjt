@@ -51,6 +51,18 @@ public class SwaggerConfig {
         ));
     }
 
+    @Bean Docket nationApi() {
+        return getDocket("com.ssafy.mini.domain.nation.controller", "국가 관리", Predicates.or(
+                PathSelectors.ant("/nation/**")
+        ));
+    }
+
+    @Bean Docket homeApi() {
+        return getDocket("com.ssafy.mini.domain.home.controller", "홈", Predicates.or(
+                PathSelectors.ant("/home/**")
+        ));
+    }
+
     public Docket getDocket(String base, String groupName, Predicate<String> predicate) {
         ParameterBuilder aParameterBuilder = new ParameterBuilder();
         aParameterBuilder.name("Authorization")

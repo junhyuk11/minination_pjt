@@ -12,7 +12,6 @@ import com.ssafy.mini.global.exception.MNException;
 import com.ssafy.mini.global.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -142,6 +141,14 @@ public class MemberServiceImpl implements MemberService{
             cardNumber.append(rnd.nextInt(10));
         }
         return cardNumber.toString();
+    }
+
+    @Override
+    public String getMemberType(String memberId){
+        Member member = memberRepository.findByMemId(memberId)
+                .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
+
+        return member.getMemType().getExpression();
     }
 
 
