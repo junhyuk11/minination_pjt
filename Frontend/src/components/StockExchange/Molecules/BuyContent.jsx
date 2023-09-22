@@ -4,16 +4,8 @@ import './BuySell.css';
 const BuyContent = () => {
     return (
         <div>
-            <button class="btn" type="button">
-                <strong>SPACE</strong>
-                <div id="container-stars">
-                    <div id="stars" />
-                </div>
-
-                <div id="glow">
-                    <div class="circle" />
-                    <div class="circle" />
-                </div>
+            <button type="button" class="buy-sell-btn buy-btn">
+                매수하기
             </button>
         </div>
     );

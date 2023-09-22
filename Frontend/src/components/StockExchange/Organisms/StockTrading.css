@@ -10,7 +10,6 @@
   transition: all .5s ease-in-out;
   border-radius: 1.5rem;
   display: flex;
-  justify-content: center;
   align-items: center;
   font-weight: bolder;
   color: #8a8989;
@@ -21,4 +20,11 @@
   gap: 15px;
 
   position: absolute;
+  top: 15px;
+}
+
+.buysell-container {
+  gap: 15px;
+  position: absolute;
+  top: 70px;
 }
