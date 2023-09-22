@@ -1,15 +1,33 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { createChart, PriceScaleMode } from 'lightweight-charts';
 
 function EconomyRow({ data }) {
     const chartContainerRef = useRef();
     const chartRef = useRef(null);
+    const [chartWidth, setChartWidth] = useState(0);
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (chartContainerRef.current) {
+                const width = chartContainerRef.current.offsetWidth;
+                if (width !== chartWidth) {
+                    setChartWidth(width);
+                }
+            }
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, [chartWidth]);
 
     useEffect(() => {
         if (chartContainerRef.current && data && !chartRef.current) {
             chartRef.current = createChart(chartContainerRef.current, {
-                width: chartContainerRef.current.width,
+                width: chartWidth,
                 height: 300,
             });
 
@@ -46,7 +64,7 @@ function EconomyRow({ data }) {
                 chartRef.current = null;
             }
         };
-    }, [data]);
+    }, [chartWidth, data]);
 
     return <div ref={chartContainerRef} />;
 }

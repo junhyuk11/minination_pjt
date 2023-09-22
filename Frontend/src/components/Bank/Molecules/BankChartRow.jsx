@@ -1,21 +1,39 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { createChart, PriceScaleMode } from 'lightweight-charts';
 
 function BankChartRow({ data }) {
     const chartContainerRef = useRef();
     const chartRef = useRef(null);
+    const [chartWidth, setChartWidth] = useState(0);
 
     useEffect(() => {
-        if (chartContainerRef.current && data && !chartRef.current) {
+        const handleResize = () => {
+            if (chartContainerRef.current) {
+                const width = chartContainerRef.current.offsetWidth;
+                if (width !== chartWidth) {
+                    setChartWidth(width);
+                }
+            }
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, [chartWidth]);
+
+    useEffect(() => {
+        if (chartContainerRef.current && data) {
             chartRef.current = createChart(chartContainerRef.current, {
-                width: chartContainerRef.current.width,
-                height: 200,
+                width: chartWidth,
+                height: 400,
             });
 
             const lineSeries = chartRef.current.addLineSeries();
             lineSeries.setData(data);
 
-            // Configure the time scale
+            // 가로축
             const timeScale = chartRef.current.timeScale();
             timeScale.setVisibleRange({
                 from: data[0].time,
@@ -23,12 +41,8 @@ function BankChartRow({ data }) {
             });
             timeScale.fitContent();
 
-            // Configure price scale
+            // 세로축
             chartRef.current.applyOptions({
-                layout: {
-                    backgroundColor: '#F9F9F9',
-                    textColor: '#191919',
-                },
                 rightPriceScale: {
                     scaleMargins: {
                         top: 0.3,
@@ -45,7 +59,7 @@ function BankChartRow({ data }) {
                 chartRef.current = null;
             }
         };
-    }, [data]);
+    }, [chartWidth, data]);
 
     return <div ref={chartContainerRef} />;
 }
