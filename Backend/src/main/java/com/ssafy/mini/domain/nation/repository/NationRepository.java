@@ -9,4 +9,5 @@ public interface NationRepository extends JpaRepository<Nation, Short> {
 
     Optional<Nation> findByIsoName(String isoName);
 
+    Optional<Nation> findByIsoSeq(Short nationSeq);
 }

@@ -27,7 +27,10 @@ public enum ErrorCode {
 
     // 국가 관련 에러
     NO_SUCH_NATION(404, "존재하지 않는 국가입니다."),
-    ;
+    DUPLICATED_CREATE_NATION(409, "이미 생성한 국가가 있습니다."),
+    DUPLICATED_JOIN_NATION(409, "이미 가입한 국가가 있습니다."),
+    NOT_MATCH_PRESIDENT(400, "대통령 이름이 맞지 않습니다."),
+    NO_NATION(404, "가입한 국가가 없습니다.");
 
     private final int code;
     private final String detail;

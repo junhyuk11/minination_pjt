@@ -45,6 +45,12 @@ public class SwaggerConfig {
         ));
     }
 
+    @Bean Docket homeApi() {
+        return getDocket("com.ssafy.mini.domain.home.controller", "홈", Predicates.or(
+                PathSelectors.ant("/home/**")
+        ));
+    }
+
     public Docket getDocket(String base, String groupName, Predicate<String> predicate) {
         ParameterBuilder aParameterBuilder = new ParameterBuilder();
         aParameterBuilder.name("Authorization")

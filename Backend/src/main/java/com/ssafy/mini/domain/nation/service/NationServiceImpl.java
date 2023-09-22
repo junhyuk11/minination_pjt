@@ -1,10 +1,13 @@
 package com.ssafy.mini.domain.nation.service;
 
 import com.ssafy.mini.domain.flag.entity.Flag;
+import com.ssafy.mini.domain.flag.repository.FlagRepository;
 import com.ssafy.mini.domain.flag.service.FlagService;
 import com.ssafy.mini.domain.master.repository.MasterRepository;
-import com.ssafy.mini.domain.member.service.MemberService;
+import com.ssafy.mini.domain.member.entity.Member;
+import com.ssafy.mini.domain.member.repository.MemberRepository;
 import com.ssafy.mini.domain.nation.dto.request.NationCreateRequest;
+import com.ssafy.mini.domain.nation.dto.response.FlagListResponse;
 import com.ssafy.mini.domain.nation.entity.Nation;
 import com.ssafy.mini.domain.nation.mapper.NationMapper;
 import com.ssafy.mini.domain.nation.repository.NationRepository;
@@ -16,6 +19,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -24,8 +29,9 @@ public class NationServiceImpl implements NationService {
     private final NationRepository nationRepository;
     private final TaxRepository taxRepository;
     private final MasterRepository masterRepository;
+    private final MemberRepository memberRepository;
+    private final FlagRepository flagRepository;
 
-    private final MemberService memberService;
     private final FlagService flagService;
 
     private final NationMapper nationMapper;
@@ -34,11 +40,20 @@ public class NationServiceImpl implements NationService {
     public void create(String memberId, NationCreateRequest nationCreateRequest) {
         log.info("Nation Service Layer::Create() called");
 
-        String memberType = memberService.getMemberType(memberId);
-        log.info("memberType: " + memberType);
-        // 선생님만 국가 생성 가능
+        Member member = memberRepository.findByMemId(memberId)
+                .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
+
+        String memberType = member.getMemType().getExpression();
+
+        log.info("memberType: " + member.getMemType());
+        // 선생님이 아닌데 국가를 생성 하려고 할 때 예외 처리
         if (!memberType.equals("TC")) {
             throw new MNException(ErrorCode.NO_AUTHORITY);
+        }
+
+        // 이미 생성한 국가가 있는데 생성을 요청했을 때 예외 처리
+        if(member.getIsoSeq() != null) {
+            throw new MNException(ErrorCode.DUPLICATED_CREATE_NATION);
         }
 
         // 국기 url로 국기 객체 가져오기
@@ -71,6 +86,11 @@ public class NationServiceImpl implements NationService {
 
         taxRepository.save(incomeTax);
         taxRepository.save(vat);
+
+        String nationName = nationCreateRequest.getNationName();
+
+        // 선생님도 국가 가입
+        join(memberId, nationName);
     }
 
     @Override
@@ -81,4 +101,50 @@ public class NationServiceImpl implements NationService {
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_NATION));
 
     }
+
+    @Override
+    public void join(String memberId, String nationName) {
+
+        Nation nation = nationRepository.findByIsoName(nationName)
+                .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_NATION));
+
+        Member member = memberRepository.findByMemId(memberId)
+                .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
+
+        // 이미 가입한 국가인지 확인
+        if(member.getIsoSeq() != null) {
+            throw new MNException(ErrorCode.DUPLICATED_JOIN_NATION);
+        }
+
+        member.setIsoSeq(nation);
+        memberRepository.save(member);
+
+    }
+
+    @Override
+    public FlagListResponse flagList() {
+        log.info("Nation Service Layer::flagList() called");
+
+        List<String> flagUrlList = flagRepository.findAllFlagUrl();
+
+        return FlagListResponse.builder()
+                .flagImgUrl(flagUrlList)
+                .build();
+    }
+
+    @Override
+    public void checkPresident(String nationName, String presidentName) {
+        log.info("Nation Service Layer::checkPresident() called");
+
+        Nation nation = nationRepository.findByIsoName(nationName)
+                .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_NATION));
+
+        String president = nation.getTeacherName();
+
+        if(!president.equals(presidentName)) {
+            throw new MNException(ErrorCode.NOT_MATCH_PRESIDENT);
+        }
+    }
+
+
 }
