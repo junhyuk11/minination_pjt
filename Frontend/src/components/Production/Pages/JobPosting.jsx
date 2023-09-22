@@ -140,7 +140,7 @@ const JobPosting = () => {
             <NavBar username="여우" totalBalance="30000" />
             <div className={styles.container}>
                 <ProductionTitle title="채용 공고" size={30} />
-                {identity === '선생님' && (
+                {identity === 'TC' && (
                     <ProductionButton2
                         title="직업 추가하기"
                         onClick={handleAddClick}
@@ -151,18 +151,18 @@ const JobPosting = () => {
                 <ProductionButton1
                     title="선생님으로 변경"
                     onClick={() => {
-                        setIdentity('선생님');
+                        setIdentity('TC');
                     }}
                 />
                 <ProductionButton1
                     title="학생으로 변경"
                     onClick={() => {
-                        setIdentity('학생');
+                        setIdentity('ST');
                     }}
                 />
             </div>
             {/* Conditional rendering based on the identity state */}
-            {identity === '학생' ? (
+            {identity === 'ST' ? (
                 <ProductionStudent jobList={jobList} />
             ) : (
                 <ProductionTeacher

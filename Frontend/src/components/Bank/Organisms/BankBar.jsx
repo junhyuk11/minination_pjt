@@ -8,6 +8,9 @@ const BankBar = () => {
     const totalBalance = '20,000';
     return (
         <div className="bankBarContainer">
+            <div className="bankTitleContainer">
+                <div className="bankBarTitle">내 자산 </div>
+            </div>
             <div className="bankBarBlackBackground">
                 <div className="assetItem">
                     <img
@@ -15,8 +18,8 @@ const BankBar = () => {
                         alt="Bank"
                         style={{
                             marginRight: '3vh',
-                            width: '15vh',
-                            height: '15vh',
+                            width: '10vh',
+                            height: '10vh',
                         }}
                     />
                     내 현금 자산 : {totalBalance}
@@ -27,8 +30,8 @@ const BankBar = () => {
                         alt="Bank"
                         style={{
                             marginRight: '3vh',
-                            width: '15vh',
-                            height: '15vh',
+                            width: '10vh',
+                            height: '10vh',
                         }}
                     />
                     내 주식 자산 : {totalBalance}
@@ -39,8 +42,8 @@ const BankBar = () => {
                         alt="Bank"
                         style={{
                             marginRight: '3vh',
-                            width: '15vh',
-                            height: '15vh',
+                            width: '10vh',
+                            height: '10vh',
                         }}
                     />
                     내 저축 자산 : {totalBalance}

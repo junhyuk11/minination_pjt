@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 70vh;
+    height: 45vh;
 }
 
 .bankCardBlackBackground {
@@ -16,7 +16,6 @@
     align-items: center; /* 중앙 정렬 */
     flex-direction: row;
     border-radius: 30px;
-    padding: 20px;
 }
 
 
