@@ -7,6 +7,7 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  gap: 1px;
 }
 
 .radio-inputs > * {
@@ -20,14 +21,10 @@
 }
 
 .radio-input:checked + .radio-tile:before {
-  transform: scale(1);
+  transform: scale(1.1);
   opacity: 1;
   background-color: #2260ff;
   border-color: #2260ff;
-}
-
-.radio-input:checked + .radio-tile .radio-icon svg {
-  fill: #2260ff;
 }
 
 .radio-input:checked + .radio-tile .radio-label {
@@ -36,7 +33,6 @@
 
 .radio-input:focus + .radio-tile {
   border-color: #2260ff;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1), 0 0 0 4px #b5c9fc;
 }
 
 .radio-input:focus + .radio-tile:before {
@@ -50,7 +46,7 @@
   align-items: center;
   justify-content: center;
   width: 48px;
-  min-height: 48px;
+  height: 48px;
   border-radius: 0.5rem;
   border: 2px solid #b5bfd9;
   background-color: #fff;
@@ -66,7 +62,7 @@
   display: block;
   width: 0.4rem;
   height: 0.4rem;
-  border: 2px solid #b5bfd9;
+  border: 1px solid #b5bfd9;
   background-color: #fff;
   border-radius: 50%;
   top: 0.25rem;
@@ -101,6 +97,11 @@
   position: absolute;
   white-space: nowrap;
   width: 1px;
+}
+
+.trading-company-logo {
+  width: 100%;
+  border-radius: 5px;
 }
 
 

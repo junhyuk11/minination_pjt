@@ -2,7 +2,11 @@
 import React, { useState } from 'react';
 import './BuySell.css';
 
-import '../../../assets/images/samsung-logo.png';
+import SamsungLogo from '../../../assets/images/samsung-logo.png';
+import '../../../assets/images/hyundai-logo.png';
+import '../../../assets/images/nexon-logo.png';
+import '../../../assets/images/hybe-logo.png';
+import '../../../assets/images/kakao-logo.png';
 
 const SellContent = () => {
     const [price, setPrice] = useState('');
@@ -43,7 +47,13 @@ const SellContent = () => {
                     <input class="radio-input" type="radio" name="engine" />
                     <span class="radio-tile">
                         <span class="radio-icon" />
-                        <span class="radio-label">삼전</span>
+                        <span class="radio-label">
+                            <img
+                                src={SamsungLogo}
+                                alt="삼성배경"
+                                class="trading-company-logo"
+                            />
+                        </span>
                     </span>
                 </label>
                 <label>
