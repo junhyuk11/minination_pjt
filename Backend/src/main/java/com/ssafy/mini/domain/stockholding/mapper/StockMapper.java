@@ -1,6 +1,6 @@
-package com.ssafy.mini.domain.stock.mapper;
+package com.ssafy.mini.domain.stockholding.mapper;
 
-import com.ssafy.mini.domain.stock.entity.Stock;
+import com.ssafy.mini.domain.stockholding.entity.Stock;
 import com.ssafy.mini.global.feign.stockInfo.Item;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

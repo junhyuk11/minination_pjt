@@ -1,15 +1,12 @@
 package com.ssafy.mini.domain.stock;
 
 
-import com.ssafy.mini.domain.corporation.dto.response.CorporationInfoResponse;
-import com.ssafy.mini.domain.corporation.entity.Corporation;
-import com.ssafy.mini.domain.corporation.service.CorporationService;
-import com.ssafy.mini.domain.stock.service.StockService;
-import com.ssafy.mini.global.feign.stockInfo.StockInfoResponse;
+import com.ssafy.mini.domain.stockholding.dto.response.CorporationInfoResponse;
+import com.ssafy.mini.domain.stockholding.service.CorporationService;
+import com.ssafy.mini.domain.stockholding.service.StockService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

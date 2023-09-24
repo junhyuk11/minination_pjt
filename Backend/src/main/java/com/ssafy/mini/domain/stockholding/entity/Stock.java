@@ -1,8 +1,9 @@
-package com.ssafy.mini.domain.stock.entity;
+package com.ssafy.mini.domain.stockholding.entity;
 
-import com.ssafy.mini.domain.corporation.entity.Corporation;
+import com.ssafy.mini.domain.stockholding.entity.Corporation;
 import com.ssafy.mini.global.db.BaseEntity;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -31,5 +32,17 @@ public class Stock extends BaseEntity {
 
     @Column(name = "stk_rate")
     private Float stkRate;
+
+    @Builder
+    public Stock(Corporation stkCd, Date stkDt, Integer stkPrice, Float stkRate) {
+        this.stkCd = stkCd;
+        this.stkDt = stkDt;
+        this.stkPrice = stkPrice;
+        this.stkRate = stkRate;
+    }
+
+    public void setStkCd(Corporation stkCd) {
+        this.stkCd = stkCd;
+    }
 
 }

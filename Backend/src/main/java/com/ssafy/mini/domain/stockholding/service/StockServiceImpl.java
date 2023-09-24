@@ -1,10 +1,11 @@
-package com.ssafy.mini.domain.stock.service;
+package com.ssafy.mini.domain.stockholding.service;
 
-import com.ssafy.mini.domain.corporation.entity.Corporation;
-import com.ssafy.mini.domain.corporation.repository.CorporationRepository;
-import com.ssafy.mini.domain.corporation.service.CorporationService;
-import com.ssafy.mini.domain.stock.entity.Stock;
-import com.ssafy.mini.domain.stock.repository.StockRepository;
+import com.ssafy.mini.domain.stockholding.entity.Corporation;
+import com.ssafy.mini.domain.stockholding.repository.CorporationRepository;
+import com.ssafy.mini.domain.stockholding.dto.response.CorpStockInfoResponse;
+import com.ssafy.mini.domain.stockholding.dto.response.StockPriceRateResponse;
+import com.ssafy.mini.domain.stockholding.entity.Stock;
+import com.ssafy.mini.domain.stockholding.repository.StockRepository;
 import com.ssafy.mini.global.exception.ErrorCode;
 import com.ssafy.mini.global.exception.MNException;
 import com.ssafy.mini.global.feign.stockInfo.Item;
@@ -15,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,7 +36,7 @@ public class StockServiceImpl implements StockService {
     private final String RESULT_TYPE = "json";
 
     /**
-     * 새로운 기업의 지난 60일 주가 정보 수집
+     * 새로운 기업의 지난 60일 주가 정보 수집 및 저장
      * @param code 종목코드
      */
     @Override
@@ -45,6 +47,16 @@ public class StockServiceImpl implements StockService {
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_STOCK));
 
         stockRepository.saveAll(stockInfoToStock(corp, items));
+    }
+
+    @Override
+    public List<CorpStockInfoResponse> getStockInfo(String code) {
+        return stockRepository.findByStkCode(code);
+    }
+
+    @Override
+    public StockPriceRateResponse getStockInfoByDate(String code, Date date) {
+        return stockRepository.findByStkCodeAndStkDt(code, date);
     }
 
     /**

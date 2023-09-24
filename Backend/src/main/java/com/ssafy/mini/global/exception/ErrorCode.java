@@ -22,8 +22,9 @@ public enum ErrorCode {
     // S3
     S3_UPLOAD_FAIL(500, "S3 업로드에 실패했습니다."),
 
-    // 주가 정보 api
+    // 주가 정보
     NO_SUCH_STOCK(404, "존재하지 않는 주식 데이터입니다."),
+    NO_SUCH_STOCK_DATE(404, "해당 날짜의 주가 정보가 존재하지 않습니다."),
 
     // 세금 관련 에러
     NO_SUCH_TAX(404, "존재하지 않는 세금입니다."),

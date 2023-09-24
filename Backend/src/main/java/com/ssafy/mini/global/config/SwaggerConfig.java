@@ -46,13 +46,13 @@ public class SwaggerConfig {
     }
 
     @Bean Docket corporationApi() {
-        return getDocket("com.ssafy.mini.domain.corporation.controller", "주식회사 관리", Predicates.or(
+        return getDocket("com.ssafy.mini.domain.stockholding.controller", "주식회사 관리", Predicates.or(
                 PathSelectors.ant("/corporation/**")
         ));
     }
 
     @Bean Docket stockApi() {
-        return getDocket("com.ssafy.mini.domain.stock.controller", "주가 정보", Predicates.or(
+        return getDocket("com.ssafy.mini.domain.stockholding.controller", "주가 정보", Predicates.or(
                 PathSelectors.ant("/stock/**")
         ));
     }

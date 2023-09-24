@@ -1,8 +1,8 @@
-package com.ssafy.mini.domain.corporation.mapper;
+package com.ssafy.mini.domain.stockholding.mapper;
 
-import com.ssafy.mini.domain.corporation.dto.request.CorporationRegisterRequest;
-import com.ssafy.mini.domain.corporation.dto.response.CorporationInfoResponse;
-import com.ssafy.mini.domain.corporation.entity.Corporation;
+import com.ssafy.mini.domain.stockholding.dto.request.CorporationRegisterRequest;
+import com.ssafy.mini.domain.stockholding.dto.response.CorporationInfoResponse;
+import com.ssafy.mini.domain.stockholding.entity.Corporation;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;

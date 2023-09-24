@@ -1,4 +1,4 @@
-package com.ssafy.mini.domain.corporation.entity;
+package com.ssafy.mini.domain.stockholding.entity;
 
 import com.ssafy.mini.global.db.BaseEntity;
 import lombok.AccessLevel;
@@ -38,16 +38,16 @@ public class Corporation extends BaseEntity {
     private String productLink;
 
     @Column(name = "inc_link", length = 100)
-    private String incUrl;
+    private String incLink;
 
     @Builder
-    public Corporation(String stkCd, String incNm, String incDesc, String reportLink, String productLink, String incUrl) {
+    public Corporation(String stkCd, String incNm, String incDesc, String reportLink, String productLink, String incLink) {
         this.stkCd = stkCd;
         this.incNm = incNm;
         this.incDesc = incDesc;
         this.reportLink = reportLink;
         this.productLink = productLink;
-        this.incUrl = incUrl;
+        this.incLink = incLink;
     }
 
     public void setImageUrls(String logo, String profile) {

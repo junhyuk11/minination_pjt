@@ -1,4 +1,4 @@
-package com.ssafy.mini.domain.corporation.dto.request;
+package com.ssafy.mini.domain.stockholding.dto.request;
 
 import lombok.Getter;
 

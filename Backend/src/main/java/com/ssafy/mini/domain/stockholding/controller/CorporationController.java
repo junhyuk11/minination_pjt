@@ -1,7 +1,7 @@
-package com.ssafy.mini.domain.corporation.controller;
+package com.ssafy.mini.domain.stockholding.controller;
 
-import com.ssafy.mini.domain.corporation.dto.request.CorporationRegisterRequest;
-import com.ssafy.mini.domain.corporation.service.CorporationService;
+import com.ssafy.mini.domain.stockholding.dto.request.CorporationRegisterRequest;
+import com.ssafy.mini.domain.stockholding.service.CorporationService;
 import com.ssafy.mini.global.response.SuccessResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
