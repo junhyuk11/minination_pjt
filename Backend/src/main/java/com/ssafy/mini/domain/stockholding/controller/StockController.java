@@ -1,6 +1,6 @@
 package com.ssafy.mini.domain.stockholding.controller;
 
-import com.ssafy.mini.domain.stockholding.dto.request.BuyStockRequest;
+import com.ssafy.mini.domain.stockholding.dto.request.TradeStockRequest;
 import com.ssafy.mini.domain.stockholding.service.CorporationService;
 import com.ssafy.mini.domain.stockholding.service.StockholdingService;
 import com.ssafy.mini.global.jwt.JwtProvider;
@@ -66,12 +66,30 @@ public class StockController {
     })
     public SuccessResponse buyStockItem(
             @RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
-            @RequestBody @ApiParam(value = "종목 코드, 구매 수량", required = true) BuyStockRequest buyStockRequest
+            @RequestBody @ApiParam(value = "종목 코드, 구매 수량", required = true) TradeStockRequest tradeStockRequest
     ) {
         log.info("Controller Layer::buyStockItem() called");
         String memberId = jwtProvider.extractMemberId(accessToken);
         return SuccessResponse.builder()
-                .data(stockholdingService.buyStockItem(memberId, buyStockRequest))
+                .data(stockholdingService.buyStockItem(memberId, tradeStockRequest))
+                .build();
+    }
+
+    @PostMapping("/sell")
+    @ApiOperation(value = "주식 매도")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "매도 성공"),
+            @ApiResponse(code = 403, message = "유효하지 않은 토큰"),
+            @ApiResponse(code = 404, message = "매도 실패")
+    })
+    public SuccessResponse sellStockItem(
+            @RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
+            @RequestBody @ApiParam(value = "종목 코드, 구매 수량", required = true) TradeStockRequest tradeStockRequest
+    ) {
+        log.info("Controller Layer::sellStockItem() called");
+        String memberId = jwtProvider.extractMemberId(accessToken);
+        return SuccessResponse.builder()
+                .data(stockholdingService.sellStockItem(memberId, tradeStockRequest))
                 .build();
     }
 

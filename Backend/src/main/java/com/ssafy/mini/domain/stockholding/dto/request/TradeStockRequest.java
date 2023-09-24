@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class BuyStockRequest {
+public class TradeStockRequest {
 
     private String code;
     private int amount;

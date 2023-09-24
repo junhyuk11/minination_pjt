@@ -6,7 +6,7 @@ import com.ssafy.mini.domain.account.repository.AccountDetailRepository;
 import com.ssafy.mini.domain.account.repository.AccountRepository;
 import com.ssafy.mini.domain.master.entity.Master;
 import com.ssafy.mini.domain.master.repository.MasterRepository;
-import com.ssafy.mini.domain.stockholding.dto.request.BuyStockRequest;
+import com.ssafy.mini.domain.stockholding.dto.request.TradeStockRequest;
 import com.ssafy.mini.domain.stockholding.dto.response.MyStockInfoResponse;
 import com.ssafy.mini.domain.stockholding.dto.response.PortfolioResponse;
 import com.ssafy.mini.domain.stockholding.entity.Stockholding;
@@ -56,11 +56,11 @@ public class StockholdingServiceImpl implements StockholdingService {
     }
 
     @Override
-    public MyStockInfoResponse buyStockItem(String memberId, BuyStockRequest buyStockRequest) {
+    public MyStockInfoResponse buyStockItem(String memberId, TradeStockRequest tradeStockRequest) {
         log.info("Service Layer::buyStockItem() called");
 
-        String code = buyStockRequest.getCode();
-        int amount = buyStockRequest.getAmount();
+        String code = tradeStockRequest.getCode();
+        int amount = tradeStockRequest.getAmount();
 
         String corporation = corporationRepository.findById(code).get().getIncNm();
 
@@ -75,6 +75,30 @@ public class StockholdingServiceImpl implements StockholdingService {
         // 주식 보유 수량 변경
         Stockholding stockholding = stockholdingRepository.findByMemberIdAndCode(memberId, code);
         upateStockholding(stockholding, amount, curPrice);
+
+        return getPortfolio(memberId);
+    }
+
+    @Override
+    public MyStockInfoResponse sellStockItem(String memberId, TradeStockRequest tradeStockRequest) {
+        log.info("Service Layer::sellStockItem() called");
+
+        String code = tradeStockRequest.getCode();
+        int amount = tradeStockRequest.getAmount();
+
+        String corporation = corporationRepository.findById(code).get().getIncNm();
+        Stockholding stockholding = stockholdingRepository.findByMemberIdAndCode(memberId, code);
+
+        // 주식 매도
+        int curPrice = getCurrentPrice(code);
+        int moneyNeed = amount * curPrice;
+        Account moneyHave = accountRepository.getMoneyToUse(memberId);
+
+        // 보유 주식보다 많이 팔려는 경우
+        if (stockholding.getHoldQty() < amount) throw new MNException(ErrorCode.NOT_ENOUGH_STOCK);
+
+        updateAccountBalance(moneyHave, moneyNeed, corporation); // 주식 보유 수량 변경
+        upateStockholding(stockholding, -amount, -curPrice);
 
         return getPortfolio(memberId);
     }
