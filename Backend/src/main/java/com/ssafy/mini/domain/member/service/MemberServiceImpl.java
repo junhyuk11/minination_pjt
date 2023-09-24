@@ -1,5 +1,8 @@
 package com.ssafy.mini.domain.member.service;
 
+import com.ssafy.mini.domain.account.entity.Account;
+import com.ssafy.mini.domain.account.repository.AccountRepository;
+import com.ssafy.mini.domain.master.entity.Master;
 import com.ssafy.mini.domain.master.repository.MasterRepository;
 import com.ssafy.mini.domain.member.dto.request.MemberJoinRequest;
 import com.ssafy.mini.domain.member.dto.request.MemberLoginRequest;
@@ -18,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.Random;
 
 @Slf4j
@@ -27,6 +31,7 @@ public class MemberServiceImpl implements MemberService{
 
     private final MemberRepository memberRepository;
     private final MasterRepository masterRepository;
+    private final AccountRepository accountRepository;
 
     private final MemberMapper memberMapper;
     private final JwtProvider jwtProvider;
@@ -51,6 +56,23 @@ public class MemberServiceImpl implements MemberService{
 
         member.setCardNo(generateCardNumber()); // 카드 번호 랜덤 생성
         memberRepository.save(member);
+
+        // 일반 통장 개설
+        Master master = masterRepository.findById("BNT03")
+                .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_CODE));
+
+        Account account = Account.builder()
+                .member(member)
+                .bankCode(master)
+                .acctBalance(0)
+                .acctStartDate(new Date())
+                .acctExpireDate(new Date())
+                .acctDay("NON")
+                .acctSaving(9999)
+                .expAmount(9999)
+                .build();
+        System.out.println(account.toString());
+        accountRepository.save(account);
     }
 
     @Override
