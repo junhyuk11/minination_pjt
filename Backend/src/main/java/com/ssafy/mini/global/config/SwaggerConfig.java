@@ -57,6 +57,12 @@ public class SwaggerConfig {
         ));
     }
 
+    @Bean Docket shopApi() {
+        return getDocket("com.ssafy.mini.domain.shop.controller", "백화점 관리", Predicates.or(
+                PathSelectors.ant("/shop/**")
+        ));
+    }
+
     public Docket getDocket(String base, String groupName, Predicate<String> predicate) {
         ParameterBuilder aParameterBuilder = new ParameterBuilder();
         aParameterBuilder.name("Authorization")
