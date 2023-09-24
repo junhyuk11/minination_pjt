@@ -57,6 +57,12 @@ public class SwaggerConfig {
         ));
     }
 
+    @Bean Docket bankApi() {
+        return getDocket("com.ssafy.mini.domain.bank.controller", "은행 관리", Predicates.or(
+                PathSelectors.ant("/bank/**")
+        ));
+    }
+
     public Docket getDocket(String base, String groupName, Predicate<String> predicate) {
         ParameterBuilder aParameterBuilder = new ParameterBuilder();
         aParameterBuilder.name("Authorization")
