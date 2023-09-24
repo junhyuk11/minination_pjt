@@ -57,6 +57,12 @@ public class SwaggerConfig {
         ));
     }
 
+    @Bean Docket lawApi() {
+        return getDocket("com.ssafy.mini.domain.law.controller", "헌법 관리", Predicates.or(
+                PathSelectors.ant("/law/**")
+        ));
+    }
+
     public Docket getDocket(String base, String groupName, Predicate<String> predicate) {
         ParameterBuilder aParameterBuilder = new ParameterBuilder();
         aParameterBuilder.name("Authorization")
