@@ -6,6 +6,7 @@ import com.ssafy.mini.domain.flag.service.FlagService;
 import com.ssafy.mini.domain.master.repository.MasterRepository;
 import com.ssafy.mini.domain.member.entity.Member;
 import com.ssafy.mini.domain.member.repository.MemberRepository;
+import com.ssafy.mini.domain.nation.dto.request.LawUpdateRequest;
 import com.ssafy.mini.domain.nation.dto.request.NationCreateRequest;
 import com.ssafy.mini.domain.nation.dto.response.FlagListResponse;
 import com.ssafy.mini.domain.nation.dto.response.LawInfoResponse;
@@ -185,6 +186,35 @@ public class NationServiceImpl implements NationService {
                 .tax(tax)
                 .population(population)
                 .build();
+    }
+
+    @Override
+    public void updateLaw(String memberId, LawUpdateRequest lawUpdateRequest){
+        log.info("Nation Service Layer::updateLaw() called");
+
+        Member member = memberRepository.findByMemId(memberId)
+                .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
+
+        // 선생님 권한 체크
+        if(!member.getMemType().getExpression().equals("TC")) {
+            throw new MNException(ErrorCode.NO_AUTHORITY);
+        }
+
+        // 국가 정보 수정
+        Nation nation = member.getIsoSeq();
+        nation.updateNation(lawUpdateRequest);
+        nationRepository.save(nation);
+
+        log.info("incomeTax: " + lawUpdateRequest.getIncomeTax());
+        log.info("vat: " + lawUpdateRequest.getVat());
+
+        // 세금 정보 수정
+        taxRepository.saveTaxRateByIsoSeqandTaxTp(nation, masterRepository.findById("TAX01")
+                        .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_CODE)),
+                lawUpdateRequest.getIncomeTax());
+        taxRepository.saveTaxRateByIsoSeqandTaxTp(nation, masterRepository.findById("TAX02")
+                .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_CODE)), lawUpdateRequest.getVat());
+
     }
 
 
