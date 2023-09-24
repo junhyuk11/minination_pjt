@@ -8,6 +8,7 @@ import com.ssafy.mini.domain.member.entity.Member;
 import com.ssafy.mini.domain.member.repository.MemberRepository;
 import com.ssafy.mini.domain.nation.dto.request.NationCreateRequest;
 import com.ssafy.mini.domain.nation.dto.response.FlagListResponse;
+import com.ssafy.mini.domain.nation.dto.response.LawInfoResponse;
 import com.ssafy.mini.domain.nation.entity.Nation;
 import com.ssafy.mini.domain.nation.mapper.NationMapper;
 import com.ssafy.mini.domain.nation.repository.NationRepository;
@@ -19,7 +20,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -144,6 +147,44 @@ public class NationServiceImpl implements NationService {
         if(!president.equals(presidentName)) {
             throw new MNException(ErrorCode.NOT_MATCH_PRESIDENT);
         }
+    }
+
+    @Override
+    public LawInfoResponse info(String memberId) {
+        log.info("Nation Service Layer::info() called");
+
+        Member member = memberRepository.findByMemId(memberId)
+                .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
+
+        Nation nation = member.getIsoSeq();
+
+        String nationName = nation.getIsoName();
+        String currency = nation.getIsoCurrency();
+        String payday = nation.getPayday();
+        int population = memberRepository.countByIsoSeq(nation);
+
+        List<Tax> taxList = taxRepository.findByNation(nation);
+
+        Map<String, Byte> tax = new HashMap<>();
+
+        for(Tax t : taxList) {
+            String taxType = t.getTaxType().getExpression();
+            if(taxType.equals("IT")) {
+                tax.put("incomeTax", t.getTaxRate());
+            } else if(taxType.equals("VT")) {
+                tax.put("vat", t.getTaxRate());
+            }
+        }
+
+        log.info("tax: " + tax);
+
+        return LawInfoResponse.builder()
+                .nationName(nationName)
+                .currency(currency)
+                .payday(payday)
+                .tax(tax)
+                .population(population)
+                .build();
     }
 
 
