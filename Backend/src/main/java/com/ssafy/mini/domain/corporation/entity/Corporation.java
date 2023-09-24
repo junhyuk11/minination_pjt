@@ -22,10 +22,10 @@ public class Corporation extends BaseEntity {
     @Column(name = "inc_nm", length = 10)
     private String incNm;
 
-    @Column(name = "logo", length = 50)
+    @Column(name = "logo", length = 100)
     private String logo;
 
-    @Column
+    @Column(name = "profile", length = 100)
     private String profile;
 
     @Column(name = "inc_desc")
