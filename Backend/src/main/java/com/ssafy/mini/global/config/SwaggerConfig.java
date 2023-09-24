@@ -51,6 +51,12 @@ public class SwaggerConfig {
         ));
     }
 
+    @Bean Docket stockApi() {
+        return getDocket("com.ssafy.mini.domain.stock.controller", "주가 정보", Predicates.or(
+                PathSelectors.ant("/stock/**")
+        ));
+    }
+
     @Bean Docket nationApi() {
         return getDocket("com.ssafy.mini.domain.nation.controller", "국가 관리", Predicates.or(
                 PathSelectors.ant("/nation/**")
