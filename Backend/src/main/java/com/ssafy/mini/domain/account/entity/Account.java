@@ -4,10 +4,7 @@ package com.ssafy.mini.domain.account.entity;
 import com.ssafy.mini.domain.master.entity.Master;
 import com.ssafy.mini.domain.member.entity.Member;
 import com.ssafy.mini.global.db.BaseEntity;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -16,6 +13,7 @@ import java.util.Date;
 @Table(name = "account")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
 public class Account extends BaseEntity {
 
     @Id
@@ -59,20 +57,6 @@ public class Account extends BaseEntity {
         this.acctDay = acctDay;
         this.acctSaving = acctSaving;
         this.expAmount = expAmount;
-    }
-
-    @Builder
-    public Account(Member member, Master bankCode) {
-        Account.builder()
-                .member(member)
-                .bankCode(bankCode)
-                .acctBalance(0)
-                .acctStartDate(new Date())
-                .acctExpireDate(new Date(9999, 12, 31))
-                .acctDay("NON")
-                .acctSaving(9999)
-                .expAmount(9999)
-                .build();
     }
 
 }
