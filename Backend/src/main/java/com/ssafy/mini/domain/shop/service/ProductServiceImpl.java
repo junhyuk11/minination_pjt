@@ -2,6 +2,7 @@ package com.ssafy.mini.domain.shop.service;
 
 import com.ssafy.mini.domain.member.entity.Member;
 import com.ssafy.mini.domain.member.repository.MemberRepository;
+import com.ssafy.mini.domain.shop.dto.request.AddProductRequest;
 import com.ssafy.mini.domain.shop.dto.response.ProductInfoResponse;
 import com.ssafy.mini.domain.shop.entity.Product;
 import com.ssafy.mini.domain.shop.mapper.ProductMapper;
@@ -40,4 +41,25 @@ public class ProductServiceImpl implements ProductService {
                 .map(prdocut -> productMapper.productToProductInfoResponse(prdocut))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void addProduct(String memberId, AddProductRequest addProductRequest) {
+        log.info("Service Layer::addProduct() called");
+
+        // TODO:이 부분 함수로 빼기
+        // 회원이 속한 국가 찾기
+        Member member = memberRepository.findByMemId(memberId)
+                .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
+
+        // TODO:이 부분 함수로 빼기
+        // 선생님인지 확인
+        if (!member.getMemType().getCode().equals("MEM01")) {
+            throw new MNException(ErrorCode.NO_PERMISSION);
+        }
+
+        Product product = productMapper.addProductRequestToProduct(addProductRequest);
+        productRepository.save(product);
+    }
+
+
 }
