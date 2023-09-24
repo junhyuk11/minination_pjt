@@ -11,7 +11,7 @@ import java.util.Map;
 @FeignClient(name = "stockInfoClient", url = "${feign.info.url}", configuration = FeignConfig.class)
 public interface StockInfoClient {
 
-    @GetMapping(value = "/getStockPriceInfo")
+     @GetMapping(value = "/getStockPriceInfo")
      StockInfoResponse stockPriceInfo(
             @RequestParam("serviceKey") String serviceKey,
             @RequestParam("numOfRows") int numOfRows,

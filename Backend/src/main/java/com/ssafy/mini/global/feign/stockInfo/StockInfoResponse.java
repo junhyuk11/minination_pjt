@@ -27,13 +27,6 @@ public class StockInfoResponse {
     @Data
     public static class Items {
         private List<Item> item;
-
     }
 
-    @Data
-    public static class Item {
-        private String basDt;  // 기준일
-        private String clpr;  // 종가
-        private String fltRt;  // 등락률
-    }
 }
