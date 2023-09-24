@@ -12,4 +12,6 @@ public interface StockRepositoryCustom {
 
     StockPriceRateResponse findByStkCodeAndStkDt(String code, Date date);
 
+    Integer getstkPriceByStkCd(String code);
+
 }

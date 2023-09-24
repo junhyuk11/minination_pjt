@@ -44,4 +44,14 @@ public class StockRepositoryCustomImpl implements StockRepositoryCustom {
                         .and(stock.stkDt.eq(date)))
                 .fetchOne();
     }
+
+    @Override
+    public Integer getstkPriceByStkCd(String code) {
+        return queryFactory
+                .select(stock.stkPrice)
+                .from(stock)
+                .where(stock.stkCd.stkCd.eq(code))
+                .orderBy(stock.stkDt.desc())
+                .fetchFirst();
+    }
 }

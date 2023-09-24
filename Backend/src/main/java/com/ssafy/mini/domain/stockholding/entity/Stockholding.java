@@ -31,4 +31,13 @@ public class Stockholding extends BaseEntity {
 
     @Column(name = "stk_buy_price")
     private Integer stkBuyPrice; // 총 구매 금액
+
+    public void updateHoldQty(int amount) {
+        this.holdQty += amount;
+    }
+
+    public void updateStkBuyPrice(int butPrice) {
+        this.stkBuyPrice += butPrice;
+    }
+
 }

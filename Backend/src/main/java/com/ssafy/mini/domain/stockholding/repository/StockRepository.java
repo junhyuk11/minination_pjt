@@ -13,4 +13,6 @@ public interface StockRepository extends JpaRepository<Stock, Integer>, StockRep
     List<CorpStockInfoResponse> findByStkCode(String code);
 
     StockPriceRateResponse findByStkCodeAndStkDt(String code, Date date);
+
+    Integer getstkPriceByStkCd(String code);
 }
