@@ -18,8 +18,9 @@ public class StockTest {
     @Test
     public void 주가정보_api_호출() {
         // when
+        int numsOfRows = 10;
         String stockCode = "005930";
-        List<?> list = stockService.stockPriceInfo(stockCode);
+        List<?> list = stockService.stockPriceInfo(numsOfRows, stockCode);
 
         // then
         list.forEach(System.out::println);

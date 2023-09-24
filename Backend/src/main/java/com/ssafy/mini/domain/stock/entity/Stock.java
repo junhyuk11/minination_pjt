@@ -15,7 +15,7 @@ import java.util.Date;
 public class Stock extends BaseEntity {
 
     @Id
-    @Column(name = "stock_seq")
+    @Column(name = "stk_seq")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer stockSeq;
 
@@ -28,5 +28,8 @@ public class Stock extends BaseEntity {
 
     @Column(name = "stk_price")
     private Integer stkPrice;
+
+    @Column(name = "stk_rate")
+    private Float stkRate;
 
 }
