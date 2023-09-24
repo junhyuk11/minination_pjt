@@ -50,6 +50,9 @@ public enum ErrorCode {
     NO_SUCH_APPLY(404, "존재하지 않는 지원입니다."),
     NOT_PROPER_EMPLOYEE(404, "해당 직업에 근무하고 있지 않습니다."),
 
+    // 계좌 관련 에러
+    NOT_ENOUGH_MONEY(406, "잔액이 부족합니다."),
+
     ;
 
     private final int code;

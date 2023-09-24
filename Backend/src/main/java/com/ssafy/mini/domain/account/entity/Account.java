@@ -59,4 +59,8 @@ public class Account extends BaseEntity {
         this.expAmount = expAmount;
     }
 
+    public void updateAcctBalance(int balance) {
+        this.acctBalance += balance;
+    }
+
 }

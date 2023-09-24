@@ -10,4 +10,6 @@ public interface StockholdingRepository extends JpaRepository<Stockholding, Long
 
     List<PortfolioResponse> findAllByMemberId(String memberId);
 
+    Stockholding findByMemberIdAndCode(String memberId, String code);
+
 }

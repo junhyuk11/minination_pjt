@@ -7,6 +7,6 @@ public interface StockholdingService {
 
     MyStockInfoResponse getPortfolio(String memberId);
 
-//    MyStockInfoResponse buyStockItem(String memberId, BuyStockRequest buyStockRequest);
+    MyStockInfoResponse buyStockItem(String memberId, BuyStockRequest buyStockRequest);
 
 }

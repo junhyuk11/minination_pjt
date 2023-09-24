@@ -4,6 +4,7 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.mini.domain.stockholding.dto.response.PortfolioResponse;
 import com.ssafy.mini.domain.stockholding.entity.QStockholding;
+import com.ssafy.mini.domain.stockholding.entity.Stockholding;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -27,6 +28,16 @@ public class StockholdingCustomImpl implements StockholdingCustom {
                 .from(stockholding)
                 .where(stockholding.member.memId.eq(memberId))
                 .fetch();
+    }
+
+    @Override
+    public Stockholding findByMemberIdAndCode(String memberId, String code) {
+        return queryFactory
+                .select(stockholding)
+                .from(stockholding)
+                .where(stockholding.member.memId.eq(memberId)
+                        .and(stockholding.corporation.stkCd.eq(code)))
+                .fetchOne();
     }
 
 }

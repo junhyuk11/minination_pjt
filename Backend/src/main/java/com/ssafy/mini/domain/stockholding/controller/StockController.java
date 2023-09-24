@@ -1,5 +1,6 @@
 package com.ssafy.mini.domain.stockholding.controller;
 
+import com.ssafy.mini.domain.stockholding.dto.request.BuyStockRequest;
 import com.ssafy.mini.domain.stockholding.service.CorporationService;
 import com.ssafy.mini.domain.stockholding.service.StockholdingService;
 import com.ssafy.mini.global.jwt.JwtProvider;
@@ -10,10 +11,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -58,4 +56,23 @@ public class StockController {
                 .data(stockholdingService.getPortfolio(memberId))
                 .build();
     }
+
+    @PostMapping("/buy")
+    @ApiOperation(value = "주식 매수")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "매수 성공"),
+            @ApiResponse(code = 403, message = "유효하지 않은 토큰"),
+            @ApiResponse(code = 404, message = "매수 실패")
+    })
+    public SuccessResponse buyStockItem(
+            @RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
+            @RequestBody @ApiParam(value = "종목 코드, 구매 수량", required = true) BuyStockRequest buyStockRequest
+    ) {
+        log.info("Controller Layer::buyStockItem() called");
+        String memberId = jwtProvider.extractMemberId(accessToken);
+        return SuccessResponse.builder()
+                .data(stockholdingService.buyStockItem(memberId, buyStockRequest))
+                .build();
+    }
+
 }
