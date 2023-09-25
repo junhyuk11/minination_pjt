@@ -31,4 +31,12 @@ public class Product extends BaseEntity {
     @Column(name = "prod_price", nullable = false)
     private Integer prodPrice;
 
+    @Builder
+    public Product(Nation isoSeq, String prodName, String prodDesc, Integer prodPrice) {
+        this.isoSeq = isoSeq;
+        this.prodName = prodName;
+        this.prodDesc = prodDesc;
+        this.prodPrice = prodPrice;
+    }
+
 }
