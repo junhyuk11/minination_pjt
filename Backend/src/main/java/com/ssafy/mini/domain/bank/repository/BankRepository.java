@@ -15,4 +15,5 @@ public interface BankRepository extends JpaRepository<Bank, Master> {
     @Query("select b from Bank b")
     List<Bank> findAll();
 
+    Optional<Bank> findByBankCd(Master bankCode);
 }

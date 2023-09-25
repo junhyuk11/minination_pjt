@@ -10,4 +10,6 @@ public interface MasterRepository extends JpaRepository<Master, String>, MasterR
     String findCodeByExpression(String codeName);
 
     Optional<Master> findByExpression(String bankExpression);
+
+    Optional<Master> findByCode(String code);
 }
