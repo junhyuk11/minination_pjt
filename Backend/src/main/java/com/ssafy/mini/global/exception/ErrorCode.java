@@ -11,6 +11,7 @@ public enum ErrorCode {
     NO_SUCH_MEMBER(404, "해당 회원을 찾을 수 없습니다."),
     NO_SUCH_MEMBER_TYPE(404, "존재하지 않는 회원 타입입니다."),
     DUPLICATED_ID(409, "이미 존재하는 아이디입니다."),
+    NO_PERMISSION(402, "권한이 없습니다."),
 
     // JWT
     EXPIRED_TOKEN(403, "만료된 토큰입니다."),
