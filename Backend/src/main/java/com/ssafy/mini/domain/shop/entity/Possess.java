@@ -3,6 +3,7 @@ package com.ssafy.mini.domain.shop.entity;
 import com.ssafy.mini.domain.member.entity.Member;
 import com.ssafy.mini.global.db.BaseEntity;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -28,4 +29,15 @@ public class Possess extends BaseEntity {
 
     @Column(name = "poss_amt", nullable = false)
     private Integer possAmount;
+
+    @Builder
+    public Possess(Member member, Product product, int possAmount) {
+        this.memSeq = member;
+        this.prodSeq = product;
+        this.possAmount = possAmount;
+    }
+
+    public void updatePossAmount(int possAmount) {
+        this.possAmount += possAmount;
+    }
 }
