@@ -3,6 +3,8 @@ package com.ssafy.mini.domain.home.service;
 import com.ssafy.mini.domain.flag.repository.FlagRepository;
 import com.ssafy.mini.domain.home.dto.response.CitizenResponse;
 import com.ssafy.mini.domain.home.dto.response.HomeInfoResponse;
+import com.ssafy.mini.domain.home.dto.response.RichDto;
+import com.ssafy.mini.domain.home.dto.response.RichResponse;
 import com.ssafy.mini.domain.member.entity.Member;
 import com.ssafy.mini.domain.member.repository.MemberRepository;
 import com.ssafy.mini.domain.nation.entity.Nation;
@@ -65,6 +67,21 @@ public class HomeServiceImpl implements HomeService{
         return CitizenResponse.builder()
                 .president(president)
                 .citizen(students)
+                .build();
+    }
+
+    @Override
+    public RichResponse listRich(String memberId) {
+        log.info("Service Layer::listRich() called");
+
+        Member member = findMember(memberId);
+        Nation nation = member.getIsoSeq();
+
+        // 해당 국가의 부자 3명
+        List<RichDto> richList = memberRepository.listRich(nation.getIsoSeq());
+
+        return RichResponse.builder()
+                .rich(richList)
                 .build();
     }
 
