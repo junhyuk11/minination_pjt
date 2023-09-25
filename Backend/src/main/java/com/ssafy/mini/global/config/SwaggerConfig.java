@@ -39,6 +39,24 @@ public class SwaggerConfig {
         ));
     }
 
+    @Bean Docket s3Api() {
+        return getDocket("com.ssafy.mini.global.infra.s3", "S3", Predicates.or(
+                PathSelectors.ant("/s3/**")
+        ));
+    }
+
+    @Bean Docket corporationApi() {
+        return getDocket("com.ssafy.mini.domain.stockholding.controller", "주식회사 관리", Predicates.or(
+                PathSelectors.ant("/corporation/**")
+        ));
+    }
+
+    @Bean Docket stockApi() {
+        return getDocket("com.ssafy.mini.domain.stockholding.controller", "주가 정보", Predicates.or(
+                PathSelectors.ant("/stock/**")
+        ));
+    }
+
     @Bean Docket nationApi() {
         return getDocket("com.ssafy.mini.domain.nation.controller", "국가 관리", Predicates.or(
                 PathSelectors.ant("/nation/**")
