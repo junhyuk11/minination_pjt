@@ -1,6 +1,7 @@
 package com.ssafy.mini.domain.shop.controller;
 
 import com.ssafy.mini.domain.shop.dto.request.AddProductRequest;
+import com.ssafy.mini.domain.shop.dto.request.DeleteProductRequest;
 import com.ssafy.mini.domain.shop.service.ProductService;
 import com.ssafy.mini.global.jwt.JwtProvider;
 import com.ssafy.mini.global.response.SuccessResponse;
@@ -54,6 +55,25 @@ public class ShopController {
         log.info("Controller Layer::listProducts() called");
         String memberId = jwtProvider.extractMemberId(accessToken);
         productService.addProduct(memberId, addProductRequest);
+        return SuccessResponse.builder()
+                .build();
+    }
+
+    @DeleteMapping
+    @ApiOperation(value = "상품 삭제")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "물품 삭제 성공"),
+            @ApiResponse(code = 402, message = "권한 없음"),
+            @ApiResponse(code = 403, message = "유효하지 않은 토큰"),
+            @ApiResponse(code = 404, message = "물품 삭제 실패")
+    })
+    public SuccessResponse deleteProduct (
+            @RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
+            @RequestBody @ApiParam(value = "삭제할 상품 정보", required = true)DeleteProductRequest deleteProductRequest
+            ) {
+        log.info("Controller Layer::listProducts() called");
+        String memberId = jwtProvider.extractMemberId(accessToken);
+        productService.deleteProduct(memberId, deleteProductRequest);
         return SuccessResponse.builder()
                 .build();
     }

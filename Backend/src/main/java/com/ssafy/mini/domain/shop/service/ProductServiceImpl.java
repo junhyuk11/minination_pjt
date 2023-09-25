@@ -3,6 +3,7 @@ package com.ssafy.mini.domain.shop.service;
 import com.ssafy.mini.domain.member.entity.Member;
 import com.ssafy.mini.domain.member.repository.MemberRepository;
 import com.ssafy.mini.domain.shop.dto.request.AddProductRequest;
+import com.ssafy.mini.domain.shop.dto.request.DeleteProductRequest;
 import com.ssafy.mini.domain.shop.dto.response.ProductInfoResponse;
 import com.ssafy.mini.domain.shop.entity.Product;
 import com.ssafy.mini.domain.shop.mapper.ProductMapper;
@@ -53,6 +54,17 @@ public class ProductServiceImpl implements ProductService {
         productRepository.save(product);
     }
 
+    @Override
+    public void deleteProduct(String memberId, DeleteProductRequest deleteProductRequest) {
+        log.info("Service Layer::deleteProduct() called");
+
+        Member member = getMemberByMemberId(memberId);
+        isTeacher(member); // 선생님인지 확인
+
+        Product product = getProductByProdName(deleteProductRequest.getProduct());
+        productRepository.delete(product);
+    }
+
     /**
      * 회원 아이디로 회원 찾기
      * @param memberId 회원 아이디
@@ -71,6 +83,16 @@ public class ProductServiceImpl implements ProductService {
         if (!member.getMemType().getCode().equals("MEM01")) {
             throw new MNException(ErrorCode.NO_PERMISSION);
         }
+    }
+
+    /**
+     * 상품 이름으로 상품 찾기
+     * @param prodName 상품 이름
+     * @return 상품
+     */
+    private Product getProductByProdName(String prodName) {
+        return productRepository.findByProdName(prodName)
+                .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_PRODUCT));
     }
 
 }
