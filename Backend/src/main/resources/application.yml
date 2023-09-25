@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: local # local, dev 중 선택
+    active: dev # local, dev 중 선택
 
   mvc: # Swagger 설정
     pathmatch:
