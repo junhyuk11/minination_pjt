@@ -1,5 +1,6 @@
 package com.ssafy.mini.domain.member.entity;
 
+import com.ssafy.mini.domain.job.entity.Job;
 import com.ssafy.mini.domain.master.entity.Master;
 import com.ssafy.mini.domain.nation.entity.Nation;
 import com.ssafy.mini.global.db.BaseEntity;
@@ -45,10 +46,9 @@ public class Member extends BaseEntity {
     @JoinColumn(name = "iso_seq")
     private Nation isoSeq;
 
-    // 현재 직업 추가하기
-//    @ManyToOne
-//    @JoinColumn(name = "job_seq")
-//    private Job jobSeq;
+    @ManyToOne
+    @JoinColumn(name = "job_seq")
+    private Job jobSeq;
 
     @Builder
     public Member(String memId, String memPwd, String memName) {
@@ -85,6 +85,10 @@ public class Member extends BaseEntity {
 
     public void setIsoSeq(Nation isoSeq) {
         this.isoSeq = isoSeq;
+    }
+
+    public void setJobSeq(Job jobSeq) {
+        this.jobSeq = jobSeq;
     }
 
 }
