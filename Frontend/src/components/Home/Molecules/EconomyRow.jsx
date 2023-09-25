@@ -27,7 +27,7 @@ function EconomyRow({ data }) {
         if (chartContainerRef.current && data) {
             chartRef.current = createChart(chartContainerRef.current, {
                 width: chartWidth,
-                height: 400,
+                height: 350,
             });
 
             const lineSeries = chartRef.current.addLineSeries();
@@ -51,14 +51,14 @@ function EconomyRow({ data }) {
                     mode: PriceScaleMode.Logarithmic,
                 },
             });
-        }
 
-        return () => {
-            if (chartRef.current) {
-                chartRef.current.remove();
-                chartRef.current = null;
-            }
-        };
+            return () => {
+                if (chartRef.current) {
+                    chartRef.current.remove();
+                    chartRef.current = null;
+                }
+            };
+        }
     }, [chartWidth, data]);
 
     return <div ref={chartContainerRef}></div>;

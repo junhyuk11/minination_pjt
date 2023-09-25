@@ -2,6 +2,7 @@
 import React from 'react';
 import ConstitutionRow from '../Molecules/ConstitutionRow';
 import HomeCard from '../Molecules/HomeCard';
+import cardGif from '../../../assets/gif/constitution.gif';
 
 const Constitution = () => {
     const response = {
@@ -17,7 +18,7 @@ const Constitution = () => {
     const { nationName, currency, tax, payday, population } = response;
 
     const contentDom = (
-        <>
+        <div>
             <ConstitutionRow
                 number={1}
                 content={`국가 이름은 ${nationName} 으로 한다.`}
@@ -42,12 +43,17 @@ const Constitution = () => {
                 number={6}
                 content={`인구수는 ${population}명 이다.`}
             />
-        </>
+        </div>
     );
 
     return (
         <div>
-            <HomeCard title="헌법" content={contentDom} />
+            <HomeCard
+                title="헌법"
+                content={contentDom}
+                contentStyle="center"
+                gif={cardGif}
+            />
         </div>
     );
 };
