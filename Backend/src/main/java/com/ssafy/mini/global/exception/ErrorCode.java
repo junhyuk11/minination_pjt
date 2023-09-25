@@ -59,7 +59,8 @@ public enum ErrorCode {
 
     // 은행 관련 에러
     NO_SUCH_BANK(404, "존재하지 않는 은행 상품입니다."),
-    NOT_ENOUGH_BALANCE(406, "잔액이 부족합니다");
+    NOT_ENOUGH_BALANCE(406, "잔액이 부족합니다"),
+    ALREADY_SUBSCRIBED(409, "이미 가입한 상품입니다");
 
     private final int code;
     private final String detail;

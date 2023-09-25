@@ -91,6 +91,11 @@ public class BankServiceImpl implements BankService {
         Master bankCode = masterRepository.findByExpression(bankExpression)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_BANK));
 
+        // 같은 상품에 이미 가입한 경우 예외 처리
+        Account sameAccount = accountRepository.findByMemSeqAndBankCd(member, bankCode);
+        if(sameAccount != null)
+            throw new MNException(ErrorCode.ALREADY_SUBSCRIBED);
+
         Bank bankProduct = bankRepository.findByBankCd(bankCode)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_BANK));
 
