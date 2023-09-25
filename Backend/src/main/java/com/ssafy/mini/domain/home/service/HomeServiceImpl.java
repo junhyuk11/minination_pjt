@@ -1,5 +1,6 @@
 package com.ssafy.mini.domain.home.service;
 
+import com.ssafy.mini.domain.asset.repository.AssetRepository;
 import com.ssafy.mini.domain.flag.repository.FlagRepository;
 import com.ssafy.mini.domain.home.dto.response.*;
 import com.ssafy.mini.domain.member.entity.Member;
@@ -22,6 +23,7 @@ public class HomeServiceImpl implements HomeService{
     private final MemberRepository memberRepository;
     private final NationRepository nationRepository;
     private final FlagRepository flagRepository;
+    private final AssetRepository assetRepository;
 
     @Override
     public HomeInfoResponse info(String memberId) {
@@ -97,6 +99,19 @@ public class HomeServiceImpl implements HomeService{
                 .job(job)
                 .pay(pay)
                 .currency(currency)
+                .build();
+    }
+
+    @Override
+    public ChartResponse getChart(String memberId) {
+        Member member = findMember(memberId);
+        Nation nation = member.getIsoSeq();
+
+        // 해당 국가의 날짜 별 자산
+        List<ChartDto> chartList = assetRepository.getAssetsByNation(nation.getIsoSeq());
+
+        return ChartResponse.builder()
+                .gdp(chartList)
                 .build();
     }
 
