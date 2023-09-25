@@ -1,11 +1,12 @@
 package com.ssafy.mini.domain.bank.controller;
 
 import com.ssafy.mini.domain.bank.dto.request.BankSubscribeRequestDTO;
+import com.ssafy.mini.domain.bank.dto.request.BankTerminateRequestDTO;
 import com.ssafy.mini.domain.bank.dto.response.BankInfoResponseDTO;
 import com.ssafy.mini.domain.bank.dto.response.BankSubscribeResponseDTO;
+import com.ssafy.mini.domain.bank.dto.response.BankTerminateResponseDTO;
 import com.ssafy.mini.domain.bank.service.BankService;
 import com.ssafy.mini.global.jwt.JwtProvider;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -53,20 +54,20 @@ public class BankController {
         return bankService.subscribe(memberId, bankSubscribeRequestDTO);
     }
 
-//    @ApiOperation(value = "은행 상품 해지")
-//    @ApiResponses({
-//            @ApiResponse(code = 200, message = "은행 상품 해지 성공"),
-//            @ApiResponse(code = 404, message = "은행 상품 해지 실패")
-//    })
-//    @PostMapping("/terminate")
-//    public BankSubscribeResponseDTO terminate(@RequestHeader("Authorization") String accessToken,
-//                                              @RequestBody BankSubscribeRequestDTO bankSubscribeRequestDTO) {
-//
-//        log.info("Bank Controller Layer:: terminate() called");
-//
-//        String memberId = jwtProvider.extractMemberId(accessToken);
-//
-//        return bankService.terminate(memberId, bankSubscribeRequestDTO);
-//    }
+    @ApiOperation(value = "은행 상품 해지")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "은행 상품 해지 성공"),
+            @ApiResponse(code = 404, message = "은행 상품 해지 실패")
+    })
+    @PostMapping("/terminate")
+    public BankTerminateResponseDTO terminate(@RequestHeader("Authorization") String accessToken,
+                                              @RequestBody BankTerminateRequestDTO bankTerminateRequestDTO) {
+
+        log.info("Bank Controller Layer:: terminate() called");
+
+        String memberId = jwtProvider.extractMemberId(accessToken);
+
+        return bankService.terminate(memberId, bankTerminateRequestDTO);
+    }
 
 }

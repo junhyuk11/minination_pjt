@@ -3,8 +3,10 @@ package com.ssafy.mini.domain.bank.service;
 import com.ssafy.mini.domain.account.entity.Account;
 import com.ssafy.mini.domain.account.repository.AccountRepository;
 import com.ssafy.mini.domain.bank.dto.request.BankSubscribeRequestDTO;
+import com.ssafy.mini.domain.bank.dto.request.BankTerminateRequestDTO;
 import com.ssafy.mini.domain.bank.dto.response.BankInfoResponseDTO;
 import com.ssafy.mini.domain.bank.dto.response.BankSubscribeResponseDTO;
+import com.ssafy.mini.domain.bank.dto.response.BankTerminateResponseDTO;
 import com.ssafy.mini.domain.bank.entity.Bank;
 import com.ssafy.mini.domain.bank.repository.BankRepository;
 import com.ssafy.mini.domain.master.entity.Master;
@@ -146,6 +148,61 @@ public class BankServiceImpl implements BankService {
                 .principal(newAccount.getAcctBalance())
                 .estimation(newAccount.getExpAmount())
                         .build();
+    }
+
+    @Override
+    public BankTerminateResponseDTO terminate(String memberId, BankTerminateRequestDTO bankTerminateRequestDTO) {
+
+        log.info("Bank Service Layer:: terminate() called");
+
+        // 사용자 조회
+        Member member = memberRepository.findByMemId(memberId)
+                .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
+
+        // 해지 상품 잔액을 넣을 일반 계좌 코드 조회
+        Master naAccountMaster = masterRepository.findByCode("BNT03")
+                .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_CODE));
+
+        log.info("naAccountMaster: " + naAccountMaster.getCode());
+
+        // 해지할 상품 코드 조회
+        Master bankAccountMaster = masterRepository.findByExpression(bankTerminateRequestDTO.getType().substring(0, 1)
+                + bankTerminateRequestDTO.getTerm())
+                .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_CODE));
+
+        log.info("bankAccountMaster: " + bankAccountMaster.getCode());
+
+        // 일반 계좌, 해지할 상품 계좌 조회
+        Account normalAccount, bankAccount;
+        if(accountRepository.findByMemSeqAndBankCd(member, naAccountMaster) != null)
+            normalAccount = accountRepository.findByMemSeqAndBankCd(member, naAccountMaster);
+        else
+            throw new MNException(ErrorCode.NO_SUCH_ACCT);
+        if(accountRepository.findByMemSeqAndBankCd(member, bankAccountMaster) != null)
+            bankAccount = accountRepository.findByMemSeqAndBankCd(member, bankAccountMaster);
+        else
+            throw new MNException(ErrorCode.NO_SUCH_ACCT);
+
+        // 일반 계좌에 잔액 옮기기
+        normalAccount.updateAcctBalance(bankAccount.getAcctBalance());
+
+        String category = bankAccount.getBankCode().getParentCode().getCodeName();
+        String start = bankAccount.getAcctStartDate().toString().substring(0, 10);
+        String end = bankAccount.getAcctExpireDate().toString().substring(0, 10);
+        int balance = bankAccount.getAcctBalance();
+        int estimation = bankAccount.getExpAmount();
+
+        // 해지할 상품 계좌 삭제
+        accountRepository.delete(bankAccount);
+
+        return BankTerminateResponseDTO.builder()
+                .type(bankTerminateRequestDTO.getType())
+                .category(category)
+                .start(start)
+                .end(end)
+                .balance(balance)
+                .estimation(estimation)
+                .build();
     }
 
     private void transfer(int amount, Account account){
