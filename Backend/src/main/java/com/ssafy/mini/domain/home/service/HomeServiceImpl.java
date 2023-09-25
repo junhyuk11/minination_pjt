@@ -1,10 +1,7 @@
 package com.ssafy.mini.domain.home.service;
 
 import com.ssafy.mini.domain.flag.repository.FlagRepository;
-import com.ssafy.mini.domain.home.dto.response.CitizenResponse;
-import com.ssafy.mini.domain.home.dto.response.HomeInfoResponse;
-import com.ssafy.mini.domain.home.dto.response.RichDto;
-import com.ssafy.mini.domain.home.dto.response.RichResponse;
+import com.ssafy.mini.domain.home.dto.response.*;
 import com.ssafy.mini.domain.member.entity.Member;
 import com.ssafy.mini.domain.member.repository.MemberRepository;
 import com.ssafy.mini.domain.nation.entity.Nation;
@@ -82,6 +79,24 @@ public class HomeServiceImpl implements HomeService{
 
         return RichResponse.builder()
                 .rich(richList)
+                .build();
+    }
+
+    @Override
+    public ProfileResponse getProfile(String memberId) {
+        Member member = findMember(memberId);
+        Nation nation = member.getIsoSeq();
+
+        String name = member.getMemName();
+        String job = member.getJobSeq().getJobName();
+        int pay = member.getJobSeq().getJobPay();
+        String currency = nation.getIsoCurrency();
+
+        return ProfileResponse.builder()
+                .name(name)
+                .job(job)
+                .pay(pay)
+                .currency(currency)
                 .build();
     }
 
