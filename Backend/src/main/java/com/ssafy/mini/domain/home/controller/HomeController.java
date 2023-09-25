@@ -3,6 +3,7 @@ package com.ssafy.mini.domain.home.controller;
 import com.ssafy.mini.domain.home.dto.response.HomeInfoResponse;
 import com.ssafy.mini.domain.home.service.HomeService;
 import com.ssafy.mini.global.jwt.JwtProvider;
+import com.ssafy.mini.global.response.SuccessResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -27,11 +28,13 @@ public class HomeController {
             @ApiResponse(code = 404, message = "홈 정보 조회 실패"),
             @ApiResponse(code = 406, message = "속한 국가 없음")
     })
-    public HomeInfoResponse info(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken){
+    public SuccessResponse info(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken){
         log.info("Home Controller Layer:: info() called");
 
         String memberId = jwtProvider.extractMemberId(accessToken);
 
-        return homeService.info(memberId);
+        return SuccessResponse.builder()
+                .data(homeService.info(memberId))
+                .build();
     }
 }
