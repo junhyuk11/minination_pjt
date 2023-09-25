@@ -37,4 +37,22 @@ public class HomeController {
                 .data(homeService.info(memberId))
                 .build();
     }
+
+    @GetMapping("/citizen")
+    @ApiOperation(value = "전체 국민 조회")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "조회 성공"),
+            @ApiResponse(code = 403, message = "유효하지 않은 토큰"),
+            @ApiResponse(code = 404, message = "조회 실패")
+    })
+    public SuccessResponse listCitizen (
+            @RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken
+    ){
+        log.info("Home Controller Layer:: listCitizen() called");
+        String memberId = jwtProvider.extractMemberId(accessToken);
+
+        return SuccessResponse.builder()
+                .data(homeService.listCitizen(memberId))
+                .build();
+    }
 }

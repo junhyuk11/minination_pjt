@@ -1,6 +1,7 @@
 package com.ssafy.mini.domain.home.service;
 
 import com.ssafy.mini.domain.flag.repository.FlagRepository;
+import com.ssafy.mini.domain.home.dto.response.CitizenResponse;
 import com.ssafy.mini.domain.home.dto.response.HomeInfoResponse;
 import com.ssafy.mini.domain.member.entity.Member;
 import com.ssafy.mini.domain.member.repository.MemberRepository;
@@ -11,6 +12,8 @@ import com.ssafy.mini.global.exception.MNException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -26,8 +29,7 @@ public class HomeServiceImpl implements HomeService{
 
         log.info("Service Layer::info() called");
 
-        Member member = memberRepository.findByMemId(memberId)
-                .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
+        Member member = findMember(memberId);
 
         Short nationSeq = member.getIsoSeq().getIsoSeq();
         // 회원이 국가에 속하지 않은 상태일 때 예외 처리
@@ -45,5 +47,29 @@ public class HomeServiceImpl implements HomeService{
                 .nationName(nation.getIsoName())
                 .flag(flagUrl)
                 .build();
+    }
+
+    @Override
+    public CitizenResponse listCitizen(String memberId) {
+        log.info("Service Layer::listCitizen() called");
+
+        Member member = findMember(memberId);
+        Nation nation = member.getIsoSeq();
+
+        // 해당 국가의 대통령 이름
+        String president = nation.getTeacherName();
+
+        // 해당 국가의 시민
+        List<String> students = memberRepository.findAllStudents(nation.getIsoSeq());
+
+        return CitizenResponse.builder()
+                .president(president)
+                .citizen(students)
+                .build();
+    }
+
+    private Member findMember(String memberId){
+        return memberRepository.findByMemId(memberId)
+                .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
     }
 }

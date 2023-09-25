@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.Optional;
 
-public interface MemberRepository extends JpaRepository<Member, Integer> {
+public interface MemberRepository extends JpaRepository<Member, Integer>, MemberRepositoryCustom {
 
     boolean existsByMemId(String memId);
 
@@ -19,4 +19,6 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
     List<String> findMemIdByJobSeq(Job job);
 
     int countByIsoSeq(Nation nation);
+
+    List<String> findAllStudents(short nationSeq);
 }
