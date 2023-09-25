@@ -3,10 +3,10 @@ import React, { useState } from 'react';
 import './BuySell.css';
 
 import SamsungLogo from '../../../assets/images/samsung-logo.png';
-import '../../../assets/images/hyundai-logo.png';
-import '../../../assets/images/nexon-logo.png';
-import '../../../assets/images/hybe-logo.png';
-import '../../../assets/images/kakao-logo.png';
+import HyundaiLogo from '../../../assets/images/hyundai-logo.png';
+import NexonLogo from '../../../assets/images/nexon-logo.png';
+import HybeLogo from '../../../assets/images/hybe-logo.png';
+import KakaoLogo from '../../../assets/images/kakao-logo.png';
 
 const SellContent = () => {
     const [price, setPrice] = useState('');
@@ -47,41 +47,60 @@ const SellContent = () => {
                     <input class="radio-input" type="radio" name="engine" />
                     <span class="radio-tile">
                         <span class="radio-icon" />
-                        <span class="radio-label">
-                            <img
-                                src={SamsungLogo}
-                                alt="삼성배경"
-                                class="trading-company-logo"
-                            />
-                        </span>
+                        <span class="radio-label" />
+                        <img
+                            src={SamsungLogo}
+                            alt="삼성로고"
+                            class="trading-company-logo"
+                        />
                     </span>
                 </label>
                 <label>
                     <input class="radio-input" type="radio" name="engine" />
                     <span class="radio-tile">
                         <span class="radio-icon" />
-                        <span class="radio-label">현대</span>
+                        <span class="radio-label" />
+                        <img
+                            src={HyundaiLogo}
+                            alt="현대로고"
+                            class="trading-company-logo"
+                        />
                     </span>
                 </label>
                 <label>
                     <input class="radio-input" type="radio" name="engine" />
                     <span class="radio-tile">
                         <span class="radio-icon" />
-                        <span class="radio-label">넥슨</span>
+                        <span class="radio-label" />
+                        <img
+                            src={NexonLogo}
+                            alt="넥슨로고"
+                            class="trading-company-logo"
+                        />
                     </span>
                 </label>
                 <label>
                     <input class="radio-input" type="radio" name="engine" />
                     <span class="radio-tile">
                         <span class="radio-icon" />
-                        <span class="radio-label">하이브</span>
+                        <span class="radio-label" />
+                        <img
+                            src={HybeLogo}
+                            alt="하이브로고"
+                            class="trading-company-logo"
+                        />
                     </span>
                 </label>
                 <label>
                     <input class="radio-input" type="radio" name="engine" />
                     <span class="radio-tile">
                         <span class="radio-icon" />
-                        <span class="radio-label">카카오</span>
+                        <span class="radio-label" />
+                        <img
+                            src={KakaoLogo}
+                            alt="카카오로고"
+                            class="trading-company-logo"
+                        />
                     </span>
                 </label>
             </div>

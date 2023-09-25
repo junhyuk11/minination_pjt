@@ -11,7 +11,7 @@
 }
 
 .radio-inputs > * {
-  margin: 1px;
+  margin: 2px;
 }
 
 .radio-input:checked + .radio-tile {
@@ -21,7 +21,7 @@
 }
 
 .radio-input:checked + .radio-tile:before {
-  transform: scale(1.1);
+  transform: scale(1.3);
   opacity: 1;
   background-color: #2260ff;
   border-color: #2260ff;
@@ -36,7 +36,7 @@
 }
 
 .radio-input:focus + .radio-tile:before {
-  transform: scale(1);
+  transform: scale(1.1);
   opacity: 1;
 }
 
@@ -62,7 +62,7 @@
   display: block;
   width: 0.4rem;
   height: 0.4rem;
-  border: 1px solid #b5bfd9;
+  border: 2px solid #b5bfd9;
   background-color: #fff;
   border-radius: 50%;
   top: 0.25rem;
@@ -216,6 +216,7 @@
   z-index: 1;
   font-family: 'GmarketSansMedium', cursive;
   margin-top: 10px;
+  margin-left: 10px;
 }
 
 .buy-sell-btn:before {
