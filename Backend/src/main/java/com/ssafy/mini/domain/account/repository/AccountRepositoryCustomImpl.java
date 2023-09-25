@@ -2,6 +2,7 @@ package com.ssafy.mini.domain.account.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.mini.domain.account.entity.Account;
+import com.ssafy.mini.domain.account.entity.QAccount;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
