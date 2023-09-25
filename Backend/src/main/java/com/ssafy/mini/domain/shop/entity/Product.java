@@ -4,6 +4,7 @@ import com.ssafy.mini.domain.nation.entity.Nation;
 import com.ssafy.mini.global.db.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
