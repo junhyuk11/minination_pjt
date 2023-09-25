@@ -1,12 +1,18 @@
 package com.ssafy.mini.domain.shop.service;
 
+import com.ssafy.mini.domain.account.entity.Account;
+import com.ssafy.mini.domain.account.repository.AccountRepository;
+import com.ssafy.mini.domain.account.service.AccountService;
 import com.ssafy.mini.domain.member.entity.Member;
 import com.ssafy.mini.domain.member.repository.MemberRepository;
 import com.ssafy.mini.domain.shop.dto.request.AddProductRequest;
+import com.ssafy.mini.domain.shop.dto.request.BuyProductRequest;
 import com.ssafy.mini.domain.shop.dto.request.DeleteProductRequest;
 import com.ssafy.mini.domain.shop.dto.response.ProductInfoResponse;
+import com.ssafy.mini.domain.shop.entity.Possess;
 import com.ssafy.mini.domain.shop.entity.Product;
 import com.ssafy.mini.domain.shop.mapper.ProductMapper;
+import com.ssafy.mini.domain.shop.repository.PossessRepository;
 import com.ssafy.mini.domain.shop.repository.ProductRepository;
 import com.ssafy.mini.global.exception.ErrorCode;
 import com.ssafy.mini.global.exception.MNException;
@@ -22,8 +28,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
+    private final AccountService accountService;
+
     private final ProductRepository productRepository;
+    private final PossessRepository possessRepository;
     private final MemberRepository memberRepository;
+    private final AccountRepository accountRepository;
 
     private final ProductMapper productMapper;
 
@@ -49,6 +59,7 @@ public class ProductServiceImpl implements ProductService {
         Member member = getMemberByMemberId(memberId);
         isTeacher(member); // 선생님인지 확인
 
+        // TODO: Optional을 반환하도록 변경
         Product product = productMapper.addProductRequestToProduct(addProductRequest);
         product.setNation(member.getIsoSeq());
         productRepository.save(product);
@@ -63,6 +74,34 @@ public class ProductServiceImpl implements ProductService {
 
         Product product = getProductByProdName(deleteProductRequest.getProduct());
         productRepository.delete(product);
+    }
+
+    @Override
+    public void buyProduct(String memberId, BuyProductRequest buyProductRequest) {
+        log.info("Service Layer::buyProduct() called");
+
+        Member member = getMemberByMemberId(memberId);
+        Product product = getProductByProdName(buyProductRequest.getProduct());
+
+        // 상품 구매
+        int moneyNeed = product.getProdPrice() * buyProductRequest.getAmount();
+        Account moneyHave = accountRepository.getMoneyToUse(memberId);
+
+        System.out.println(moneyNeed);
+        System.out.println(moneyHave.getAcctBalance());
+        if (moneyNeed > moneyHave.getAcctBalance()) throw new MNException(ErrorCode.NOT_ENOUGH_MONEY); // 돈이 부족한 경우
+        accountService.updateAccountBalance(moneyHave, -moneyNeed, buyProductRequest.getProduct());
+
+        // 보유한 상품 수량 변경
+        Possess possess = possessRepository.findByMemberIdAndName(memberId, product.getProdName()).orElse(
+                Possess.builder()
+                        .member(member)
+                        .product(product)
+                        .possAmount(0)
+                        .build()
+                    );
+        possess.updatePossAmount(buyProductRequest.getAmount());
+        possessRepository.save(possess);
     }
 
     /**

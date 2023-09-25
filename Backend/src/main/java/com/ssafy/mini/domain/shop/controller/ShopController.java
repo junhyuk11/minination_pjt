@@ -1,6 +1,7 @@
 package com.ssafy.mini.domain.shop.controller;
 
 import com.ssafy.mini.domain.shop.dto.request.AddProductRequest;
+import com.ssafy.mini.domain.shop.dto.request.BuyProductRequest;
 import com.ssafy.mini.domain.shop.dto.request.DeleteProductRequest;
 import com.ssafy.mini.domain.shop.service.ProductService;
 import com.ssafy.mini.global.jwt.JwtProvider;
@@ -78,4 +79,22 @@ public class ShopController {
                 .build();
     }
 
+    @PostMapping("/buy")
+    @ApiOperation(value = "물품 구매")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "물품 구매 성공"),
+            @ApiResponse(code = 402, message = "잔액 부족"),
+            @ApiResponse(code = 403, message = "유효하지 않은 토큰"),
+            @ApiResponse(code = 404, message = "물품 구매 실패")
+    })
+    public SuccessResponse buyProduct (
+            @RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
+            @RequestBody @ApiParam(value = "구매할 상품 정보", required = true)BuyProductRequest buyProductRequest
+            ) {
+        log.info("Controller Layer::listProducts() called");
+        String memberId = jwtProvider.extractMemberId(accessToken);
+        productService.buyProduct(memberId, buyProductRequest);
+        return SuccessResponse.builder()
+                .build();
+    }
 }
