@@ -1,5 +1,6 @@
 package com.ssafy.mini.domain.shop.repository;
 
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.mini.domain.shop.entity.Possess;
 import com.ssafy.mini.domain.shop.entity.QPossess;
@@ -18,7 +19,7 @@ public class PossessRepositoryCustomImpl implements PossessRepositoryCustom {
     public Optional<Possess> findByMemberIdAndName(String memberId, String name) {
         return Optional.ofNullable(queryFactory.select(possess)
                 .from(possess)
-                .where(possess.memSeq.memId.eq(name)
+                .where(possess.memSeq.memId.eq(memberId)
                         .and(possess.prodSeq.prodName.eq(name))
                 )
                 .fetchOne());
