@@ -26,12 +26,11 @@ public class AccountDetail extends BaseEntity {
     private Account account;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "acct_det_org")
-    private Master organization; // 입출금처
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "acct_det_cat")
     private Master category; // 입출금 카테고리
+
+    @Column(name = "acct_det_org", length = 10)
+    private String organization; // 입출금처
 
     /**
      * D: 입금
@@ -50,10 +49,10 @@ public class AccountDetail extends BaseEntity {
     private LocalDateTime date; // 거래 일시
 
     @Builder
-    public AccountDetail(Account account, Master organization, Master category, Character acctDetailType, Integer amount, Integer balance, LocalDateTime date) {
+    public AccountDetail(Account account, Master category, String organization, Character acctDetailType, Integer amount, Integer balance, LocalDateTime date) {
         this.account = account;
-        this.organization = organization;
         this.category = category;
+        this.organization = organization;
         this.acctDetailType = acctDetailType;
         this.amount = amount;
         this.balance = balance;

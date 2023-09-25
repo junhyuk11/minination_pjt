@@ -39,9 +39,7 @@ public class JwtProvider {
         Claims claims = Jwts.claims().setSubject(id);
         Date now = new Date();
 
-        System.out.println("accessToken");
-        System.out.println(new Date(now.getTime()));
-        System.out.println(new Date(now.getTime() + jwtProperties.getAccessTokenValidity()));
+        log.info("access token 만기 시간: {}", new Date(now.getTime() + jwtProperties.getAccessTokenValidity()));
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -60,9 +58,7 @@ public class JwtProvider {
         Claims claims = Jwts.claims().setSubject(id);
         Date now = new Date();
 
-        System.out.println("refreshTOken");
-        System.out.println(new Date(now.getTime()));
-        System.out.println(new Date(now.getTime() + jwtProperties.getRefreshTokenValidity()));
+        log.info("refresh token 만기 시간: {}", new Date(now.getTime() + jwtProperties.getRefreshTokenValidity()));
 
         final String refreshToken = Jwts.builder()
                 .setClaims(claims)
