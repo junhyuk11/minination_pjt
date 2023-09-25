@@ -4,20 +4,20 @@ import NationTitle from '../Atoms/NationTitle';
 
 const Nation = () => {
     const response = {
-        name: '개발의 민족',
+        nationName: '개발의 민족',
         flag: flag1,
     };
-    const { name, flag } = response;
+    const { nationName, flag } = response;
     const nationStyle = {
         display: 'flex',
         alignItems: 'center',
-        margin: '2vw',
+        justifyContent: 'space-around',
     };
 
     return (
         <div style={nationStyle}>
             <img src={flag} alt="flag" />
-            <NationTitle title={name} />
+            <NationTitle title={nationName} />
         </div>
     );
 };

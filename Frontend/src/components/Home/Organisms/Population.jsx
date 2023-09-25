@@ -1,6 +1,7 @@
 import React from 'react';
 import PopulationRow from '../Molecules/PopulationRow';
 import HomeCard from '../Molecules/HomeCard';
+import cardGif from '../../../assets/gif/population.gif';
 
 const Population = () => {
     const response = {
@@ -37,6 +38,8 @@ const Population = () => {
             <HomeCard
                 title={`인구(${citizen.length + 1}명)`}
                 content={contentDom}
+                gif={cardGif}
+                contentStyle="wrap"
             />
         </div>
     );

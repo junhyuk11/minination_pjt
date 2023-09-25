@@ -1,6 +1,7 @@
 import React from 'react';
 import EconomyRow from '../Molecules/EconomyRow';
 import HomeCard from '../Molecules/HomeCard';
+import cardGif from '../../../assets/gif/economy.gif';
 
 const Economy = () => {
     const response = {
@@ -52,7 +53,12 @@ const Economy = () => {
 
     return (
         <div>
-            <HomeCard title="경제" content={contentDom} />
+            <HomeCard
+                title="경제"
+                content={contentDom}
+                gif={cardGif}
+                contentStyle="column"
+            />
         </div>
     );
 };

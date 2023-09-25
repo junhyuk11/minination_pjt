@@ -11,12 +11,22 @@ const Dashboard = () => {
     return (
         <div className={styles.body}>
             <NavBar username="준혁" totalBalance="30000" />
-            <div className={styles.layoutStyle}>
-                <Nation />
-                <Constitution />
-                <Population />
-                <Ranking />
-                <Economy />
+            <div className={styles.container}>
+                <div className={styles.nation}>
+                    <Nation />
+                </div>
+                <div className={styles.constitution}>
+                    <Constitution />
+                </div>
+                <div className={styles.ranking}>
+                    <Ranking />
+                </div>
+                <div className={styles.population}>
+                    <Population />
+                </div>
+                <div className={styles.economy}>
+                    <Economy />
+                </div>
             </div>
         </div>
     );
