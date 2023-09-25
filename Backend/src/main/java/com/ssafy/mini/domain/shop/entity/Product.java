@@ -4,6 +4,7 @@ import com.ssafy.mini.domain.nation.entity.Nation;
 import com.ssafy.mini.global.db.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -30,5 +31,13 @@ public class Product extends BaseEntity {
 
     @Column(name = "prod_price", nullable = false)
     private Integer prodPrice;
+
+    @Builder
+    public Product(Nation isoSeq, String prodName, String prodDesc, Integer prodPrice) {
+        this.isoSeq = isoSeq;
+        this.prodName = prodName;
+        this.prodDesc = prodDesc;
+        this.prodPrice = prodPrice;
+    }
 
 }
