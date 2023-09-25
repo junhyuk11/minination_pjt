@@ -39,21 +39,9 @@ public class SwaggerConfig {
         ));
     }
 
-    @Bean Docket s3Api() {
-        return getDocket("com.ssafy.mini.global.infra.s3", "S3", Predicates.or(
-                PathSelectors.ant("/s3/**")
-        ));
-    }
-
-    @Bean Docket corporationApi() {
-        return getDocket("com.ssafy.mini.domain.stockholding.controller", "주식회사 관리", Predicates.or(
-                PathSelectors.ant("/corporation/**")
-        ));
-    }
-
-    @Bean Docket stockApi() {
-        return getDocket("com.ssafy.mini.domain.stockholding.controller", "주가 정보", Predicates.or(
-                PathSelectors.ant("/stock/**")
+    @Bean Docket productApi() {
+        return getDocket("com.ssafy.mini.domain.shop.controller", "백화점 관리", Predicates.or(
+                PathSelectors.ant("/shop/**")
         ));
     }
 
@@ -72,12 +60,6 @@ public class SwaggerConfig {
     @Bean Docket jobApi() {
         return getDocket("com.ssafy.mini.domain.job.controller", "직업 관리", Predicates.or(
                 PathSelectors.ant("/job/**")
-        ));
-    }
-
-    @Bean Docket shopApi() {
-        return getDocket("com.ssafy.mini.domain.shop.controller", "백화점 관리", Predicates.or(
-                PathSelectors.ant("/shop/**")
         ));
     }
 
