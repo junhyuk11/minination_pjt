@@ -31,8 +31,7 @@ public class ProductServiceImpl implements ProductService {
         log.info("Service Layer::listProducts() called");
 
         // 회원이 속한 국가 찾기
-        Member member = memberRepository.findByMemId(memberId)
-                .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
+        Member member = getMemberByMemberId(memberId);
 
         // TODO: QueryDSL로 객체 반환
         List<Product> products = productRepository.findAllByIsoSeq(member.getIsoSeq());
@@ -46,20 +45,32 @@ public class ProductServiceImpl implements ProductService {
     public void addProduct(String memberId, AddProductRequest addProductRequest) {
         log.info("Service Layer::addProduct() called");
 
-        // TODO:이 부분 함수로 빼기
-        // 회원이 속한 국가 찾기
-        Member member = memberRepository.findByMemId(memberId)
-                .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
-
-        // TODO:이 부분 함수로 빼기
-        // 선생님인지 확인
-        if (!member.getMemType().getCode().equals("MEM01")) {
-            throw new MNException(ErrorCode.NO_PERMISSION);
-        }
+        Member member = getMemberByMemberId(memberId);
+        isTeacher(member); // 선생님인지 확인
 
         Product product = productMapper.addProductRequestToProduct(addProductRequest);
+        product.setNation(member.getIsoSeq());
         productRepository.save(product);
     }
 
+    /**
+     * 회원 아이디로 회원 찾기
+     * @param memberId 회원 아이디
+     * @return 회원
+     */
+    private Member getMemberByMemberId(String memberId) {
+        return memberRepository.findByMemId(memberId)
+                .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
+    }
+
+    /**
+     * 선생님인지 확인
+     * @param member 회원
+     */
+    private void isTeacher(Member member) {
+        if (!member.getMemType().getCode().equals("MEM01")) {
+            throw new MNException(ErrorCode.NO_PERMISSION);
+        }
+    }
 
 }
