@@ -59,6 +59,7 @@ public enum ErrorCode {
 
     // 상품 관련 에러
     NO_SUCH_PRODUCT(404, "존재하지 않는 상품입니다."),
+    NOT_ENOUGH_PRODUCT(406, "보유한 상품이 부족합니다."),
 
     ;
 

@@ -17,4 +17,5 @@ public interface ProductService {
 
     void buyProduct(String memberId, BuyProductRequest buyProductRequest);
 
+    void useProduct(String memberId, DeleteProductRequest deleteProductRequest);
 }

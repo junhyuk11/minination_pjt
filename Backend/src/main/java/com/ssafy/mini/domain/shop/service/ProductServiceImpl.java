@@ -104,6 +104,22 @@ public class ProductServiceImpl implements ProductService {
         possessRepository.save(possess);
     }
 
+    @Override
+    public void useProduct(String memberId, DeleteProductRequest deleteProductRequest) {
+        log.info("Service Layer::useProduct() called");
+
+        Member member = getMemberByMemberId(memberId);
+        Product product = getProductByProdName(deleteProductRequest.getProduct());
+
+        Possess possess = possessRepository.findByMemberIdAndName(memberId, product.getProdName())
+                .orElseThrow(() -> new MNException(ErrorCode.NOT_ENOUGH_PRODUCT));
+        if (possess.getPossAmount() < 1) throw new MNException(ErrorCode.NOT_ENOUGH_PRODUCT); // 상품이 부족한 경우
+
+        // 보유한 상품 수량 변경
+        possess.updatePossAmount(-1);
+        possessRepository.save(possess);
+    }
+
     /**
      * 회원 아이디로 회원 찾기
      * @param memberId 회원 아이디

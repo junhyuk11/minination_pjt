@@ -97,4 +97,23 @@ public class ShopController {
         return SuccessResponse.builder()
                 .build();
     }
+
+    @PostMapping("/use")
+    @ApiOperation(value = "물품 사용")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "물품 사용 성공"),
+            @ApiResponse(code = 406, message = "보유한 물품 수량 부족"),
+            @ApiResponse(code = 403, message = "유효하지 않은 토큰"),
+            @ApiResponse(code = 404, message = "물품 구매 실패")
+    })
+    public SuccessResponse useProduct (
+            @RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
+            @RequestBody @ApiParam(value = "사용할 상품 정보", required = true) DeleteProductRequest deleteProductRequest
+    ) {
+        log.info("Controller Layer::useProduct() called");
+        String memberId = jwtProvider.extractMemberId(accessToken);
+        productService.useProduct(memberId, deleteProductRequest);
+        return SuccessResponse.builder()
+                .build();
+    }
 }
