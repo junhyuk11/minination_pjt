@@ -33,11 +33,14 @@ public class Product extends BaseEntity {
     private Integer prodPrice;
 
     @Builder
-    public Product(Nation isoSeq, String prodName, String prodDesc, Integer prodPrice) {
-        this.isoSeq = isoSeq;
+    public Product(String prodName, String prodDesc, Integer prodPrice) {
         this.prodName = prodName;
         this.prodDesc = prodDesc;
         this.prodPrice = prodPrice;
+    }
+
+    public void setNation(Nation nation) {
+        this.isoSeq = nation;
     }
 
 }
