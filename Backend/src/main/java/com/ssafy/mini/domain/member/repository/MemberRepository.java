@@ -1,5 +1,6 @@
 package com.ssafy.mini.domain.member.repository;
 
+import com.ssafy.mini.domain.home.dto.response.RichDto;
 import com.ssafy.mini.domain.job.entity.Job;
 import com.ssafy.mini.domain.member.entity.Member;
 import com.ssafy.mini.domain.nation.entity.Nation;
@@ -9,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.Optional;
 
-public interface MemberRepository extends JpaRepository<Member, Integer> {
+public interface MemberRepository extends JpaRepository<Member, Integer>, MemberRepositoryCustom {
 
     boolean existsByMemId(String memId);
 
@@ -19,4 +20,8 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
     List<String> findMemIdByJobSeq(Job job);
 
     int countByIsoSeq(Nation nation);
+
+    List<String> findAllStudents(short nationSeq);
+
+    List<RichDto> listRich(short nationSeq);
 }

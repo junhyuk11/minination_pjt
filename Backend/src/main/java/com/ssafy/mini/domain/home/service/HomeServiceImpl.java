@@ -1,7 +1,8 @@
 package com.ssafy.mini.domain.home.service;
 
+import com.ssafy.mini.domain.asset.repository.AssetRepository;
 import com.ssafy.mini.domain.flag.repository.FlagRepository;
-import com.ssafy.mini.domain.home.dto.response.HomeInfoResponse;
+import com.ssafy.mini.domain.home.dto.response.*;
 import com.ssafy.mini.domain.member.entity.Member;
 import com.ssafy.mini.domain.member.repository.MemberRepository;
 import com.ssafy.mini.domain.nation.entity.Nation;
@@ -12,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -20,14 +23,14 @@ public class HomeServiceImpl implements HomeService{
     private final MemberRepository memberRepository;
     private final NationRepository nationRepository;
     private final FlagRepository flagRepository;
+    private final AssetRepository assetRepository;
 
     @Override
     public HomeInfoResponse info(String memberId) {
 
         log.info("Service Layer::info() called");
 
-        Member member = memberRepository.findByMemId(memberId)
-                .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
+        Member member = findMember(memberId);
 
         Short nationSeq = member.getIsoSeq().getIsoSeq();
         // 회원이 국가에 속하지 않은 상태일 때 예외 처리
@@ -45,5 +48,75 @@ public class HomeServiceImpl implements HomeService{
                 .nationName(nation.getIsoName())
                 .flag(flagUrl)
                 .build();
+    }
+
+    @Override
+    public CitizenResponse listCitizen(String memberId) {
+        log.info("Service Layer::listCitizen() called");
+
+        Member member = findMember(memberId);
+        Nation nation = member.getIsoSeq();
+
+        // 해당 국가의 대통령 이름
+        String president = nation.getTeacherName();
+
+        // 해당 국가의 시민
+        List<String> students = memberRepository.findAllStudents(nation.getIsoSeq());
+
+        return CitizenResponse.builder()
+                .president(president)
+                .citizen(students)
+                .build();
+    }
+
+    @Override
+    public RichResponse listRich(String memberId) {
+        log.info("Service Layer::listRich() called");
+
+        Member member = findMember(memberId);
+        Nation nation = member.getIsoSeq();
+
+        // 해당 국가의 부자 3명
+        List<RichDto> richList = memberRepository.listRich(nation.getIsoSeq());
+
+        return RichResponse.builder()
+                .rich(richList)
+                .build();
+    }
+
+    @Override
+    public ProfileResponse getProfile(String memberId) {
+        Member member = findMember(memberId);
+        Nation nation = member.getIsoSeq();
+
+        String name = member.getMemName();
+        String job = member.getJobSeq().getJobName();
+        int pay = member.getJobSeq().getJobPay();
+        String currency = nation.getIsoCurrency();
+
+        return ProfileResponse.builder()
+                .name(name)
+                .job(job)
+                .pay(pay)
+                .currency(currency)
+                .build();
+    }
+
+    @Override
+    public ChartResponse getChart(String memberId) {
+        Member member = findMember(memberId);
+        Nation nation = member.getIsoSeq();
+
+        // 해당 국가의 날짜 별 자산
+        List<ChartDto> chartList = assetRepository.getAssetsByNation(nation.getIsoSeq());
+
+        return ChartResponse.builder()
+                .gdp(chartList)
+                .build();
+    }
+
+    private Member findMember(String memberId){
+        return memberRepository.findByMemId(memberId)
+                .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
     }
 }

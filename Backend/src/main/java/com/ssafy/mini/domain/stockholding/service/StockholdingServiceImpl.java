@@ -1,11 +1,7 @@
 package com.ssafy.mini.domain.stockholding.service;
 
 import com.ssafy.mini.domain.account.entity.Account;
-import com.ssafy.mini.domain.account.entity.AccountDetail;
-import com.ssafy.mini.domain.account.repository.AccountDetailRepository;
-import com.ssafy.mini.domain.account.repository.AccountRepository;
-import com.ssafy.mini.domain.master.entity.Master;
-import com.ssafy.mini.domain.master.repository.MasterRepository;
+import com.ssafy.mini.domain.account.service.AccountService;
 import com.ssafy.mini.domain.stockholding.dto.request.TradeStockRequest;
 import com.ssafy.mini.domain.stockholding.dto.response.MyStockInfoResponse;
 import com.ssafy.mini.domain.stockholding.dto.response.PortfolioResponse;
@@ -19,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -27,12 +22,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StockholdingServiceImpl implements StockholdingService {
 
+    private final AccountService accountService;
+
     private final StockholdingRepository stockholdingRepository;
     private final StockRepository stockRepository;
-    private final AccountRepository accountRepository;
-    private final AccountDetailRepository accountDetailRepository;
     private final CorporationRepository corporationRepository;
-    private final MasterRepository masterRepository;
 
     @Override
     public MyStockInfoResponse getPortfolio(String memberId) {
@@ -67,10 +61,10 @@ public class StockholdingServiceImpl implements StockholdingService {
         // 주식 매수
         int curPrice = getCurrentPrice(code);
         int moneyNeed = amount * curPrice;
-        Account moneyHave = accountRepository.getMoneyToUse(memberId);
+        Account moneyHave = accountService.getNormalAccount(memberId);
 
         if (moneyNeed > moneyHave.getAcctBalance()) throw new MNException(ErrorCode.NOT_ENOUGH_MONEY); // 돈이 부족한 경우
-        updateAccountBalance(moneyHave, -moneyNeed, corporation);
+        accountService.updateAccountBalance(moneyHave, -moneyNeed, corporation);
 
         // 주식 보유 수량 변경
         Stockholding stockholding = stockholdingRepository.findByMemberIdAndCode(memberId, code);
@@ -92,12 +86,12 @@ public class StockholdingServiceImpl implements StockholdingService {
         // 주식 매도
         int curPrice = getCurrentPrice(code);
         int moneyNeed = amount * curPrice;
-        Account moneyHave = accountRepository.getMoneyToUse(memberId);
+        Account moneyHave = accountService.getNormalAccount(memberId);
 
         // 보유 주식보다 많이 팔려는 경우
         if (stockholding.getHoldQty() < amount) throw new MNException(ErrorCode.NOT_ENOUGH_STOCK);
 
-        updateAccountBalance(moneyHave, moneyNeed, corporation); // 주식 보유 수량 변경
+        accountService.updateAccountBalance(moneyHave, moneyNeed, corporation); // 주식 보유 수량 변경
         upateStockholding(stockholding, -amount, -curPrice);
 
         return getPortfolio(memberId);
@@ -110,31 +104,6 @@ public class StockholdingServiceImpl implements StockholdingService {
      */
     private int getCurrentPrice(String code) {
         return stockRepository.getstkPriceByStkCd(code);
-    }
-
-    /**
-     * 계좌 잔액 확인 및 변경
-     * @param moneyHave 보유 금액
-     * @param moneyNeed 필요 금액
-     */
-    private void updateAccountBalance(Account moneyHave, int moneyNeed, String corporation) {
-        // 보유 금액 변경
-        moneyHave.updateAcctBalance(moneyNeed);
-        accountRepository.save(moneyHave);
-
-        // 거래 내역 기록
-        Master master = masterRepository.findById("TRX01")
-                .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_CODE));
-        AccountDetail accountDetail = AccountDetail.builder()
-                .account(moneyHave)
-                .category(master)
-                .organization(corporation)
-                .acctDetailType(moneyNeed > 0 ? 'D' : 'W')
-                .amount(moneyNeed)
-                .balance(moneyHave.getAcctBalance())
-                .date(LocalDateTime.now())
-                .build();
-        accountDetailRepository.save(accountDetail);
     }
 
     /**
