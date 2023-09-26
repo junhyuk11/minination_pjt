@@ -23,4 +23,11 @@ public class PossessRepositoryCustomImpl implements PossessRepositoryCustom {
                 )
                 .fetchOne());
     }
+
+    public Integer countPossessByMemberId (String memberId) {
+        return queryFactory.select(possess.possAmount.sum())
+                .from(possess)
+                .where(possess.memSeq.memId.eq(memberId))
+                .fetchOne();
+    }
 }

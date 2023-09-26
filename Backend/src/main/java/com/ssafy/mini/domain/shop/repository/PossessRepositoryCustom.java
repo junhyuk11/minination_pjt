@@ -8,4 +8,6 @@ public interface PossessRepositoryCustom {
 
     Optional<Possess> findByMemberIdAndName(String memberId, String name);
 
+    Integer countPossessByMemberId (String memberId);
+
 }
