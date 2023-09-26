@@ -23,6 +23,7 @@ public class SecurityConfig {
     protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .httpBasic().disable()
+                .cors().and()
                 .csrf().disable()
                 .authorizeRequests(requests -> requests
                         .antMatchers(HttpMethod.OPTIONS).permitAll()  // preflight 로 보내는 요청
