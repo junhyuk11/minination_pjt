@@ -1,7 +1,7 @@
 import React from 'react';
 import flag1 from '../../../assets/icons/Foundation/Flag1.svg';
-import NationTitle from '../Atoms/NationTitle';
-import HomeCard from '../Molecules/HomeCard';
+import NationTitle from '../Atoms/NationTitle.jsx';
+// import HomeCard from '../Molecules/HomeCard';
 
 const Nation = () => {
     const response = {

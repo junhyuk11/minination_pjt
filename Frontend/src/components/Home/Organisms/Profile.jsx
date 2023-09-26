@@ -1,7 +1,7 @@
 import React from 'react';
-import HomeCard from '../Molecules/HomeCard';
+import HomeCard from '../Molecules/HomeCard.jsx';
 import cardGif from '../../../assets/gif/profile.gif';
-import ProfileRow from '../Molecules/ProfileRow';
+import ProfileRow from '../Molecules/ProfileRow.jsx';
 
 const Profile = () => {
     const response = {
@@ -16,7 +16,7 @@ const Profile = () => {
     const { name, jobName, pay, currency, totalBalance, productAmount } =
         response;
     const contentDom = (
-        <>
+        <div>
             <ProfileRow
                 name={name}
                 jobName={jobName}
@@ -25,7 +25,7 @@ const Profile = () => {
                 totalBalance={totalBalance}
                 productAmount={productAmount}
             />
-        </>
+        </div>
     );
 
     return (
