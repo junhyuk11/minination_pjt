@@ -2,9 +2,6 @@ package com.ssafy.mini.domain.bank.controller;
 
 import com.ssafy.mini.domain.bank.dto.request.BankSubscribeRequestDTO;
 import com.ssafy.mini.domain.bank.dto.request.BankTerminateRequestDTO;
-import com.ssafy.mini.domain.bank.dto.response.BankInfoResponseDTO;
-import com.ssafy.mini.domain.bank.dto.response.BankSubscribeResponseDTO;
-import com.ssafy.mini.domain.bank.dto.response.BankTerminateResponseDTO;
 import com.ssafy.mini.domain.bank.service.BankService;
 import com.ssafy.mini.global.jwt.JwtProvider;
 import com.ssafy.mini.global.response.SuccessResponse;
@@ -30,11 +27,13 @@ public class BankController {
             @ApiResponse(code = 404, message = "은행 상품 정보 조회 실패")
     })
     @GetMapping("/info")
-    public BankInfoResponseDTO getBankInfo(@RequestHeader("Authorization") String accessToken) {
+    public SuccessResponse getBankInfo(@RequestHeader("Authorization") String accessToken) {
 
         log.info("Bank Controller Layer:: getBankInfo() called");
 
-        return bankService.info();
+        return SuccessResponse.builder()
+                .data(bankService.info())
+                .build();
     }
 
     @ApiOperation(value = "은행 상품 가입")
@@ -45,14 +44,16 @@ public class BankController {
             @ApiResponse(code = 409, message = "이미 가입한 상품")
     })
     @PostMapping("/subscribe")
-    public BankSubscribeResponseDTO subscribe(@RequestHeader("Authorization") String accessToken,
+    public SuccessResponse subscribe(@RequestHeader("Authorization") String accessToken,
                                               @RequestBody BankSubscribeRequestDTO bankSubscribeRequestDTO) {
 
         log.info("Bank Controller Layer:: subscribe() called");
 
         String memberId = jwtProvider.extractMemberId(accessToken);
 
-        return bankService.subscribe(memberId, bankSubscribeRequestDTO);
+        return SuccessResponse.builder()
+                .data(bankService.subscribe(memberId, bankSubscribeRequestDTO))
+                .build();
     }
 
     @ApiOperation(value = "은행 상품 해지")
@@ -61,14 +62,17 @@ public class BankController {
             @ApiResponse(code = 404, message = "은행 상품 해지 실패")
     })
     @PostMapping("/terminate")
-    public BankTerminateResponseDTO terminate(@RequestHeader("Authorization") String accessToken,
+    public SuccessResponse terminate(@RequestHeader("Authorization") String accessToken,
                                               @RequestBody BankTerminateRequestDTO bankTerminateRequestDTO) {
 
         log.info("Bank Controller Layer:: terminate() called");
 
         String memberId = jwtProvider.extractMemberId(accessToken);
 
-        return bankService.terminate(memberId, bankTerminateRequestDTO);
+        return SuccessResponse
+                .builder()
+                .data(bankService.terminate(memberId, bankTerminateRequestDTO))
+                .build();
     }
 
     @ApiOperation(value = "내 자산 조회")
