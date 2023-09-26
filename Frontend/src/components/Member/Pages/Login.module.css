@@ -11,6 +11,7 @@
     background-color: rgb(255, 255, 255);
     display: flex;
     width: 60vw;
+    border-radius: 15px;
 }
 
 .inputContainer {
@@ -25,6 +26,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 15px;
 }
 
 .logo {
@@ -33,7 +35,11 @@
 }
 
 .img {
-    width: 100%; /* 가로 크기를 viewport 가로 길이의 30%로 설정 */
+    width: 100%;
+    transition: transform 0.3s;
+}
+.img:hover {
+    transform: scale(1.05);
 }
 
 .error {

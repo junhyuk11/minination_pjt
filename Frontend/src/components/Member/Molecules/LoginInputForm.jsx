@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import MemberTitle from './../Atoms/MemberTitle.jsx';
-import InputBox1 from './../../Common/Atoms/InputBox1.jsx';
+import MemberTitle from '../Atoms/MemberTitle.jsx';
+import InputBox1 from '../../Common/Atoms/InputBox1.jsx';
 import ButtonLarge1 from '../../Common/Atoms/ButtonLarge1.jsx';
-import { useNavigation } from '../../../hooks/useNavigation';
+import { useNavigation } from '../../../hooks/useNavigation.jsx';
 import styles from '../Pages/Login.module.css';
 import headerLogo from '../../../assets/images/header-logo.png';
 import MovingLoginOrSignup from '../Atoms/MovingLoginOrSignup.jsx';
@@ -20,9 +20,9 @@ const LoginInputForm = () => {
     };
 
     return (
-        <div>
-            <img className={styles.logo} src={headerLogo} alt="logo"></img>
-            <MemberTitle title="로그인" size={40} />
+        <div className="center">
+            <img className={styles.logo} src={headerLogo} alt="logo" />
+            <MemberTitle title="로그인" size={30} />
             <InputBox1
                 title="아이디"
                 placeholder="아이디"

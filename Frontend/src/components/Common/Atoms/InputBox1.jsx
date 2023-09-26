@@ -8,12 +8,12 @@ function InputBox1({ title, placeholder, inputText, onChange, type }) {
         margin: 'auto',
     };
     const titleStyle = {
-        width: '80%',
+        width: '140%',
         textAlign: 'left',
-        paddingBottom: '8px',
+        marginBottom: '8px',
     };
     const inputStyle = {
-        width: '80%',
+        width: '130%',
         padding: '1rem',
         borderRadius: '1rem',
     };

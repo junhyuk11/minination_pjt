@@ -1,6 +1,7 @@
 import styles from './Login.module.css';
 import LoginInputForm from '../Molecules/LoginInputForm.jsx';
 import loginImage from '../../../assets/images/login.png';
+
 const Login = () => {
     return (
         <div className={styles.background}>
