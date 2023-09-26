@@ -27,6 +27,7 @@
         ' nation profile ranking'
         'economy economy constitution'
         'population population population';
+    font-family: 'GmarketSansMedium', cursive;
 }
 .profile {
     grid-area: profile;
