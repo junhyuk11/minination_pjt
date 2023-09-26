@@ -1,17 +1,26 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import InputBox1 from '../../Common/Atoms/InputBox1.jsx';
+import useShopApi from '../../../api/useShopApi.jsx';
 
 const MarketModal2 = ({ hideModal }) => {
     const [product, setProduct] = useState('');
     const [desc, setDesc] = useState('');
     const [price, setPrice] = useState('');
 
-    const handleRegister = () => {
-        // 아래 3개 POST 요청
-        console.log({ product, desc, price });
-        Swal.fire('상품이 추가되었습니다');
-        hideModal();
+    const handleRegister = async () => {
+        try {
+            const response = await useShopApi.shopPutShop(product, desc, price);
+            if (response.code === 200) {
+                Swal.fire('상품이 추가되었습니다');
+                hideModal();
+                window.location.reload();
+            } else {
+                console.log('200이 아닌 다른 code가 나오는중');
+            }
+        } catch (e) {
+            Swal.fire('양식에 맞춰서 작성해주세요!');
+        }
     };
 
     const modalStyle = {
