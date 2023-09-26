@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigation } from '../../../hooks/useNavigation.jsx';
-import MemberTitle from '../Atoms/MemberTitle.jsx';
 import styles from '../Pages/Login.module.css';
 import headerLogo from '../../../assets/images/header-logo.png';
 import InputBox1 from '../../Common/Atoms/InputBox1.jsx';
@@ -9,6 +8,7 @@ import ButtonRadio1 from '../../Common/Atoms/ButtonRadio1.jsx';
 import ButtonLarge1 from '../../Common/Atoms/ButtonLarge1.jsx';
 // import ButtonMiddle1 from '../../Common/Atoms/ButtonMiddle1.jsx';
 import MovingLoginOrSignup from '../Atoms/MovingLoginOrSignup.jsx';
+import MemberTitle from '../Atoms/MemberTitle.jsx';
 
 const SignupInputForm = () => {
     const { navigateToFoundation, navigateToNationality, navigateToLogin } =

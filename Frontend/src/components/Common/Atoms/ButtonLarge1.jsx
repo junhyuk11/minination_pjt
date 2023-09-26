@@ -2,13 +2,9 @@ import React from 'react';
 
 function ButtonLarge1({ title, onClick }) {
     const buttonStyle = {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '300px',
-        // width: '100%',
-        height: '40px',
-        borderRadius: '2rem',
+        width: '100%',
+        padding: '1rem',
+        borderRadius: '1rem',
         border: 'none',
         backgroundColor: '#029664',
         color: 'white',
@@ -16,11 +12,9 @@ function ButtonLarge1({ title, onClick }) {
     };
 
     return (
-        <div>
-            <button type="button" style={buttonStyle} onClick={onClick}>
-                {title}
-            </button>
-        </div>
+        <button type="button" style={buttonStyle} onClick={onClick}>
+            {title}
+        </button>
     );
 }
 

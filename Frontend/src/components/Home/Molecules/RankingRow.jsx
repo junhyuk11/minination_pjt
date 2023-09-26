@@ -2,7 +2,9 @@ import React from 'react';
 
 function RankingRow({ img, ranking, name, asset }) {
     const rowStyle = {
+        width: '100%',
         display: 'flex',
+        justifyContent: 'space-around',
         alignItems: 'center',
     };
     const imageStyle = {

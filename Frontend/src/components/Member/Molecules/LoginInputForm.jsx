@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import MemberTitle from '../Atoms/MemberTitle.jsx';
 import InputBox1 from '../../Common/Atoms/InputBox1.jsx';
 import ButtonLarge1 from '../../Common/Atoms/ButtonLarge1.jsx';
 import { useNavigation } from '../../../hooks/useNavigation.jsx';
@@ -20,26 +19,28 @@ const LoginInputForm = () => {
     };
 
     return (
-        <div className="center">
-            <img className={styles.logo} src={headerLogo} alt="logo" />
-            <MemberTitle title="로그인" size={30} />
-            <InputBox1
-                title="아이디"
-                placeholder="아이디"
-                inputText={id}
-                onChange={handleChange1}
-                type="text"
-            />
-            <br />
-            <InputBox1
-                title="비밀번호"
-                placeholder="비밀번호"
-                inputText={password}
-                onChange={handleChange2}
-                type="password"
-            />
-            <br />
-            <ButtonLarge1 title="Login" onClick={navigateToDashboard} />
+        <div>
+            <div class={styles.top}>
+                <div className={styles.logoContainer}>
+                    <img className={styles.logo} src={headerLogo} alt="logo" />
+                </div>
+                <br />
+                <InputBox1
+                    placeholder="아이디"
+                    inputText={id}
+                    onChange={handleChange1}
+                    type="text"
+                />
+                <br />
+                <InputBox1
+                    placeholder="비밀번호"
+                    inputText={password}
+                    onChange={handleChange2}
+                    type="password"
+                />
+                <br />
+                <ButtonLarge1 title="로그인" onClick={navigateToDashboard} />
+            </div>
             <MovingLoginOrSignup
                 description="아직 회원이 아니신가요?"
                 title="회원가입"

@@ -2,9 +2,9 @@ import React from 'react';
 import RankingRow from '../Molecules/RankingRow';
 import HomeCard from '../Molecules/HomeCard';
 import cardGif from '../../../assets/gif/ranking.gif';
-import ranking1 from '../../../assets/images/ranking1.png';
-import ranking2 from '../../../assets/images/ranking2.png';
-import ranking3 from '../../../assets/images/ranking3.png';
+import ranking1 from '../../../assets/images/medal1.png';
+import ranking2 from '../../../assets/images/medal2.png';
+import ranking3 from '../../../assets/images/medal3.png';
 
 const Ranking = () => {
     const response = {
@@ -26,7 +26,7 @@ const Ranking = () => {
     const { rich } = response;
     const imageUrls = [ranking1, ranking2, ranking3];
     const contentDom = (
-        <div>
+        <>
             {rich.map((citizen, idx) => (
                 <RankingRow
                     key={citizen.name}
@@ -36,7 +36,7 @@ const Ranking = () => {
                     asset={citizen.asset}
                 />
             ))}
-        </div>
+        </>
     );
 
     return (

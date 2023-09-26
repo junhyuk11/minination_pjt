@@ -1,37 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 function InputBox2({ title, placeholder, inputText, onChange, onBlur, type }) {
-    const containerStyle = {
-        alignItems: 'center',
-        display: 'flex',
-        flexDirection: 'column', // 세로로 배치
-        //width: '80%',
-        margin: 'auto',
+    const [isFocused, setIsFocused] = useState(false);
+    const handleFocus = () => {
+        setIsFocused(true);
+        console.log(isFocused);
     };
-    const titleStyle = {
-        width: '80%',
-        textAlign: 'left',
-        paddingBottom: '8px',
+
+    const handleBlur = () => {
+        setIsFocused(false);
+        console.log(isFocused);
     };
+
     const inputStyle = {
-        width: '80%',
+        boxSizing: 'border-box',
+        width: '100%',
         padding: '1rem',
         borderRadius: '1rem',
+        borderColor: isFocused ? '#a2d6ab' : '#c0c0c0',
+        borderStyle: 'solid',
+        outline: 'none', // 디폴트 아웃라인(검정) 삭제
     };
 
     return (
-        <div style={containerStyle}>
-            <div style={titleStyle}>{title}</div>
-            <input
-                value={inputText}
-                placeholder={placeholder}
-                name="text"
-                style={inputStyle}
-                onChange={onChange}
-                onBlur={onBlur}
-                type={type}
-            />
-        </div>
+        <input
+            value={inputText}
+            placeholder={placeholder}
+            name="text"
+            style={inputStyle}
+            onChange={onChange}
+            onBlur={onBlur}
+            type={type}
+            onFocus={handleFocus}
+        />
     );
 }
 
