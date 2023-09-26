@@ -3,7 +3,6 @@ package com.ssafy.mini.domain.member.repository;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.mini.domain.home.dto.response.RichDto;
-import com.ssafy.mini.domain.home.dto.response.RichResponse;
 import com.ssafy.mini.domain.member.entity.QMember;
 import lombok.RequiredArgsConstructor;
 

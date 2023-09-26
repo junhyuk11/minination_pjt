@@ -16,7 +16,7 @@ import java.util.Date;
 public class Asset {
 
     @Id
-    @Column(name = "assetSeq")
+    @Column(name = "asset_seq")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer assetSeq;
 

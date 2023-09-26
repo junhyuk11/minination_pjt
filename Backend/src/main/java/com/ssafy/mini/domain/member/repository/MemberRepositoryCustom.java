@@ -1,7 +1,6 @@
 package com.ssafy.mini.domain.member.repository;
 
 import com.ssafy.mini.domain.home.dto.response.RichDto;
-import com.ssafy.mini.domain.home.dto.response.RichResponse;
 
 import java.util.List;
 
