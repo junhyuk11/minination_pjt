@@ -84,6 +84,7 @@ const shopGetList = async () => {
     try {
         const jwt = sessionStorage.getItem('accessToken');
         const response = await useAxiosInstance.authApiClient(jwt).get(`/shop`);
+        console.log("여기까지 들어옴");
         return response.data;
     } catch (e) {
         if (e.response.data.status === 404) {

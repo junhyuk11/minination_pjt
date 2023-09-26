@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './MarketTeacher.css';
 import Swal from 'sweetalert2';
 import ButtonMiddle1 from '../../Common/Atoms/ButtonMiddle1.jsx';
 import MarketModal2 from './MarketModal2.jsx';
+
+import useShopApi from '../../../api/useShopApi.jsx';
 
 const MarketTeacher = () => {
     const handleDelete = () => {
@@ -10,17 +12,35 @@ const MarketTeacher = () => {
         // 상품의 이름으로 삭제요청
     };
 
-    const transactions = [
-        {
-            id: 1,
-            product: '청구계좌',
-            description:
-                '이 편지는 영국에서 시작했을 수도 잇고 아닐 수도 잇으며 어쩌ㅓ고 저쩌고이 편지는 영국에서 시작했을 수도 잇고 아닐 수도 잇으며 어쩌ㅓ고 저쩌고이 편지는 영국에서 시작했을 수도 잇고 아닐 수도 잇으며 어쩌ㅓ고 저쩌고이 편지는 영국에서 시작했을 수도 잇고 아닐 수도 잇으며 어쩌ㅓ고 저쩌고',
-            price: 5000,
+    const [productList, setProductList] = useState([]);
+
+    const getProductList = async () => {
+        try {
+            const response = await useShopApi.shopGetList();
+            if (response.status === 200) {
+                setProductList(response.resultData);
+            } else {
+                console.log(response.status);
+            }
+        } catch (error) {
+            console.log('catch error 발생');
+        }
+    };
+
+    const transformProductToTransaction = (product, id) => {
+        return {
+            id,
+            product: product.product,
+            desc: product.desc,
+            price: product.price,
             amount: '-',
             button: <ButtonMiddle1 title="삭제하기" onClick={handleDelete} />,
-        },
-    ];
+        };
+    };
+
+    const transactions = productList.map((product, index) =>
+        transformProductToTransaction(product, index + 1),
+    );
 
     // 모달의 상태를 관리하는 state
     const [isModal2Visible, setModal2Visible] = useState(false);
@@ -34,6 +54,10 @@ const MarketTeacher = () => {
     const hideModal2 = () => {
         setModal2Visible(false);
     };
+
+    useEffect(() => {
+        getProductList();
+    }, []);
 
     return (
         <div>
@@ -56,7 +80,7 @@ const MarketTeacher = () => {
                         {transactions.map(transaction => (
                             <tr key={transaction.id}>
                                 <td>{transaction.product}</td>
-                                <td>{transaction.description}</td>
+                                <td>{transaction.desc}</td>
                                 <td>{transaction.price}</td>
                                 <td>{transaction.amount}</td>
                                 <td>{transaction.button}</td>
