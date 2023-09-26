@@ -7,6 +7,7 @@ import com.ssafy.mini.domain.member.entity.Member;
 import com.ssafy.mini.domain.member.repository.MemberRepository;
 import com.ssafy.mini.domain.nation.entity.Nation;
 import com.ssafy.mini.domain.nation.repository.NationRepository;
+import com.ssafy.mini.domain.shop.repository.PossessRepository;
 import com.ssafy.mini.global.exception.ErrorCode;
 import com.ssafy.mini.global.exception.MNException;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class HomeServiceImpl implements HomeService{
     private final NationRepository nationRepository;
     private final FlagRepository flagRepository;
     private final AssetRepository assetRepository;
+    private final PossessRepository possessRepository;
 
     @Override
     public HomeInfoResponse info(String memberId) {
@@ -89,16 +91,17 @@ public class HomeServiceImpl implements HomeService{
         Member member = findMember(memberId);
         Nation nation = member.getIsoSeq();
 
-        String name = member.getMemName();
-        String job = member.getJobSeq().getJobName();
-        int pay = member.getJobSeq().getJobPay();
-        String currency = nation.getIsoCurrency();
+        String job = member.getJobSeq() != null ? member.getJobSeq().getJobName() : ""; // 무직인 경우 빈 문자열 반환
+        int pay = member.getJobSeq() != null ? member.getJobSeq().getJobPay() : 0; // 무직인 경우 0 반환
+        int productAmount = possessRepository.countPossessByMemberId(memberId);
 
         return ProfileResponse.builder()
-                .name(name)
-                .job(job)
+                .name(member.getMemName())
+                .jobName(job)
                 .pay(pay)
-                .currency(currency)
+                .currency(nation.getIsoCurrency())
+                .totalBalance(member.getMemBalance())
+                .productAmount(productAmount)
                 .build();
     }
 
