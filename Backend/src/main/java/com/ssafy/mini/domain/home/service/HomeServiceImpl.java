@@ -90,9 +90,10 @@ public class HomeServiceImpl implements HomeService{
         Nation nation = member.getIsoSeq();
 
         String name = member.getMemName();
-        String job = member.getJobSeq().getJobName();
-        int pay = member.getJobSeq().getJobPay();
         String currency = nation.getIsoCurrency();
+
+        String job = member.getJobSeq() != null ? member.getJobSeq().getJobName() : ""; // 무직인 경우 빈 문자열 반환
+        int pay = member.getJobSeq() != null ? member.getJobSeq().getJobPay() : 0; // 무직인 경우 0 반환
 
         return ProfileResponse.builder()
                 .name(name)
