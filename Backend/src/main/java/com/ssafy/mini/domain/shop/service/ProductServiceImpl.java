@@ -8,6 +8,7 @@ import com.ssafy.mini.domain.member.repository.MemberRepository;
 import com.ssafy.mini.domain.shop.dto.request.AddProductRequest;
 import com.ssafy.mini.domain.shop.dto.request.BuyProductRequest;
 import com.ssafy.mini.domain.shop.dto.request.DeleteProductRequest;
+import com.ssafy.mini.domain.shop.dto.response.MyProductResponse;
 import com.ssafy.mini.domain.shop.dto.response.ProductInfoResponse;
 import com.ssafy.mini.domain.shop.entity.Possess;
 import com.ssafy.mini.domain.shop.entity.Product;
@@ -118,6 +119,16 @@ public class ProductServiceImpl implements ProductService {
         // 보유한 상품 수량 변경
         possess.updatePossAmount(-1);
         possessRepository.save(possess);
+    }
+
+    @Override
+    public List<MyProductResponse> listMyProducts(String memberId) {
+        List<Possess> myProducts = possessRepository.findAllByMemId(memberId);
+
+        // 보유한 물품이 0개 이상인 경우에 대해서만 반환
+        return myProducts.stream().filter(possess -> possess.getPossAmount() > 0)
+                .map(possess -> productMapper.possessToMyProductResponse(possess))
+                .collect(Collectors.toList());
     }
 
     /**
