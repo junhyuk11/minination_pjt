@@ -17,10 +17,12 @@ const MarketTeacher = () => {
     const getProductList = async () => {
         try {
             const response = await useShopApi.shopGetList();
-            if (response.status === 200) {
-                setProductList(response.resultData);
+            console.log('보냈죠?', response);
+            if (response.code === 200) {
+                setProductList(response.data);
+                console.log('여기 사람잇어요');
             } else {
-                console.log(response.status);
+                console.log(response.code);
             }
         } catch (error) {
             console.log('catch error 발생');
