@@ -12,32 +12,41 @@ const Constitution = () => {
             incomeTax: '12',
             vat: '10',
         },
-        payday: 'mon',
+        payday: 'MON',
         population: '20',
     };
     const { nationName, currency, tax, payday, population } = response;
+    const dayMappings = {
+        MON: '월요일',
+        TUE: '화요일',
+        WED: '수요일',
+        THU: '목요일',
+        FRI: '금요일',
+        SAT: '토요일',
+        SUN: '일요일',
+    };
 
     const contentDom = (
         <div>
             <ConstitutionRow
                 number={1}
-                content={`국가 이름은 ${nationName} 으로 한다.`}
+                content={`국가 이름은 '${nationName}' 으로 한다.`}
             />
             <ConstitutionRow
                 number={2}
-                content={`소득세는 ${tax.incomeTax} 이다.`}
+                content={`소득세는 ${tax.incomeTax}% 이다.`}
             />
             <ConstitutionRow
                 number={3}
-                content={`부가가치세는 ${tax.vat} 이다.`}
+                content={`부가가치세는 ${tax.vat}% 이다.`}
             />
             <ConstitutionRow
                 number={4}
-                content={`화폐 단위는 ${currency} 로 한다.`}
+                content={`화폐 단위는 '${currency}' (으)로 한다.`}
             />
             <ConstitutionRow
                 number={5}
-                content={`주급 지급일은 ${payday} 로 한다.`}
+                content={`주급 지급일은 '${dayMappings[payday]}' 로 한다.`}
             />
             <ConstitutionRow
                 number={6}

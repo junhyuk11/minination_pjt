@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigation } from '../../../hooks/useNavigation.jsx';
-import MemberTitle from '../Atoms/MemberTitle.jsx';
 import styles from '../Pages/Login.module.css';
 import headerLogo from '../../../assets/images/header-logo.png';
 import InputBox1 from '../../Common/Atoms/InputBox1.jsx';
 import ButtonRadio1 from './../../Common/Atoms/ButtonRadio1.jsx';
 import ButtonLarge1 from '../../Common/Atoms/ButtonLarge1.jsx';
 import InputBox2 from '../Atoms/InputBox2.jsx';
-// import ButtonMiddle1 from '../../Common/Atoms/ButtonMiddle1.jsx';
 import MovingLoginOrSignup from '../Atoms/MovingLoginOrSignup.jsx';
 
 const SignupInputForm = () => {
@@ -36,43 +34,56 @@ const SignupInputForm = () => {
 
     return (
         <div>
-            <img className={styles.logo} src={headerLogo} alt="logo"></img>
-            <MemberTitle title="회원가입" size={40} />
-            <InputBox1
-                title="이름"
-                placeholder="이름"
-                inputText={name}
-                onChange={handleChange1}
-                type="text"
-            />
-            <br />
-            <InputBox2
-                title="아이디"
-                placeholder="아이디"
-                inputText={id}
-                onChange={handleChange2}
-                onBlur={checkDuplication}
-                type="text"
-            />
-            <p className={styles.error}>{idError}</p>
-            <br />
-            <InputBox1
-                title="비밀번호"
-                placeholder="비밀번호"
-                inputText={password}
-                onChange={handleChange3}
-                type="password"
-            />
-            <br />
-            <ButtonRadio1 setData={setStudent} />
-            <ButtonLarge1
-                title="회원가입"
-                onClick={
-                    student === '학생'
-                        ? navigateToNationality
-                        : navigateToFoundation
-                }
-            />
+            <div class={styles.top}>
+                <div className={styles.logoContainer}>
+                    <img
+                        className={styles.logo}
+                        src={headerLogo}
+                        alt="logo"
+                    ></img>
+                </div>
+
+                <br />
+                <InputBox1
+                    placeholder="이름"
+                    inputText={name}
+                    onChange={handleChange1}
+                    type="text"
+                />
+                <br />
+                <InputBox2
+                    placeholder="아이디"
+                    inputText={id}
+                    onChange={handleChange2}
+                    onBlur={checkDuplication}
+                    type="text"
+                />
+                {idError && (
+                    <div className={styles.errorContainer}>
+                        <div className={styles.error}>{idError}</div>
+                    </div>
+                )}
+                <br />
+                <InputBox1
+                    placeholder="비밀번호"
+                    inputText={password}
+                    onChange={handleChange3}
+                    type="password"
+                />
+                <br />
+
+                <ButtonRadio1 setData={setStudent} />
+                <br />
+                <ButtonLarge1
+                    title="회원가입"
+                    onClick={
+                        student === '학생'
+                            ? navigateToNationality
+                            : navigateToFoundation
+                    }
+                />
+            </div>
+
             <MovingLoginOrSignup
                 description="이미 회원이신가요?"
                 title="로그인"

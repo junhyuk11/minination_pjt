@@ -1,21 +1,21 @@
+import { light } from '@mui/material/styles/createPalette';
 import React from 'react';
 
-function MovingSignup({ description, title, onClick }) {
+function MovingLoginOrSignup({ description, title, onClick }) {
     const contanierStyle = {
         display: 'flex',
         justifyContent: 'flex-end',
     };
+    const pStyle = {
+        color: 'rgba(53, 91, 62, 0.44)',
+    };
     const buttonStyle = {
-        padding: '0',
         border: 'none',
         background: 'none',
         color: '#355B3E',
         textDecorationLine: 'underline',
         cursor: 'pointer',
-    };
-
-    const pStyle = {
-        color: 'rgba(53, 91, 62, 0.44)',
+        fontWeight: 'bold',
     };
 
     return (
@@ -28,4 +28,4 @@ function MovingSignup({ description, title, onClick }) {
     );
 }
 
-export default MovingSignup;
+export default MovingLoginOrSignup;
