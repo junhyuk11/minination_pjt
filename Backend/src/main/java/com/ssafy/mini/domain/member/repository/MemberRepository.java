@@ -1,7 +1,6 @@
 package com.ssafy.mini.domain.member.repository;
 
 import com.ssafy.mini.domain.home.dto.response.RichDto;
-import com.ssafy.mini.domain.home.dto.response.RichResponse;
 import com.ssafy.mini.domain.job.entity.Job;
 import com.ssafy.mini.domain.member.entity.Member;
 import com.ssafy.mini.domain.nation.entity.Nation;
