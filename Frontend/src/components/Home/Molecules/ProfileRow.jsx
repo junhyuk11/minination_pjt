@@ -1,7 +1,5 @@
 import React from 'react';
-import ButtonLarge1 from './../../Common/Atoms/ButtonLarge1';
-import { useNavigation } from '../../../hooks/useNavigation';
-import { red } from '@mui/material/colors';
+import { useNavigation } from '../../../hooks/useNavigation.jsx';
 
 const ProfileRow = ({
     name,
@@ -33,7 +31,7 @@ const ProfileRow = ({
     };
 
     return (
-        <>
+        <div>
             <p>
                 <span style={nameStyle}>{name}</span>님, 오늘도 화이팅이에요!
             </p>
@@ -60,7 +58,7 @@ const ProfileRow = ({
                 </a>{' '}
                 개 입니다.
             </p>
-        </>
+        </div>
     );
 };
 

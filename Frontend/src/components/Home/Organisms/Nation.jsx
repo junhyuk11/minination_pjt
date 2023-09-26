@@ -19,6 +19,8 @@ const Nation = () => {
         width: '100%',
         height: 'auto',
         objectFit: 'cover',
+        boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.8)',
+        borderRadius: '25px',
     };
 
     return (
