@@ -8,7 +8,7 @@ import ProductionStudent from '../Organisms/ProductionStudent.jsx';
 import ProductionTeacher from '../Organisms/ProductionTeacher.jsx';
 import ProductionButton2 from '../Atoms/ProductionButton2.jsx';
 import ProductionButton1 from '../Atoms/ProductionButton1.jsx';
-import styles from './JobPosting.module.css';
+import './JobPosting.css';
 
 const JobPosting = () => {
     const [identity, setIdentity] = useRecoilState(identityState);
@@ -138,7 +138,7 @@ const JobPosting = () => {
     return (
         <div>
             <NavBar username="여우" totalBalance="30000" />
-            <div className={styles.container}>
+            <div className="jobposting-container">
                 <ProductionTitle title="채용 공고" size={30} />
                 {identity === 'TC' && (
                     <ProductionButton2
@@ -146,20 +146,22 @@ const JobPosting = () => {
                         onClick={handleAddClick}
                     />
                 )}
-            </div>
-            <div style={{ display: 'flex' }}>
-                <ProductionButton1
-                    title="선생님으로 변경"
-                    onClick={() => {
-                        setIdentity('TC');
-                    }}
-                />
-                <ProductionButton1
-                    title="학생으로 변경"
-                    onClick={() => {
-                        setIdentity('ST');
-                    }}
-                />
+                <div className="student-teacher-selector">
+                    <div style={{ display: 'flex' }}>
+                        <ProductionButton1
+                            title="선생님으로 변경"
+                            onClick={() => {
+                                setIdentity('TC');
+                            }}
+                        />
+                        <ProductionButton1
+                            title="학생으로 변경"
+                            onClick={() => {
+                                setIdentity('ST');
+                            }}
+                        />
+                    </div>
+                </div>
             </div>
             {/* Conditional rendering based on the identity state */}
             {identity === 'ST' ? (

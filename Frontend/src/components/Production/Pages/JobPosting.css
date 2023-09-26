@@ -1,0 +1,9 @@
+.jobposting-container {
+    width: 80%;
+    height: auto;
+    margin: 20px auto;
+    display: flex;
+    justify-content: space-between;
+
+    font-family: 'GmarketSansMedium', cursive;
+}

@@ -140,7 +140,7 @@ const BuyContent = () => {
             </div>
             {/* 매도버튼 */}
             <button type="button" className="buy-sell-btn buy-btn">
-                매도하기
+                매수하기
             </button>
         </div>
     );
