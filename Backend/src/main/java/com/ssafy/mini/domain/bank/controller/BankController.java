@@ -7,6 +7,7 @@ import com.ssafy.mini.domain.bank.dto.response.BankSubscribeResponseDTO;
 import com.ssafy.mini.domain.bank.dto.response.BankTerminateResponseDTO;
 import com.ssafy.mini.domain.bank.service.BankService;
 import com.ssafy.mini.global.jwt.JwtProvider;
+import com.ssafy.mini.global.response.SuccessResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -68,6 +69,23 @@ public class BankController {
         String memberId = jwtProvider.extractMemberId(accessToken);
 
         return bankService.terminate(memberId, bankTerminateRequestDTO);
+    }
+
+    @ApiOperation(value = "내 자산 조회")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "내 자산 조회 성공"),
+            @ApiResponse(code = 404, message = "내 자산 조회 실패")
+    })
+    @GetMapping()
+    public SuccessResponse myAsset(@RequestHeader("Authorization") String accessToken) {
+
+        log.info("Bank Controller Layer:: myAsset() called");
+
+        String memberId = jwtProvider.extractMemberId(accessToken);
+
+        return SuccessResponse.builder()
+                .data(bankService.myAsset(memberId))
+                .build();
     }
 
 }
