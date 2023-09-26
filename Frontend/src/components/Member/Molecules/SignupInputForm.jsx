@@ -37,7 +37,7 @@ const SignupInputForm = () => {
     return (
         <div className="center">
             <img className={styles.logo} src={headerLogo} alt="logo" />
-            <MemberTitle title="회원가입" size={40} />
+            <br />
             <InputBox1
                 title="이름"
                 placeholder="이름"
@@ -65,6 +65,7 @@ const SignupInputForm = () => {
             />
             <br />
             <ButtonRadio1 setData={setStudent} />
+            <br />
             <ButtonLarge1
                 title="회원가입"
                 onClick={
