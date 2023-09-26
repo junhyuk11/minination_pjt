@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 public class ShopController {
 
     private final ProductService productService;
-
     private final JwtProvider jwtProvider;
 
     @GetMapping

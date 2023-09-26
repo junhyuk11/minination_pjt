@@ -1,12 +1,7 @@
 package com.ssafy.mini.domain.stockholding.service;
 
 import com.ssafy.mini.domain.account.entity.Account;
-import com.ssafy.mini.domain.account.entity.AccountDetail;
-import com.ssafy.mini.domain.account.repository.AccountDetailRepository;
-import com.ssafy.mini.domain.account.repository.AccountRepository;
 import com.ssafy.mini.domain.account.service.AccountService;
-import com.ssafy.mini.domain.master.entity.Master;
-import com.ssafy.mini.domain.master.repository.MasterRepository;
 import com.ssafy.mini.domain.stockholding.dto.request.TradeStockRequest;
 import com.ssafy.mini.domain.stockholding.dto.response.MyStockInfoResponse;
 import com.ssafy.mini.domain.stockholding.dto.response.PortfolioResponse;
@@ -20,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j

@@ -14,11 +14,15 @@ public class CorsConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
+        // 허용할 url
         config.addAllowedOrigin("https//j9a508.p.ssafy.io");
+        config.addAllowedOrigin("http//j9a508.p.ssafy.io");
         config.addAllowedOrigin("http://3.34.53.16:3000");
         config.addAllowedOrigin("http://localhost:3000");
-        config.setAllowedMethods(Arrays.asList("HEAD","POST","GET", "PUT", "DELETE", "OPTION"));
-        config.setAllowedHeaders(Arrays.asList("*"));
+        // 허용할 http method
+        config.addAllowedMethod("*");
+        // 허용할 header
+        config.addAllowedHeader("*");
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);

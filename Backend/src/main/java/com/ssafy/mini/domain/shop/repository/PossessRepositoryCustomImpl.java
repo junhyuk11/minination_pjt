@@ -1,6 +1,5 @@
 package com.ssafy.mini.domain.shop.repository;
 
-import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.mini.domain.shop.entity.Possess;
 import com.ssafy.mini.domain.shop.entity.QPossess;
@@ -23,5 +22,12 @@ public class PossessRepositoryCustomImpl implements PossessRepositoryCustom {
                         .and(possess.prodSeq.prodName.eq(name))
                 )
                 .fetchOne());
+    }
+
+    public Integer countPossessByMemberId (String memberId) {
+        return queryFactory.select(possess.possAmount.sum())
+                .from(possess)
+                .where(possess.memSeq.memId.eq(memberId))
+                .fetchOne();
     }
 }
