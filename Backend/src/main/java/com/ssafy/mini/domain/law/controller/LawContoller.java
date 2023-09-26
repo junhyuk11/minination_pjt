@@ -1,7 +1,6 @@
 package com.ssafy.mini.domain.law.controller;
 
 import com.ssafy.mini.domain.nation.dto.request.LawUpdateRequest;
-import com.ssafy.mini.domain.nation.dto.response.LawInfoResponse;
 import com.ssafy.mini.domain.nation.service.NationService;
 import com.ssafy.mini.global.jwt.JwtProvider;
 import com.ssafy.mini.global.response.SuccessResponse;
@@ -28,12 +27,15 @@ public class LawContoller {
             @ApiResponse(code = 200, message = "헌법 조회 성공"),
             @ApiResponse(code = 404, message = "헌법 조회 실패")
     })
-    public LawInfoResponse info(@RequestHeader("Authorization") String accessToken) {
+    public SuccessResponse info(@RequestHeader("Authorization") String accessToken) {
         log.info("Law Controller Layer:: info() called");
 
         String memberId = jwtProvider.extractMemberId(accessToken);
 
-        return nationService.info(memberId);
+        return SuccessResponse.builder()
+                .data(nationService.info(memberId))
+                .build();
+
     }
 
     @PutMapping
