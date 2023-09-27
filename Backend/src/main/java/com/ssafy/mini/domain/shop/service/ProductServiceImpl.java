@@ -38,6 +38,8 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductMapper productMapper;
 
+    private final String SHOP_EXPRESSION = "SP"; // master 테이블의 백화점 코드
+
     @Override
     public List<ProductInfoResponse> listProducts(String memberId) {
         log.info("Service Layer::listProducts() called");
@@ -88,10 +90,8 @@ public class ProductServiceImpl implements ProductService {
         int moneyNeed = product.getProdPrice() * buyProductRequest.getAmount();
         Account moneyHave = accountRepository.getMoneyToUse(memberId);
 
-        System.out.println(moneyNeed);
-        System.out.println(moneyHave.getAcctBalance());
         if (moneyNeed > moneyHave.getAcctBalance()) throw new MNException(ErrorCode.NOT_ENOUGH_MONEY); // 돈이 부족한 경우
-        accountService.updateAccountBalance(moneyHave, -moneyNeed, buyProductRequest.getProduct());
+        accountService.updateAccountBalance(moneyHave, -moneyNeed, SHOP_EXPRESSION , buyProductRequest.getProduct());
 
         // 보유한 상품 수량 변경
         Possess possess = possessRepository.findByMemberIdAndName(memberId, product.getProdName()).orElse(
@@ -146,7 +146,7 @@ public class ProductServiceImpl implements ProductService {
      * @param member 회원
      */
     private void isTeacher(Member member) {
-        if (!member.getMemType().getCode().equals("MEM01")) {
+        if (!member.getMemType().getExpression().equals("TC")) {
             throw new MNException(ErrorCode.NO_PERMISSION);
         }
     }
