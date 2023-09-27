@@ -3,6 +3,7 @@ import styles from './Foundation.module.css';
 import AdminTitle from '../Atoms/AdminTitle.jsx';
 import foundationImg from '../../../assets/images/foundation.jpg';
 import Info from '../Organisms/Info.jsx';
+import MemberTitle from '../../Member/Atoms/MemberTitle.jsx';
 
 const Foundation = () => {
     return (
@@ -13,7 +14,7 @@ const Foundation = () => {
                     <img src={foundationImg} className={styles.img} alt="" />
                     <div className={styles.info}>
                         <div className={styles.infoContent}>
-                            <AdminTitle title="국가정보" />
+                            <MemberTitle title="국가정보" size={30} />
                             <Info />
                         </div>
                     </div>

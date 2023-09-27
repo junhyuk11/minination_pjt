@@ -7,8 +7,7 @@ import ProductionTitle from '../Atoms/ProductionTitle.jsx';
 import ProductionStudent from '../Organisms/ProductionStudent.jsx';
 import ProductionTeacher from '../Organisms/ProductionTeacher.jsx';
 import ProductionButton2 from '../Atoms/ProductionButton2.jsx';
-import ProductionButton1 from '../Atoms/ProductionButton1.jsx';
-import './JobPosting.css';
+import styles from './JobPosting.module.css';
 
 const JobPosting = () => {
     const [identity, setIdentity] = useRecoilState(identityState);
@@ -76,17 +75,47 @@ const JobPosting = () => {
         Swal.fire({
             title: '직업 추가하기',
             html: `
-                <hr>
-                <div>직업명: <input id="jobName" type="text"></div>
-                <br>
-                <div>직업 설명: <input id="jobDesc" type="text"></div>
-                <br>
-                <div>주급: <input id="jobPay" type="number"></div>
-                <br>
-                <div>모집인원: <input id="jobRecruitCount" type="number"></div>
-                <br>
-                <div>자격요건: <input id="jobRequirement" type="text"></div>
-                <hr>
+            <hr>
+            <div>직업명: <input id="jobName" type="text" style="border-radius: 10px; height: 30px;"></div>
+            <br>
+            <div>직업 설명: <input id="jobDesc" type="text" style="border-radius: 10px; height: 30px;"></div>
+            <br>
+            <div>주급: <input id="jobPay" type="number" style="border-radius: 10px; height: 30px;"></div>
+            <br>
+            <div>모집인원: <input id="jobRecruitCount" type="number" style="border-radius: 10px; height: 30px;"></div>
+            <br>
+            <div>자격요건: <input id="jobRequirement" type="text" style="border-radius: 10px; height: 30px;"></div>
+            <hr>
+            <style>
+            input {
+                border: 1px solid #d8d8d8;
+                text-align: center;
+                font-size: 20px;
+                width: 100px;
+            }
+            input[type="number"] {
+                background-image: url('data:image/svg+xml;utf8,%3Csvg%20version%3D%221.1%22%20viewBox%3D%220%200%2050%2067%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22none%22%20stroke-width%3D%222%22%3E%3Cline%20x1%3D%221%22%20x2%3D%2250%22%20y1%3D%2233.5%22%20y2%3D%2233.5%22%20stroke%3D%22%23D8D8D8%22%2F%3E%3Cpolyline%20transform%3D%22translate(25%2020)%20rotate(45)%20translate(-25%20-20)%22%20points%3D%2219%2026%2019%2014%2032%2014%22%20stroke%3D%22%23000%22%2F%3E%3Cpolyline%20transform%3D%22translate(25%2045)%20rotate(225)%20translate(-25%20-45)%22%20points%3D%2219%2052%2019%2039%2032%2039%22%20stroke%3D%22%23000%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E');
+                background-position: center right;
+                background-size: contain;
+                background-repeat: no-repeat;
+                caret-color: transparent;
+            }              
+            input[type="number"]::-webkit-inner-spin-button {
+                -webkit-appearance: none !important;
+                opacity: 1 !important;
+                background: transparent !important;
+                border-width: 0px;
+                margin: 0;
+                border-left: 1px solid #d8d8d8;
+                height: 34px;
+                width: 23px;
+                cursor: pointer;
+              }
+            input[type="text"]:focus,
+            input[type="number"]:focus {
+                caret-color: initial; /* 포커스 시 커서의 기본 색상 사용 */
+            }
+            </style>
             `,
             showCancelButton: true,
             confirmButtonText: '확인',
@@ -138,29 +167,17 @@ const JobPosting = () => {
     return (
         <div>
             <NavBar username="여우" totalBalance="30000" />
-            <div className="jobposting-container">
-                <ProductionTitle title="채용 공고" size={30} />
-                {identity === 'TC' && (
-                    <ProductionButton2
-                        title="직업 추가하기"
-                        onClick={handleAddClick}
-                    />
-                )}
-                <div className="student-teacher-selector">
-                    <div style={{ display: 'flex' }}>
-                        <ProductionButton1
-                            title="선생님으로 변경"
-                            onClick={() => {
-                                setIdentity('TC');
-                            }}
+            <div className={styles.container}>
+                <div className={styles.title}>
+                    <ProductionTitle title="채용 공고" size={25} />
+                </div>
+                <div className={styles.addButton}>
+                    {identity === 'TC' && (
+                        <ProductionButton2
+                            title="직업 추가하기"
+                            onClick={handleAddClick}
                         />
-                        <ProductionButton1
-                            title="학생으로 변경"
-                            onClick={() => {
-                                setIdentity('ST');
-                            }}
-                        />
-                    </div>
+                    )}
                 </div>
             </div>
             {/* Conditional rendering based on the identity state */}

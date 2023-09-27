@@ -1,10 +1,10 @@
 import React from 'react';
 
-const ProductionTitle = ({ title, size }) => {
+const ProductionTitle = ({ title }) => {
     const titleStyle = {
-        fontSize: `${size}px`,
+        fontSize: '15px',
         Width: '140px',
-        margin: 'auto',
+        textAlign: 'right',
     };
     return <div style={titleStyle}>{title}</div>;
 };

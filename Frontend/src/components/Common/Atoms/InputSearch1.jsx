@@ -25,7 +25,6 @@ function InputSearch1({ text, onClick, onChange }) {
         width: '30px',
         height: '30px',
         cursor: 'pointer',
-        outline: 'none',
     };
 
     const inputRef = useRef(null);

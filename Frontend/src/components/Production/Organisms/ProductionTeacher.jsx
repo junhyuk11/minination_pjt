@@ -1,13 +1,14 @@
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
 import uuid from 'react-uuid';
+import swal from 'sweetalert2';
 import ProductionRow from '../Molecules/ProductionRow.jsx';
 import ProductionTitle from '../Atoms/ProductionTitle.jsx';
 import ProductionButton1 from '../Atoms/ProductionButton1.jsx';
 import ProductionRequirement from '../Atoms/ProductionRequirement.jsx';
 import styles from './ProductionTeacher.module.css';
 import ProductionApplicantModal from './ProductionApplicantModal.jsx';
-import ProductionCategoryTeacher from './../Molecules/ProductionCatergoryTeacher';
+import ProductionCategoryTeacher from "../Molecules/ProductionCatergoryTeacher.jsx";
 
 const ProductionTeacher = ({ jobList }) => {
     // --------------직원 관리하기-------------------
@@ -31,8 +32,24 @@ const ProductionTeacher = ({ jobList }) => {
     };
     // ---------------------------------------------
     const handleDeleteClick = name => {
-        // api 삭제 요청
+        swal.fire({
+            icon: 'warning',
+            title: '삭제하시겠습니까?',
+            showCancelButton: true,
+            confirmButtonText: '확인',
+            cancelButtonText: '취소',
+        }).then(result => {
+            if (result.isConfirmed) {
+                // 삭제 처리 로직을 구현하고, 필요한 API 호출을 수행합니다.
+                swal.fire({
+                    icon: 'success',
+                    title: '삭제하였습니다.',
+                    confirmButtonText: '확인',
+                });
+            }
+        });
     };
+
 
     const productionRows = jobList.map(job => (
         <ProductionRow
@@ -57,12 +74,14 @@ const ProductionTeacher = ({ jobList }) => {
                 <ProductionButton1
                     title="인원관리"
                     onClick={() => handleManageClick(job.name)}
+                    color="#2B788B"
                 />
             }
             Comp8={
                 <ProductionButton1
                     title="삭제하기"
                     onClick={() => handleDeleteClick(job.name)}
+                    color="#2B788B"
                 />
             }
             className={styles.container}
@@ -74,10 +93,12 @@ const ProductionTeacher = ({ jobList }) => {
             <ProductionCategoryTeacher />
             {productionRows}
             {isModalOpen && (
+                <div className={styles.modalBackground}>                
                 <ProductionApplicantModal
                     applicants={applicants} // applicants 전달
                     setIsModalOpen={setIsModalOpen}
                 />
+            </div>
             )}
         </div>
     );

@@ -8,9 +8,9 @@ function ProductionButton2({ title, onClick }) {
         width: '100px',
         height: '50px',
         borderRadius: '2rem',
-        border: '1px solid #029664',
+        border: '1px solid #2B788B',
         backgroundColor: 'white',
-        color: '#029664',
+        color: '#2B788B',
         cursor: 'pointer',
     };
 
