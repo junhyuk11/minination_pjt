@@ -15,6 +15,7 @@ import com.ssafy.mini.domain.master.entity.Master;
 import com.ssafy.mini.domain.master.repository.MasterRepository;
 import com.ssafy.mini.domain.member.entity.Member;
 import com.ssafy.mini.domain.member.repository.MemberRepository;
+import com.ssafy.mini.domain.member.service.MemberService;
 import com.ssafy.mini.domain.stockholding.service.StockholdingService;
 import com.ssafy.mini.global.exception.ErrorCode;
 import com.ssafy.mini.global.exception.MNException;
@@ -40,6 +41,7 @@ public class BankServiceImpl implements BankService {
     private final AccountDetailRepository accountDetailRepository;
 
     private final StockholdingService stockholdingService;
+    private final MemberService memberService;
 
     @Override
     public BankInfoResponseDTO info() {
@@ -89,10 +91,8 @@ public class BankServiceImpl implements BankService {
         byte period = bankSubscribeRequestDTO.getTerm();
         int amount = bankSubscribeRequestDTO.getAmount();
 
-        // 일반 계좌에 1회차 납입할 잔액이 있는지 확인
+        // 사용자의 일반 계좌 가져오기
         Account normalAccount = accountRepository.getMoneyToUse(memberId);
-        if (normalAccount.getAcctBalance() < amount)
-            throw new MNException(ErrorCode.NOT_ENOUGH_BALANCE);
 
         String bankExpression = bankType.substring(0, 1) + period;
 
@@ -128,20 +128,6 @@ public class BankServiceImpl implements BankService {
             expAmount = amount * period * 4 * (100 + rate) / 100;
         }
 
-        // 예적금 계좌 개설
-        Account newAccount = Account.builder()
-                .member(member)
-                .bankCode(bankCode)
-                .acctBalance(amount)
-                .acctStartDate(Timestamp.valueOf(now))
-                .acctExpireDate(Timestamp.valueOf(now.plusWeeks(period * 4)))
-                .acctDay(now.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.US).toUpperCase(Locale.ROOT))
-                .acctSaving(acctSaving)
-                .expAmount(expAmount)
-                .build();
-
-        accountRepository.save(newAccount);
-
         // 일반 잔고 잔액 차감
         transfer(amount, normalAccount);
 
@@ -156,6 +142,20 @@ public class BankServiceImpl implements BankService {
                 .date(now)
                 .build()
         );
+
+        // 예적금 계좌 개설
+        Account newAccount = Account.builder()
+                .member(member)
+                .bankCode(bankCode)
+                .acctBalance(amount)
+                .acctStartDate(Timestamp.valueOf(now))
+                .acctExpireDate(Timestamp.valueOf(now.plusWeeks(period * 4)))
+                .acctDay(now.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.US).toUpperCase(Locale.ROOT))
+                .acctSaving(acctSaving)
+                .expAmount(expAmount)
+                .build();
+
+        accountRepository.save(newAccount);
 
         return BankSubscribeResponseDTO
                 .builder()
@@ -262,6 +262,8 @@ public class BankServiceImpl implements BankService {
         // 잔고 차감 및 반영
         account.updateAcctBalance(-amount);
         accountRepository.save(account);
+
+        memberService.updateBalance(account.getMember().getMemId(), -amount);
     }
 
     private AssetDTO getAsset(Member member) {

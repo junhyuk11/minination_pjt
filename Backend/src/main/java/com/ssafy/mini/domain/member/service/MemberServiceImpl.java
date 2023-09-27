@@ -27,7 +27,7 @@ import java.util.Random;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class MemberServiceImpl implements MemberService{
+public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
     private final MasterRepository masterRepository;
@@ -146,6 +146,7 @@ public class MemberServiceImpl implements MemberService{
 
     /**
      * 비밀번호 암호화
+     *
      * @param password 비밀번호
      * @return 암호화된 비밀번호
      */
@@ -155,6 +156,7 @@ public class MemberServiceImpl implements MemberService{
 
     /**
      * 카드 번호 랜덤 생성
+     *
      * @return 카드 번호
      */
     private String generateCardNumber() {
@@ -167,7 +169,7 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public String getMemberType(String memberId){
+    public String getMemberType(String memberId) {
         Member member = memberRepository.findByMemId(memberId)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
 
@@ -181,6 +183,18 @@ public class MemberServiceImpl implements MemberService{
                 .getIsoSeq();
 
         return nation;
+    }
+
+    @Override
+    public void updateBalance(String memberId, int amount) {
+
+        Member member = memberRepository.findByMemId(memberId)
+                .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
+
+        member.updateMembalance(amount);
+
+        memberRepository.save(member);
+
     }
 
 
