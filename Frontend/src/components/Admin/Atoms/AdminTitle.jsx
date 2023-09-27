@@ -1,10 +1,14 @@
 import React from 'react';
 
-function AdminTitle({ title }) {
+function AdminTitle({ title, size }) {
     const titleStyle = {
-        fontSize: '40px', // 폰트 크기를 40px로 설정
+        fontSize: `${size}px`, // 폰트 크기를 40px로 설정
     };
     return <div style={titleStyle}>{title}</div>;
 }
 
 export default AdminTitle;
+
+AdminTitle.defaultProps = {
+    size: 30,
+};

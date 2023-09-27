@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import styles from './ProductionApplicantModal.module.css'; // CSS 모듈 가져오기
 import ProductionTitle from '../Atoms/ProductionTitle.jsx';
 import ProductionButton1 from '../Atoms/ProductionButton1.jsx';
+import ProductionSemiTitle from '../Molecules/ProductionSemiTitle.jsx';
 
 const ProductionApplicantModal = ({ applicants, setIsModalOpen }) => {
     const handleCloseClick = () => {
@@ -73,15 +74,21 @@ const ProductionApplicantModal = ({ applicants, setIsModalOpen }) => {
         <div key={applicantName}>
             <hr />
             <div className={styles.modalRow}>
-                <p>{applicantName}</p>
-                <ProductionButton1
-                    title="승인"
-                    onClick={() => handleApprove(applicantName)}
-                />
-                <ProductionButton1
-                    title="거절"
-                    onClick={() => handleReject(applicantName)}
-                />
+                <div className={styles.modalRowName}>
+                    <p>{applicantName}</p>
+                </div>
+                <div className={styles.modalRowButtons}>
+                    <ProductionButton1
+                        title="승인"
+                        onClick={() => handleApprove(applicantName)}
+                        color="#2B788B"
+                    />
+                    <ProductionButton1
+                        title="거절"
+                        onClick={() => handleReject(applicantName)}
+                        color="#2B788B"
+                    />
+                </div>
             </div>
         </div>
     ));
@@ -90,19 +97,25 @@ const ProductionApplicantModal = ({ applicants, setIsModalOpen }) => {
         <div key={employeeName}>
             <hr />
             <div className={styles.modalRow}>
-                <p>{employeeName}</p>
-                <ProductionButton1
-                    title="해고"
-                    onClick={() => handleFire(employeeName)}
-                />
+                <div className={styles.modalRowName}>
+                    <p>{employeeName}</p>
+                </div>
+                <div className={styles.modalRowButtons}>
+                    <ProductionButton1
+                        title="해고"
+                        onClick={() => handleFire(employeeName)}
+                        color="#8B3C2B"
+                    />
+                </div>
             </div>
         </div>
     ));
 
     const semiTitle = `인원수: 신청 ${applicants.applicant_count} 모집 ${applicants.recruit_total_count} 근로 ${applicants.employee_count} 잔여 ${applicants.recruit_left_count}`;
+
     return (
         <div className={styles.wrapper}>
-            <div className={styles.modalCard}>
+            <div className={styles.closeButtonWrapper}>
                 <button
                     className={styles.closeButton}
                     onClick={handleCloseClick}
@@ -110,12 +123,15 @@ const ProductionApplicantModal = ({ applicants, setIsModalOpen }) => {
                 >
                     X
                 </button>
-                <div style={{ height: '40px' }} />
+            </div>
+            <div className={styles.modalCard}>
+                <div className={styles.modalTitle} />
                 <ProductionTitle title="신청자명단" size={30} />
-                <ProductionTitle title={semiTitle} size={15} />
+                <ProductionSemiTitle title={semiTitle} />
                 <div>{applicantRows}</div>
                 <div style={{ height: '40px' }} />
                 <ProductionTitle title="직원명단" size={30} />
+                <br />
                 <div>{employeeRows}</div>
             </div>
         </div>

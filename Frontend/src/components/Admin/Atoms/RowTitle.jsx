@@ -1,11 +1,16 @@
 import React from 'react';
 
-const RowTitle = ({ text }) => {
+const RowTitle = ({ text, size }) => {
     const hrStyle = {
-        size: '20px',
+        fontSize: `${size}px`,
+        width: '25%',
     };
 
     return <div style={hrStyle}>{text}</div>;
 };
 
 export default RowTitle;
+
+RowTitle.defaultProps = {
+    size: 20,
+};

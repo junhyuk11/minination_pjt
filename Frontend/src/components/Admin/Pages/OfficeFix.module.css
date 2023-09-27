@@ -5,18 +5,16 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    display: flex; /* 부모 요소를 플렉스 컨테이너로 설정 */
-    align-items: center; /* 세로 방향 가운데 정렬 */
-    justify-content: center; /* 가로 방향 가운데 정렬 */
   }
   
   .info {
     width: 60vw;
-    height: 60vh;
+    min-height: 70vh;
+    height: auto;
     flex-shrink: 0;
     border-radius: 20px;
     background: #FFF;
-    margin: auto auto;
+    margin: 0 auto 5vh;
     border: solid grey 1px;
     box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.5);
     display: flex;
@@ -25,6 +23,7 @@
 }
 
 .content {
-    width: 50vw;
-    height: 50vh;
+    width: 40vw;
+    min-height: 50vh;
+    height: auto;
 }

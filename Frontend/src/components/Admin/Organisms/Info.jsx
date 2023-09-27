@@ -6,6 +6,7 @@ import ButtonMiddle1 from '../../Common/Atoms/ButtonMiddle1.jsx';
 import { useNavigation } from '../../../hooks/useNavigation.jsx';
 import RowDescription from '../Atoms/RowDescription.jsx';
 import Modal1 from './Modal1.jsx';
+import styles from './Info.module.css';
 
 const Info = () => {
     const [dropdownStates, setDropdownStates] = useState({
@@ -68,34 +69,20 @@ const Info = () => {
         navigateToDashboard();
     };
 
-    const hrStyle = {
-        width: '80%',
-        height: '1px',
-        background: 'grey',
-    };
-
-    const infoRowStyle = {
-        fontWeight: 'bold',
-    };
-
     return (
         <div>
-            <hr style={hrStyle} />
-            <div style={infoRowStyle}>
+            <hr className={styles.hrStyle} />
+            <div className={styles.infoRowStyle}>
                 <InfoRow
                     title="국가명"
                     secondComp={
                         <RowInput
                             text={inputText}
                             onTextChange={handleInputTextChange}
+                            width={100}
                         />
                     }
-                    thirdComp={
-                        <RowDescription
-                            text="한글, 영문, 숫자 혼용가능 
-                    (한글 기준 8자 이내)"
-                        />
-                    }
+                    thirdComp={<RowDescription text="한글기준 8자 이내" />}
                 />
                 <InfoRow
                     title="화폐명"
@@ -103,9 +90,10 @@ const Info = () => {
                         <RowInput
                             text={currencyInputText}
                             onTextChange={handleCurrencyInputTextChange}
+                            width={100}
                         />
                     }
-                    thirdComp={<RowDescription text="한글 2자 이내" />}
+                    thirdComp={<RowDescription text="2자 이내 한글" />}
                 />
                 <InfoRow
                     title="주급 수령일"
@@ -159,17 +147,19 @@ const Info = () => {
                 />
             </div>
             <ButtonMiddle1 title="완료" onClick={handleCompleteClick} />
-            {/* 모달을 표시하는 로직 */}
+            {/* 배경 모달 */}
             {isModalOpen && (
-                <Modal1
-                    handleClick={handleModalClick}
-                    selectedDay={selectedDay}
-                    selectedIncomeTax={selectedIncomeTax}
-                    selectedVAT={selectedVAT}
-                    inputText={inputText}
-                    currencyInputText={currencyInputText}
-                    setIsModalOpen={setIsModalOpen}
-                />
+                <div className={styles.modalBackground}>
+                    <Modal1
+                        handleClick={handleModalClick}
+                        selectedDay={selectedDay}
+                        selectedIncomeTax={selectedIncomeTax}
+                        selectedVAT={selectedVAT}
+                        inputText={inputText}
+                        currencyInputText={currencyInputText}
+                        setIsModalOpen={setIsModalOpen}
+                    />
+                </div>
             )}
         </div>
     );

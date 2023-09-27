@@ -1,11 +1,14 @@
 import React from 'react';
 import './NavBar.css';
+import { useRecoilState } from 'recoil';
 import { useNavigation } from '../../../hooks/useNavigation.jsx';
 import logoimage from '../../../assets/images/header-logo.png';
+import ProductionButton1 from '../../Production/Atoms/ProductionButton1.jsx';
+import { identityState } from '../../../recoil/atoms.jsx';
 
 function NavBar({ username, totalBalance }) {
     const { navigateToBankPage } = useNavigation();
-
+    const [identity, setIdentity] = useRecoilState(identityState);
     return (
         <div className="header">
             <div class="inner">
@@ -13,6 +16,20 @@ function NavBar({ username, totalBalance }) {
                     <a href="/home/dashboard">
                         <img src={logoimage} alt="로고" className="logo" />
                     </a>
+                    <div style={{ display: 'flex' }}>
+                        <ProductionButton1
+                            title="선생님으로 변경"
+                            onClick={() => {
+                                setIdentity('TC');
+                            }}
+                        />
+                        <ProductionButton1
+                            title="학생으로 변경"
+                            onClick={() => {
+                                setIdentity('ST');
+                            }}
+                        />
+                    </div>
                     <div className="links">
                         <a href="/stockexchange/stock" className="navbar-btn">
                             증권거래소

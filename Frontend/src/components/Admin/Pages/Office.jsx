@@ -22,6 +22,15 @@ const Office = () => {
                 className={styles.background}
                 style={{ backgroundImage: `url(${backgroundImage})` }}
             >
+                <div
+                    style={{
+                        paddingTop: '2%',
+                        paddingBottom: '1%',
+                        textAlign: 'center',
+                    }}
+                >
+                    <Title title="집무실" size="40" />
+                </div>
                 <div className={styles.info}>
                     <div className={styles.content}>
                         <Title title="국가정보" />
