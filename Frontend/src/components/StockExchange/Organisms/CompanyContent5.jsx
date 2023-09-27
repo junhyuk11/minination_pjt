@@ -2,15 +2,13 @@
 import React from 'react';
 import './CompanyContent.css';
 
-import KakaoCover from '../../../assets/images/kakao-cover.jpg';
-
 const CompanyContent5 = () => {
     return (
         <div class="company-content-container">
             <div class="company-name">카카오</div>
             <div class="company-image-parent">
                 <img
-                    src={KakaoCover}
+                    src="https://t1.daumcdn.net/news/202306/14/NEWS1/20230614053113460wari.gif"
                     alt="카카오배경"
                     class="company-coverimage"
                 />

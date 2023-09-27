@@ -2,15 +2,13 @@
 import React from 'react';
 import './CompanyContent.css';
 
-import SamsungCover from '../../../assets/images/samsung-cover.png';
-
 const CompanyContent1 = () => {
     return (
         <div class="company-content-container">
             <div class="company-name">삼성전자</div>
             <div class="company-image-parent">
                 <img
-                    src={SamsungCover}
+                    src="https://biz.chosun.com/resizer/5DEr4LtJ1dSz7ZQ35ogDanBaJoE=/616x0/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosunbiz/XLYL7D7AJVHDXK57Z6RROVD4X4.gif"
                     alt="삼성배경"
                     class="company-coverimage"
                 />

@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import './BuySell.css';
+import Swal from 'sweetalert2';
 
 import SamsungLogo from '../../../assets/images/samsung-logo.png';
 import HyundaiLogo from '../../../assets/images/hyundai-logo.png';
@@ -37,6 +38,10 @@ const BuyContent = () => {
         } else {
             setFinalPrice(null);
         }
+    };
+
+    const handleBuyClick = () => {
+        Swal.fire('매수되었습니다.');
     };
 
     return (
@@ -139,7 +144,11 @@ const BuyContent = () => {
                 </div>
             </div>
             {/* 매도버튼 */}
-            <button type="button" className="buy-sell-btn buy-btn">
+            <button
+                type="button"
+                className="buy-sell-btn buy-btn"
+                onClick={handleBuyClick}
+            >
                 매수하기
             </button>
         </div>

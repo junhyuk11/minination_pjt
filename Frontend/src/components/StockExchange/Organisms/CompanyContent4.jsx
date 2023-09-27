@@ -2,15 +2,13 @@
 import React from 'react';
 import './CompanyContent.css';
 
-import HybeCover from '../../../assets/images/hybe-cover.png';
-
 const CompanyContent4 = () => {
     return (
         <div class="company-content-container">
             <div class="company-name">하이브</div>
             <div class="company-image-parent">
                 <img
-                    src={HybeCover}
+                    src="https://cloudfront-ap-northeast-1.images.arcpublishing.com/chosunbiz/VUSCZGH3E5ARJEDG5ZKSFXQZ5E.gif"
                     alt="하이브배경"
                     class="company-coverimage"
                 />

@@ -2,16 +2,14 @@
 import React from 'react';
 import './CompanyContent.css';
 
-import HyundaiCover from '../../../assets/images/hyundai-cover.jpg';
-
 const CompanyContent2 = () => {
     return (
         <div class="company-content-container">
             <div class="company-name">현대자동차</div>
             <div class="company-image-parent">
                 <img
-                    src={HyundaiCover}
-                    alt="삼성배경"
+                    src="https://blog.kakaocdn.net/dn/bCmfq4/btqxG7OOGdC/Eepm4tqFfQOy6KkY9maiqk/img.gif"
+                    alt="현대차배경"
                     class="company-coverimage"
                 />
             </div>

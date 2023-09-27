@@ -22,7 +22,7 @@
 
 .company-coverimage {
   width: 100%;
-  max-height: 300px;
+  max-height: 280px;
   margin: 0 auto;
   border-radius: 20px;
   object-fit: cover;
