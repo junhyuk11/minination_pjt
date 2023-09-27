@@ -8,6 +8,7 @@ import com.ssafy.mini.domain.member.repository.MemberRepository;
 import com.ssafy.mini.domain.shop.dto.request.AddProductRequest;
 import com.ssafy.mini.domain.shop.dto.request.BuyProductRequest;
 import com.ssafy.mini.domain.shop.dto.request.DeleteProductRequest;
+import com.ssafy.mini.domain.shop.dto.response.MyProductResponse;
 import com.ssafy.mini.domain.shop.dto.response.ProductInfoResponse;
 import com.ssafy.mini.domain.shop.entity.Possess;
 import com.ssafy.mini.domain.shop.entity.Product;
@@ -36,6 +37,8 @@ public class ProductServiceImpl implements ProductService {
     private final AccountRepository accountRepository;
 
     private final ProductMapper productMapper;
+
+    private final String SHOP_EXPRESSION = "SP"; // master 테이블의 백화점 코드
 
     @Override
     public List<ProductInfoResponse> listProducts(String memberId) {
@@ -87,10 +90,8 @@ public class ProductServiceImpl implements ProductService {
         int moneyNeed = product.getProdPrice() * buyProductRequest.getAmount();
         Account moneyHave = accountRepository.getMoneyToUse(memberId);
 
-        System.out.println(moneyNeed);
-        System.out.println(moneyHave.getAcctBalance());
         if (moneyNeed > moneyHave.getAcctBalance()) throw new MNException(ErrorCode.NOT_ENOUGH_MONEY); // 돈이 부족한 경우
-        accountService.updateAccountBalance(moneyHave, -moneyNeed, buyProductRequest.getProduct());
+        accountService.updateAccountBalance(moneyHave, -moneyNeed, SHOP_EXPRESSION , buyProductRequest.getProduct());
 
         // 보유한 상품 수량 변경
         Possess possess = possessRepository.findByMemberIdAndName(memberId, product.getProdName()).orElse(
@@ -120,6 +121,16 @@ public class ProductServiceImpl implements ProductService {
         possessRepository.save(possess);
     }
 
+    @Override
+    public List<MyProductResponse> listMyProducts(String memberId) {
+        List<Possess> myProducts = possessRepository.findAllByMemId(memberId);
+
+        // 보유한 물품이 0개 이상인 경우에 대해서만 반환
+        return myProducts.stream().filter(possess -> possess.getPossAmount() > 0)
+                .map(possess -> productMapper.possessToMyProductResponse(possess))
+                .collect(Collectors.toList());
+    }
+
     /**
      * 회원 아이디로 회원 찾기
      * @param memberId 회원 아이디
@@ -135,7 +146,7 @@ public class ProductServiceImpl implements ProductService {
      * @param member 회원
      */
     private void isTeacher(Member member) {
-        if (!member.getMemType().getCode().equals("MEM01")) {
+        if (!member.getMemType().getExpression().equals("TC")) {
             throw new MNException(ErrorCode.NO_PERMISSION);
         }
     }

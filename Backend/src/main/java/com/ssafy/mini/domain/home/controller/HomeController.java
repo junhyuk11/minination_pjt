@@ -1,6 +1,5 @@
 package com.ssafy.mini.domain.home.controller;
 
-import com.ssafy.mini.domain.home.dto.response.HomeInfoResponse;
 import com.ssafy.mini.domain.home.service.HomeService;
 import com.ssafy.mini.global.jwt.JwtProvider;
 import com.ssafy.mini.global.response.SuccessResponse;
@@ -10,7 +9,10 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController

@@ -39,13 +39,13 @@ public class AccountServiceImpl implements AccountService {
      * @param moneyNeed 필요 금액
      * @param organization 거래처
      */
-    public void updateAccountBalance(Account moneyHave, int moneyNeed, String organization) {
+    public void updateAccountBalance(Account moneyHave, int moneyNeed, String category, String organization) {
         // 보유 금액 변경
         moneyHave.updateAcctBalance(moneyNeed);
         accountRepository.save(moneyHave);
 
         // 거래 내역 기록
-        Master master = masterRepository.findById("TRX01")
+        Master master = masterRepository.findByExpression(category)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_CODE));
         AccountDetail accountDetail = AccountDetail.builder()
                 .account(moneyHave)

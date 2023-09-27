@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 public class ShopController {
 
     private final ProductService productService;
-
     private final JwtProvider jwtProvider;
 
     @GetMapping
@@ -114,6 +113,24 @@ public class ShopController {
         String memberId = jwtProvider.extractMemberId(accessToken);
         productService.useProduct(memberId, deleteProductRequest);
         return SuccessResponse.builder()
+                .build();
+    }
+
+    @GetMapping("/my")
+    @ApiOperation(value = "내가 가진 품목 리스트")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "물품 조회 성공"),
+            @ApiResponse(code = 403, message = "유효하지 않은 토큰"),
+            @ApiResponse(code = 404, message = "물품 조회 실패")
+    })
+    public SuccessResponse useProduct (
+            @RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken
+    ) {
+        log.info("Controller Layer::useProduct() called");
+        String memberId = jwtProvider.extractMemberId(accessToken);
+        productService.listMyProducts(memberId);
+        return SuccessResponse.builder()
+                .data(productService.listMyProducts(memberId))
                 .build();
     }
 }

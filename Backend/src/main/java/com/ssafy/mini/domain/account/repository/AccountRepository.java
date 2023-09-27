@@ -1,7 +1,11 @@
 package com.ssafy.mini.domain.account.repository;
 
 import com.ssafy.mini.domain.account.entity.Account;
+import com.ssafy.mini.domain.master.entity.Master;
+import com.ssafy.mini.domain.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
 
 public interface AccountRepository extends JpaRepository<Account, Integer>, AccountRepositoryCustom {
 
@@ -12,4 +16,8 @@ public interface AccountRepository extends JpaRepository<Account, Integer>, Acco
      */
     Account getMoneyToUse(String memberId);
 
+//    @Query("select a from Account a where a.member = ?1 and a.bankCode = ?2")
+    Account findByMemberAndBankCode(Member member, Master bankCode);
+
+    List<Account> findByMember(Member member);
 }
