@@ -294,12 +294,12 @@ public class BankServiceImpl implements BankService {
     private List<FlowDTO> getFlow(Member member) {
 
         List<FlowDTO> flowDTOList = new ArrayList<>();
-        List<Asset> assetList = assetRepository.findByMemberOrderByAssetDtDesc(member);
+        List<Asset> assetList = assetRepository.findTop30ByMemberOrderByAssetDtDesc(member);
 
-        for (Asset asset : assetList) {
+        for(int index = assetList.size() - 1; index >= 0; index--){
             flowDTOList.add(FlowDTO.builder()
-                    .date(asset.getAssetDt().toString().substring(0, 10))
-                    .asset(asset.getAssetBalance())
+                    .time(assetList.get(index).getAssetDt().toString().substring(0, 10))
+                    .asset(assetList.get(index).getAssetBalance())
                     .build());
         }
 

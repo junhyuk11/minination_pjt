@@ -11,6 +11,6 @@ public interface AssetRepository extends JpaRepository<Asset, Integer>, AssetRep
 
     List<ChartDto> getAssetsByNation(short isoSeq);
 
-    List<Asset> findByMemberOrderByAssetDtDesc(Member member);
+    List<Asset> findTop30ByMemberOrderByAssetDtDesc(Member member);
 
 }
