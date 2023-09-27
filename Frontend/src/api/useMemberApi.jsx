@@ -81,19 +81,13 @@ const memberPutPassword = async password => {
 
 const memberPostLogin = async (id, password) => {
     try {
+        console.log('여기');
         const response = await useAxiosInstance
             .apiClient()
             .post(`/member/login`, { id, password });
         return response.data;
     } catch (e) {
-        if (e.response.data.status === 404) {
-            console.log('404에러');
-            return e.response.data;
-        }
-        if (e.response.data.status === 403) {
-            console.log('403에러');
-            return e.response.data;
-        }
+        console.log(e);
     }
     return null;
 };

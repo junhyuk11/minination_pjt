@@ -45,7 +45,8 @@ const shopDeleteShop = async product => {
         const jwt = sessionStorage.getItem('accessToken');
         const response = await useAxiosInstance
             .authApiClient(jwt)
-            .delete(`/shop`, { product });
+            .delete(`/shop`, { data: product });
+        console.log('삭제 잘됨', response.data);
         return response.data;
     } catch (e) {
         if (e.response.data.status === 404) {
@@ -57,6 +58,7 @@ const shopDeleteShop = async product => {
             return e.response.data;
         }
     }
+    console.log('삭제 안됨');
     return null;
 };
 
@@ -86,12 +88,12 @@ const shopGetList = async () => {
         const response = await useAxiosInstance.authApiClient(jwt).get(`/shop`);
         return response.data;
     } catch (e) {
-        if (e.response.data.status === 404) {
-            console.log('404에러');
+        if (e.response.data.code === 404) {
+            console.log('404에러 api에서');
             return e.response.data;
         }
-        if (e.response.data.status === 403) {
-            console.log('403에러');
+        if (e.response.data.code === 403) {
+            console.log('403에러 api에서');
             return e.response.data;
         }
     }
