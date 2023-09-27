@@ -1,7 +1,9 @@
 package com.ssafy.mini.domain.shop.mapper;
 
 import com.ssafy.mini.domain.shop.dto.request.AddProductRequest;
+import com.ssafy.mini.domain.shop.dto.response.MyProductResponse;
 import com.ssafy.mini.domain.shop.dto.response.ProductInfoResponse;
+import com.ssafy.mini.domain.shop.entity.Possess;
 import com.ssafy.mini.domain.shop.entity.Product;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -21,4 +23,10 @@ public interface ProductMapper {
     @Mapping(source = "desc", target = "prodDesc")
     @Mapping(source = "price", target = "prodPrice")
     Product addProductRequestToProduct(AddProductRequest addProductRequest);
+
+    @Mapping(source = "possess.prodSeq.prodName", target = "product")
+    @Mapping(source = "possess.prodSeq.prodDesc", target = "desc")
+    @Mapping(source = "possess.prodSeq.prodPrice", target = "price")
+    @Mapping(source = "possAmount", target = "amount")
+    MyProductResponse possessToMyProductResponse(Possess possess);
 }
