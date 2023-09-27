@@ -104,7 +104,10 @@ const MarketStudent = () => {
     return (
         <div>
             <div className="marketRightText">
-                <ButtonLarge1 title={`사용가능한 금액 : ${cash}`} />
+                <div class="market-asset-card center">
+                    {`사용가능한 금액 : ${cash}`}
+                </div>
+                {/* <ButtonLarge1 title={`사용가능한 금액 : ${cash}`} /> */}
             </div>
             <div className="marketLeftText">구매할 수 있는 물품</div>
             <div className="marketStudentTableWrapper">
