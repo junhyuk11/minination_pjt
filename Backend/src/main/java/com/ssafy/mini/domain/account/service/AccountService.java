@@ -6,7 +6,7 @@ public interface AccountService {
 
     Account getNormalAccount(String memberId);
 
-    public void updateAccountBalance(Account moneyHave, int moneyNeed, String organization);
+    public void updateAccountBalance(Account moneyHave, int moneyNeed, String category, String organization);
 
 
 }

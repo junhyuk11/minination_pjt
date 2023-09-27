@@ -28,6 +28,8 @@ public class StockholdingServiceImpl implements StockholdingService {
     private final StockRepository stockRepository;
     private final CorporationRepository corporationRepository;
 
+    private final String STOCK_EXPRESSION = "SK"; // master 테이블의 주식 코드
+
     @Override
     public MyStockInfoResponse getPortfolio(String memberId) {
         log.info("Service Layer::getPortfolio() called");
@@ -64,7 +66,7 @@ public class StockholdingServiceImpl implements StockholdingService {
         Account moneyHave = accountService.getNormalAccount(memberId);
 
         if (moneyNeed > moneyHave.getAcctBalance()) throw new MNException(ErrorCode.NOT_ENOUGH_MONEY); // 돈이 부족한 경우
-        accountService.updateAccountBalance(moneyHave, -moneyNeed, corporation);
+        accountService.updateAccountBalance(moneyHave, -moneyNeed, STOCK_EXPRESSION,corporation);
 
         // 주식 보유 수량 변경
         Stockholding stockholding = stockholdingRepository.findByMemberIdAndCode(memberId, code);
@@ -91,7 +93,7 @@ public class StockholdingServiceImpl implements StockholdingService {
         // 보유 주식보다 많이 팔려는 경우
         if (stockholding.getHoldQty() < amount) throw new MNException(ErrorCode.NOT_ENOUGH_STOCK);
 
-        accountService.updateAccountBalance(moneyHave, moneyNeed, corporation); // 주식 보유 수량 변경
+        accountService.updateAccountBalance(moneyHave, moneyNeed, STOCK_EXPRESSION,corporation); // 주식 보유 수량 변경
         upateStockholding(stockholding, -amount, -curPrice);
 
         return getPortfolio(memberId);
