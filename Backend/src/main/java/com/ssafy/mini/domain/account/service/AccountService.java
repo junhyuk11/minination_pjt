@@ -8,5 +8,4 @@ public interface AccountService {
 
     public void updateAccountBalance(Account moneyHave, int moneyNeed, String category, String organization);
 
-
 }
