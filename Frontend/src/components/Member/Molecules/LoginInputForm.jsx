@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigation } from '../../../hooks/useNavigation.jsx';
+import useMemberApi from '../../../api/useMemberApi.jsx';
 import InputBox1 from '../../Common/Atoms/InputBox1.jsx';
 import ButtonLarge1 from '../../Common/Atoms/ButtonLarge1.jsx';
-import { useNavigation } from '../../../hooks/useNavigation.jsx';
+import MovingLoginOrSignup from '../Atoms/MovingLoginOrSignup.jsx';
 import styles from '../Pages/Login.module.css';
 import headerLogo from '../../../assets/images/header-logo.png';
-import MovingLoginOrSignup from '../Atoms/MovingLoginOrSignup.jsx';
 
 const LoginInputForm = () => {
     const { navigateToSignup, navigateToDashboard } = useNavigation();
@@ -18,11 +19,31 @@ const LoginInputForm = () => {
         setPassword(event.target.value);
     };
 
+    const postLoginApi = async () => {
+        try {
+            const response = await useMemberApi.memberPostLogin(id, password);
+            if (response.code === 200) {
+                alert('로그인 성공!');
+                // TS, 토큰 저장
+                navigateToDashboard();
+            } else {
+                console.log(response.code);
+            }
+        } catch (error) {
+            console.log('에러');
+            console.log(error);
+        }
+    };
+
     return (
         <div>
             <div class={styles.top}>
                 <div className={styles.logoContainer}>
-                    <img className={styles.logo} src={headerLogo} alt="logo" />
+                    <img
+                        className={styles.logo}
+                        src={headerLogo}
+                        alt="logo"
+                    ></img>
                 </div>
                 <br />
                 <InputBox1
@@ -39,7 +60,7 @@ const LoginInputForm = () => {
                     type="password"
                 />
                 <br />
-                <ButtonLarge1 title="로그인" onClick={navigateToDashboard} />
+                <ButtonLarge1 title="로그인" onClick={postLoginApi} />
             </div>
             <MovingLoginOrSignup
                 description="아직 회원이 아니신가요?"

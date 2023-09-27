@@ -1,12 +1,13 @@
 import axios from 'axios';
 import { API_URL, CONTENT_TYPE_JSON } from '../constants/constants.jsx';
 
-const apiClient = axios.create({
-    baseURL: API_URL,
-    headers: {
-        'Content-Type': CONTENT_TYPE_JSON,
-    },
-});
+const apiClient = () =>
+    axios.create({
+        baseURL: API_URL,
+        headers: {
+            'Content-Type': CONTENT_TYPE_JSON,
+        },
+    });
 
 const authApiClient = token =>
     axios.create({
