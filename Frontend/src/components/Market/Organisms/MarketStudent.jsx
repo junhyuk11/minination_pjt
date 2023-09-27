@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './MarketStudent.css';
 import Swal from 'sweetalert2';
-import ButtonLarge1 from '../../Common/Atoms/ButtonLarge1.jsx';
-import InputNumber1 from '../../Common/Atoms/InputNumber1.jsx';
-import ButtonMiddle1 from '../../Common/Atoms/ButtonMiddle1.jsx';
+import MarketButtonMiddle from '../Atoms/MarketButtonMiddle.jsx';
+import MarketInputNumber from '../Atoms/MarketInputNumber.jsx';
 import { useNavigation } from '../../../hooks/useNavigation.jsx';
 import useShopApi from '../../../api/useShopApi.jsx';
 
@@ -94,12 +93,12 @@ const MarketStudent = () => {
             desc: product.desc,
             price: product.price,
             amount: (
-                <InputNumber1
+                <MarketInputNumber
                     onChange={value => handleQuantityChange(product.id, value)}
                 />
             ),
             button: (
-                <ButtonMiddle1
+                <MarketButtonMiddle
                     title="구매하기"
                     onClick={() => handleBuy(product)}
                 />
@@ -115,7 +114,7 @@ const MarketStudent = () => {
             price: item.price,
             amount: item.amount,
             button: (
-                <ButtonMiddle1
+                <MarketButtonMiddle
                     title="사용하기"
                     onClick={() => handleUse(item)}
                 />
@@ -142,7 +141,6 @@ const MarketStudent = () => {
                 <div class="market-asset-card center">
                     {`사용가능한 금액 : ${cash}`}
                 </div>
-                {/* <ButtonLarge1 title={`사용가능한 금액 : ${cash}`} /> */}
             </div>
             <div className="marketLeftText">구매할 수 있는 물품</div>
             <div className="marketStudentTableWrapper">
