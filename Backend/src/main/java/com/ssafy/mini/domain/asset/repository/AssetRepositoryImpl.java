@@ -15,6 +15,11 @@ public class AssetRepositoryImpl implements AssetRepositoryCustom {
 
     private final QAsset asset = QAsset.asset;
 
+    /**
+     * 국가의 그날그날 자산 총합
+     * @param isoSeq 국가 번호
+     * @return
+     */
     @Override
     public List<ChartDto> getAssetsByNation(short isoSeq) {
         return queryFactory
@@ -24,7 +29,9 @@ public class AssetRepositoryImpl implements AssetRepositoryCustom {
                         )
                 )
                 .from(asset)
-                .where(asset.nation.isoSeq.eq(isoSeq))
+                .where(asset.nation.isoSeq.eq(isoSeq)
+                        .and(asset.member.isNull()))
+                .orderBy(asset.assetDt.asc())
                 .fetch();
     }
 }
