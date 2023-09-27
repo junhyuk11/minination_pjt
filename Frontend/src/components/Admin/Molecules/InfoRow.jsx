@@ -6,7 +6,7 @@ const InfoRow = ({ title, secondComp, thirdComp }) => {
         display: 'flex',
         alignItems: 'center',
         flexWrap: 'wrap',
-        height: '40px',
+        minHeight: '40px',
     };
     return (
         <div>
