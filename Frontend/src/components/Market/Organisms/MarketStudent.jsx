@@ -9,6 +9,7 @@ import useShopApi from '../../../api/useShopApi.jsx';
 const MarketStudent = () => {
     const cash = 20000;
     const { navigateToLogin } = useNavigation();
+    const [purchaseList, setPurchaseList] = useState([]);
 
     const [productList, setProductList] = useState([]);
 
@@ -61,34 +62,43 @@ const MarketStudent = () => {
         };
     };
 
+    const transformPurchaseToDisplayItem = (item, index) => {
+        return {
+            ...item,
+            id: item.id || index + 1,
+            button: (
+                <ButtonMiddle1
+                    title="사용하기"
+                    onClick={() => handleUse(item)}
+                />
+            ),
+        };
+    };
+
     const transactions = productList.map((product, index) =>
         transformProductToTransaction(product, index + 1),
     );
 
-    const purchasedItems = [
-        // 예제 데이터
-        {
-            id: 101,
-            product: '사용한 계좌',
-            description:
-                '간장공장공장장은 간장공장장이고간장공장공장장은 간장공장장이고간장공장공장장은 간장공장장이고간장공장공장장은 간장공장장이고',
-            price: 3000,
-            amount: 12000,
-            button: '2023-09-18',
-        },
-        {
-            id: 102,
-            product: '사용한 계좌',
-            description: '스낵',
-            price: 1500,
-            amount: 3000,
-            button: '2023-09-17',
-        },
-        // 필요한만큼 다른 데이터를 추가
-    ];
+    const displayPurchases = purchaseList.map((item, index) =>
+        transformPurchaseToDisplayItem(item, index),
+    );
+
+    const getPurchaseList = async () => {
+        try {
+            const response = await useShopApi.shopGetPurchase();
+            if (response.code === 200) {
+                setPurchaseList(response.data);
+            } else {
+                console.log(response.code);
+            }
+        } catch (error) {
+            navigateToLogin();
+        }
+    };
 
     useEffect(() => {
         getProductList();
+        getPurchaseList();
     }, []);
 
     return (
@@ -134,10 +144,10 @@ const MarketStudent = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {purchasedItems.map(item => (
+                        {displayPurchases.map(item => (
                             <tr key={item.id}>
                                 <td>{item.product}</td>
-                                <td>{item.description}</td>
+                                <td>{item.desc}</td>
                                 <td>{item.price}</td>
                                 <td>{item.amount}</td>
                                 <td>{item.button}</td>
