@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { useNavigation } from '../../../hooks/useNavigation.jsx';
+import { useNavigation } from '../../../hooks/useNavigation';
+import { useRecoilState } from 'recoil';
+import { identityState } from '../../../recoil/atoms.jsx';
 import useMemberApi from '../../../api/useMemberApi.jsx';
-import InputBox1 from '../../Common/Atoms/InputBox1.jsx';
+import InputBox1 from './../../Common/Atoms/InputBox1.jsx';
 import ButtonLarge1 from '../../Common/Atoms/ButtonLarge1.jsx';
 import MovingLoginOrSignup from '../Atoms/MovingLoginOrSignup.jsx';
 import styles from '../Pages/Login.module.css';
 import headerLogo from '../../../assets/images/header-logo.png';
 
 const LoginInputForm = () => {
+    const [identity, setIdentity] = useRecoilState(identityState);
     const { navigateToSignup, navigateToDashboard } = useNavigation();
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
@@ -23,14 +26,20 @@ const LoginInputForm = () => {
         try {
             const response = await useMemberApi.memberPostLogin(id, password);
             if (response.code === 200) {
-                alert('로그인 성공!');
-                // TS, 토큰 저장
+                setIdentity(response.data.memType);
+                sessionStorage.setItem(
+                    'accessToken',
+                    response.data.accessToken,
+                );
+                sessionStorage.setItem(
+                    'refreshToken',
+                    response.data.refreshToken,
+                );
                 navigateToDashboard();
             } else {
                 console.log(response.code);
             }
         } catch (error) {
-            console.log('에러');
             console.log(error);
         }
     };

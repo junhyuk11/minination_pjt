@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import useHomeApi from '../../../api/useHomeApi';
 import RankingRow from '../Molecules/RankingRow';
 import HomeCard from '../Molecules/HomeCard';
 import cardGif from '../../../assets/gif/ranking.gif';
@@ -6,25 +7,24 @@ import ranking1 from '../../../assets/images/medal1.png';
 import ranking2 from '../../../assets/images/medal2.png';
 import ranking3 from '../../../assets/images/medal3.png';
 
+const imageUrls = [ranking1, ranking2, ranking3];
+
 const Ranking = () => {
-    const response = {
-        rich: [
-            {
-                name: '정준혁',
-                asset: '5090',
-            },
-            {
-                name: '김경륜',
-                asset: '5080',
-            },
-            {
-                name: '박예한',
-                asset: '5070',
-            },
-        ],
+    const [response, setResponse] = useState({ rich: [] });
+
+    const getRichApi = async () => {
+        const response = await useHomeApi.homeGetRich();
+        if (response.code === 200) {
+            setResponse(response.data);
+        }
     };
+
     const { rich } = response;
-    const imageUrls = [ranking1, ranking2, ranking3];
+
+    useEffect(() => {
+        getRichApi();
+    }, []);
+
     const contentDom = (
         <>
             {rich.map((citizen, idx) => (
