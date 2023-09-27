@@ -3,7 +3,7 @@ import useHomeApi from '../../../api/useHomeApi';
 import NationTitle from '../Atoms/NationTitle';
 
 const Nation = () => {
-    const [response, setResponse] = useState({});
+    const [response, setResponse] = useState({ nationName: '', flag: '' });
     const { nationName, flag } = response;
 
     const nationStyle = {

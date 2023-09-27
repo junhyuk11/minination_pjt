@@ -18,13 +18,13 @@
 
 /* --- grid --- */
 .container {
-    padding: 6vw;
+    padding: 6vw 0vw;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 0.5fr 0.5fr 2fr;
     gap: 4vw 2vw;
     grid-template-areas:
-        ' nation profile ranking'
+        'nation profile ranking'
         'economy economy constitution'
         'population population population';
     font-family: 'GmarketSansMedium', cursive;
@@ -32,7 +32,7 @@
     margin: 0 auto;
     max-width: 1100px;
     width: 100%;
-    height:100vh;
+    height: 100vh;
 }
 .profile {
     grid-area: profile;
@@ -50,6 +50,7 @@
 }
 .population {
     grid-area: population;
+    padding-bottom: 6vw;
 }
 .economy {
     grid-area: economy;
