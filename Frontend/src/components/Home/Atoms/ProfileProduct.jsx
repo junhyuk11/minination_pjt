@@ -8,7 +8,7 @@ function ProfileProduct({ productAmount }) {
     if (productAmount) {
         return (
             <p>
-                가지고 있는 물품 수는{' '}
+                물품 수는{' '}
                 <a className={styles.aStyle} onClick={navigateToMarketPage}>
                     {productAmount}
                 </a>{' '}

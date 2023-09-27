@@ -24,7 +24,7 @@ function EconomyRow({ data }) {
     }, [chartWidth]);
 
     useEffect(() => {
-        if (chartContainerRef.current && data) {
+        if (chartContainerRef.current && data && data.length > 0) {
             chartRef.current = createChart(chartContainerRef.current, {
                 width: chartWidth,
                 height: 350,

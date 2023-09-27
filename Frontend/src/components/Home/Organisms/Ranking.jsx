@@ -11,6 +11,7 @@ const imageUrls = [ranking1, ranking2, ranking3];
 
 const Ranking = () => {
     const [response, setResponse] = useState({ rich: [] });
+    const { rich } = response;
 
     const getRichApi = async () => {
         const response = await useHomeApi.homeGetRich();
@@ -18,8 +19,6 @@ const Ranking = () => {
             setResponse(response.data);
         }
     };
-
-    const { rich } = response;
 
     useEffect(() => {
         getRichApi();

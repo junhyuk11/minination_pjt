@@ -8,7 +8,7 @@ function ProfileAsset({ totalBalance, currency }) {
     if (totalBalance) {
         return (
             <p>
-                가지고 있는 총 자산은{' '}
+                총 자산은{' '}
                 <a className={styles.aStyle} onClick={navigateToBankPage}>
                     {totalBalance}
                     {currency}
