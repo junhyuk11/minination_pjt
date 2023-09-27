@@ -64,9 +64,18 @@ const OfficeFix = () => {
                 className={styles.background}
                 style={{ backgroundImage: `url(${backgroundImage})` }}
             >
+                <div
+                    style={{
+                        paddingTop: '2%',
+                        paddingBottom: '1%',
+                        textAlign: 'center',
+                    }}
+                >
+                    <AdminTitle title="집무실" size="40" />
+                </div>
                 <div className={styles.info}>
                     <div className={styles.content}>
-                        <AdminTitle title="국가정보" />
+                        <AdminTitle title="국가정보" size={30} />
                         <hr style={{ border: '1px solid black' }} />
                         <InfoRow
                             title="국가명"
@@ -74,10 +83,11 @@ const OfficeFix = () => {
                                 <RowInput
                                     text={inputText}
                                     onTextChange={handleInputTextChange}
+                                    width={120}
                                 />
                             }
                             thirdComp={
-                                <RowDescription text="한글, 영문, 숫자 혼용가능 (한글 기준 8자 이내)" />
+                                <RowDescription text="한글 기준 8자 이내" />
                             }
                         />
                         <InfoRow
@@ -86,6 +96,7 @@ const OfficeFix = () => {
                                 <RowInput
                                     text={currencyName}
                                     onTextChange={handleCurrencyNameChange}
+                                    width={120}
                                 />
                             }
                             thirdComp={<RowDescription text="한글 2자 이내" />}
@@ -112,9 +123,7 @@ const OfficeFix = () => {
                                     }
                                 />
                             }
-                            thirdComp={
-                                <RowDescription text="요일을 선택하세요" />
-                            }
+                            thirdComp={<RowDescription text="" />}
                         />
                         <InfoRow
                             title="소득세"
@@ -132,9 +141,7 @@ const OfficeFix = () => {
                                     }
                                 />
                             }
-                            thirdComp={
-                                <RowDescription text="세율을 선택하세요" />
-                            }
+                            thirdComp={<RowDescription text="" />}
                         />
                         <InfoRow
                             title="부가가치세"
@@ -152,9 +159,7 @@ const OfficeFix = () => {
                                     }
                                 />
                             }
-                            thirdComp={
-                                <RowDescription text="세율을 선택하세요" />
-                            }
+                            thirdComp={<RowDescription text="" />}
                         />
                         <div style={{ display: 'flex', justifyContent: 'end' }}>
                             <ButtonMiddle1

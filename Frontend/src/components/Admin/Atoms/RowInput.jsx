@@ -1,13 +1,15 @@
 import React from 'react';
 
-const RowInput = ({ text, onTextChange, onKeyPress }) => {
+const RowInput = ({ text, onTextChange, onKeyPress, width }) => {
     const inputStyle = {
-        height: '30px',
-        flexShrink: 0,
-        border: '1px solid rgba(0, 0, 0, 0.50)',
+        width: `${width}px`,
+        height: '40px',
+        borderRadius: '100px',
+        border: '1px solid #000',
         background: '#FFF',
+        alignItems: 'center',
+        padding: '0px 20px',
     };
-
     return (
         <input
             style={inputStyle}
@@ -22,6 +24,10 @@ const RowInput = ({ text, onTextChange, onKeyPress }) => {
             }}
         />
     );
+};
+
+RowInput.defaultProps = {
+    width: 40,
 };
 
 export default RowInput;

@@ -1,4 +1,5 @@
 import useAxiosInstance from './useAxiosInstance.jsx';
+import Swal from 'sweetalert2';
 
 const memberPostLogout = async () => {
     try {
@@ -8,11 +9,11 @@ const memberPostLogout = async () => {
             .post(`/member/logout`);
         return response.data;
     } catch (e) {
-        if (e.response.data.status === 404) {
+        if (e.response.status === 404) {
             console.log('404에러');
             return e.response.data;
         }
-        if (e.response.data.status === 403) {
+        if (e.response.status === 403) {
             console.log('403에러');
             return e.response.data;
         }
@@ -27,11 +28,11 @@ const memberPostId = async id => {
             .post(`/member/id`, { id });
         return response.data;
     } catch (e) {
-        if (e.response.data.status === 404) {
+        if (e.response.status === 404) {
             console.log('404에러');
             return e.response.data;
         }
-        if (e.response.data.status === 403) {
+        if (e.response.status === 403) {
             console.log('403에러');
             return e.response.data;
         }
@@ -47,11 +48,11 @@ const memberDeleteMember = async () => {
             .delete(`/member`);
         return response.data;
     } catch (e) {
-        if (e.response.data.status === 404) {
+        if (e.response.status === 404) {
             console.log('404에러');
             return e.response.data;
         }
-        if (e.response.data.status === 403) {
+        if (e.response.status === 403) {
             console.log('403에러');
             return e.response.data;
         }
@@ -67,11 +68,11 @@ const memberPutPassword = async password => {
             .put(`/member/id`, { password });
         return response.data;
     } catch (e) {
-        if (e.response.data.status === 404) {
+        if (e.response.status === 404) {
             console.log('404에러');
             return e.response.data;
         }
-        if (e.response.data.status === 403) {
+        if (e.response.status === 403) {
             console.log('403에러');
             return e.response.data;
         }
@@ -87,7 +88,17 @@ const memberPostLogin = async (id, password) => {
             .post(`/member/login`, { id, password });
         return response.data;
     } catch (e) {
-        console.log(e);
+        if (e.response.status === 404) {
+            Swal.fire({
+                html: '아이디 또는 비밀번호를 잘못 입력했습니다. <br/>입력하신 내용을 다시 확인해주세요.',
+                confirmButtonText: '확인',
+            });
+            return e.response.data;
+        }
+        if (e.response.status === 403) {
+            console.log('403에러');
+            return e.response.data;
+        }
     }
     return null;
 };
@@ -99,11 +110,11 @@ const memberPostJoin = async (id, password, name, type) => {
             .post(`/member/join`, { id, password, name, type });
         return response.data;
     } catch (e) {
-        if (e.response.data.status === 404) {
+        if (e.response.status === 404) {
             console.log('404에러');
             return e.response.data;
         }
-        if (e.response.data.status === 403) {
+        if (e.response.status === 403) {
             console.log('403에러');
             return e.response.data;
         }

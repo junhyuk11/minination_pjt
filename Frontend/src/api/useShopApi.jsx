@@ -100,10 +100,31 @@ const shopGetList = async () => {
     return null;
 };
 
+const shopGetPurchase = async () => {
+    try {
+        const jwt = sessionStorage.getItem('accessToken');
+        const response = await useAxiosInstance
+            .authApiClient(jwt)
+            .get(`/shop/my`);
+        return response.data;
+    } catch (e) {
+        if (e.response.data.code === 404) {
+            console.log('404에러 api에서');
+            return e.response.data;
+        }
+        if (e.response.data.code === 403) {
+            console.log('403에러 api에서');
+            return e.response.data;
+        }
+    }
+    return null;
+};
+
 export default {
     shopPostUse,
     shopPostBuy,
     shopDeleteShop,
     shopPutShop,
     shopGetList,
+    shopGetPurchase,
 };

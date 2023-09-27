@@ -10,9 +10,6 @@
 .container {
     display: flex;
     width: 60vw;
-    border-radius: 15px;
-    /* overflow: auto; */
-    /* height: 40vw; */
 }
 
 .inputContainer {
