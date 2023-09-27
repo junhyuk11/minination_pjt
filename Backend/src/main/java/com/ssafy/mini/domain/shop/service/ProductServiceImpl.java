@@ -146,7 +146,7 @@ public class ProductServiceImpl implements ProductService {
      * @param member 회원
      */
     private void isTeacher(Member member) {
-        if (!member.getMemType().getCode().equals("MEM01")) {
+        if (!member.getMemType().getExpression().equals("TC")) {
             throw new MNException(ErrorCode.NO_PERMISSION);
         }
     }
