@@ -23,7 +23,7 @@ const ProfileRow = ({
             <ProfileJob jobName={jobName} pay={pay} currency={currency} />
             <ProfileAsset totalBalance={totalBalance} currency={currency} />
             <ProfileProduct productAmount={productAmount} />
-        </>
+        </div>
     );
 };
 
