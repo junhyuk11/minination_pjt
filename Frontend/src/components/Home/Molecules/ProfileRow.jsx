@@ -17,7 +17,7 @@ const ProfileRow = ({
     // };
 
     const nameStyle = {
-        fontSize: '20px',
+        fontSize: '19px',
     };
 
     const aStyle = {
@@ -26,7 +26,7 @@ const ProfileRow = ({
         color: '#355B3E',
         cursor: 'pointer',
         fontWeight: 'bold',
-        fontSize: '20px',
+        fontSize: '19px',
         textDecoration: 'green underline',
     };
 
@@ -37,7 +37,10 @@ const ProfileRow = ({
             </p>
             <p>
                 현재 직업은{' '}
-                <a style={aStyle} onClick={navigateToJobPosting}>
+                <a 
+                    style={aStyle} 
+                    onClick={navigateToJobPosting}
+                >
                     {jobName}
                 </a>
                 이고, 주급은 {pay}

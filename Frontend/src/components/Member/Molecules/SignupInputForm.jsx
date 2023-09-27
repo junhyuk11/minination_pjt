@@ -8,7 +8,6 @@ import ButtonRadio1 from '../../Common/Atoms/ButtonRadio1.jsx';
 import ButtonLarge1 from '../../Common/Atoms/ButtonLarge1.jsx';
 // import ButtonMiddle1 from '../../Common/Atoms/ButtonMiddle1.jsx';
 import MovingLoginOrSignup from '../Atoms/MovingLoginOrSignup.jsx';
-import MemberTitle from '../Atoms/MemberTitle.jsx';
 
 const SignupInputForm = () => {
     const { navigateToFoundation, navigateToNationality, navigateToLogin } =

@@ -18,8 +18,8 @@ const BankBar = () => {
                         alt="Bank"
                         style={{
                             marginRight: '3vh',
-                            width: '10vh',
-                            height: '10vh',
+                            width: '7vh',
+                            height: '7vh',
                         }}
                     />
                     내 현금 자산 : {totalBalance}
@@ -30,8 +30,8 @@ const BankBar = () => {
                         alt="Bank"
                         style={{
                             marginRight: '3vh',
-                            width: '10vh',
-                            height: '10vh',
+                            width: '7vh',
+                            height: '7vh',
                         }}
                     />
                     내 주식 자산 : {totalBalance}
@@ -42,8 +42,8 @@ const BankBar = () => {
                         alt="Bank"
                         style={{
                             marginRight: '3vh',
-                            width: '10vh',
-                            height: '10vh',
+                            width: '7vh',
+                            height: '7vh',
                         }}
                     />
                     내 저축 자산 : {totalBalance}
