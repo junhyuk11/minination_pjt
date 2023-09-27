@@ -1,29 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import useHomeApi from '../../../api/useHomeApi';
 import PopulationRow from '../Molecules/PopulationRow';
 import HomeCard from '../Molecules/HomeCard';
 import cardGif from '../../../assets/gif/population.gif';
 
 const Population = () => {
-    const response = {
-        president: '이정화',
-        citizen: [
-            '김싸피',
-            '박싸피',
-            '김싸피',
-            '박싸피',
-            '김싸피',
-            '박싸피',
-            '김싸피',
-            '박싸피',
-            '김싸피',
-            '박싸피',
-            '김싸피',
-            '박싸피',
-            '김싸피',
-            '박싸피',
-        ],
-    };
+    const [response, setResponse] = useState({ citizen: [] });
     const { president, citizen } = response;
+
+    const getCitizenApi = async () => {
+        const response = await useHomeApi.homeGetCitizen();
+        if (response.code === 200) {
+            setResponse(response.data);
+        }
+    };
+
+    useEffect(() => {
+        getCitizenApi();
+    }, []);
+
     const contentDom = (
         <>
             <PopulationRow name={president} role="대통령" />

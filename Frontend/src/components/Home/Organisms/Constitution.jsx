@@ -1,21 +1,25 @@
 /* 헌법 */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import useLawApi from '../../../api/useLawApi';
 import ConstitutionRow from '../Molecules/ConstitutionRow';
 import HomeCard from '../Molecules/HomeCard';
 import cardGif from '../../../assets/gif/constitution.gif';
 
 const Constitution = () => {
-    const response = {
-        nationName: '개발의 민족',
-        currency: '미소',
-        tax: {
-            incomeTax: '12',
-            vat: '10',
-        },
-        payday: 'MON',
-        population: '20',
-    };
+    const [response, setResponse] = useState({ tax: {} });
     const { nationName, currency, tax, payday, population } = response;
+
+    const getLawApi = async () => {
+        const response = await useLawApi.lawGetInfo();
+        if (response.code === 200) {
+            setResponse(response.data);
+        }
+    };
+
+    useEffect(() => {
+        getLawApi();
+    }, []);
+
     const dayMappings = {
         MON: '월요일',
         TUE: '화요일',

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 function ButtonRadio1({ setData }) {
-    const [selectedOption, setSelectedOption] = useState('학생');
+    const [selectedOption, setSelectedOption] = useState('ST');
 
     const handleRadioChange = event => {
         setSelectedOption(event.target.value);
@@ -15,8 +15,8 @@ function ButtonRadio1({ setData }) {
                 <input
                     type="radio"
                     id="option1"
-                    value="학생"
-                    checked={selectedOption === '학생'}
+                    value="ST"
+                    checked={selectedOption === 'ST'}
                     onChange={handleRadioChange}
                 />
                 학생
@@ -25,8 +25,8 @@ function ButtonRadio1({ setData }) {
                 <input
                     type="radio"
                     id="option2"
-                    value="선생님"
-                    checked={selectedOption === '선생님'}
+                    value="TC"
+                    checked={selectedOption === 'TC'}
                     onChange={handleRadioChange}
                 />
                 선생님

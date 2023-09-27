@@ -63,15 +63,12 @@
     transform: scale(1.05);
 }
 
-.errorContainer {
+.error {
     /* padding-left: 20px; */
     width: 100%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-
-    .error {
-        padding: 10px;
-        color: rgb(255, 100, 100);
-    }
+    padding-left: 10px;
+    color: rgb(255, 100, 100);
 }
