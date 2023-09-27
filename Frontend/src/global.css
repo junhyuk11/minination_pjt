@@ -12,6 +12,13 @@ code {
         monospace;
 }
 
+.center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 /* Webkit 관련 스타일 무효화 */
 *::-webkit-scrollbar {
     width: 0;  

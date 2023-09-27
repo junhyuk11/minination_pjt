@@ -22,14 +22,29 @@
 
 .company-coverimage {
   width: 100%;
+  max-height: 300px;
   margin: 0 auto;
   border-radius: 20px;
+  object-fit: cover;
   transition: transform 0.3s;
 }
 
 .company-coverimage:hover {
   transform: scale(1.02);
 }
+
+.company-covervideo {
+  width: 100%;
+  height: 300px;
+  margin: 0 auto;
+  border-radius: 20px;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+.company-covervideo:hover {
+  transform: scale(1.02);
+}
+
 
 .company-description {
   font-size: 0.8em;

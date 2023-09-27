@@ -7,6 +7,7 @@ const MarketModal2 = ({ hideModal }) => {
     const [product, setProduct] = useState('');
     const [desc, setDesc] = useState('');
     const [price, setPrice] = useState('');
+    const [isHovered, setIsHovered] = useState(false);
 
     const handleRegister = async () => {
         try {
@@ -59,10 +60,11 @@ const MarketModal2 = ({ hideModal }) => {
 
     const buttonStyle = {
         fontSize: '1.2rem', // 버튼 내의 글자 크기를 조절합니다.
-        padding: '0.5rem 1rem', // 버튼의 패딩을 조절하여 버튼 크기를 키웁니다.
+        padding: '0.5rem 1rem',
+        margin: '10px',
         cursor: 'pointer',
         border: 'none',
-        backgroundColor: '#029664',
+        backgroundColor: isHovered ? '#027a51' : '#029664',
         color: 'white',
         borderRadius: '5px',
         marginright: '1rem',
@@ -98,10 +100,18 @@ const MarketModal2 = ({ hideModal }) => {
                     type="button"
                     style={buttonStyle}
                     onClick={handleRegister}
+                    onMouseEnter={() => setIsHovered(false)}
+                    onMouseLeave={() => setIsHovered(false)}
                 >
                     등록하기
                 </button>
-                <button type="button" style={buttonStyle} onClick={hideModal}>
+                <button
+                    type="button"
+                    style={buttonStyle}
+                    onClick={hideModal}
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                >
                     닫기
                 </button>
             </div>
