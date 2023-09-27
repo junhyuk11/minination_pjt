@@ -5,12 +5,10 @@ function InputBox1({ placeholder, inputText, onChange, type }) {
 
     const handleFocus = () => {
         setIsFocused(true);
-        console.log(isFocused);
     };
 
     const handleBlur = () => {
         setIsFocused(false);
-        console.log(isFocused);
     };
 
     const inputStyle = {

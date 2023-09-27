@@ -13,11 +13,11 @@ const Dashboard = () => {
         <div className={styles.body}>
             <NavBar username="준혁" totalBalance="30000" />
             <div className={styles.container}>
-                <div className={styles.profile}>
-                    <Profile />
-                </div>
                 <div className={styles.nation}>
                     <Nation />
+                </div>
+                <div className={styles.profile}>
+                    <Profile />
                 </div>
                 <div className={styles.constitution}>
                     <Constitution />
