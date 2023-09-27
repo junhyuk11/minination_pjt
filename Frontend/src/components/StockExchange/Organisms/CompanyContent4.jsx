@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/style-prop-object */
 import React from 'react';
 import './CompanyContent.css';
@@ -14,10 +15,12 @@ const CompanyContent4 = () => {
                 />
             </div>
             <div class="company-description">
-                삼성전자는 전자제품을 만들고 전세계에 판매하는 큰 회사에요.
-                판매하는 다양한 물건 중에는 TV, 컴퓨터, 모니터, 냉장고, 세탁기,
-                에어컨, 스마트폰, 네트워크 장치, 그리고 컴퓨터와 같은 것들이
-                있어요. 또한 작은 컴퓨터 칩과 같은 것들도 만들어요.
+                넥슨은 우수한 IP와 탄탄한 개발력, 20년 이상의 온라인게임 서비스
+                경험을 바탕으로 글로벌 종합 엔터테인먼트 기업으로 거듭나고
+                있어요. '메이플스토리', '던전앤파이터', '카트라이더', '마비노기'
+                등 핵심 IP와 함께, 새로운 상상력과 아이디어를 담아낸 게임
+                콘텐츠를 50종 이상, 190여개 국가, 19억 명의 글로벌 이용자에게
+                서비스하고 있어요.
             </div>
 
             <div class="outlink-btns">

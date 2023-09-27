@@ -25,6 +25,14 @@
 .portfolio-item-logo {
   flex: 1;
 }
+.portfolio-item-logo img {
+  transition: transform 0.3s ease;
+}
+.portfolio-item-logo img:hover {
+  transform: scale(1.1);
+}
+
+
 .portfolio-item-holdings {
   flex: 1;
 }

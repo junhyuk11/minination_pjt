@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/style-prop-object */
 import React from 'react';
 import './CompanyContent.css';
@@ -8,16 +9,17 @@ const CompanyContent5 = () => {
             <div class="company-name">카카오</div>
             <div class="company-image-parent">
                 <img
-                    src="https://t1.daumcdn.net/news/202306/14/NEWS1/20230614053113460wari.gif"
+                    src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/f80ea461852513.5c5306ea3f4e0.gif"
                     alt="카카오배경"
                     class="company-coverimage"
                 />
             </div>
             <div class="company-description">
-                삼성전자는 전자제품을 만들고 전세계에 판매하는 큰 회사에요.
-                판매하는 다양한 물건 중에는 TV, 컴퓨터, 모니터, 냉장고, 세탁기,
-                에어컨, 스마트폰, 네트워크 장치, 그리고 컴퓨터와 같은 것들이
-                있어요. 또한 작은 컴퓨터 칩과 같은 것들도 만들어요.
+                카카오는 국내 1위 메신저인 카카오톡을 포함한 다양한 모바일
+                서비스를 제공 중인 '모바일 라이프 플랫폼' 기업이에요. 인터넷
+                포털 사이트 다음(Daum)을 비롯해 모바일/인터넷 기반의 커머스,
+                모빌리티, 금융, 게임, 음악, 스토리 IP를 주축으로 사업을 전개하고
+                있어요.
             </div>
 
             <div class="outlink-btns">

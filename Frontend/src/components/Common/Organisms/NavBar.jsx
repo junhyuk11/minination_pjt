@@ -23,6 +23,7 @@ function NavBar({ username, totalBalance }) {
                                 setIdentity('TC');
                             }}
                         />
+                        <div class="gap" />
                         <ProductionButton1
                             title="학생으로 변경"
                             onClick={() => {

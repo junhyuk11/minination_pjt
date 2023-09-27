@@ -63,3 +63,8 @@ code {
       background-position: 0% 50%;
     }
   }
+
+  /* GAP */
+  .gap {
+    margin: 2px;
+  }

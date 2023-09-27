@@ -6,7 +6,7 @@ function ProductionButton1({ title, onClick }) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width: '100px',
+        width: '110px',
         height: '30px',
         borderRadius: '1.5rem',
         border: 'none',
