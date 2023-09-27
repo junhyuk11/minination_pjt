@@ -5,7 +5,7 @@ const shopPostUse = async product => {
         const jwt = sessionStorage.getItem('accessToken');
         const response = await useAxiosInstance
             .authApiClient(jwt)
-            .post(`/shop/use`, { product });
+            .post(`/shop/use`, product);
         return response.data;
     } catch (e) {
         if (e.response.data.status === 404) {
@@ -20,16 +20,18 @@ const shopPostUse = async product => {
     return null;
 };
 
-const shopPostBuy = async (product, amount) => {
+const shopPostBuy = async product => {
     try {
         const jwt = sessionStorage.getItem('accessToken');
+        console.log(product);
         const response = await useAxiosInstance
             .authApiClient(jwt)
-            .post(`/shop/buy`, { product, amount });
+            .post(`/shop/buy`, product);
         return response.data;
     } catch (e) {
-        if (e.response.data.status === 404) {
-            console.log('404에러');
+        console.log('api에서', e.response);
+        if (e.response.status === 406) {
+            console.log('406에러');
             return e.response.data;
         }
         if (e.response.data.status === 403) {
