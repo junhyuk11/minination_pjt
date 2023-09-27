@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import useHomeApi from '../../../api/useHomeApi';
-import HomeCard from '../Molecules/HomeCard';
+import useHomeApi from '../../../api/useHomeApi.jsx';
+import HomeCard from '../Molecules/HomeCard.jsx';
 import cardGif from '../../../assets/gif/profile.gif';
 import ProfileRow from '../Molecules/ProfileRow';
 

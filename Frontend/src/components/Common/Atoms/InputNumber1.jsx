@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-function InputNumber1() {
-    const [value, setValue] = useState(0);
+function InputNumber1({ onChange, initialValue }) {
+    const [value, setValue] = useState(initialValue || 0);
 
     const containerStyle = {
         width: '150px',
@@ -43,6 +43,11 @@ function InputNumber1() {
     const decrement = () => {
         setValue(prevValue => (prevValue > 0 ? prevValue - 1 : prevValue));
     };
+
+    useEffect(() => {
+        // Notify the parent component when value changes
+        onChange(value);
+    }, [value]);
 
     return (
         <div style={containerStyle}>
