@@ -8,12 +8,12 @@ import java.util.Date;
 
 @Getter
 public class ChartDto {
-    private String date;
+    private String time;
     private int value;
 
     @Builder
     public ChartDto(Date date, int value) {
-        this.date = formateDate(date);
+        this.time = formateDate(date);
         this.value = value;
     }
 
