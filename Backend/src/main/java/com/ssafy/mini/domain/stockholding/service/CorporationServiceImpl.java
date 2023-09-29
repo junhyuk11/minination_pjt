@@ -33,7 +33,7 @@ public class CorporationServiceImpl implements CorporationService {
 
     private final S3Service s3Service;
 
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
     public void register(CorporationRegisterRequest corporationRegisterRequest, MultipartFile logo, MultipartFile profile) {
@@ -65,7 +65,7 @@ public class CorporationServiceImpl implements CorporationService {
 
             try {
                 // 어제 주가, 하루 등락률
-                Date yesterday = dateFormat.parse(stockList.get(0).getDate());
+                Date yesterday = dateFormat.parse(stockList.get(0).getTime());
                 StockPriceRateResponse yesterdayStock = stockService.getStockInfoByDate(corporationInfoResponse.getCode(), yesterday);
                 corporationInfoResponse.setYesterday(yesterdayStock);
             } catch (ParseException e) {
@@ -76,7 +76,7 @@ public class CorporationServiceImpl implements CorporationService {
         return corpInfo;
     }
 
-    /**률     * Corporation -> CorporationInfoResponse
+    /** Corporation -> CorporationInfoResponse
      * @param corporations 기업 정보
      * @return
      */
