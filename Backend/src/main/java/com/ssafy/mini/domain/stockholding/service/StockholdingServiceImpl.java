@@ -4,7 +4,7 @@ import com.ssafy.mini.domain.account.entity.Account;
 import com.ssafy.mini.domain.account.service.AccountService;
 import com.ssafy.mini.domain.stockholding.dto.request.TradeStockRequest;
 import com.ssafy.mini.domain.stockholding.dto.response.MyStockInfoResponse;
-import com.ssafy.mini.domain.stockholding.dto.response.PortfolioResponse;
+import com.ssafy.mini.domain.stockholding.dto.response.PortfolioDto;
 import com.ssafy.mini.domain.stockholding.entity.Stockholding;
 import com.ssafy.mini.domain.stockholding.repository.CorporationRepository;
 import com.ssafy.mini.domain.stockholding.repository.StockRepository;
@@ -35,11 +35,11 @@ public class StockholdingServiceImpl implements StockholdingService {
         log.info("Service Layer::getPortfolio() called");
 
         // 보유한 주가 정보 가져오기
-        List<PortfolioResponse> portfolio = stockholdingRepository.findAllByMemberId(memberId);
+        List<PortfolioDto> portfolio = stockholdingRepository.findAllByMemberId(memberId);
 
         // 주식 보유 자산
         int balance = 0;
-        for (PortfolioResponse p : portfolio) {
+        for (PortfolioDto p : portfolio) {
             int currentPrice = getCurrentPrice(p.getCode());
             p.setCurPrice(currentPrice);
             balance += p.getCurPrice();

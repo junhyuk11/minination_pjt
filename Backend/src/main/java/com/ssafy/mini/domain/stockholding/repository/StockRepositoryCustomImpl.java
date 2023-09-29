@@ -20,13 +20,13 @@ public class StockRepositoryCustomImpl implements StockRepositoryCustom {
     public List<CorpStockInfoResponse> findByStkCode(String code) {
         return queryFactory
                 .select(Projections.constructor(CorpStockInfoResponse.class,
-                        stock.stkDt.as("date"),
+                        stock.stkDt.as("time"),
                         stock.stkPrice.as("price")
                         )
                     )
                 .from(stock)
                 .where(stock.stkCd.stkCd.eq(code))
-                .orderBy(stock.stkDt.desc())
+                .orderBy(stock.stkDt.asc())
                 .fetch();
     }
 
