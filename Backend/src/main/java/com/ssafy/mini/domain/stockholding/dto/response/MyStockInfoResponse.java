@@ -9,10 +9,10 @@ import java.util.List;
 public class MyStockInfoResponse {
 
     private int balance;
-    private List<PortfolioResponse> portfolio;
+    private List<PortfolioDto> portfolio;
 
     @Builder
-    public MyStockInfoResponse(int balance, List<PortfolioResponse> portfolio) {
+    public MyStockInfoResponse(int balance, List<PortfolioDto> portfolio) {
         this.balance = balance;
         this.portfolio = portfolio;
     }

@@ -25,13 +25,13 @@ public class Corporation extends BaseEntity {
     @Column(name = "logo", length = 100)
     private String logo;
 
-    @Column(name = "profile", length = 100)
+    @Column(name = "profile", length = 200)
     private String profile;
 
     @Column(name = "inc_desc")
     private String incDesc;
 
-    @Column(name = "report_link", length = 100)
+    @Column(name = "report_link", length = 150)
     private String reportLink;
 
     @Column(name = "product_link", length = 100)
