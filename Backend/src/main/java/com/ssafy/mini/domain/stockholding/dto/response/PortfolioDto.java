@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class PortfolioResponse {
+public class PortfolioDto {
 
     private String code;
     private int holdQty; // 보유 주 수
@@ -12,7 +12,7 @@ public class PortfolioResponse {
     private int curPrice; // 현재 가치
 
     @Builder
-    public PortfolioResponse(String code, int holdQty, int buyPrice) {
+    public PortfolioDto(String code, int holdQty, int buyPrice) {
         this.code = code;
         this.holdQty = holdQty;
         this.buyPrice = buyPrice / holdQty;
