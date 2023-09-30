@@ -98,7 +98,6 @@ const BuyContent = () => {
                 <span>=</span>
                 <div className="calc-price">
                     <div className="calc-price-heading">매매금액</div>
-                    {/* 최종가격이 null 일 때는 빈 문자열 표시 */}
                     <div className="calc-price-result">4500</div>
                 </div>
             </div>
