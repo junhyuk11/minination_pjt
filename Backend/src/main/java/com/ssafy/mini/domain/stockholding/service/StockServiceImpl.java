@@ -56,6 +56,7 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public StockPriceRateResponse getStockInfoByDate(String code, Date date) {
+        log.info("Service Layer: getStockInfoByDate() called");
         return stockRepository.findByStkCodeAndStkDt(code, date);
     }
 
