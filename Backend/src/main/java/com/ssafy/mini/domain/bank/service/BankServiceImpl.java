@@ -351,7 +351,7 @@ public class BankServiceImpl implements BankService {
     }
 
     @Transactional
-    @Scheduled(cron = "0 22 10 * * ?")
+    @Scheduled(cron = "0 0 03 * * ?")
     public void terminateAtMaturity() {
         log.info("Bank Service Layer:: terminateAtMaturity() called");
 
@@ -372,6 +372,29 @@ public class BankServiceImpl implements BankService {
                 // 만기일이 지난 계좌 삭제
                 accountRepository.delete(account);
             }
+        }
+    }
+
+    @Transactional
+    @Scheduled(cron = "0 00 04 * * ?")
+    public void periodicTransfer(){
+        // 적금 계좌 조회
+        List<Account> accountList = accountRepository.findSavingAccount();
+        String today = LocalDateTime.now().getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.US).toUpperCase(Locale.ROOT);
+
+        for(Account savingAcct : accountList){
+            // 오늘이 자동 이체일이 아닌 계좌면 skip
+            if(!savingAcct.getAcctDay().equals(today))
+                continue;
+
+            Account normalAccount = accountRepository.getMoneyToUse(savingAcct.getMember().getMemId());
+            // 일반 계좌 잔액이 이체할 적금 금액보다 작으면
+            if(normalAccount.getAcctBalance() < savingAcct.getAcctSaving())
+                continue;
+            // 적금 계좌의 적금 금액을 일반 계좌에서 빼기
+            accountService.updateAccountBalance(normalAccount, -savingAcct.getAcctSaving(), "AT", "은행");
+            // 적금 계좌의 적금 금액을 적금 계좌에 추가
+            accountService.updateAccountBalance(savingAcct, savingAcct.getAcctSaving(), "AT", "은행");
         }
     }
 }
