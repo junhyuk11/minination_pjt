@@ -24,4 +24,6 @@ public interface MemberRepository extends JpaRepository<Member, Integer>, Member
     List<String> findAllStudents(short nationSeq);
 
     List<RichDto> listRich(short nationSeq);
+
+    List<Member> findAllByIsoSeq(Nation n);
 }

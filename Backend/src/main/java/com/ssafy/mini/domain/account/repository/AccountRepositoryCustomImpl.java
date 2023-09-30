@@ -5,6 +5,8 @@ import com.ssafy.mini.domain.account.entity.Account;
 import com.ssafy.mini.domain.account.entity.QAccount;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 public class AccountRepositoryCustomImpl implements AccountRepositoryCustom {
 
@@ -20,5 +22,14 @@ public class AccountRepositoryCustomImpl implements AccountRepositoryCustom {
                 .where(account.member.memId.eq(memberId)
                         .and(account.bankCode.expression.eq("NA")))
                 .fetchOne();
+    }
+
+    @Override
+    public List<Account> findSavingAccount() {
+        return queryFactory
+                .select(account)
+                .from(account)
+                .where(account.acctDay.ne("NON"))
+                .fetch();
     }
 }
