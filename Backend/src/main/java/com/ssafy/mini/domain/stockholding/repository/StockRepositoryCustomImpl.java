@@ -54,4 +54,14 @@ public class StockRepositoryCustomImpl implements StockRepositoryCustom {
                 .orderBy(stock.stkDt.desc())
                 .fetchFirst();
     }
+
+    @Override
+    public Date getLastDate(String code) {
+        return queryFactory
+                .select(stock.stkDt)
+                .from(stock)
+                .where(stock.stkCd.stkCd.eq(code))
+                .orderBy(stock.stkDt.desc())
+                .fetchFirst();
+    }
 }
