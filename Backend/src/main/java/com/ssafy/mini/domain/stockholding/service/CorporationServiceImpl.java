@@ -65,7 +65,7 @@ public class CorporationServiceImpl implements CorporationService {
 
             try {
                 // 어제 주가, 하루 등락률
-                Date yesterday = dateFormat.parse(stockList.get(0).getTime());
+                Date yesterday = dateFormat.parse(stockList.get(stockList.size() - 1).getTime());
                 StockPriceRateResponse yesterdayStock = stockService.getStockInfoByDate(corporationInfoResponse.getCode(), yesterday);
                 corporationInfoResponse.setYesterday(yesterdayStock);
             } catch (ParseException e) {

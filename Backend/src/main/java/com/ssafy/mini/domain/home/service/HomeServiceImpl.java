@@ -93,7 +93,8 @@ public class HomeServiceImpl implements HomeService{
 
         String job = member.getJobSeq() != null ? member.getJobSeq().getJobName() : ""; // 무직인 경우 빈 문자열 반환
         int pay = member.getJobSeq() != null ? member.getJobSeq().getJobPay() : 0; // 무직인 경우 0 반환
-        int productAmount = possessRepository.countPossessByMemberId(memberId);
+        Integer productAmountInteger = possessRepository.countPossessByMemberId(memberId);
+        int productAmount = productAmountInteger != null ? productAmountInteger.intValue() : 0;
 
         return ProfileResponse.builder()
                 .name(member.getMemName())
