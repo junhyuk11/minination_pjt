@@ -14,4 +14,5 @@ public interface StockRepositoryCustom {
 
     Integer getstkPriceByStkCd(String code);
 
+    Date getLastDate(String code);
 }

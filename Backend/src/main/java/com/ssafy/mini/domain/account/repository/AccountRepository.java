@@ -22,4 +22,6 @@ public interface AccountRepository extends JpaRepository<Account, Integer>, Acco
     List<Account> findByMember(Member member);
 
     List<Account> findSavingAccount();
+
+    Integer getMyAccountBalance(String memberId);
 }

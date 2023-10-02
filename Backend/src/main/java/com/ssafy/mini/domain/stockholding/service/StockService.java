@@ -15,4 +15,5 @@ public interface StockService {
 
     StockPriceRateResponse getStockInfoByDate(String code, Date date);
 
+    void getCurrentStockInfo();
 }

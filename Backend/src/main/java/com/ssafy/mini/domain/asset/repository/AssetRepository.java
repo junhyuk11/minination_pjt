@@ -5,6 +5,7 @@ import com.ssafy.mini.domain.home.dto.response.ChartDto;
 import com.ssafy.mini.domain.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.sql.Date;
 import java.util.List;
 
 public interface AssetRepository extends JpaRepository<Asset, Integer>, AssetRepositoryCustom {
@@ -13,4 +14,5 @@ public interface AssetRepository extends JpaRepository<Asset, Integer>, AssetRep
 
     List<Asset> findTop30ByMemberOrderByAssetDtDesc(Member member);
 
+    Integer getNationAccountBalance(short isoSeq, Date today);
 }
