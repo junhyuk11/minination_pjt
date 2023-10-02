@@ -4,4 +4,5 @@ public interface AssetService {
 
     void setPersonAssetInfo();
 
+    void setNationAssetInfo();
 }

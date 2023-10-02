@@ -69,6 +69,34 @@ public class AssetServiceImpl implements AssetService {
     }
 
     /**
+     * 모든 국가의 자산 정보 업데이트
+     */
+    @Override
+    @Transactional
+    @Scheduled(cron = "0 50 23 * * MON-FRI")
+    public void setNationAssetInfo() {
+        log.info("Service Layer: setNationAssetInfo() called");
+
+        // 국가의 정보 가져오기
+        List<Nation> nations = nationRepository.findAll();
+        for (Nation nation : nations) {
+            // 오늘 날짜
+            java.sql.Date today = java.sql.Date.valueOf(LocalDate.now());
+
+            // 각 국가의 자산 정보 가져오기
+            Integer asset = assetRepository.getNationAccountBalance(nation.getIsoSeq(), today);
+            int nationAsset = asset == null ? 0 : asset;
+
+            // 각 국가의 자산 정보 업데이트
+            assetRepository.save(Asset.builder()
+                    .nation(nation)
+                    .assetDt(new Date())
+                    .assetBalance(nationAsset)
+                    .build());
+        }
+    }
+
+    /**
      * 각 주식의 코드와 최근 가격
      * key: 종목 코드, value: 최근 가격
      */
