@@ -13,6 +13,7 @@ function OrderTab({ menu, onClick, className }) {
         transition: 'all .3s',
         boxShadow: '6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff',
         fontFamily: 'GmarketSansMedium, cursive',
+        cursor: 'pointer',
     };
 
     // `.active` 클래스가 있을 경우의 스타일

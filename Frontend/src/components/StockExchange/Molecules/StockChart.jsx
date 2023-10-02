@@ -22,7 +22,7 @@ const Economy = () => {
 
     return (
         <div>
-            <HomeCard title="경제" content={contentDom} />
+            <HomeCard title="주가" content={contentDom} />
         </div>
     );
 };

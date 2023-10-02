@@ -68,7 +68,7 @@ const Economy = () => {
 
     const getChartApi = async () => {
         const response = await useHomeApi.homeGetChart();
-        if (response.code === 200) {
+        if (response.code === 200) { 
             setResponse(response.data);
         }
     };

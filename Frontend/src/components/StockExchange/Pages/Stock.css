@@ -27,8 +27,6 @@
   background-color: #262E3A;
   padding: 20px;
   overflow-y: auto; /* 세로 스크롤 허용 */
-  max-height: 600px;
-
   border-radius: 25px 25px 0 0;
 }
 

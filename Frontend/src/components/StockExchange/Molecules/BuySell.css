@@ -114,21 +114,23 @@
   margin-top: 10px;
 }
 
-.stock-price-quantity .input.price {
-  width: 35px;
+.trading-price {
+  width: 30px;
   height: 35px;
+  color: #05060f;
   background-color: #05060f0a;
-  text-align: center;
   border-radius: .5rem;
-  padding: 0 0.5rem;
+  padding: 0 1rem;
   border: 2px solid transparent;
   font-size: 0.8rem;
-  font-family: 'GmarketSansMedium', cursive;
-  transition: border-color .3s cubic-bezier(.25,.01,.25,1) 0s, color .3s cubic-bezier(.25,.01,.25,1) 0s,background .2s cubic-bezier(.25,.01,.25,1) 0s;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .stock-price-quantity .input.quantity {
-  width: 35px;
+  width: 27px;
   height: 35px;
   background-color: #05060f0a;
   text-align: center;

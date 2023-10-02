@@ -42,13 +42,16 @@ function PortFolio() {
                 </div>
                 <div className="portfolio-item-value center">
                     <div>
-                        현재가치 <span>10000</span>
+                        <span className="gap">현재가치</span>
+                        <span className="emp">10000</span>
                     </div>
                     <div>
-                        구매금액 <span>10000</span>
+                        <span className="gap">구매금액</span>
+                        <span className="emp">10000</span>
                     </div>
                     <div>
-                        손익<span>10000</span>
+                        <span className="gap">손익</span>
+                        <span className="emp">10000</span>
                     </div>
                 </div>
                 <div className="porftolio-item-status center">
@@ -83,13 +86,16 @@ function PortFolio() {
                 </div>
                 <div className="portfolio-item-value center">
                     <div>
-                        현재가치 <span>10000</span>
+                        <span className="gap">현재가치</span>
+                        <span className="emp">10000</span>
                     </div>
                     <div>
-                        구매금액 <span>10000</span>
+                        <span className="gap">구매금액</span>
+                        <span className="emp">10000</span>
                     </div>
                     <div>
-                        손익<span>10000</span>
+                        <span className="gap">손익</span>
+                        <span className="emp">10000</span>
                     </div>
                 </div>
                 <div className="porftolio-item-status center">
@@ -124,13 +130,16 @@ function PortFolio() {
                 </div>
                 <div className="portfolio-item-value center">
                     <div>
-                        현재가치 <span>10000</span>
+                        <span className="gap">현재가치</span>
+                        <span className="emp">10000</span>
                     </div>
                     <div>
-                        구매금액 <span>10000</span>
+                        <span className="gap">구매금액</span>
+                        <span className="emp">10000</span>
                     </div>
                     <div>
-                        손익<span>10000</span>
+                        <span className="gap">손익</span>
+                        <span className="emp">10000</span>
                     </div>
                 </div>
                 <div className="porftolio-item-status center">
@@ -165,13 +174,16 @@ function PortFolio() {
                 </div>
                 <div className="portfolio-item-value center">
                     <div>
-                        현재가치 <span>10000</span>
+                        <span className="gap">현재가치</span>
+                        <span className="emp">10000</span>
                     </div>
                     <div>
-                        구매금액 <span>10000</span>
+                        <span className="gap">구매금액</span>
+                        <span className="emp">10000</span>
                     </div>
                     <div>
-                        손익<span>10000</span>
+                        <span className="gap">손익</span>
+                        <span className="emp">10000</span>
                     </div>
                 </div>
                 <div className="porftolio-item-status center">
@@ -206,13 +218,16 @@ function PortFolio() {
                 </div>
                 <div className="portfolio-item-value center">
                     <div>
-                        현재가치 <span>10000</span>
+                        <span className="gap">현재가치</span>
+                        <span className="emp">10000</span>
                     </div>
                     <div>
-                        구매금액 <span>10000</span>
+                        <span className="gap">구매금액</span>
+                        <span className="emp">10000</span>
                     </div>
                     <div>
-                        손익<span>10000</span>
+                        <span className="gap">손익</span>
+                        <span className="emp">10000</span>
                     </div>
                 </div>
                 <div className="porftolio-item-status center">
@@ -247,13 +262,16 @@ function PortFolio() {
                 </div>
                 <div className="portfolio-item-value center">
                     <div>
-                        현재가치 <span>10000</span>
+                        <span className="gap">현재가치</span>
+                        <span className="emp">10000</span>
                     </div>
                     <div>
-                        구매금액 <span>10000</span>
+                        <span className="gap">구매금액</span>
+                        <span className="emp">10000</span>
                     </div>
                     <div>
-                        손익<span>10000</span>
+                        <span className="gap">손익</span>
+                        <span className="emp">10000</span>
                     </div>
                 </div>
                 <div className="porftolio-item-status center">
