@@ -2,9 +2,15 @@
     width: 100%; /* 원하는 너비로 조절 */
     max-width: 60%;
     margin: 0% auto 0 auto; /* 중앙 정렬 */
-    max-height: 300px; 
+    max-height: 200px; 
     overflow-y: auto;    
     overflow-x: auto; /* 필요한 경우 수평 스크롤 표시 */
+}
+
+.marketHeaderContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 table {
@@ -43,10 +49,20 @@ thead th {
     background: #555; 
 }
 
+.marketRightText2 {
+    position: relative;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    left: 60%;
+    font-size: 24px;
+}
+
+
 .market-asset-card {
     width: 300px;
     height: 50px;
     background: #10B981;
+    right: 80%;
     color: white;
     border-radius: 50px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px -10px 15px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.04) 0px 16px 8px, rgba(0, 0, 0, 0.05) 0px 10px 10px;

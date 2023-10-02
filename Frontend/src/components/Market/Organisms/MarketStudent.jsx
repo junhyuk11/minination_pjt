@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import './MarketStudent.css';
 import Swal from 'sweetalert2';
-import ButtonLarge1 from '../../Common/Atoms/ButtonLarge1.jsx';
 import InputNumber1 from '../../Common/Atoms/InputNumber1.jsx';
-import ButtonMiddle1 from '../../Common/Atoms/ButtonMiddle1.jsx';
+import ButtonSmall1 from '../Atoms/MarketButtonSmall.jsx';
 import { useNavigation } from '../../../hooks/useNavigation.jsx';
 import useShopApi from '../../../api/useShopApi.jsx';
+import useBankApi from '../../../api/useBankApi.jsx';
 
 const MarketStudent = () => {
-    const cash = 20000;
     const { navigateToLogin } = useNavigation();
     const [purchaseList, setPurchaseList] = useState([]);
     const [productList, setProductList] = useState([]);
     const [quantity, setQuantity] = useState({});
+    const [cash, setCash] = useState({});
 
     const getProductList = async () => {
         try {
@@ -21,6 +21,19 @@ const MarketStudent = () => {
                 setProductList(response.data);
             } else {
                 console.log(response.code);
+            }
+        } catch (error) {
+            navigateToLogin();
+        }
+    };
+
+    const getCash = async () => {
+        try {
+            const response = await useBankApi.bankGetBank();
+            if (response.code === 200) {
+                setCash(response.data.asset.cash);
+            } else {
+                console.log('리스폰', response.code);
             }
         } catch (error) {
             navigateToLogin();
@@ -99,7 +112,7 @@ const MarketStudent = () => {
                 />
             ),
             button: (
-                <ButtonMiddle1
+                <ButtonSmall1
                     title="구매하기"
                     onClick={() => handleBuy(product)}
                 />
@@ -115,7 +128,7 @@ const MarketStudent = () => {
             price: item.price,
             amount: item.amount,
             button: (
-                <ButtonMiddle1
+                <ButtonSmall1
                     title="사용하기"
                     onClick={() => handleUse(item)}
                 />
@@ -134,15 +147,13 @@ const MarketStudent = () => {
     useEffect(() => {
         getProductList();
         getPurchaseList();
+        getCash();
     }, []);
 
     return (
         <div>
-            <div className="marketRightText">
-                <div class="market-asset-card center">
-                    {`사용가능한 금액 : ${cash}`}
-                </div>
-                {/* <ButtonLarge1 title={`사용가능한 금액 : ${cash}`} /> */}
+            <div className="marketRightText2">
+                {`사용가능한 금액 : ${cash}`}
             </div>
             <div className="marketLeftText">구매할 수 있는 물품</div>
             <div className="marketStudentTableWrapper">
