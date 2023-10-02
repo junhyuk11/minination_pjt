@@ -10,4 +10,5 @@ public interface AccountRepositoryCustom {
 
     List<Account> findSavingAccount();
 
+    Integer getMyAccountBalance(String memberId);
 }

@@ -32,4 +32,13 @@ public class AccountRepositoryCustomImpl implements AccountRepositoryCustom {
                 .where(account.acctDay.ne("NON"))
                 .fetch();
     }
+
+    @Override
+    public Integer getMyAccountBalance(String memberId) {
+        return queryFactory
+                .select(account.acctBalance.sum())
+                .from(account)
+                .where(account.member.memId.eq(memberId))
+                .fetchOne();
+    }
 }

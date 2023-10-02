@@ -6,10 +6,11 @@ import com.ssafy.mini.domain.asset.entity.QAsset;
 import com.ssafy.mini.domain.home.dto.response.ChartDto;
 import lombok.RequiredArgsConstructor;
 
+import java.sql.Date;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class AssetRepositoryImpl implements AssetRepositoryCustom {
+public class AssetRepositoryCustomImpl implements AssetRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
 
@@ -33,5 +34,16 @@ public class AssetRepositoryImpl implements AssetRepositoryCustom {
                         .and(asset.member.isNull()))
                 .orderBy(asset.assetDt.asc())
                 .fetch();
+    }
+
+    @Override
+    public Integer getNationAccountBalance(short isoSeq, Date today) {
+        return queryFactory
+                .select(asset.assetBalance.sum())
+                .from(asset)
+                .where(asset.nation.isoSeq.eq(isoSeq)
+                        .and(asset.assetDt.after(today))
+                )
+                .fetchOne();
     }
 }
