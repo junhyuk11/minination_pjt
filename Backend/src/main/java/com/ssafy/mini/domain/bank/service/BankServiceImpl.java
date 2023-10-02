@@ -343,7 +343,7 @@ public class BankServiceImpl implements BankService {
                     .start(account.getAcctStartDate().toString().substring(0, 10))
                     .end(account.getAcctExpireDate().toString().substring(0, 10))
                     .principal(account.getAcctBalance())
-                    .estimaion(account.getExpAmount() == 9999 ? 0 : account.getExpAmount())
+                    .estimation(account.getExpAmount() == 9999 ? 0 : account.getExpAmount())
                     .build());
         }
 

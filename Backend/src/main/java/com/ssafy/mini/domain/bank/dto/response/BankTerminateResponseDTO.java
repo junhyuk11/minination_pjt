@@ -12,7 +12,8 @@ public class BankTerminateResponseDTO {
     private int balance;
     private int estimation;
 
-    @Builder BankTerminateResponseDTO(String type, String category, String start, String end, int balance, int estimation) {
+    @Builder
+    BankTerminateResponseDTO(String type, String category, String start, String end, int balance, int estimation) {
         this.type = type;
         this.category = category;
         this.start = start;
