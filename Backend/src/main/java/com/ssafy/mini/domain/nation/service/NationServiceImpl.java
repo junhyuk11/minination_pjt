@@ -1,6 +1,7 @@
 package com.ssafy.mini.domain.nation.service;
 
 import com.ssafy.mini.domain.flag.entity.Flag;
+import com.ssafy.mini.domain.flag.mapper.FlagMapper;
 import com.ssafy.mini.domain.flag.repository.FlagRepository;
 import com.ssafy.mini.domain.flag.service.FlagService;
 import com.ssafy.mini.domain.master.repository.MasterRepository;
@@ -8,6 +9,7 @@ import com.ssafy.mini.domain.member.entity.Member;
 import com.ssafy.mini.domain.member.repository.MemberRepository;
 import com.ssafy.mini.domain.nation.dto.request.LawUpdateRequest;
 import com.ssafy.mini.domain.nation.dto.request.NationCreateRequest;
+import com.ssafy.mini.domain.nation.dto.response.AllFlagResponse;
 import com.ssafy.mini.domain.nation.dto.response.FlagListResponse;
 import com.ssafy.mini.domain.nation.dto.response.LawInfoResponse;
 import com.ssafy.mini.domain.nation.entity.Nation;
@@ -24,6 +26,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -37,6 +40,7 @@ public class NationServiceImpl implements NationService {
     private final FlagRepository flagRepository;
 
     private final FlagService flagService;
+    private final FlagMapper flagMapper;
 
     private final NationMapper nationMapper;
 
@@ -134,6 +138,16 @@ public class NationServiceImpl implements NationService {
         return FlagListResponse.builder()
                 .flagImgUrl(flagUrlList)
                 .build();
+    }
+
+    @Override
+    public List<AllFlagResponse> listAllFlags() {
+        log.info("Nation Service Layer::flagList() called");
+
+        List<Flag> flagList = flagRepository.findAll();
+        return flagList.stream()
+                .map(flagMapper::flagToAllFlagResponse)
+                .collect(Collectors.toList());
     }
 
     @Override

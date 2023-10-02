@@ -4,6 +4,7 @@ import com.ssafy.mini.domain.account.entity.Account;
 import com.ssafy.mini.domain.account.entity.AccountDetail;
 import com.ssafy.mini.domain.account.repository.AccountDetailRepository;
 import com.ssafy.mini.domain.account.repository.AccountRepository;
+import com.ssafy.mini.domain.account.service.AccountService;
 import com.ssafy.mini.domain.asset.entity.Asset;
 import com.ssafy.mini.domain.asset.repository.AssetRepository;
 import com.ssafy.mini.domain.bank.dto.request.BankSubscribeRequestDTO;
@@ -15,12 +16,15 @@ import com.ssafy.mini.domain.master.entity.Master;
 import com.ssafy.mini.domain.master.repository.MasterRepository;
 import com.ssafy.mini.domain.member.entity.Member;
 import com.ssafy.mini.domain.member.repository.MemberRepository;
+import com.ssafy.mini.domain.member.service.MemberService;
 import com.ssafy.mini.domain.stockholding.service.StockholdingService;
 import com.ssafy.mini.global.exception.ErrorCode;
 import com.ssafy.mini.global.exception.MNException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -40,6 +44,8 @@ public class BankServiceImpl implements BankService {
     private final AccountDetailRepository accountDetailRepository;
 
     private final StockholdingService stockholdingService;
+    private final MemberService memberService;
+    private final AccountService accountService;
 
     @Override
     public BankInfoResponseDTO info() {
@@ -89,10 +95,8 @@ public class BankServiceImpl implements BankService {
         byte period = bankSubscribeRequestDTO.getTerm();
         int amount = bankSubscribeRequestDTO.getAmount();
 
-        // 일반 계좌에 1회차 납입할 잔액이 있는지 확인
+        // 사용자의 일반 계좌 가져오기
         Account normalAccount = accountRepository.getMoneyToUse(memberId);
-        if (normalAccount.getAcctBalance() < amount)
-            throw new MNException(ErrorCode.NOT_ENOUGH_BALANCE);
 
         String bankExpression = bankType.substring(0, 1) + period;
 
@@ -117,30 +121,18 @@ public class BankServiceImpl implements BankService {
 
         // 계좌 타입
         String accountType = bankCode.getParentCode().getExpression();
+        String day = now.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.US).toUpperCase(Locale.ROOT);
 
         // 정기 예금이면
         if (accountType.equals("DP")) {
             // Saving에 쓰레기 값(9999) 넣고 예상 만기 수령액 계산
             acctSaving = 9999;
             expAmount = amount * (100 + rate) / 100;
+            day = "NON";
         } else {
             acctSaving = bankSubscribeRequestDTO.getAmount();
             expAmount = amount * period * 4 * (100 + rate) / 100;
         }
-
-        // 예적금 계좌 개설
-        Account newAccount = Account.builder()
-                .member(member)
-                .bankCode(bankCode)
-                .acctBalance(amount)
-                .acctStartDate(Timestamp.valueOf(now))
-                .acctExpireDate(Timestamp.valueOf(now.plusWeeks(period * 4)))
-                .acctDay(now.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.US).toUpperCase(Locale.ROOT))
-                .acctSaving(acctSaving)
-                .expAmount(expAmount)
-                .build();
-
-        accountRepository.save(newAccount);
 
         // 일반 잔고 잔액 차감
         transfer(amount, normalAccount);
@@ -156,6 +148,20 @@ public class BankServiceImpl implements BankService {
                 .date(now)
                 .build()
         );
+
+        // 예적금 계좌 개설
+        Account newAccount = Account.builder()
+                .member(member)
+                .bankCode(bankCode)
+                .acctBalance(amount)
+                .acctStartDate(Timestamp.valueOf(now))
+                .acctExpireDate(Timestamp.valueOf(now.plusWeeks(period * 4)))
+                .acctDay(day)
+                .acctSaving(acctSaving)
+                .expAmount(expAmount)
+                .build();
+
+        accountRepository.save(newAccount);
 
         return BankSubscribeResponseDTO
                 .builder()
@@ -262,6 +268,8 @@ public class BankServiceImpl implements BankService {
         // 잔고 차감 및 반영
         account.updateAcctBalance(-amount);
         accountRepository.save(account);
+
+        memberService.updateBalance(account.getMember().getMemId(), -amount);
     }
 
     private AssetDTO getAsset(Member member) {
@@ -292,12 +300,12 @@ public class BankServiceImpl implements BankService {
     private List<FlowDTO> getFlow(Member member) {
 
         List<FlowDTO> flowDTOList = new ArrayList<>();
-        List<Asset> assetList = assetRepository.findByMemberOrderByAssetDtDesc(member);
+        List<Asset> assetList = assetRepository.findTop30ByMemberOrderByAssetDtDesc(member);
 
-        for (Asset asset : assetList) {
+        for (int index = assetList.size() - 1; index >= 0; index--) {
             flowDTOList.add(FlowDTO.builder()
-                    .date(asset.getAssetDt().toString().substring(0, 10))
-                    .asset(asset.getAssetBalance())
+                    .time(assetList.get(index).getAssetDt().toString().substring(0, 10))
+                    .asset(assetList.get(index).getAssetBalance())
                     .build());
         }
 
@@ -323,24 +331,70 @@ public class BankServiceImpl implements BankService {
 
     }
 
-    private List<AccountDTO> getAccountList(Member member){
+    private List<AccountDTO> getAccountList(Member member) {
         List<AccountDTO> accountDTOList = new ArrayList<>();
         List<Account> accountList = accountRepository.findByMember(member);
 
-        log.info("accountList: {}" , accountList.toString());
+        log.info("accountList: {}", accountList.toString());
 
-        for(Account account : accountList){
+        for (Account account : accountList) {
             accountDTOList.add(AccountDTO.builder()
                     .type(account.getBankCode().getCodeName())
                     .start(account.getAcctStartDate().toString().substring(0, 10))
                     .end(account.getAcctExpireDate().toString().substring(0, 10))
                     .principal(account.getAcctBalance())
-                    .estimaion(account.getExpAmount() == 9999? 0 : account.getExpAmount())
+                    .estimation(account.getExpAmount() == 9999 ? 0 : account.getExpAmount())
                     .build());
         }
 
         return accountDTOList;
     }
 
+    @Transactional
+    @Scheduled(cron = "0 0 03 * * ?")
+    public void terminateAtMaturity() {
+        log.info("Bank Service Layer:: terminateAtMaturity() called");
 
+        List<Account> accountList = accountRepository.findAll();
+
+        for (Account account : accountList) {
+            Master bankCode = account.getBankCode();
+            if (bankCode.getCode().equals("BNT03"))   // 일반 계좌면 넘기기
+                continue;
+
+            if (account.getAcctExpireDate().before(Timestamp.valueOf(LocalDateTime.now()))) {     // 만기일이 지났으면
+                log.info("bankCode: {}", bankCode.getCodeName());
+                int rate = bankRepository.findByBankCd(bankCode).orElseThrow().getRate();  // 이율
+                int amount = account.getAcctBalance() * (100 + rate) / 100;     // 해지 금액
+                // 만기일이 지난 계좌의 잔액을 일반 계좌로 이동
+                Account normalAccount = accountRepository.getMoneyToUse(account.getMember().getMemId());
+                accountService.updateAccountBalance(normalAccount, amount, "TM", "은행");
+                // 만기일이 지난 계좌 삭제
+                accountRepository.delete(account);
+            }
+        }
+    }
+
+    @Transactional
+    @Scheduled(cron = "0 00 04 * * ?")
+    public void periodicTransfer(){
+        // 적금 계좌 조회
+        List<Account> accountList = accountRepository.findSavingAccount();
+        String today = LocalDateTime.now().getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.US).toUpperCase(Locale.ROOT);
+
+        for(Account savingAcct : accountList){
+            // 오늘이 자동 이체일이 아닌 계좌면 skip
+            if(!savingAcct.getAcctDay().equals(today))
+                continue;
+
+            Account normalAccount = accountRepository.getMoneyToUse(savingAcct.getMember().getMemId());
+            // 일반 계좌 잔액이 이체할 적금 금액보다 작으면
+            if(normalAccount.getAcctBalance() < savingAcct.getAcctSaving())
+                continue;
+            // 적금 계좌의 적금 금액을 일반 계좌에서 빼기
+            accountService.updateAccountBalance(normalAccount, -savingAcct.getAcctSaving(), "AT", "은행");
+            // 적금 계좌의 적금 금액을 적금 계좌에 추가
+            accountService.updateAccountBalance(savingAcct, savingAcct.getAcctSaving(), "AT", "은행");
+        }
+    }
 }

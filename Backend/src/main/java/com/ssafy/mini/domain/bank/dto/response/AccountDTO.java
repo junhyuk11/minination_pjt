@@ -9,14 +9,14 @@ public class AccountDTO {
     private String start;
     private String end;
     private int principal;
-    private int estimaion;
+    private int estimation;
 
     @Builder
-    public AccountDTO(String type, String start, String end, int principal, int estimaion) {
+    public AccountDTO(String type, String start, String end, int principal, int estimation) {
         this.type = type;
         this.start = start;
         this.end = end;
         this.principal = principal;
-        this.estimaion = estimaion;
+        this.estimation = estimation;
     }
 }

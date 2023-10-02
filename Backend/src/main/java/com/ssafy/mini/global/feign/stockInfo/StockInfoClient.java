@@ -19,4 +19,12 @@ public interface StockInfoClient {
             @RequestParam("likeSrtnCd") String likeSrtnCd
     );
 
+    @GetMapping(value = "/getStockPriceInfo")
+    StockInfoResponse curretnStockPriceInfo(
+            @RequestParam("serviceKey") String serviceKey,
+            @RequestParam("beginBasDt") String beginDay,
+            @RequestParam("resultType") String resultType,
+            @RequestParam("likeSrtnCd") String likeSrtnCd
+    );
+
 }
