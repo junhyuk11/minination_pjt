@@ -11,9 +11,9 @@ function InputNumber1({ onChange, initialValue }) {
     };
 
     const minusStyle = {
-        width: '16px',
-        height: '16px',
-        padding: '16px',
+        width: '14px',
+        height: '14px',
+        padding: '14px',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -25,7 +25,7 @@ function InputNumber1({ onChange, initialValue }) {
 
     const inputStyle = {
         minWidth: '60px',
-        height: '40px',
+        height: '14px',
         padding: '12px',
         borderRadius: '6px',
         border: '1px solid #B8D6BF',

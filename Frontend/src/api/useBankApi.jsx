@@ -20,12 +20,12 @@ const bankGetInfo = async () => {
     return null;
 };
 
-const bankPostTerminate = async (type, term) => {
+const bankPostTerminate = async (data) => {
     try {
         const jwt = sessionStorage.getItem('accessToken');
         const response = await useAxiosInstance
             .authApiClient(jwt)
-            .post(`/bank/terminate`, { type, term });
+            .post(`/bank/terminate`, data);
         return response.data;
     } catch (e) {
         if (e.response.data.status === 404) {
@@ -40,12 +40,12 @@ const bankPostTerminate = async (type, term) => {
     return null;
 };
 
-const bankPostSubscribe = async (type, term, amount) => {
+const bankPostSubscribe = async (data) => {
     try {
         const jwt = sessionStorage.getItem('accessToken');
         const response = await useAxiosInstance
             .authApiClient(jwt)
-            .post(`/bank/subscribe`, { type, term, amount });
+            .post(`/bank/subscribe`, data);
         return response.data;
     } catch (e) {
         if (e.response.data.status === 404) {

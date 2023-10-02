@@ -1,34 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import BankChartRow from '../Molecules/BankChartRow.jsx';
 import BankChartContent from '../Molecules/BankChartContent.jsx';
+import useBankApi from '../../../api/useBankApi.jsx';
 
 const BankChart = () => {
-    const response = {
-        gdp: [
-            { time: '2019-04-11', value: 5040 },
-            { time: '2019-04-12', value: 5020 },
-            { time: '2019-04-13', value: 5010 },
-            { time: '2019-04-14', value: 5090 },
-            { time: '2019-04-15', value: 4800 },
-            { time: '2019-04-16', value: 5000 },
-            { time: '2019-04-17', value: 5020 },
-            { time: '2019-04-18', value: 5033 },
-            { time: '2019-04-19', value: 5045 },
-            { time: '2019-04-20', value: 5000 },
-            { time: '2019-04-21', value: 5040 },
-            { time: '2019-04-22', value: 5020 },
-            { time: '2019-04-23', value: 5010 },
-            { time: '2019-04-24', value: 5090 },
-            { time: '2019-04-25', value: 4800 },
-            { time: '2019-04-26', value: 5000 },
-            { time: '2019-04-27', value: 5020 },
-            { time: '2019-04-28', value: 5033 },
-            { time: '2019-04-29', value: 5045 },
-            { time: '2019-04-30', value: 5000 },
-        ],
+    const [chartList, setChartList] = useState([]);
+
+    const getChartList = async () => {
+        try {
+            const response = await useBankApi.bankGetBank();
+            if (response.code === 200) {
+                console.log('차트리스트 flow', response.data.flow);
+                setChartList(response.data.flow);
+            } else {
+                console.log(response.code);
+            }
+        } catch (error) {
+            // Handle error
+        }
     };
-    const { gdp } = response;
-    const contentDom = <BankChartRow data={[...gdp]} />;
+
+    useEffect(() => {
+        getChartList();
+    }, []);
+
+    // chartList의 항목이 undefined가 아닌 경우만 처리합니다.
+    const transformedData = chartList.filter(item => item !== undefined).map(item => ({
+        time: item.time,
+        value: item.asset, // asset을 value로 변경합니다.
+    }));
+
+    // transformedData가 비어있지 않은 경우에만 contentDom을 정의합니다.
+    const contentDom = transformedData.length > 0 ? <BankChartRow data={transformedData} /> : null;
 
     return (
         <div>

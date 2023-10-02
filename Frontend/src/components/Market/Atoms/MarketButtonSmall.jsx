@@ -1,37 +1,36 @@
-// import React, { useState } from 'react';
+import React from 'react';
 
-// function MarketButtonSmall({ title }) {
-//     const defaultButtonStyle = {
-//         display: 'flex',
-//         alignItems: 'center',
-//         justifyContent: 'center',
-//         width: '90px',
-//         height: '20px',
-//         borderRadius: '2rem',
-//         border: 'none',
-//         backgroundColor: '#029664',
-//         color: 'white',
-//         cursor: 'pointer',
-//     };
+function ButtonSmall1({ title, onClick, width, height }) {
+    const buttonStyle = {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: `${width}px`,
+        height: `${height}px`,
+        borderRadius: '2rem',
+        border: 'none',
+        backgroundColor: '#029664',
+        color: 'white',
+        cursor: 'pointer',
+    };
 
-//     // `.active` 클래스가 있을 경우의 스타일
-//     const activeButtonStyle = {
-//         ...defaultButtonStyle,
-//         backgroundColor: 'blue',
-//         color: 'white',
-//     };
+    const containerStyle = {
+        display: 'flex',
+        justifyContent: 'end',
+    };
 
-//     return (
-//         <div>
-//             <button
-//                 type="button"
-//                 style={isButtonActive ? activeButtonStyle : defaultButtonStyle}
-//                 onClick={onClick}
-//             >
-//                 {title}
-//             </button>
-//         </div>
-//     );
-// }
+    return (
+        <div style={containerStyle}>
+            <button type="button" style={buttonStyle} onClick={onClick}>
+                {title}
+            </button>
+        </div>
+    );
+}
 
-// export default MarketButtonSmall;
+ButtonSmall1.defaultProps = {
+    height: 30, // height의 기본값을 50으로 설정
+    width: 100, // width의 기본값을 100으로 설정
+};
+
+export default ButtonSmall1;
