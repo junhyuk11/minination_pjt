@@ -14,11 +14,11 @@ const Info = () => {
         dropdown2: false,
         dropdown3: false,
     });
-    const [selectedDay, setSelectedDay] = useState('월요일');
-    const [selectedIncomeTax, setSelectedIncomeTax] = useState(10); // 예시로 10%로 초기화
-    const [selectedVAT, setSelectedVAT] = useState(5); // 예시로 5%로 초기화
-    const [inputText, setInputText] = useState(''); // 국가명 입력값을 관리할 상태 추가
-    const [currencyInputText, setCurrencyInputText] = useState(''); // 화폐명 입력값을 관리할 상태 추가
+    const [payday, setpayday] = useState('월요일');
+    const [incomeTax, setincomeTax] = useState(10); // 예시로 10%로 초기화
+    const [vat, setVat] = useState(5); // 예시로 5%로 초기화
+    const [nationName, setNationName] = useState(''); // 국가명 입력값을 관리할 상태 추가
+    const [currency, setCurrency] = useState(''); // 화폐명 입력값을 관리할 상태 추가
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { navigateToDashboard } = useNavigation();
 
@@ -39,23 +39,23 @@ const Info = () => {
     };
 
     const handleDayChange = value => {
-        setSelectedDay(value);
+        setpayday(value);
     };
 
     const handleIncomeTaxChange = value => {
-        setSelectedIncomeTax(value);
+        setincomeTax(value);
     };
 
     const handleVATChange = value => {
-        setSelectedVAT(value);
+        setVat(value);
     };
 
-    const handleInputTextChange = value => {
-        setInputText(value); // 국가명 입력값 업데이트
+    const handleNationNameChange = value => {
+        setNationName(value); // 국가명 입력값 업데이트
     };
 
-    const handleCurrencyInputTextChange = value => {
-        setCurrencyInputText(value); // 화폐명 입력값 업데이트
+    const handlecurrencyChange = value => {
+        setCurrency(value); // 화폐명 입력값 업데이트
     };
 
     const handleCompleteClick = () => {
@@ -77,8 +77,8 @@ const Info = () => {
                     title="국가명"
                     secondComp={
                         <RowInput
-                            text={inputText}
-                            onTextChange={handleInputTextChange}
+                            text={nationName}
+                            onTextChange={handleNationNameChange}
                             width={100}
                         />
                     }
@@ -88,8 +88,8 @@ const Info = () => {
                     title="화폐명"
                     secondComp={
                         <RowInput
-                            text={currencyInputText}
-                            onTextChange={handleCurrencyInputTextChange}
+                            text={currency}
+                            onTextChange={handlecurrencyChange}
                             width={100}
                         />
                     }
@@ -108,7 +108,7 @@ const Info = () => {
                                 '토요일',
                                 '일요일',
                             ]}
-                            selectedValue={selectedDay}
+                            selectedValue={payday}
                             onValueChange={handleDayChange}
                             isOpen={dropdownStates.dropdown1}
                             closeOtherDropdowns={() =>
@@ -122,7 +122,7 @@ const Info = () => {
                     secondComp={
                         <DropDown2
                             options={Array.from({ length: 100 }, (_, i) => i)} // 0%부터 99%까지 배열 생성
-                            selectedValue={`${selectedIncomeTax}%`}
+                            selectedValue={`${incomeTax}%`}
                             onValueChange={handleIncomeTaxChange}
                             isOpen={dropdownStates.dropdown2}
                             closeOtherDropdowns={() =>
@@ -136,7 +136,7 @@ const Info = () => {
                     secondComp={
                         <DropDown2
                             options={Array.from({ length: 100 }, (_, i) => i)} // 0%부터 99%까지 배열 생성
-                            selectedValue={`${selectedVAT}%`}
+                            selectedValue={`${vat}%`}
                             onValueChange={handleVATChange}
                             isOpen={dropdownStates.dropdown3}
                             closeOtherDropdowns={() =>
@@ -152,11 +152,11 @@ const Info = () => {
                 <div className={styles.modalBackground}>
                     <Modal1
                         handleClick={handleModalClick}
-                        selectedDay={selectedDay}
-                        selectedIncomeTax={selectedIncomeTax}
-                        selectedVAT={selectedVAT}
-                        inputText={inputText}
-                        currencyInputText={currencyInputText}
+                        payday={payday}
+                        incomeTax={incomeTax}
+                        vat={vat}
+                        nationName={nationName}
+                        currency={currency}
                         setIsModalOpen={setIsModalOpen}
                     />
                 </div>

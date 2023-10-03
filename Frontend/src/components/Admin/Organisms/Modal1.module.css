@@ -17,12 +17,7 @@
     margin: auto;
 }
 
-.modalCards1 {
-    display: flex;
-    justify-content: space-between;
-}
-
-.modalCards2 {
+.modalCards {
     display: flex;
     justify-content: space-between;
 }
