@@ -8,30 +8,41 @@ import ProductionButton1 from '../Atoms/ProductionButton1.jsx';
 import ProductionRequirement from '../Atoms/ProductionRequirement.jsx';
 import styles from './ProductionTeacher.module.css';
 import ProductionApplicantModal from './ProductionApplicantModal.jsx';
-import ProductionCategoryTeacher from "../Molecules/ProductionCatergoryTeacher.jsx";
+import ProductionCategoryTeacher from '../Molecules/ProductionCatergoryTeacher.jsx';
+import useJobApi from '../../../api/useJobApi.jsx';
 
 const ProductionTeacher = ({ jobList }) => {
     // --------------직원 관리하기-------------------
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [applicants, setApplicants] = useState(''); // applicants 상태 추가
+    const [applicants, setApplicants] = useState({
+        // api 응답 전 임시 데이터
+        applicatCount: 0,
+        recruitTotalCount: 0,
+        employeeCount: 0,
+        recruitLeftCount: 0,
+        applicants: [],
+        employees: [],
+    });
+    const [modalJobName, setModalJobName] = useState('');
 
-    const handleManageClick = name => {
+    const handleManageClick = job_name => {
         // api 요청 등 필요한 데이터 처리
-        const applicantsData = {
-            applicant_count: 2,
-            recruit_total_count: 4,
-            employee_count: 2,
-            recruit_left_count: 2,
-            applicant: ['김하늘', '이예은'],
-            employee: ['김싸피', '최싸피'],
+        const fetchData = async () => {
+            try {
+                const response = await useJobApi.jobGetDetail({job_name});
+                setApplicants(response.data); // API 응답을 applicants 상태에 저장합니다.
+            } catch (error) {
+                console.error('API 요청 중 오류 발생:', error);
+                // 오류 처리를 수행합니다.
+            }
         };
 
-        // 데이터를 상태로 설정
-        setApplicants(applicantsData);
+        fetchData();
+        setModalJobName(job_name);
         setIsModalOpen(true);
     };
     // ---------------------------------------------
-    const handleDeleteClick = name => {
+    const handleDeleteClick = job_name => {
         swal.fire({
             icon: 'warning',
             title: '삭제하시겠습니까?',
@@ -49,7 +60,6 @@ const ProductionTeacher = ({ jobList }) => {
             }
         });
     };
-
 
     const productionRows = jobList.map(job => (
         <ProductionRow
@@ -93,12 +103,13 @@ const ProductionTeacher = ({ jobList }) => {
             <ProductionCategoryTeacher />
             {productionRows}
             {isModalOpen && (
-                <div className={styles.modalBackground}>                
-                <ProductionApplicantModal
-                    applicants={applicants} // applicants 전달
-                    setIsModalOpen={setIsModalOpen}
-                />
-            </div>
+                <div className={styles.modalBackground}>
+                    <ProductionApplicantModal
+                        applicants={applicants} // applicants 전달
+                        setIsModalOpen={setIsModalOpen}
+                        job_name={modalJobName}
+                    />
+                </div>
             )}
         </div>
     );

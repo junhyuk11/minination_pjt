@@ -1,11 +1,12 @@
 import useAxiosInstance from './useAxiosInstance.jsx';
+import Swal from 'sweetalert2';
 
-const jobPostDecline = async (jobName, applicantId) => {
+const jobPostDecline = async (job_name, applicant_id) => {
     try {
         const jwt = sessionStorage.getItem('accessToken');
         const response = await useAxiosInstance
             .authApiClient(jwt)
-            .post(`/job/decline`, { jobName, applicantId });
+            .post(`/job/decline`, { job_name, applicant_id });
         return response.data;
     } catch (e) {
         if (e.response.data.status === 404) {
@@ -20,12 +21,14 @@ const jobPostDecline = async (jobName, applicantId) => {
     return null;
 };
 
-const jobPostFire = async (jobName, applicantId) => {
+const jobPostFire = async (job_name, applicant_id) => {
     try {
+        const form = { job_name, applicant_id };
+        console.log(form);
         const jwt = sessionStorage.getItem('accessToken');
         const response = await useAxiosInstance
             .authApiClient(jwt)
-            .post(`/job/fire`, { jobName, applicantId });
+            .post(`/job/fire`, form);
         return response.data;
     } catch (e) {
         if (e.response.data.status === 404) {
@@ -40,12 +43,12 @@ const jobPostFire = async (jobName, applicantId) => {
     return null;
 };
 
-const jobPostApprove = async (jobName, applicantId) => {
+const jobPostApprove = async (job_name, applicant_id) => {
     try {
         const jwt = sessionStorage.getItem('accessToken');
         const response = await useAxiosInstance
             .authApiClient(jwt)
-            .post(`/job/approve`, { jobName, applicantId });
+            .post(`/job/approve`, { job_name, applicant_id });
         return response.data;
     } catch (e) {
         if (e.response.data.status === 404) {
@@ -60,32 +63,49 @@ const jobPostApprove = async (jobName, applicantId) => {
     return null;
 };
 
-const jobPostApply = async jobName => {
+const jobPostApply = async job_name => {
     try {
         const jwt = sessionStorage.getItem('accessToken');
         const response = await useAxiosInstance
             .authApiClient(jwt)
-            .post(`/job/apply`, { jobName });
+            .post(`/job/apply`, { job_name });
         return response.data;
     } catch (e) {
-        if (e.response.data.status === 404) {
-            console.log('404에러');
-            return e.response.data;
-        }
-        if (e.response.data.status === 403) {
-            console.log('403에러');
-            return e.response.data;
+        if (e.response.data.code === 403) {
+            Swal.fire({
+                icon: 'warning',
+                title: '유효하지 않은 토큰입니다.',
+                confirmButtonText: '확인',
+            });
+        } else if (e.response.data.code === 404) {
+            Swal.fire({
+                icon: 'warning',
+                title: '지원 실패.',
+                confirmButtonText: '확인',
+            });
+        } else if (e.response.data.code === 400) {
+            Swal.fire({
+                icon: 'warning',
+                title: '잔여 자리가 없습니다.',
+                confirmButtonText: '확인',
+            });
+        } else {
+            Swal.fire({
+                icon: 'warning',
+                title: '이미 신청 중이거나 근무 중입니다.',
+                confirmButtonText: '확인',
+            });
         }
     }
     return null;
 };
 
-const jobPostDetail = async jobName => {
+const jobGetDetail = async job_name => {
     try {
         const jwt = sessionStorage.getItem('accessToken');
         const response = await useAxiosInstance
             .authApiClient(jwt)
-            .post(`/job/detail`, { jobName });
+            .post(`/job/detail`, job_name);
         return response.data;
     } catch (e) {
         if (e.response.data.status === 404) {
@@ -124,7 +144,7 @@ const jobPostRegister = async (
     name,
     desc,
     pay,
-    recruitTotalCount,
+    recruit_total_count,
     requirement,
 ) => {
     try {
@@ -135,7 +155,7 @@ const jobPostRegister = async (
                 name,
                 desc,
                 pay,
-                recruitTotalCount,
+                recruit_total_count,
                 requirement,
             });
         return response.data;
@@ -157,7 +177,7 @@ export default {
     jobPostFire,
     jobPostApprove,
     jobPostApply,
-    jobPostDetail,
+    jobGetDetail,
     jobGetList,
     jobPostRegister,
 };
