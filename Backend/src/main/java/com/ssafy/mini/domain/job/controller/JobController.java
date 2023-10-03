@@ -5,7 +5,7 @@ import com.ssafy.mini.domain.job.dto.request.JobDeclineRequestDTO;
 import com.ssafy.mini.domain.job.dto.request.JobFireRequestDTO;
 import com.ssafy.mini.domain.job.dto.request.JobRegisterRequestDTO;
 import com.ssafy.mini.domain.job.service.JobService;
-import com.ssafy.mini.global.jwt.JwtProvider;
+import com.ssafy.mini.global.auth.jwt.JwtProvider;
 import com.ssafy.mini.global.response.SuccessResponse;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;

@@ -1,4 +1,4 @@
-package com.ssafy.mini.global.jwt;
+package com.ssafy.mini.global.auth.jwt;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -13,7 +13,7 @@ import com.ssafy.mini.domain.member.repository.MemberRepository;
 import com.ssafy.mini.domain.nation.entity.Nation;
 import com.ssafy.mini.global.exception.ErrorCode;
 import com.ssafy.mini.global.exception.MNException;
-import com.ssafy.mini.global.jwt.JwtProvider;
+import com.ssafy.mini.global.auth.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

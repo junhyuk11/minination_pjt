@@ -2,7 +2,7 @@ package com.ssafy.mini.domain.law.controller;
 
 import com.ssafy.mini.domain.nation.dto.request.LawUpdateRequest;
 import com.ssafy.mini.domain.nation.service.NationService;
-import com.ssafy.mini.global.jwt.JwtProvider;
+import com.ssafy.mini.global.auth.jwt.JwtProvider;
 import com.ssafy.mini.global.response.SuccessResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
