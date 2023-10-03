@@ -146,7 +146,7 @@ const OfficeFix = () => {
 
     return (
         <div>
-            <NavBar username="준혁" totalBalance="30000" />
+            <NavBar />
             <div
                 className={styles.background}
                 style={{ backgroundImage: `url(${backgroundImage})` }}

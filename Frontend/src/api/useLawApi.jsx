@@ -4,9 +4,11 @@ import { useNavigation } from '../hooks/useNavigation.jsx';
 const lawPutLaw = async (name, currency, payday, incomeTax, vat) => {
     try {
         const jwt = sessionStorage.getItem('accessToken');
+        const form = { name, currency, payday, incomeTax, vat };
+        console.log(form);
         const response = await useAxiosInstance
             .authApiClient(jwt)
-            .put(`/law`, { name, currency, payday, incomeTax, vat });
+            .put(`/law`, form);
         return response.data;
     } catch (e) {
         if (e.response.data.status === 404) {

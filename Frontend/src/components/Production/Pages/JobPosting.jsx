@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { identityState } from '../../../recoil/atoms.jsx';
 import NavBar from '../../Common/Organisms/NavBar.jsx';
@@ -7,69 +7,37 @@ import ProductionStudent from '../Organisms/ProductionStudent.jsx';
 import ProductionTeacher from '../Organisms/ProductionTeacher.jsx';
 import ProductionAddModal from '../Organisms/ProductionAddModal.jsx';
 import styles from './JobPosting.module.css';
+import useJobApi from '../../../api/useJobApi.jsx';
 
 const JobPosting = () => {
     const [identity, setIdentity] = useRecoilState(identityState);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const jobList = [
+    const [response, setResponse] = useState([
+        // api요청 응답 전 렌더링 해줄 임시값
         {
-            name: '은행원',
-            desc: '은행원은 고객이 맡긴 돈을 예치하고 고객의 대출을 상담하는 역할을 합니다.  그리고 개인이나 기업으로부터 단기 또는 장기의 자금을 보관하고 위탁합니다.',
-            pay: '200',
-            recruit_total_count: '4',
-            apply_count: '5',
-            requirement: '수학 1급 자격증, 책임 우수상',
-            employees: ['김하늘', '이예은'],
+            name: '직업명',
+            desc: '직업설명',
+            pay: '급여',
+            recruit_total_count: '',
+            apply_count: '',
+            requirement: '자격',
+            employees: ['근무자'],
             status: '0',
         },
-        {
-            name: '은행원',
-            desc: '은행원은 고객이 맡긴...',
-            pay: '200',
-            recruit_total_count: '4',
-            apply_count: '5',
-            requirement: '수학 1급 자격증, 책임 우수상',
-            employees: ['김하늘', '이예은'],
-        },
-        {
-            name: '은행원',
-            desc: '은행원은 고객이 맡긴 돈을 예치하고 고객의 대출을 상담하는 역할을 합니다.  그리고 개인이나 기업으로부터 단기 또는 장기의 자금을 보관하고 위탁합니다.',
-            pay: '200',
-            recruit_total_count: '4',
-            apply_count: '5',
-            requirement: '수학 1급 자격증, 책임 우수상',
-            employees: ['김하늘', '이예은'],
-            status: '0',
-        },
-        {
-            name: '은행원',
-            desc: '은행원은 고객이 맡긴...',
-            pay: '200',
-            recruit_total_count: '4',
-            apply_count: '5',
-            requirement: '수학 1급 자격증, 책임 우수상',
-            employees: ['김하늘', '이예은'],
-        },
-        {
-            name: '은행원',
-            desc: '은행원은 고객이 맡긴 돈을 예치하고 고객의 대출을 상담하는 역할을 합니다.  그리고 개인이나 기업으로부터 단기 또는 장기의 자금을 보관하고 위탁합니다.',
-            pay: '200',
-            recruit_total_count: '4',
-            apply_count: '5',
-            requirement: '수학 1급 자격증, 책임 우수상',
-            employees: ['김하늘', '이예은'],
-            status: '0',
-        },
-        {
-            name: '은행원',
-            desc: '은행원은 고객이 맡긴...',
-            pay: '200',
-            recruit_total_count: '4',
-            apply_count: '5',
-            requirement: '수학 1급 자격증, 책임 우수상',
-            employees: ['김하늘', '이예은'],
-        },
-    ];
+    ]);
+
+    // api 요청
+    const getLawApi = async () => {
+        const res = await useJobApi.jobGetList();
+        if (res.code === 200) {
+            setResponse(res.data);
+        }
+    };
+
+    // mount시 api요청을 보낸다
+    useEffect(() => {
+        getLawApi();
+    }, []);
 
     return (
         <div>
@@ -82,10 +50,10 @@ const JobPosting = () => {
             </div>
             {/* Conditional rendering based on the identity state */}
             {identity === 'ST' ? (
-                <ProductionStudent jobList={jobList} />
+                <ProductionStudent jobList={response} />
             ) : (
                 <ProductionTeacher
-                    jobList={jobList}
+                    jobList={response}
                     isModalOpen={isModalOpen}
                     setIsModalOpen={setIsModalOpen}
                 />

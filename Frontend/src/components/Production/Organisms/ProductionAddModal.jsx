@@ -1,22 +1,24 @@
 import React from 'react';
 import Swal from 'sweetalert2';
 import ProductionButton2 from '../Atoms/ProductionButton2.jsx';
+import styles from './ProductionAddModal.module.css';
+import useJobApi from '../../../api/useJobApi.jsx';
 
 const ProductionAddModal = () => {
-    const handleAddClick = () => {
+    const handleAddClick = async () => {
         Swal.fire({
             title: '직업 추가하기',
             html: `
       <hr>
-      <div>직업명: <input id="jobName" type="text" style="border-radius: 10px; height: 30px;"></div>
+      <div>직업명: <input id="name" type="text" style="border-radius: 10px; height: 30px;"></div>
       <br>
-      <div>직업 설명: <input id="jobDesc" type="text" style="border-radius: 10px; height: 30px;"></div>
+      <div>직업 설명: <input id="desc" type="text" style="border-radius: 10px; height: 30px;"></div>
       <br>
-      <div>주급: <input id="jobPay" type="number" style="border-radius: 10px; height: 30px;"></div>
+      <div>주급: <input id="pay" type="number" style="border-radius: 10px; height: 30px;"></div>
       <br>
-      <div>모집인원: <input id="jobRecruitCount" type="number" style="border-radius: 10px; height: 30px;"></div>
+      <div>모집인원: <input id="recruit_total_count" type="number" style="border-radius: 10px; height: 30px;"></div>
       <br>   
-      <div>자격요건: <input id="jobRequirement" type="text" style="border-radius: 10px; height: 30px;"></div>
+      <div>자격요건: <input id="requirement" type="text" style="border-radius: 10px; height: 30px;"></div>
       <hr>
       <style>
       input {
@@ -52,44 +54,58 @@ const ProductionAddModal = () => {
             showCancelButton: true,
             confirmButtonText: '확인',
             cancelButtonText: '취소',
-            preConfirm: () => {
-                const jobName = document.getElementById('jobName').value;
-                const jobDesc = document.getElementById('jobDesc').value;
-                const jobPay = document.getElementById('jobPay').value;
-                const jobRecruitCount =
-                    document.getElementById('jobRecruitCount').value;
-                const jobRequirement =
-                    document.getElementById('jobRequirement').value;
+            preConfirm: async () => {
+                const name = document.getElementById('name').value;
+                const desc = document.getElementById('desc').value;
+                const pay = document.getElementById('pay').value;
+                const recruit_total_count = document.getElementById(
+                    'recruit_total_count',
+                ).value;
+                const requirement =
+                    document.getElementById('requirement').value;
 
                 // 주급 필드가 자연수인지 확인
-                if (!Number.isInteger(Number(jobPay)) || Number(jobPay) <= 0) {
+                if (!Number.isInteger(Number(pay)) || Number(pay) <= 0) {
                     Swal.showValidationMessage('주급은 자연수여야 합니다.');
                     return false;
                 }
                 // 모집인원 필드가 자연수인지 확인
                 if (
-                    !Number.isInteger(Number(jobRecruitCount)) ||
-                    Number(jobRecruitCount) <= 0
+                    !Number.isInteger(Number(recruit_total_count)) ||
+                    Number(recruit_total_count) <= 0
                 ) {
                     Swal.showValidationMessage('모집인원은 자연수여야 합니다.');
                     return false;
                 }
 
-                // 여기서 API 호출을 수행하고, 성공 또는 실패 여부에 따라 Swal 띄우기
-                // 성공 시
                 try {
-                    // API 호출 및 데이터 저장
-
-                    Swal.fire({
-                        icon: 'success',
-                        title: '등록 완료',
-                        confirmButtonText: '확인',
-                    });
-                } catch {
-                    // 실패 시
+                    // API 호출
+                    const response = await useJobApi.jobPostRegister(
+                        name,
+                        desc,
+                        pay,
+                        recruit_total_count,
+                        requirement,
+                    );
+                    console.log(response);
+                    if (response) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: '등록 완료',
+                            confirmButtonText: '확인',
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: '등록 실패',
+                            confirmButtonText: '확인',
+                        });
+                    }
+                } catch (error) {
+                    console.error('등록 처리 중 오류 발생:', error);
                     Swal.fire({
                         icon: 'error',
-                        title: '등록 실패',
+                        title: '등록 처리 중 오류 발생',
                         confirmButtonText: '확인',
                     });
                 }
@@ -97,7 +113,7 @@ const ProductionAddModal = () => {
         });
     };
     return (
-        <div>
+        <div className={styles.button}>
             <ProductionButton2 onClick={handleAddClick} title="직업 추가하기" />
         </div>
     );

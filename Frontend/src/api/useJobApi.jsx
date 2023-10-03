@@ -1,11 +1,11 @@
 import useAxiosInstance from './useAxiosInstance.jsx';
 
-const jobPostDecline = async (jobName, applicantId) => {
+const jobPostDecline = async (job_name, applicant_id) => {
     try {
         const jwt = sessionStorage.getItem('accessToken');
         const response = await useAxiosInstance
             .authApiClient(jwt)
-            .post(`/job/decline`, { jobName, applicantId });
+            .post(`/job/decline`, { job_name, applicant_id });
         return response.data;
     } catch (e) {
         if (e.response.data.status === 404) {
@@ -20,12 +20,14 @@ const jobPostDecline = async (jobName, applicantId) => {
     return null;
 };
 
-const jobPostFire = async (jobName, applicantId) => {
+const jobPostFire = async (job_name, applicant_id) => {
     try {
+        const form = { job_name, applicant_id };
+        console.log(form);
         const jwt = sessionStorage.getItem('accessToken');
         const response = await useAxiosInstance
             .authApiClient(jwt)
-            .post(`/job/fire`, { jobName, applicantId });
+            .post(`/job/fire`, form);
         return response.data;
     } catch (e) {
         if (e.response.data.status === 404) {
@@ -40,12 +42,12 @@ const jobPostFire = async (jobName, applicantId) => {
     return null;
 };
 
-const jobPostApprove = async (jobName, applicantId) => {
+const jobPostApprove = async (job_name, applicant_id) => {
     try {
         const jwt = sessionStorage.getItem('accessToken');
         const response = await useAxiosInstance
             .authApiClient(jwt)
-            .post(`/job/approve`, { jobName, applicantId });
+            .post(`/job/approve`, { job_name, applicant_id });
         return response.data;
     } catch (e) {
         if (e.response.data.status === 404) {
@@ -60,12 +62,12 @@ const jobPostApprove = async (jobName, applicantId) => {
     return null;
 };
 
-const jobPostApply = async jobName => {
+const jobPostApply = async job_name => {
     try {
         const jwt = sessionStorage.getItem('accessToken');
         const response = await useAxiosInstance
             .authApiClient(jwt)
-            .post(`/job/apply`, { jobName });
+            .post(`/job/apply`, { job_name });
         return response.data;
     } catch (e) {
         if (e.response.data.status === 404) {
@@ -80,12 +82,12 @@ const jobPostApply = async jobName => {
     return null;
 };
 
-const jobPostDetail = async jobName => {
+const jobGetDetail = async job_name => {
     try {
         const jwt = sessionStorage.getItem('accessToken');
         const response = await useAxiosInstance
             .authApiClient(jwt)
-            .post(`/job/detail`, { jobName });
+            .post(`/job/detail`, job_name);
         return response.data;
     } catch (e) {
         if (e.response.data.status === 404) {
@@ -124,7 +126,7 @@ const jobPostRegister = async (
     name,
     desc,
     pay,
-    recruitTotalCount,
+    recruit_total_count,
     requirement,
 ) => {
     try {
@@ -135,7 +137,7 @@ const jobPostRegister = async (
                 name,
                 desc,
                 pay,
-                recruitTotalCount,
+                recruit_total_count,
                 requirement,
             });
         return response.data;
@@ -157,7 +159,7 @@ export default {
     jobPostFire,
     jobPostApprove,
     jobPostApply,
-    jobPostDetail,
+    jobGetDetail,
     jobGetList,
     jobPostRegister,
 };

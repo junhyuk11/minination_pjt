@@ -8,6 +8,7 @@ import ProductionButton1 from '../Atoms/ProductionButton1.jsx';
 import ProductionRequirement from '../Atoms/ProductionRequirement.jsx';
 import styles from './ProductionStudent.module.css';
 import ProductionCategoryStudent from '../Molecules/ProductionCatergoryStudent.jsx';
+import useJobApi from '../../../api/useJobApi.jsx';
 
 const ProductionStudent = ({ jobList }) => {
     const handleApplyClick = job => {
@@ -20,23 +21,43 @@ const ProductionStudent = ({ jobList }) => {
         }).then(async res => {
             if (res.isConfirmed) {
                 try {
-                    const body = {
-                        description: job.name,
-                    };
-                    // const response = await API.put('/api/artist/desc', body);
-                    // setOriginalData(currentData);
-                    // return response.data;
-                    Swal.fire({
-                        icon: 'success',
-                        title: '지원완료',
-                        confirmButtonText: '확인',
-                    });
+                    // API 호출
+                    const response = await useJobApi.jobPostApply(job.name);
+                    if (response.code === 200) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: '지원 완료',
+                            confirmButtonText: '확인',
+                        });
+                    }
                 } catch (error) {
-                    Swal.fire({
-                        icon: 'warning',
-                        title: '이미 지원한 공고입니다.',
-                        confirmButtonText: '확인',
-                    });
+                  // 현재 error로 코드가 오고 있지 않아 코드로 분류가 불가능함.
+                    console.error('지원 처리 중 오류 발생:', error);
+                    if (error.code === 403) {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: '유효하지 않은 토큰입니다.',
+                            confirmButtonText: '확인',
+                        });
+                    } else if (error.code === 404) {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: '지원 실패.',
+                            confirmButtonText: '확인',
+                        });
+                    } else if (error.code === 406) {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: '잔여 자리가 없습니다.',
+                            confirmButtonText: '확인',
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: '이미 신청 중이거나 근무 중입니다.',
+                            confirmButtonText: '확인',
+                        });
+                    }
                 }
             }
         });
@@ -50,12 +71,10 @@ const ProductionStudent = ({ jobList }) => {
             Comp3={<ProductionTitle title={`급여: ${job.pay} 만원`} />}
             Comp4={
                 <ProductionTitle
-                    title={`채용 인원: ${job.recruit_total_count}명`}
+                    title={`채용 인원: ${job.recruitTotalCount}명`}
                 />
             }
-            Comp5={
-                <ProductionTitle title={`지원자 수: ${job.apply_count}명`} />
-            }
+            Comp5={<ProductionTitle title={`지원자 수: ${job.applyCount}명`} />}
             Comp6={
                 <ProductionRequirement
                     title={`자격 요건: ${job.requirement}`}
@@ -74,7 +93,12 @@ const ProductionStudent = ({ jobList }) => {
         />
     ));
 
-    return <div className={styles.productionStudent}><ProductionCategoryStudent />{productionRows}</div>;
+    return (
+        <div className={styles.productionStudent}>
+            <ProductionCategoryStudent />
+            {productionRows}
+        </div>
+    );
 };
 
 export default ProductionStudent;
