@@ -1,63 +1,29 @@
 import useAxiosInstance from './useAxiosInstance.jsx';
 
 const nationPostPresident = async (nation, president) => {
-    try {
-        const jwt = sessionStorage.getItem('accessToken');
-        const response = await useAxiosInstance
-            .authApiClient(jwt)
-            .post(`/nation/president`, { nation, president });
-        return response.data;
-    } catch (e) {
-        if (e.response.data.status === 404) {
-            console.log('404에러');
-            return e.response.data;
-        }
-        if (e.response.data.status === 403) {
-            console.log('403에러');
-            return e.response.data;
-        }
-    }
-    return null;
+    const form = { nation, president };
+    console.log(form);
+    const jwt = sessionStorage.getItem('accessToken');
+    const response = await useAxiosInstance
+        .authApiClient(jwt)
+        .post(`/nation/president`, form);
+    return response.data;
 };
 
 const nationGetFlaglist = async () => {
-    try {
-        const jwt = sessionStorage.getItem('accessToken');
-        const response = await useAxiosInstance
-            .authApiClient(jwt)
-            .get(`/nation/flag/list`);
-        return response.data;
-    } catch (e) {
-        if (e.response.data.status === 404) {
-            console.log('404에러');
-            return e.response.data;
-        }
-        if (e.response.data.status === 403) {
-            console.log('403에러');
-            return e.response.data;
-        }
-    }
-    return null;
+    const jwt = sessionStorage.getItem('accessToken');
+    const response = await useAxiosInstance
+        .authApiClient(jwt)
+        .get(`/nation/flags`);
+    return response.data;
 };
 
 const nationDeleteNation = async () => {
-    try {
-        const jwt = sessionStorage.getItem('accessToken');
-        const response = await useAxiosInstance
-            .authApiClient(jwt)
-            .delete(`/nation`);
-        return response.data;
-    } catch (e) {
-        if (e.response.data.status === 404) {
-            console.log('404에러');
-            return e.response.data;
-        }
-        if (e.response.data.status === 403) {
-            console.log('403에러');
-            return e.response.data;
-        }
-    }
-    return null;
+    const jwt = sessionStorage.getItem('accessToken');
+    const response = await useAxiosInstance
+        .authApiClient(jwt)
+        .delete(`/nation`);
+    return response.data;
 };
 
 const nationPostCreate = async (
@@ -68,70 +34,38 @@ const nationPostCreate = async (
     vat,
     flagImgUrl,
 ) => {
-    try {
-        const jwt = sessionStorage.getItem('accessToken');
-        const response = await useAxiosInstance
-            .authApiClient(jwt)
-            .post(`/nation/create`, {
-                nationName,
-                currency,
-                payday,
-                incomeTax,
-                vat,
-                flagImgUrl,
-            });
-        return response.data;
-    } catch (e) {
-        if (e.response.data.status === 404) {
-            console.log('404에러');
-            return e.response.data;
-        }
-        if (e.response.data.status === 403) {
-            console.log('403에러');
-            return e.response.data;
-        }
-    }
-    return null;
+    const form = {
+        nationName,
+        currency,
+        payday,
+        incomeTax,
+        vat,
+        flagImgUrl,
+    };
+    console.log(form, form.flagImgUrl);
+    const jwt = sessionStorage.getItem('accessToken');
+    const response = await useAxiosInstance
+        .authApiClient(jwt)
+        .post(`/nation/create`, form);
+    return response.data;
 };
 
 const nationPostSearch = async nationName => {
-    try {
-        const jwt = sessionStorage.getItem('accessToken');
-        const response = await useAxiosInstance
-            .authApiClient(jwt)
-            .post(`/nation/search`, nationName);
-        return response.data;
-    } catch (e) {
-        if (e.response.data.status === 404) {
-            console.log('404에러');
-            return e.response.data;
-        }
-        if (e.response.data.status === 403) {
-            console.log('403에러');
-            return e.response.data;
-        }
-    }
-    return null;
+    const form = { nationName };
+    const jwt = sessionStorage.getItem('accessToken');
+    const response = await useAxiosInstance
+        .authApiClient(jwt)
+        .post(`/nation/search`, form);
+    return response.data;
 };
 
-const nationPostJoin = async () => {
-    try {
-        const jwt = sessionStorage.getItem('accessToken');
-        const response = await useAxiosInstance
-            .authApiClient(jwt)
-            .post(`/nation/join`);
-        return response.data;
-    } catch (e) {
-        if (e.response.data.status === 404) {
-            console.log('404에러');
-            return e.response.data;
-        }
-        if (e.response.data.status === 403) {
-            console.log('403에러');
-            return e.response.data;
-        }
-    }
-    return null;
+const nationPostJoin = async nationName => {
+    console.log(nationName);
+    const jwt = sessionStorage.getItem('accessToken');
+    const response = await useAxiosInstance
+        .authApiClient(jwt)
+        .post(`/nation/join`, nationName);
+    return response.data;
 };
 
 export default {

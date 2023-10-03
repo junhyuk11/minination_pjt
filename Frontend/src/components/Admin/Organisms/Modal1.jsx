@@ -3,40 +3,40 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './Modal1.module.css'; // CSS 모듈 가져오기
 import AdminTitle from '../Atoms/AdminTitle.jsx';
-import { ReactComponent as Flag1 } from '../../../assets/icons/Foundation/Flag1.svg';
-import { ReactComponent as Flag2 } from '../../../assets/icons/Foundation/Flag2.svg';
-import { ReactComponent as Flag3 } from '../../../assets/icons/Foundation/Flag3.svg';
-import { ReactComponent as Flag4 } from '../../../assets/icons/Foundation/Flag4.svg';
-import { ReactComponent as Flag5 } from '../../../assets/icons/Foundation/Flag5.svg';
-import { ReactComponent as Flag6 } from '../../../assets/icons/Foundation/Flag6.svg';
-import { ReactComponent as Flag7 } from '../../../assets/icons/Foundation/Flag7.svg';
-import { ReactComponent as Flag8 } from '../../../assets/icons/Foundation/Flag8.svg';
-import { ReactComponent as Flag9 } from '../../../assets/icons/Foundation/Flag9.svg';
-import { ReactComponent as Flag10 } from '../../../assets/icons/Foundation/Flag10.svg';
-import { ReactComponent as Checked1 } from '../../../assets/icons/Foundation/Checked1.svg';
-import { ReactComponent as Checked2 } from '../../../assets/icons/Foundation/Checked2.svg';
-import { ReactComponent as Checked3 } from '../../../assets/icons/Foundation/Checked3.svg';
-import { ReactComponent as Checked4 } from '../../../assets/icons/Foundation/Checked4.svg';
-import { ReactComponent as Checked5 } from '../../../assets/icons/Foundation/Checked5.svg';
-import { ReactComponent as Checked6 } from '../../../assets/icons/Foundation/Checked6.svg';
-import { ReactComponent as Checked7 } from '../../../assets/icons/Foundation/Checked7.svg';
-import { ReactComponent as Checked8 } from '../../../assets/icons/Foundation/Checked8.svg';
-import { ReactComponent as Checked9 } from '../../../assets/icons/Foundation/Checked9.svg';
-import { ReactComponent as Checked10 } from '../../../assets/icons/Foundation/Checked10.svg';
+import useNationApi from '../../../api/useNationApi.jsx';
 
 const Modal1 = ({
     handleClick,
-    selectedDay,
-    selectedIncomeTax,
-    selectedVAT,
-    inputText,
-    currencyInputText,
+    payday,
+    incomeTax,
+    vat,
+    nationName,
+    currency,
     setIsModalOpen,
 }) => {
     const [selectedFlag, setSelectedFlag] = useState(null);
+    const [flags, setFlags] = useState([]); // 국기 정보를 저장할 상태
+
+    useEffect(() => {
+        // API를 통해 국기 정보를 가져오는 함수를 호출합니다.
+        const fetchFlags = async () => {
+            try {
+                const response = await useNationApi.nationGetFlaglist();
+                if (response.code === 200) {
+                    setFlags(response.data);
+                } else {
+                    console.error('Failed to fetch flags');
+                }
+            } catch (error) {
+                console.error('Error fetching flags:', error);
+            }
+        };
+        // 국기 정보를 가져오는 함수를 호출합니다.
+        fetchFlags();
+    }, []); // 컴포넌트가 처음 렌더링될 때만 호출
 
     const handleFlagClick = flagNumber => {
         if (selectedFlag === flagNumber) {
@@ -45,50 +45,72 @@ const Modal1 = ({
             setSelectedFlag(flagNumber);
         }
     };
+    // 요일 데이터 가공
+    const dayMappings = {
+        월요일: 'MON',
+        화요일: 'TUE',
+        수요일: 'WED',
+        목요일: 'THU',
+        금요일: 'FRI',
+        토요일: 'SAT',
+        일요일: 'SUN',
+    };
 
-    const handleAcceptClick = () => {
+    const handleAcceptClick = async () => {
         if (selectedFlag === null) {
             alert('국기를 선택하세요.');
             return;
         }
-        handleClick();
+
+        try {
+            const selectedFlagIndex = selectedFlag - 1;
+            const flagImgUrl = flags[selectedFlagIndex]?.flag;
+
+            if (!flagImgUrl) {
+                alert('선택한 국기의 이미지 URL을 가져올 수 없습니다.');
+                return;
+            }
+
+            const response = await useNationApi.nationPostCreate(
+                nationName,
+                currency,
+                dayMappings[payday],
+                String(incomeTax),
+                String(vat),
+                flagImgUrl,
+            );
+
+            if (response.code === 200) {
+                alert('국가가 성공적으로 생성되었습니다.');
+                // 모달을 닫고 메인으로 이동시키는 함수
+                handleClick();
+            }
+        } catch (error) {
+            if (error.code === 402) {
+                alert('선생님 접근 가능한 기능입니다.');
+            } else if (error.code === 403) {
+                alert('유효하지 않은 토큰입니다.');
+            } else if (error.code === 404) {
+                alert('국가 생성에 실패하였습니다.');
+            } else if (error.code === 409) {
+                alert('이미 생성한 국가가 있습니다.');
+            } else {
+                alert('알 수 없는 오류가 발생했습니다.');
+            }
+        }
     };
 
     const handleCloseClick = () => {
         setIsModalOpen(false); // Close the modal
     };
-    const FlagWithCheck = ({ flagNumber, selected, onClick }) => {
-        // Define an array to map flag numbers to Flag components
-        const FlagComponents = [
-            null, // The first element is null to align with flag numbers
-            Flag1,
-            Flag2,
-            Flag3,
-            Flag4,
-            Flag5,
-            Flag6,
-            Flag7,
-            Flag8,
-            Flag9,
-            Flag10,
-        ];
-        const CheckedComponents = [
-            null, // The first element is null to align with flag numbers
-            Checked1,
-            Checked2,
-            Checked3,
-            Checked4,
-            Checked5,
-            Checked6,
-            Checked7,
-            Checked8,
-            Checked9,
-            Checked10,
-        ];
-
-        const FlagComponent = FlagComponents[flagNumber];
-        const isChecked = selectedFlag === flagNumber;
-        const CheckedComponent = CheckedComponents[flagNumber];
+    const FlagWithCheck = ({
+        flagNumber,
+        selected,
+        onClick,
+        flagUrl,
+        checkedFlagUrl,
+    }) => {
+        const isChecked = selected === flagNumber;
         return (
             <div
                 className={`${styles.flag} ${
@@ -97,9 +119,17 @@ const Modal1 = ({
                 onClick={() => onClick(flagNumber)}
             >
                 {isChecked ? (
-                    <CheckedComponent className={styles.flag} />
+                    <img
+                        src={checkedFlagUrl}
+                        alt={`Flag ${flagNumber}`}
+                        className={styles.flagImage}
+                    />
                 ) : (
-                    <FlagComponent className={styles.flag} />
+                    <img
+                        src={flagUrl}
+                        alt={`Flag ${flagNumber}`}
+                        className={styles.flagImage}
+                    />
                 )}
             </div>
         );
@@ -116,59 +146,29 @@ const Modal1 = ({
                     X
                 </button>
                 <AdminTitle title="국기 선택" className={styles.modalTitle} />
-                <div className={styles.modalCards1}>
-                    <FlagWithCheck
-                        flagNumber={1}
-                        selectedFlag={selectedFlag}
-                        onClick={handleFlagClick}
-                    />
-                    <FlagWithCheck
-                        flagNumber={2}
-                        selectedFlag={selectedFlag}
-                        onClick={handleFlagClick}
-                    />
-                    <FlagWithCheck
-                        flagNumber={3}
-                        selectedFlag={selectedFlag}
-                        onClick={handleFlagClick}
-                    />
-                    <FlagWithCheck
-                        flagNumber={4}
-                        selectedFlag={selectedFlag}
-                        onClick={handleFlagClick}
-                    />
-                    <FlagWithCheck
-                        flagNumber={5}
-                        selectedFlag={selectedFlag}
-                        onClick={handleFlagClick}
-                    />
+                <div className={styles.modalCards}>
+                    {flags.slice(0, 5).map((flag, index) => (
+                        <FlagWithCheck
+                            key={index}
+                            flagNumber={index + 1}
+                            selected={selectedFlag}
+                            onClick={handleFlagClick}
+                            flagUrl={flag.flag}
+                            checkedFlagUrl={flag.checkedFlag}
+                        />
+                    ))}
                 </div>
-                <div className={styles.modalCards2}>
-                    <FlagWithCheck
-                        flagNumber={6}
-                        selectedFlag={selectedFlag}
-                        onClick={handleFlagClick}
-                    />
-                    <FlagWithCheck
-                        flagNumber={7}
-                        selectedFlag={selectedFlag}
-                        onClick={handleFlagClick}
-                    />
-                    <FlagWithCheck
-                        flagNumber={8}
-                        selectedFlag={selectedFlag}
-                        onClick={handleFlagClick}
-                    />
-                    <FlagWithCheck
-                        flagNumber={9}
-                        selectedFlag={selectedFlag}
-                        onClick={handleFlagClick}
-                    />
-                    <FlagWithCheck
-                        flagNumber={10}
-                        selectedFlag={selectedFlag}
-                        onClick={handleFlagClick}
-                    />
+                <div className={styles.modalCards}>
+                    {flags.slice(5, 10).map((flag, index) => (
+                        <FlagWithCheck
+                            key={index}
+                            flagNumber={index + 6}
+                            selected={selectedFlag}
+                            onClick={handleFlagClick}
+                            flagUrl={flag.flag}
+                            checkedFlagUrl={flag.checkedFlag}
+                        />
+                    ))}
                 </div>
                 <button
                     className={styles.modalButton}
@@ -178,10 +178,9 @@ const Modal1 = ({
                     확인
                 </button>
                 <div>
-                    API로 넘겨줄 정보: <br /> 국가명 : {inputText}, 화폐명 :{' '}
-                    {currencyInputText}, 수령일 : {selectedDay}, 소득세 :{' '}
-                    {selectedIncomeTax}, 부가가치세 : {selectedVAT}, 선택한 국기
-                    번호 : {selectedFlag}
+                    API로 넘겨줄 정보: <br /> 국가명 : {nationName}, 화폐명 :{' '}
+                    {currency}, 수령일 : {payday}, 소득세 : {incomeTax},
+                    부가가치세 : {vat}, 선택한 국기 번호 : {selectedFlag}
                 </div>
             </div>
         </div>

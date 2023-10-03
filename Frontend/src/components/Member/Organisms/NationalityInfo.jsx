@@ -5,65 +5,98 @@ import NationalityResult from '../Molecules/NationalityResult.jsx';
 import NationalityError from '../Molecules/NationalityError.jsx';
 import ButtonMiddle1 from '../../Common/Atoms/ButtonMiddle1.jsx';
 import styles from './NationalityInfo.module.css';
+import useNationApi from '../../../api/useNationApi.jsx';
 
 const NationalityInfo = () => {
     const { navigateToDashboard } = useNavigation();
-    const [searchText, setSearchText] = useState('개발의민족');
-    const [presidentText, setPresidentText] = useState('김영석');
+    const [nationName, setnationName] = useState('개발의민족');
+    const [president, setpresident] = useState('');
     const [searchResult, setSearchResult] = useState(null);
-    const [presidentName, setPresidentName] = useState('김영석');
     const [showPresidentInput, setShowPresidentInput] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
-    // 실제 api 연결시 수정
-    const handleSelectButtonClick = () => {
-        setShowPresidentInput(true);
-        setPresidentName('김영석');
-    };
 
-    const handleChange = event => {
-        setSearchText(event.target.value);
-    };
-
-    const handleConfirmButtonClick = () => {
-        setErrorMsg('');
-        if (presidentName === presidentText) {
-            // eslint-disable-next-line no-alert
-            alert(`'${searchResult}' 국가에 가입되셨습니다.`);
-            navigateToDashboard();
-        } else {
-            setErrorMsg('대통령 이름이 일치하지 않습니다.');
-        }
-    };
-    const handleClick = async () => {
+    // API 요청을 위한 함수
+    const fetchNationInfo = async () => {
         try {
-            // 실제 API 요청을 보내는 부분
-            const response = await fetch(`API_URL?query=${searchText}`);
-            const data = await response.json();
+            const response = await useNationApi.nationPostSearch(nationName);
 
-            if (data && data.results.length > 0) {
-                const countryName = data.results[0].name;
-                setSearchResult(countryName);
+            if (response.code === 200) {
+                // 검색 결과가 있을 경우
+                setSearchResult(nationName);
             } else {
+                // 검색 결과가 없을 경우
                 setSearchResult('');
+                console.log('API 요청 에러');
             }
         } catch (error) {
-            // eslint-disable-next-line no-console
             console.error('API 요청 에러:', error);
             setSearchResult('');
         }
+    };
 
-        if (searchText === '개발의민족') {
-            setSearchResult('개발의민족');
-        } else {
-            setSearchResult('');
-        }
+    const handleSelectButtonClick = () => {
+        setShowPresidentInput(true);
+    };
+
+    const handleChange = event => {
+        setnationName(event.target.value);
+    };
+
+    // 국가검색 함수
+    const handleClick = () => {
+        // 국가 검색 API 요청
+        setErrorMsg('');
+        fetchNationInfo();
         setShowPresidentInput(false);
     };
+
+    const handleConfirmButtonClick = async () => {
+        setErrorMsg('');
+
+        try {
+            // 대통령 이름 확인 API 요청
+            const response = await useNationApi.nationPostPresident(
+                searchResult,
+                president,
+            );
+
+            const statusCode = response.code;
+            if (statusCode === 200) {
+                // 대통령 이름이 일치하는 경우
+                const joinResponse =
+                    await useNationApi.nationPostJoin(searchResult);
+                if (joinResponse.code === 200) {
+                    // 국가 가입 성공
+                    alert(`'${searchResult}' 국가에 가입되셨습니다.`);
+                    navigateToDashboard();
+                } else if (joinResponse.code === 409) {
+                    setErrorMsg('이미 가입 중인 국가입니다.');
+                } else {
+                    setErrorMsg('국가 가입 중에 오류가 발생했습니다.');
+                }
+            } else if (statusCode === 400) {
+                setErrorMsg('대통령 이름이 일치하지 않습니다.');
+            } else {
+                setErrorMsg('서버 오류가 발생했습니다.');
+            }
+        } catch (error) {
+            // console.log(error.response.data.status);
+            if (error.response.data.status === 404) {
+                console.log('API 요청실패, 코드 404');
+            } else if (error.response.data.status === 403) {
+                console.log('API 요청실패, 코드 403 : 유효하지 않은 토큰');
+            } else {
+                console.error('API 요청 에러:', error);
+                setErrorMsg('API 요청 중에 오류가 발생했습니다.');
+            }
+        }
+    };
+
     return (
         <div className={styles.info}>
             <div className={styles.infoContent}>
                 <NationalitySearchForm
-                    text={searchText}
+                    text={nationName}
                     onChange={handleChange}
                     onClick={handleClick}
                     className={styles.search}
@@ -85,8 +118,8 @@ const NationalityInfo = () => {
                         {showPresidentInput && (
                             <>
                                 <NationalityResult
-                                    presidentText={presidentText}
-                                    onTextChange={setPresidentText}
+                                    president={president}
+                                    onTextChange={setpresident}
                                     onKeyPress={handleConfirmButtonClick}
                                 />
                                 {errorMsg && (

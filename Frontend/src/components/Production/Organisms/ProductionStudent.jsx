@@ -20,44 +20,14 @@ const ProductionStudent = ({ jobList }) => {
             cancelButtonText: '취소',
         }).then(async res => {
             if (res.isConfirmed) {
-                try {
-                    // API 호출
-                    const response = await useJobApi.jobPostApply(job.name);
-                    if (response.code === 200) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: '지원 완료',
-                            confirmButtonText: '확인',
-                        });
-                    }
-                } catch (error) {
-                  // 현재 error로 코드가 오고 있지 않아 코드로 분류가 불가능함.
-                    console.error('지원 처리 중 오류 발생:', error);
-                    if (error.code === 403) {
-                        Swal.fire({
-                            icon: 'warning',
-                            title: '유효하지 않은 토큰입니다.',
-                            confirmButtonText: '확인',
-                        });
-                    } else if (error.code === 404) {
-                        Swal.fire({
-                            icon: 'warning',
-                            title: '지원 실패.',
-                            confirmButtonText: '확인',
-                        });
-                    } else if (error.code === 406) {
-                        Swal.fire({
-                            icon: 'warning',
-                            title: '잔여 자리가 없습니다.',
-                            confirmButtonText: '확인',
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: 'warning',
-                            title: '이미 신청 중이거나 근무 중입니다.',
-                            confirmButtonText: '확인',
-                        });
-                    }
+                // API 호출
+                const response = await useJobApi.jobPostApply(job.name);
+                if (response && response.code === 200) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '지원 완료',
+                        confirmButtonText: '확인',
+                    });
                 }
             }
         });
