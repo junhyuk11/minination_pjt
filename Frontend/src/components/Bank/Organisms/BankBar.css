@@ -7,16 +7,18 @@
 }
 
 .bankBarBlackBackground {
-    width: 25vw; /* 뷰포트 너비의 50%로 수정 */
+    width: 25vw;
     background-color: #d9d9d9;
-    flex-direction: column; /* 주축을 수직으로 설정 */
+    flex-direction: column;
     color: black;
     font-size: 24px;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start; /* 좌측 정렬을 위해 이 부분을 변경 */
     border-radius: 30px;
+    padding-left: 10px; /* 좌측 정렬 시 아이템과 컨테이너 가장자리 사이의 공간을 추가 */
 }
+
 
 .assetItem {
     display: flex;

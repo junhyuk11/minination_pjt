@@ -1,57 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './BankContent1.css';
+import useBankApi from '../../../api/useBankApi.jsx';
 
 function BankContent1() {
-    const transactions = [
-        {
-            id: 1,
-            account: '청구계좌',
-            category: '식비',
-            amount: 5000,
-            balance: 95000,
-            date: '2023-09-19',
-        },
-        {
-            id: 1,
-            account: '청구계좌',
-            category: '식비',
-            amount: 5000,
-            balance: 95000,
-            date: '2023-09-19',
-        },
-        {
-            id: 1,
-            account: '청구계좌',
-            category: '식비',
-            amount: 3000,
-            balance: 95000,
-            date: '2023-09-19',
-        },
-        {
-            id: 1,
-            account: '청구계좌',
-            category: '식비',
-            amount: 5000,
-            balance: 95000,
-            date: '2023-09-19',
-        },
-        {
-            id: 1,
-            account: '청구계좌',
-            category: '식비',
-            amount: 5000,
-            balance: 95000,
-            date: '2023-09-19',
-        },
-        {
-            id: 1,
-            account: '청구계좌',
-            category: '식비',
-            amount: 99000,
-            balance: 95000,
-            date: '2023-09-19',
-        },
-    ];
+    const [bankList, setBankList] = useState([]);
+
+    const getBankList = async () => {
+        try {
+            const response = await useBankApi.bankGetBank();
+            if (response.code === 200) {
+                console.log(response.data.detail);
+                setBankList(response.data.detail);
+            } else {
+                console.log(response.code);
+            }
+        } catch (error) {
+            // Handle error
+        }
+    };
+
+    useEffect(() => {
+        getBankList();
+    }, []);
 
     return (
         <div className="bankContentTableWrapper">
@@ -66,15 +36,16 @@ function BankContent1() {
                     </tr>
                 </thead>
                 <tbody>
-                    {transactions.map(transaction => (
-                        <tr key={transaction.id}>
-                            <td>{transaction.account}</td>
-                            <td>{transaction.category}</td>
-                            <td>{transaction.amount}</td>
-                            <td>{transaction.balance}</td>
-                            <td>{transaction.date}</td>
-                        </tr>
-                    ))}
+                    {bankList
+                        .map((detail, index) => (
+                            <tr key={index}>
+                                <td>{detail.org}</td>
+                                <td>{detail.category}</td>
+                                <td>{detail.amount}</td>
+                                <td>{detail.balance}</td>
+                                <td>{detail.date}</td>
+                            </tr>
+                        ))}
                 </tbody>
             </table>
         </div>
