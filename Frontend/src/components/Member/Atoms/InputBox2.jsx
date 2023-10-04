@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 
-function InputBox2({ title, placeholder, inputText, onChange, onBlur, type }) {
+function InputBox2({ placeholder, inputText, onChange, onBlur, type }) {
     const [isFocused, setIsFocused] = useState(false);
     const handleFocus = () => {
         setIsFocused(true);
-        console.log(isFocused);
     };
 
     const handleBlur = () => {
         setIsFocused(false);
-        console.log(isFocused);
+        onBlur();
+    };
+
+    const formStyle = {
+        width: '100%',
     };
 
     const inputStyle = {
@@ -23,16 +26,18 @@ function InputBox2({ title, placeholder, inputText, onChange, onBlur, type }) {
     };
 
     return (
-        <input
-            value={inputText}
-            placeholder={placeholder}
-            name="text"
-            style={inputStyle}
-            onChange={onChange}
-            onBlur={onBlur}
-            type={type}
-            onFocus={handleFocus}
-        />
+        <form style={formStyle}>
+            <input
+                value={inputText}
+                placeholder={placeholder}
+                name="text"
+                style={inputStyle}
+                onChange={onChange}
+                onBlur={handleBlur}
+                type={type}
+                onFocus={handleFocus}
+            />
+        </form>
     );
 }
 
