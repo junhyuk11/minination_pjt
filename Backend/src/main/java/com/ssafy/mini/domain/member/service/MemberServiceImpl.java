@@ -11,6 +11,7 @@ import com.ssafy.mini.domain.member.entity.Member;
 import com.ssafy.mini.domain.member.mapper.MemberMapper;
 import com.ssafy.mini.domain.member.repository.MemberRepository;
 import com.ssafy.mini.domain.nation.entity.Nation;
+import com.ssafy.mini.domain.stockholding.service.StockholdingService;
 import com.ssafy.mini.global.exception.ErrorCode;
 import com.ssafy.mini.global.exception.MNException;
 import com.ssafy.mini.global.auth.jwt.JwtProvider;
@@ -32,6 +33,7 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
     private final MasterRepository masterRepository;
     private final AccountRepository accountRepository;
+    private final StockholdingService stockholdingService;
 
     private final MemberMapper memberMapper;
     private final JwtProvider jwtProvider;
@@ -61,6 +63,9 @@ public class MemberServiceImpl implements MemberService {
         Master master = masterRepository.findById("BNT03")
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_CODE));
 
+        // 보유 주식 0으로 설정
+        stockholdingService.setInitStockholding(member);
+
         Account account = Account.builder()
                 .member(member)
                 .bankCode(master)
@@ -71,7 +76,6 @@ public class MemberServiceImpl implements MemberService {
                 .acctSaving(9999)
                 .expAmount(9999)
                 .build();
-        System.out.println(account.toString());
         accountRepository.save(account);
 
         // 토큰 발급
