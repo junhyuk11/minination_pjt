@@ -62,7 +62,6 @@ const SignupInputForm = () => {
             );
 
             if (response.code === 200) {
-                console.log(response);
                 setIdentity(response.data.memType);
                 sessionStorage.setItem(
                     'accessToken',
