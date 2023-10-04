@@ -15,7 +15,7 @@ const NationalityInfo = () => {
     const [showPresidentInput, setShowPresidentInput] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
 
-    // API 요청을 위한 함수
+    // 국가검색 api요청부분
     const fetchNationInfo = async () => {
         try {
             const response = await useNationApi.nationPostSearch(nationName);
@@ -42,7 +42,7 @@ const NationalityInfo = () => {
         setnationName(event.target.value);
     };
 
-    // 국가검색 함수
+    // 국가검색
     const handleClick = () => {
         // 국가 검색 API 요청
         setErrorMsg('');
