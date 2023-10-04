@@ -170,16 +170,17 @@ public class MemberServiceImpl implements MemberService {
      */
     private MemberTokenResponse generateToken(Member member) {
         String type = member.getMemType().getExpression();
+        String nationName = member.getIsoSeq() != null ? member.getIsoSeq().getIsoName() : "";
         String accessToken = jwtProvider.generateAccessToken(member.getMemId());
         String refreshToken = jwtProvider.generateRefreshToken(member.getMemId());
 
         return MemberTokenResponse.builder()
                 .memType(type)
+                .nationName(nationName)
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();
     }
-
     @Override
     public String getMemberType(String memberId) {
         Member member = memberRepository.findByMemId(memberId)

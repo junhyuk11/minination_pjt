@@ -111,11 +111,17 @@ public class JobServiceImpl implements JobService{
         Member member = memberRepository.findByMemId(memberId)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
 
-        if(!member.getMemType().getExpression().equals("TC"))
-            throw new MNException(ErrorCode.NO_AUTHORITY);
-
         Job job = jobRepository.findByJobName(jobApproveRequestDTO.getJobName())
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_JOB));
+
+        // 해당 지원에 해당하는 국가의 선생님만 승인 가능
+        if(!member.getMemType().getExpression().equals("TC") || !member.getIsoSeq().equals(job.getNation())) {
+            throw new MNException(ErrorCode.NO_AUTHORITY);
+        }
+
+        // 직업에 지원한 인원이 모두 모였을 경우
+        if(job.getJobLeftCnt() == 0)
+            throw new MNException(ErrorCode.NO_LEFT_JOB);
 
         Member applicant = memberRepository.findByMemName(jobApproveRequestDTO.getApplicantName())
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
@@ -149,7 +155,7 @@ public class JobServiceImpl implements JobService{
         for(Job j : jobList){
 
             List<Apply> applyList = applyRepository.findAllByJob(j);
-            List<String> employeeList = memberRepository.findMemIdByJobSeq(j);
+            List<String> employeeList = memberRepository.findMemNameByJobSeq(j);
 
             int status = 0;
             if(applyRepository.findByJobAndMember(j, member).isPresent())
@@ -180,11 +186,13 @@ public class JobServiceImpl implements JobService{
         Member member = memberRepository.findByMemId(memberId)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
 
-        if(!member.getMemType().getExpression().equals("TC"))
-            throw new MNException(ErrorCode.NO_AUTHORITY);
-
         Job job = jobRepository.findByJobName(jobDeclineRequestDTO.getJobName())
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_JOB));
+
+        // 해당 지원에 해당하는 국가의 선생님만 거절 가능
+        if(!member.getMemType().getExpression().equals("TC") || !member.getIsoSeq().equals(job.getNation())) {
+            throw new MNException(ErrorCode.NO_AUTHORITY);
+        }
 
         Member applicant = memberRepository.findByMemName(jobDeclineRequestDTO.getApplicantName())
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
@@ -246,8 +254,8 @@ public class JobServiceImpl implements JobService{
         Job job = jobRepository.findByJobName(jobName)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_JOB));
 
-        List<String> applicants = applyRepository.findMemIdByJobSeq(job);
-        List<String> employees = memberRepository.findMemIdByJobSeq(job);
+        List<String> applicants = applyRepository.findMemNameByJob(job);
+        List<String> employees = memberRepository.findMemNameByJobSeq(job);
 
         return JobDetailResponseDTO.builder()
                 .applicatCount(applicants.size())
@@ -259,6 +267,45 @@ public class JobServiceImpl implements JobService{
                 .build();
     }
 
+    @Override
+    public void delete(String memberId, JobDeleteRequestDTO jobDeleteRequestDTO) {
 
+        log.info("Job Service Layer:: delete() called");
+
+        Member member = memberRepository.findByMemId(memberId)
+                .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
+
+        String jobName = jobDeleteRequestDTO.getJobName();
+        Job job = jobRepository.findByJobName(jobName)
+                .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_JOB));
+
+        // 선생님만 자기 국가의 직업 삭제 가능
+        if(!member.getMemType().getExpression().equals("TC") || !member.getIsoSeq().equals(job.getNation())) {
+            throw new MNException(ErrorCode.NO_AUTHORITY);
+        }
+
+        // 해당 직업 지원자 모두 거절
+        List<Apply> applicantList = applyRepository.findAllByJob(job);
+        for(Apply a : applicantList){
+            JobDeclineRequestDTO jobDeclineRequestDTO = JobDeclineRequestDTO.builder()
+                    .applicantName(a.getMember().getMemName())
+                    .jobName(jobName)
+                    .build();
+            decline(memberId, jobDeclineRequestDTO);
+        }
+
+        // 해당 직업 근무자 모두 해고
+        List<Member> employeeList = memberRepository.findAllByJobSeq(job);
+        for(Member m : employeeList){
+            JobFireRequestDTO jobFireRequestDTO = JobFireRequestDTO.builder()
+                    .employeeName(m.getMemName())
+                    .jobName(jobName)
+                    .build();
+            fire(memberId, jobFireRequestDTO);
+        }
+
+        // 해당 직업 삭제
+        jobRepository.delete(job);
+    }
 
 }

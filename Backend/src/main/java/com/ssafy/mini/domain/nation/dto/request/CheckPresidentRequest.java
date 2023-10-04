@@ -4,6 +4,6 @@ import lombok.Getter;
 
 @Getter
 public class CheckPresidentRequest {
-    String nation;
-    String president;
+    private String nation;
+    private String president;
 }
