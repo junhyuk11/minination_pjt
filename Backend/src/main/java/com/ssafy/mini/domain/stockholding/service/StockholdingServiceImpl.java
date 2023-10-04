@@ -98,8 +98,9 @@ public class StockholdingServiceImpl implements StockholdingService {
         // 보유 주식보다 많이 팔려는 경우
         if (stockholding.getHoldQty() < amount) throw new MNException(ErrorCode.NOT_ENOUGH_STOCK);
 
-        accountService.updateAccountBalance(moneyHave, moneyNeed, STOCK_EXPRESSION,corporation); // 주식 보유 수량 변경
-        upateStockholding(stockholding, -amount, -curPrice);
+        accountService.updateAccountBalance(moneyHave, moneyNeed, STOCK_EXPRESSION,corporation); // account table 잔액 update
+        updateMemberBalance(memberId, moneyNeed); // member table 잔액 update
+        upateStockholding(stockholding, -amount, -curPrice); // 주식 보유 수량 변경
 
         return getPortfolio(memberId);
     }
