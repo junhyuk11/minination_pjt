@@ -74,7 +74,14 @@ public class StockholdingServiceImpl implements StockholdingService {
         updateMemberBalance(memberId, -moneyNeed); // member table 잔액 update
 
         // 주식 보유 수량 변경
-        Stockholding stockholding = stockholdingRepository.findByMemberIdAndCode(memberId, code);
+        Stockholding stockholding = stockholdingRepository.findByMemberIdAndCode(memberId, code).orElse(
+                Stockholding.builder()
+                        .member(memberRepository.findByMemId(memberId).get())
+                        .corporation(corporationRepository.findById(code).get())
+                        .holdQty(0)
+                        .stkBuyPrice(0)
+                        .build()
+        );
         upateStockholding(stockholding, amount, curPrice);
 
         return getPortfolio(memberId);
@@ -88,7 +95,8 @@ public class StockholdingServiceImpl implements StockholdingService {
         int amount = tradeStockRequest.getAmount();
 
         String corporation = corporationRepository.findById(code).get().getIncNm();
-        Stockholding stockholding = stockholdingRepository.findByMemberIdAndCode(memberId, code);
+        Stockholding stockholding = stockholdingRepository.findByMemberIdAndCode(memberId, code)
+                .orElseThrow(() -> new MNException(ErrorCode.NOT_ENOUGH_STOCK)); // 보유 주식 가져오기
 
         // 주식 매도
         int curPrice = getCurrentPrice(code);
