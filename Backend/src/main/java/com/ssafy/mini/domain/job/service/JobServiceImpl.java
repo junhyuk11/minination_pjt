@@ -155,7 +155,7 @@ public class JobServiceImpl implements JobService{
         for(Job j : jobList){
 
             List<Apply> applyList = applyRepository.findAllByJob(j);
-            List<String> employeeList = memberRepository.findMemIdByJobSeq(j);
+            List<String> employeeList = memberRepository.findMemNameByJobSeq(j);
 
             int status = 0;
             if(applyRepository.findByJobAndMember(j, member).isPresent())
@@ -254,8 +254,8 @@ public class JobServiceImpl implements JobService{
         Job job = jobRepository.findByJobName(jobName)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_JOB));
 
-        List<String> applicants = applyRepository.findMemIdByJobSeq(job);
-        List<String> employees = memberRepository.findMemIdByJobSeq(job);
+        List<String> applicants = applyRepository.findMemNameByJob(job);
+        List<String> employees = memberRepository.findMemNameByJobSeq(job);
 
         return JobDetailResponseDTO.builder()
                 .applicatCount(applicants.size())
