@@ -48,7 +48,10 @@ const BankBar = () => {
                             height: '7vh',
                         }}
                     />
-                    내 현금 자산 : {cashValue}
+                    <span className="gap"> </span>
+                    <span className="bold">내 현금 자산</span>
+                    <span className="mega-gap"> </span>
+                    {cashValue}
                 </div>
                 <div className="assetItem">
                     <img
@@ -60,7 +63,10 @@ const BankBar = () => {
                             height: '7vh',
                         }}
                     />
-                    내 주식 자산 : {stockValue}
+                    <span className="gap"> </span>
+                    <span className="bold">내 주식 자산</span>
+                    <span className="mega-gap"> </span>
+                    {cashValue}
                 </div>
                 <div className="assetItem">
                     <img
@@ -72,7 +78,10 @@ const BankBar = () => {
                             height: '7vh',
                         }}
                     />
-                    내 저축 자산 : {saveValue}
+                    <span className="gap"> </span>
+                    <span className="bold">내 저축 자산</span>
+                    <span className="mega-gap"> </span>
+                    {cashValue}
                 </div>
             </div>
         </div>

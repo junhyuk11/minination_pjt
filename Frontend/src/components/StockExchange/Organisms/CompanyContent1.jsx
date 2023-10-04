@@ -23,7 +23,7 @@ const CompanyContent1 = () => {
         }
     };
 
-    const exampleList = stockList[1];
+    const samsungList = stockList[1];
 
     useEffect(() => {
         getStockList();
@@ -31,9 +31,9 @@ const CompanyContent1 = () => {
 
     return (
         <div className="company-content-container">
-            {exampleList && (
+            {samsungList && (
                 <>
-                    <div className="company-name">{exampleList.name}</div>
+                    <div className="company-name">{samsungList.name}</div>
                     <div className="company-image-parent">
                         <img
                             src="https://biz.chosun.com/resizer/5DEr4LtJ1dSz7ZQ35ogDanBaJoE=/616x0/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosunbiz/XLYL7D7AJVHDXK57Z6RROVD4X4.gif"
@@ -42,7 +42,7 @@ const CompanyContent1 = () => {
                         />
                     </div>
                     <div className="company-description">
-                        {exampleList.desc}
+                        {samsungList.desc}
                     </div>
                     <div className="outlink-btns">
                         <a

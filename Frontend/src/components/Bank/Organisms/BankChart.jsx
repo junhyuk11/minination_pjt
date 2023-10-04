@@ -25,13 +25,18 @@ const BankChart = () => {
     }, []);
 
     // chartList의 항목이 undefined가 아닌 경우만 처리합니다.
-    const transformedData = chartList.filter(item => item !== undefined).map(item => ({
-        time: item.time,
-        value: item.asset, // asset을 value로 변경합니다.
-    }));
+    const transformedData = chartList
+        .filter(item => item !== undefined)
+        .map(item => ({
+            time: item.time,
+            value: item.asset, // asset을 value로 변경합니다.
+        }));
 
     // transformedData가 비어있지 않은 경우에만 contentDom을 정의합니다.
-    const contentDom = transformedData.length > 0 ? <BankChartRow data={transformedData} /> : null;
+    const contentDom =
+        transformedData.length > 0 ? (
+            <BankChartRow data={transformedData} />
+        ) : null;
 
     return (
         <div>

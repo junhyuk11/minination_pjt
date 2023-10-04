@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import useHomeApi from '../../../api/useHomeApi';
-import EconomyRow from '../Molecules/EconomyRow';
-import HomeCard from '../Molecules/HomeCard';
+import useHomeApi from '../../../api/useHomeApi.jsx';
+import EconomyRow from '../Molecules/EconomyRow.jsx';
+import HomeCard from '../Molecules/HomeCard.jsx';
 import cardGif from '../../../assets/gif/economy.gif';
 
 const Economy = () => {
@@ -68,7 +68,7 @@ const Economy = () => {
 
     const getChartApi = async () => {
         const response = await useHomeApi.homeGetChart();
-        if (response.code === 200) { 
+        if (response.code === 200) {
             setResponse(response.data);
         }
     };

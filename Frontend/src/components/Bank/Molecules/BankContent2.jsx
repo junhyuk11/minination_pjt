@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './BankContent1.css';
+import Swal from 'sweetalert2';
 import BankButtonSmall from '../Atoms/BankButtonSmall.jsx';
 import BankInput from '../Atoms/BankInput.jsx';
 import useBankApi from '../../../api/useBankApi.jsx';
-import Swal from 'sweetalert2';
 
 function BankContent2() {
     const [bankList, setBankList] = useState([]);
@@ -72,7 +72,7 @@ function BankContent2() {
                                 <td>{account.start}</td>
                                 <td>{account.end}</td>
                                 <td>{account.principal}</td>
-                                <td>{account.estimaion}</td>
+                                <td>{account.estimation}</td>
                                 <td>
                                     <BankButtonSmall
                                         title="해지하기"

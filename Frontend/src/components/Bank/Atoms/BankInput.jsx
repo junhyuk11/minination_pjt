@@ -16,7 +16,7 @@ function BankInput({ placeholder, inputText, onChange, type }) {
         width: '100%',
         padding: '0.5rem',
         height: '24px',
-        borderRadius: '1rem',
+        borderRadius: '0.5rem',
         borderColor: isFocused ? '#a2d6ab' : '#c0c0c0',
         borderStyle: 'solid',
         outline: 'none', // 디폴트 아웃라인(검정) 삭제

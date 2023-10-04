@@ -7,7 +7,7 @@ function BankButtonMiddle({ title, onClick, className }) {
         justifyContent: 'center',
         width: '110px',
         height: '50px',
-        borderRadius: '2rem',
+        borderRadius: '20px 20px 0 0',
         border: 'none',
         backgroundColor: '#029664',
         color: 'white',
