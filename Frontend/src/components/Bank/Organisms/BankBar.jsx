@@ -66,7 +66,7 @@ const BankBar = () => {
                     <span className="gap"> </span>
                     <span className="bold">내 주식 자산</span>
                     <span className="mega-gap"> </span>
-                    {cashValue}
+                    {stockValue}
                 </div>
                 <div className="assetItem">
                     <img
@@ -81,7 +81,7 @@ const BankBar = () => {
                     <span className="gap"> </span>
                     <span className="bold">내 저축 자산</span>
                     <span className="mega-gap"> </span>
-                    {cashValue}
+                    {saveValue}
                 </div>
             </div>
         </div>

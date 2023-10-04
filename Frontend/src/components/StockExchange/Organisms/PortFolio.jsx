@@ -57,9 +57,6 @@ function PortFolio() {
                     </div>
                     <div className="portfolio-item-holdings center">
                         <span>{stock.holdQty}주</span>
-                        <span>X</span>
-                        <span>{stock.curPrice}</span>{' '}
-                        {/* Adjust this line based on the actual structure of portList items */}
                     </div>
                     <div className="portfolio-item-value center">
                         <div>
