@@ -9,10 +9,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/bank")
@@ -28,9 +26,6 @@ public class BankController {
     })
     @GetMapping("/info")
     public SuccessResponse getBankInfo(@RequestHeader("Authorization") String accessToken) {
-
-        log.info("Bank Controller Layer:: getBankInfo() called");
-
         return SuccessResponse.builder()
                 .data(bankService.info())
                 .build();
@@ -46,9 +41,6 @@ public class BankController {
     @PostMapping("/subscribe")
     public SuccessResponse subscribe(@RequestHeader("Authorization") String accessToken,
                                               @RequestBody BankSubscribeRequestDTO bankSubscribeRequestDTO) {
-
-        log.info("Bank Controller Layer:: subscribe() called");
-
         String memberId = jwtProvider.extractMemberId(accessToken);
 
         return SuccessResponse.builder()
@@ -64,9 +56,6 @@ public class BankController {
     @PostMapping("/terminate")
     public SuccessResponse terminate(@RequestHeader("Authorization") String accessToken,
                                               @RequestBody BankTerminateRequestDTO bankTerminateRequestDTO) {
-
-        log.info("Bank Controller Layer:: terminate() called");
-
         String memberId = jwtProvider.extractMemberId(accessToken);
 
         return SuccessResponse
@@ -82,9 +71,6 @@ public class BankController {
     })
     @GetMapping()
     public SuccessResponse myAsset(@RequestHeader("Authorization") String accessToken) {
-
-        log.info("Bank Controller Layer:: myAsset() called");
-
         String memberId = jwtProvider.extractMemberId(accessToken);
 
         return SuccessResponse.builder()

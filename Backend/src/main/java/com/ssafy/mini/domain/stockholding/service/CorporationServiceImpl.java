@@ -11,7 +11,6 @@ import com.ssafy.mini.global.exception.ErrorCode;
 import com.ssafy.mini.global.exception.MNException;
 import com.ssafy.mini.global.infra.s3.S3Service;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,7 +20,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CorporationServiceImpl implements CorporationService {
@@ -37,7 +35,6 @@ public class CorporationServiceImpl implements CorporationService {
 
     @Override
     public void register(CorporationRegisterRequest corporationRegisterRequest, MultipartFile logo, MultipartFile profile) {
-        log.info("Service Layer: register() 진입");
         Corporation corporation = corporationMapper.corporationRegisterRequestToCorporation(corporationRegisterRequest);
 
         // 새로운 기업 정보 저장
@@ -54,7 +51,6 @@ public class CorporationServiceImpl implements CorporationService {
 
     @Override
     public List<CorporationInfoResponse> getCorpInfo() {
-        log.info("Service Layer: getCorpList() called");
         // 기업 정보
         List<CorporationInfoResponse> corpInfo = corporationToCorporationInfoResponse(corporationRepository.findAll());
 

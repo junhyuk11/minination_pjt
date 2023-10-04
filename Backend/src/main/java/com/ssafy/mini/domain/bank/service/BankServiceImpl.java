@@ -49,9 +49,6 @@ public class BankServiceImpl implements BankService {
 
     @Override
     public BankInfoResponseDTO info() {
-
-        log.info("Bank Service Layer:: info() called");
-
         List<Bank> bankList = bankRepository.findAll();
 
         List<Map<String, String>> depositList = new ArrayList<>();
@@ -83,9 +80,6 @@ public class BankServiceImpl implements BankService {
 
     @Override
     public BankSubscribeResponseDTO subscribe(String memberId, BankSubscribeRequestDTO bankSubscribeRequestDTO) {
-
-        log.info("Bank Service Layer:: subscribe() called");
-
         // member 확인
         Member member = memberRepository.findByMemId(memberId)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
@@ -117,7 +111,7 @@ public class BankServiceImpl implements BankService {
         int acctSaving, expAmount;
         byte rate = bankProduct.getRate();
 
-        log.info("rate: " + rate);
+        log.debug("rate: " + rate);
 
         // 계좌 타입
         String accountType = bankCode.getParentCode().getExpression();
@@ -176,9 +170,6 @@ public class BankServiceImpl implements BankService {
 
     @Override
     public BankTerminateResponseDTO terminate(String memberId, BankTerminateRequestDTO bankTerminateRequestDTO) {
-
-        log.info("Bank Service Layer:: terminate() called");
-
         // 사용자 조회
         Member member = memberRepository.findByMemId(memberId)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
@@ -187,14 +178,14 @@ public class BankServiceImpl implements BankService {
         Master naAccountMaster = masterRepository.findByCode("BNT03")
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_CODE));
 
-        log.info("naAccountMaster: " + naAccountMaster.getCode());
+        log.debug("naAccountMaster: " + naAccountMaster.getCode());
 
         // 해지할 상품 코드 조회
         Master bankAccountMaster = masterRepository.findByExpression(bankTerminateRequestDTO.getType().substring(0, 1)
                         + bankTerminateRequestDTO.getTerm())
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_CODE));
 
-        log.info("bankAccountMaster: " + bankAccountMaster.getCode());
+        log.debug("bankAccountMaster: " + bankAccountMaster.getCode());
 
         // 일반 계좌, 해지할 상품 계좌 조회
         Account normalAccount, bankAccount;
@@ -231,9 +222,6 @@ public class BankServiceImpl implements BankService {
 
     @Override
     public BankMyInfoResponseDTO myAsset(String memberId) {
-
-        log.info("Bank Service Layer:: myAsset() called");
-
         Member member = memberRepository.findByMemId(memberId)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
 
@@ -335,7 +323,7 @@ public class BankServiceImpl implements BankService {
         List<AccountDTO> accountDTOList = new ArrayList<>();
         List<Account> accountList = accountRepository.findByMember(member);
 
-        log.info("accountList: {}", accountList.toString());
+        log.debug("accountList: {}", accountList.toString());
 
         for (Account account : accountList) {
             accountDTOList.add(AccountDTO.builder()
@@ -353,8 +341,6 @@ public class BankServiceImpl implements BankService {
     @Transactional
     @Scheduled(cron = "0 0 03 * * ?")
     public void terminateAtMaturity() {
-        log.info("Bank Service Layer:: terminateAtMaturity() called");
-
         List<Account> accountList = accountRepository.findAll();
 
         for (Account account : accountList) {
@@ -363,7 +349,7 @@ public class BankServiceImpl implements BankService {
                 continue;
 
             if (account.getAcctExpireDate().before(Timestamp.valueOf(LocalDateTime.now()))) {     // 만기일이 지났으면
-                log.info("bankCode: {}", bankCode.getCodeName());
+                log.debug("bankCode: {}", bankCode.getCodeName());
                 int rate = bankRepository.findByBankCd(bankCode).orElseThrow().getRate();  // 이율
                 int amount = account.getAcctBalance() * (100 + rate) / 100;     // 해지 금액
                 // 만기일이 지난 계좌의 잔액을 일반 계좌로 이동

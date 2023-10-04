@@ -15,13 +15,11 @@ import com.ssafy.mini.domain.stockholding.repository.StockholdingRepository;
 import com.ssafy.mini.global.exception.ErrorCode;
 import com.ssafy.mini.global.exception.MNException;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class StockholdingServiceImpl implements StockholdingService {
@@ -38,8 +36,6 @@ public class StockholdingServiceImpl implements StockholdingService {
 
     @Override
     public MyStockInfoResponse getPortfolio(String memberId) {
-        log.info("Service Layer::getPortfolio() called");
-
         // 보유한 주가 정보 가져오기
         List<PortfolioDto> portfolio = stockholdingRepository.findAllByMemberId(memberId);
 
@@ -59,8 +55,6 @@ public class StockholdingServiceImpl implements StockholdingService {
 
     @Override
     public MyStockInfoResponse buyStockItem(String memberId, TradeStockRequest tradeStockRequest) {
-        log.info("Service Layer::buyStockItem() called");
-
         String code = tradeStockRequest.getCode();
         int amount = tradeStockRequest.getAmount();
 
@@ -91,8 +85,6 @@ public class StockholdingServiceImpl implements StockholdingService {
 
     @Override
     public MyStockInfoResponse sellStockItem(String memberId, TradeStockRequest tradeStockRequest) {
-        log.info("Service Layer::sellStockItem() called");
-
         String code = tradeStockRequest.getCode();
         int amount = tradeStockRequest.getAmount();
 

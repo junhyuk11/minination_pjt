@@ -46,14 +46,12 @@ public class NationServiceImpl implements NationService {
 
     @Override
     public void create(String memberId, NationCreateRequest nationCreateRequest) {
-        log.info("Nation Service Layer::Create() called");
-
         Member member = memberRepository.findByMemId(memberId)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
 
         String memberType = member.getMemType().getExpression();
 
-        log.info("memberType: " + member.getMemType());
+        log.debug("memberType: " + member.getMemType());
         // 선생님이 아닌데 국가를 생성 하려고 할 때 예외 처리
         if (!memberType.equals("TC")) {
             throw new MNException(ErrorCode.NO_AUTHORITY);
@@ -65,9 +63,9 @@ public class NationServiceImpl implements NationService {
         }
 
         // 국기 url로 국기 객체 가져오기
-        log.info("flagImgUrl: " + nationCreateRequest.getFlagImgUrl());
+        log.debug("flagImgUrl: " + nationCreateRequest.getFlagImgUrl());
         Flag flag = flagService.getFlag(nationCreateRequest.getFlagImgUrl());
-        log.info("flag: " + flag.getFlagSeq());
+        log.debug("flag: " + flag.getFlagSeq());
         Nation nation = nationMapper.nationCreateRequestToNation(nationCreateRequest);
 
         // 국기 저장
@@ -103,8 +101,6 @@ public class NationServiceImpl implements NationService {
 
     @Override
     public void search(String nationName) {
-        log.info("Nation Service Layer::search() called");
-
         nationRepository.findByIsoName(nationName)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_NATION));
 
@@ -131,8 +127,6 @@ public class NationServiceImpl implements NationService {
 
     @Override
     public FlagListResponse flagList() {
-        log.info("Nation Service Layer::flagList() called");
-
         List<String> flagUrlList = flagRepository.findAllFlagUrl();
 
         return FlagListResponse.builder()
@@ -142,8 +136,6 @@ public class NationServiceImpl implements NationService {
 
     @Override
     public List<AllFlagResponse> listAllFlags() {
-        log.info("Nation Service Layer::flagList() called");
-
         List<Flag> flagList = flagRepository.findAll();
         return flagList.stream()
                 .map(flagMapper::flagToAllFlagResponse)
@@ -152,8 +144,6 @@ public class NationServiceImpl implements NationService {
 
     @Override
     public void checkPresident(String nationName, String presidentName) {
-        log.info("Nation Service Layer::checkPresident() called");
-
         Nation nation = nationRepository.findByIsoName(nationName)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_NATION));
 
@@ -166,8 +156,6 @@ public class NationServiceImpl implements NationService {
 
     @Override
     public LawInfoResponse info(String memberId) {
-        log.info("Nation Service Layer::info() called");
-
         Member member = memberRepository.findByMemId(memberId)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
 
@@ -191,7 +179,7 @@ public class NationServiceImpl implements NationService {
             }
         }
 
-        log.info("tax: " + tax);
+        log.debug("tax: " + tax);
 
         return LawInfoResponse.builder()
                 .nationName(nationName)
@@ -204,8 +192,6 @@ public class NationServiceImpl implements NationService {
 
     @Override
     public void updateLaw(String memberId, LawUpdateRequest lawUpdateRequest){
-        log.info("Nation Service Layer::updateLaw() called");
-
         Member member = memberRepository.findByMemId(memberId)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
 
@@ -219,8 +205,8 @@ public class NationServiceImpl implements NationService {
         nation.updateNation(lawUpdateRequest);
         nationRepository.save(nation);
 
-        log.info("incomeTax: " + lawUpdateRequest.getIncomeTax());
-        log.info("vat: " + lawUpdateRequest.getVat());
+        log.debug("incomeTax: " + lawUpdateRequest.getIncomeTax());
+        log.debug("vat: " + lawUpdateRequest.getVat());
 
         // 세금 정보 수정
         taxRepository.saveTaxRateByIsoSeqandTaxTp(nation, masterRepository.findById("TAX01")

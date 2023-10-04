@@ -13,13 +13,11 @@ import com.ssafy.mini.domain.member.service.MemberService;
 import com.ssafy.mini.global.exception.ErrorCode;
 import com.ssafy.mini.global.exception.MNException;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class JobServiceImpl implements JobService{
@@ -32,8 +30,6 @@ public class JobServiceImpl implements JobService{
 
     @Override
     public void register(String memberId, JobRegisterRequestDTO jobRegisterRequestDTO) {
-        log.info("Job Service Layer:: register() called");
-
         // 선생님만 등록 가능
         if (!memberService.getMemberType(memberId).equals("TC"))
             throw new MNException(ErrorCode.NO_AUTHORITY);
@@ -67,8 +63,6 @@ public class JobServiceImpl implements JobService{
 
     @Override
     public void apply(String memberId, JobApplyRequest jobApplyRequest) {
-        log.info("Job Service Layer:: apply() called");
-
         Member member = memberRepository.findByMemId(memberId)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
 
@@ -105,9 +99,6 @@ public class JobServiceImpl implements JobService{
 
     @Override
     public void approve(String memberId, JobApproveRequestDTO jobApproveRequestDTO) {
-
-        log.info("Job Service Layer:: approve() called");
-
         Member member = memberRepository.findByMemId(memberId)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
 
@@ -181,8 +172,6 @@ public class JobServiceImpl implements JobService{
 
     @Override
     public void decline(String memberId, JobDeclineRequestDTO jobDeclineRequestDTO) {
-        log.info("Job Service Layer:: decline() called");
-
         Member member = memberRepository.findByMemId(memberId)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
 
@@ -206,9 +195,6 @@ public class JobServiceImpl implements JobService{
 
     @Override
     public void fire(String memberId, JobFireRequestDTO jobFireRequestDTO) {
-
-        log.info("Job Service Layer:: fire() called");
-
         Member teacher = memberRepository.findByMemId(memberId)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
 
@@ -242,9 +228,6 @@ public class JobServiceImpl implements JobService{
 
     @Override
     public JobDetailResponseDTO getJobDetail(String memberId, String jobName) {
-
-        log.info("Job Service Layer:: getJobDetail() called");
-
         // 선생님만 조회 가능
         if(!memberRepository.findByMemId(memberId)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER))
@@ -269,9 +252,6 @@ public class JobServiceImpl implements JobService{
 
     @Override
     public void delete(String memberId, JobDeleteRequestDTO jobDeleteRequestDTO) {
-
-        log.info("Job Service Layer:: delete() called");
-
         Member member = memberRepository.findByMemId(memberId)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
 

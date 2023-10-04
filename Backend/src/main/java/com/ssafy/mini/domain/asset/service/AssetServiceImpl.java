@@ -12,7 +12,6 @@ import com.ssafy.mini.domain.stockholding.repository.CorporationRepository;
 import com.ssafy.mini.domain.stockholding.repository.StockRepository;
 import com.ssafy.mini.domain.stockholding.repository.StockholdingRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AssetServiceImpl implements AssetService {
@@ -43,8 +41,6 @@ public class AssetServiceImpl implements AssetService {
     @Transactional
     @Scheduled(cron = "0 40 23 * * MON-FRI")
     public void setPersonAssetInfo() {
-        log.info("Service Layer: setPersonAssetInfo() called");
-
         // 각 주식의 가장 최근 가격 정보 가져오기
         Map<String, Integer> currentStockInfo = getStockInfo();
 
@@ -75,8 +71,6 @@ public class AssetServiceImpl implements AssetService {
     @Transactional
     @Scheduled(cron = "0 50 23 * * MON-FRI")
     public void setNationAssetInfo() {
-        log.info("Service Layer: setNationAssetInfo() called");
-
         // 국가의 정보 가져오기
         List<Nation> nations = nationRepository.findAll();
         for (Nation nation : nations) {

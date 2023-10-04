@@ -8,11 +8,9 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-@Slf4j
 @RestController
 @RequestMapping("/corporation")
 @RequiredArgsConstructor
@@ -33,7 +31,6 @@ public class CorporationController {
             @RequestPart(required = false) @ApiParam(value = "주식회사 로고", required = true) MultipartFile logo,
             @RequestPart(required = false) @ApiParam(value = "주식회사 프로필", required = true) MultipartFile profile
             ) {
-        log.info("Controller Layer: register() 진입");
         corporationService.register(corporationRegisterRequest, logo, profile);
         return SuccessResponse.builder()
                 .build();

@@ -12,7 +12,6 @@ import com.ssafy.mini.global.feign.stockInfo.Item;
 import com.ssafy.mini.global.feign.stockInfo.StockInfoClient;
 import com.ssafy.mini.global.feign.stockInfo.StockInfoResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -23,7 +22,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class StockServiceImpl implements StockService {
@@ -46,7 +44,6 @@ public class StockServiceImpl implements StockService {
      */
     @Override
     public void initCorpStock(String code) {
-        log.info("Service Layer: initCorpStock() called");
         List<Item> items = stockPriceInfo(60, code);
         Corporation corp = corporationRepository.findById(code)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_STOCK));
@@ -61,7 +58,6 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public StockPriceRateResponse getStockInfoByDate(String code, Date date) {
-        log.info("Service Layer: getStockInfoByDate() called");
         return stockRepository.findByStkCodeAndStkDt(code, date);
     }
 
@@ -72,8 +68,6 @@ public class StockServiceImpl implements StockService {
     @Transactional
     @Scheduled(cron = "0 30 11 * * MON-FRI")
     public void getCurrentStockInfo() {
-        log.info("Servie Layer::getCurrentStockInfo 진입");
-
         // 전체 종목 가져오기
         List<Corporation> corporations = corporationRepository.findAll();
 
@@ -97,7 +91,6 @@ public class StockServiceImpl implements StockService {
      * @return 최근 주가 동향
      */
     private List<Item> stockPriceInfo(int numsOfRows, String stockCode) {
-        log.info("Service Layer: stockPriceInfo() 진입");
         StockInfoResponse res = stockInfoClient.stockPriceInfo(SERVICE_KEY, numsOfRows, RESULT_TYPE, stockCode);
         List<Item> items = res.getResponse().getBody().getItems().getItem();
 
@@ -111,7 +104,6 @@ public class StockServiceImpl implements StockService {
      * @return 최근 주가 동향
      */
     private List<Item> currentStockPriceInfo(String beginDate, String stockCode) {
-        log.info("Service Layer: stockPriceInfo() 진입");
         StockInfoResponse res = stockInfoClient.curretnStockPriceInfo(SERVICE_KEY, beginDate, RESULT_TYPE, stockCode);
         List<Item> items = res.getResponse().getBody().getItems().getItem();
         return items;

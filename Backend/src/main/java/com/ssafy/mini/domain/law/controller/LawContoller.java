@@ -9,10 +9,8 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-@Slf4j
 @RestController
 @RequestMapping("/law")
 @RequiredArgsConstructor
@@ -28,8 +26,6 @@ public class LawContoller {
             @ApiResponse(code = 404, message = "헌법 조회 실패")
     })
     public SuccessResponse info(@RequestHeader("Authorization") String accessToken) {
-        log.info("Law Controller Layer:: info() called");
-
         String memberId = jwtProvider.extractMemberId(accessToken);
 
         return SuccessResponse.builder()
@@ -46,8 +42,6 @@ public class LawContoller {
     })
     public SuccessResponse update(@RequestHeader("Authorization") String accessToken,
                                   @RequestBody @ApiParam(value = "국가 수정 정보", required = true) LawUpdateRequest lawUpdateRequest) {
-        log.info("Law Controller Layer:: update() called");
-
         String memberId = jwtProvider.extractMemberId(accessToken);
 
         nationService.updateLaw(memberId, lawUpdateRequest);

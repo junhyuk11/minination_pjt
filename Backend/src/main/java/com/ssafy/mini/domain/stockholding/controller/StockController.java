@@ -10,10 +10,8 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-@Slf4j
 @RestController
 @RequestMapping("/stock")
 @RequiredArgsConstructor
@@ -34,7 +32,6 @@ public class StockController {
     public SuccessResponse listCorp(
             @RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken
     ) {
-        log.info("Controller Layer::list Corporation() called");
         return SuccessResponse.builder()
                 .data(corporationService.getCorpInfo())
                 .build();
@@ -50,7 +47,6 @@ public class StockController {
     public SuccessResponse getPortfolio(
             @RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken
     ) {
-        log.info("Controller Layer::getPortfolio() called");
         String memberId = jwtProvider.extractMemberId(accessToken);
         return SuccessResponse.builder()
                 .data(stockholdingService.getPortfolio(memberId))
@@ -68,7 +64,6 @@ public class StockController {
             @RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
             @RequestBody @ApiParam(value = "종목 코드, 구매 수량", required = true) TradeStockRequest tradeStockRequest
     ) {
-        log.info("Controller Layer::buyStockItem() called");
         String memberId = jwtProvider.extractMemberId(accessToken);
         return SuccessResponse.builder()
                 .data(stockholdingService.buyStockItem(memberId, tradeStockRequest))
@@ -86,7 +81,6 @@ public class StockController {
             @RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
             @RequestBody @ApiParam(value = "종목 코드, 구매 수량", required = true) TradeStockRequest tradeStockRequest
     ) {
-        log.info("Controller Layer::sellStockItem() called");
         String memberId = jwtProvider.extractMemberId(accessToken);
         return SuccessResponse.builder()
                 .data(stockholdingService.sellStockItem(memberId, tradeStockRequest))

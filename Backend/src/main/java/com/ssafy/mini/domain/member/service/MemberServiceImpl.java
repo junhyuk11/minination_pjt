@@ -16,7 +16,6 @@ import com.ssafy.mini.global.exception.ErrorCode;
 import com.ssafy.mini.global.exception.MNException;
 import com.ssafy.mini.global.auth.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,7 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.Random;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
@@ -45,7 +43,6 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public MemberTokenResponse join(MemberJoinRequest memberJoinRequest) {
-        log.info("Service Layer::join() called");
         Member member = memberMapper.memberJoinRequestToMember(memberJoinRequest);
 
         idCheck(member.getMemId()); // 아이디 중복 검사
@@ -84,8 +81,6 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void idCheck(String id) {
-        log.info("Service Layer::idCheck() called");
-
         if (memberRepository.existsByMemId(id)) {
             throw new MNException(ErrorCode.DUPLICATED_ID);
         }
@@ -93,8 +88,6 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public MemberTokenResponse login(MemberLoginRequest memberLoginRequest) {
-        log.info("Service Layer::login() called");
-
         Member member = memberRepository.findByMemId(memberLoginRequest.getId())
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
 
@@ -109,8 +102,6 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void update(String memberId, String newPwd) {
-        log.info("Service Layer::update() called");
-
         Member member = memberRepository.findByMemId(memberId)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
 
@@ -121,8 +112,6 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void logout(String accessToken, String memberId) {
-        log.info("Service Layer::logout() called");
-
         // 사용된 accessToken 블랙리스트에 저장
         jwtProvider.storeBlacklist(accessToken, memberId);
 
@@ -132,8 +121,6 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void delete(String accessToken, String memberId) {
-        log.info("Service Layer::delete() called");
-
         // 블랙리스트 저장 + refresh token 삭제
         logout(accessToken, memberId);
 

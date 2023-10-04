@@ -18,13 +18,11 @@ import com.ssafy.mini.domain.shop.repository.ProductRepository;
 import com.ssafy.mini.global.exception.ErrorCode;
 import com.ssafy.mini.global.exception.MNException;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
@@ -42,8 +40,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductInfoResponse> listProducts(String memberId) {
-        log.info("Service Layer::listProducts() called");
-
         // 회원이 속한 국가 찾기
         Member member = getMemberByMemberId(memberId);
 
@@ -57,8 +53,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void addProduct(String memberId, AddProductRequest addProductRequest) {
-        log.info("Service Layer::addProduct() called");
-
         Member member = getMemberByMemberId(memberId);
         isTeacher(member); // 선생님인지 확인
 
@@ -70,8 +64,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteProduct(String memberId, DeleteProductRequest deleteProductRequest) {
-        log.info("Service Layer::deleteProduct() called");
-
         Member member = getMemberByMemberId(memberId);
         isTeacher(member); // 선생님인지 확인
 
@@ -81,8 +73,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void buyProduct(String memberId, BuyProductRequest buyProductRequest) {
-        log.info("Service Layer::buyProduct() called");
-
         Member member = getMemberByMemberId(memberId);
         Product product = getProductByProdName(buyProductRequest.getProduct());
 
@@ -109,8 +99,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void useProduct(String memberId, DeleteProductRequest deleteProductRequest) {
-        log.info("Service Layer::useProduct() called");
-
         Member member = getMemberByMemberId(memberId);
         Product product = getProductByProdName(deleteProductRequest.getProduct());
 

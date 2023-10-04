@@ -12,10 +12,8 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-@Slf4j
 @RestController
 @RequestMapping("/member")
 @RequiredArgsConstructor
@@ -34,7 +32,6 @@ public class MemberController {
     public SuccessResponse join(
             @RequestBody @ApiParam(value = "회원가입 정보", required = true) MemberJoinRequest memberJoinRequest
     ) {
-        log.info("Controller Layer::join() called");
         return SuccessResponse.builder()
                 .data(memberService.join(memberJoinRequest))
                 .build();
@@ -49,7 +46,6 @@ public class MemberController {
     public SuccessResponse idCheck(
             @RequestBody @ApiParam(value = "아이디", required = true) MemberLoginRequest memberLoginRequest
     ) {
-        log.info("Controller Layer::idCheck() called");
         memberService.idCheck(memberLoginRequest.getId());
         return SuccessResponse.builder()
                 .build();
@@ -65,7 +61,6 @@ public class MemberController {
     public SuccessResponse<MemberTokenResponse> login(
             @RequestBody @ApiParam(value = "아이디, 비밀번호", required = true) MemberLoginRequest memberLoginRequest
     ){
-        log.info("Controller Layer::login() called");
         return SuccessResponse.<MemberTokenResponse>builder()
                 .data(memberService.login(memberLoginRequest))
                 .build();
@@ -82,9 +77,7 @@ public class MemberController {
             @RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
             @RequestBody @ApiParam(value = "회원 정보", required = true) MemberUpdateRequest memberUpdateRequest
     ) {
-        log.info("Controller Layer::update() called");
         String memberId = jwtProvider.validateToken(accessToken);
-        log.debug("memberId: {}", memberId);
         memberService.update(memberId, memberUpdateRequest.getPassword());
         return SuccessResponse.builder()
                 .build();
@@ -100,7 +93,6 @@ public class MemberController {
     public SuccessResponse logout(
             @RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken
     ) {
-        log.info("Controller Layer::logout() called");
         String memberId = jwtProvider.validateToken(accessToken);
         memberService.logout(accessToken, memberId);
         return SuccessResponse.builder()
@@ -117,7 +109,6 @@ public class MemberController {
     public SuccessResponse delete(
             @RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken
     ) {
-        log.info("Controller Layer::delete() called");
         String memberId = jwtProvider.validateToken(accessToken);
         memberService.delete(accessToken, memberId);
         return SuccessResponse.builder()

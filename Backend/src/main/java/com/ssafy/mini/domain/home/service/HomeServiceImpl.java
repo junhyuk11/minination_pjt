@@ -11,12 +11,10 @@ import com.ssafy.mini.domain.shop.repository.PossessRepository;
 import com.ssafy.mini.global.exception.ErrorCode;
 import com.ssafy.mini.global.exception.MNException;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class HomeServiceImpl implements HomeService{
@@ -29,9 +27,6 @@ public class HomeServiceImpl implements HomeService{
 
     @Override
     public HomeInfoResponse info(String memberId) {
-
-        log.info("Service Layer::info() called");
-
         Member member = findMember(memberId);
 
         Short nationSeq = member.getIsoSeq().getIsoSeq();
@@ -54,8 +49,6 @@ public class HomeServiceImpl implements HomeService{
 
     @Override
     public CitizenResponse listCitizen(String memberId) {
-        log.info("Service Layer::listCitizen() called");
-
         Member member = findMember(memberId);
         Nation nation = member.getIsoSeq();
 
@@ -73,8 +66,6 @@ public class HomeServiceImpl implements HomeService{
 
     @Override
     public RichResponse listRich(String memberId) {
-        log.info("Service Layer::listRich() called");
-
         Member member = findMember(memberId);
         Nation nation = member.getIsoSeq();
 

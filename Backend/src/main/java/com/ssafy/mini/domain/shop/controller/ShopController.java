@@ -11,10 +11,8 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-@Slf4j
 @RestController
 @RequestMapping("shop")
 @RequiredArgsConstructor
@@ -33,7 +31,6 @@ public class ShopController {
     public SuccessResponse listProducts(
             @RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken
     ) {
-        log.info("Controller Layer::listProducts() called");
         String memberId = jwtProvider.extractMemberId(accessToken);
         return SuccessResponse.builder()
                 .data(productService.listProducts(memberId))
@@ -52,7 +49,6 @@ public class ShopController {
             @RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
             @RequestBody @ApiParam(value = "추가할 상품 정보", required = true) AddProductRequest addProductRequest
     ) {
-        log.info("Controller Layer::listProducts() called");
         String memberId = jwtProvider.extractMemberId(accessToken);
         productService.addProduct(memberId, addProductRequest);
         return SuccessResponse.builder()
@@ -71,7 +67,6 @@ public class ShopController {
             @RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
             @RequestBody @ApiParam(value = "삭제할 상품 정보", required = true)DeleteProductRequest deleteProductRequest
             ) {
-        log.info("Controller Layer::listProducts() called");
         String memberId = jwtProvider.extractMemberId(accessToken);
         productService.deleteProduct(memberId, deleteProductRequest);
         return SuccessResponse.builder()
@@ -90,7 +85,6 @@ public class ShopController {
             @RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
             @RequestBody @ApiParam(value = "구매할 상품 정보", required = true)BuyProductRequest buyProductRequest
             ) {
-        log.info("Controller Layer::listProducts() called");
         String memberId = jwtProvider.extractMemberId(accessToken);
         productService.buyProduct(memberId, buyProductRequest);
         return SuccessResponse.builder()
@@ -109,7 +103,6 @@ public class ShopController {
             @RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
             @RequestBody @ApiParam(value = "사용할 상품 정보", required = true) DeleteProductRequest deleteProductRequest
     ) {
-        log.info("Controller Layer::useProduct() called");
         String memberId = jwtProvider.extractMemberId(accessToken);
         productService.useProduct(memberId, deleteProductRequest);
         return SuccessResponse.builder()
@@ -126,7 +119,6 @@ public class ShopController {
     public SuccessResponse useProduct (
             @RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken
     ) {
-        log.info("Controller Layer::useProduct() called");
         String memberId = jwtProvider.extractMemberId(accessToken);
         productService.listMyProducts(memberId);
         return SuccessResponse.builder()

@@ -8,13 +8,11 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Slf4j
 @RestController
 @RequestMapping("/home")
 @RequiredArgsConstructor
@@ -31,8 +29,6 @@ public class HomeController {
             @ApiResponse(code = 406, message = "속한 국가 없음")
     })
     public SuccessResponse info(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken){
-        log.info("Home Controller Layer:: info() called");
-
         String memberId = jwtProvider.extractMemberId(accessToken);
 
         return SuccessResponse.builder()
@@ -50,7 +46,6 @@ public class HomeController {
     public SuccessResponse listCitizen (
             @RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken
     ){
-        log.info("Home Controller Layer:: listCitizen() called");
         String memberId = jwtProvider.extractMemberId(accessToken);
 
         return SuccessResponse.builder()
@@ -68,7 +63,6 @@ public class HomeController {
     public SuccessResponse getTheRich (
             @RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken
     ){
-        log.info("Home Controller Layer:: listCitizen() called");
         String memberId = jwtProvider.extractMemberId(accessToken);
 
         return SuccessResponse.builder()
@@ -86,7 +80,6 @@ public class HomeController {
     public SuccessResponse getProfile (
             @RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken
     ){
-        log.info("Home Controller Layer:: getProfile() called");
         String memberId = jwtProvider.extractMemberId(accessToken);
 
         return SuccessResponse.builder()
@@ -104,7 +97,6 @@ public class HomeController {
     public SuccessResponse getGDP (
             @RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken
     ){
-        log.info("Home Controller Layer:: getGDP() called");
         String memberId = jwtProvider.extractMemberId(accessToken);
 
         return SuccessResponse.builder()

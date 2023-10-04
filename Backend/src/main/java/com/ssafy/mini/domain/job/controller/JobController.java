@@ -8,10 +8,8 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-@Slf4j
 @RestController
 @RequestMapping("/job")
 @RequiredArgsConstructor
@@ -31,8 +29,6 @@ public class JobController {
     })
     public SuccessResponse register(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
                                     @RequestBody @ApiParam(value = "직업 등록 정보", required = true) JobRegisterRequestDTO jobRegisterRequestDTO) {
-        log.info("Job Controller Layer:: register() called");
-
         String memberId = jwtProvider.extractMemberId(accessToken);
 
         jobService.register(memberId, jobRegisterRequestDTO);
@@ -50,9 +46,6 @@ public class JobController {
     })
     public SuccessResponse apply(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
                                  @RequestBody @ApiParam(value = "직업 이름", required = true) JobApplyRequest jobApplyRequest) {
-
-        log.info("Job Controller Layer:: apply() called");
-
         String memberId = jwtProvider.extractMemberId(accessToken);
 
         jobService.apply(memberId, jobApplyRequest);
@@ -68,9 +61,6 @@ public class JobController {
     })
     public SuccessResponse approve(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
                                    @RequestBody @ApiParam(value = "직업 신청 내용", required = true) JobApproveRequestDTO jobApproveRequestDTO) {
-
-        log.info("Job Controller Layer:: approve() called");
-
         String memberId = jwtProvider.extractMemberId(accessToken);
 
         jobService.approve(memberId, jobApproveRequestDTO);
@@ -85,9 +75,6 @@ public class JobController {
             @ApiResponse(code = 404, message = "직업 리스트 조회 실패"),
     })
     public SuccessResponse list(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken) {
-
-        log.info("Job Controller Layer:: list() called");
-
         String memberId = jwtProvider.extractMemberId(accessToken);
 
         return SuccessResponse.builder()
@@ -102,9 +89,6 @@ public class JobController {
     })
     public SuccessResponse decline(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
                                    @RequestBody @ApiParam(value = "직업 거절 내용", required = true) JobDeclineRequestDTO jobDeclineRequestDTO) {
-
-        log.info("Job Controller Layer:: decline() called");
-
         String memberId = jwtProvider.extractMemberId(accessToken);
 
         jobService.decline(memberId, jobDeclineRequestDTO);
@@ -120,9 +104,6 @@ public class JobController {
     })
     public SuccessResponse fire(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
                                 @RequestBody @ApiParam(value = "해고할 직업 이름", required = true) JobFireRequestDTO jobFireRequestDTO) {
-
-        log.info("Job Controller Layer:: fire() called");
-
         String memberId = jwtProvider.extractMemberId(accessToken);
 
         jobService.fire(memberId, jobFireRequestDTO);
@@ -138,9 +119,6 @@ public class JobController {
     })
     public SuccessResponse detail(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
                                   @RequestBody @ApiParam(value = "직업 이름", required = true) JobDetailRequestDTO jobDetailRequestDTO) {
-
-        log.info("Job Controller Layer:: detail() called");
-
         String memberId = jwtProvider.extractMemberId(accessToken);
         String jobName = jobDetailRequestDTO.getJobName();
 
@@ -156,9 +134,6 @@ public class JobController {
     })
     public SuccessResponse delete(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
                                   @RequestBody @ApiParam(value = "직업 이름", required = true) JobDeleteRequestDTO jobDeleteRequestDTO) {
-
-        log.info("Job Controller Layer:: delete() called");
-
         String memberId = jwtProvider.extractMemberId(accessToken);
 
         jobService.delete(memberId, jobDeleteRequestDTO);

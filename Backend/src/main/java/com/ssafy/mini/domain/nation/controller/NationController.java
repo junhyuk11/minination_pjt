@@ -11,10 +11,8 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-@Slf4j
 @RestController
 @RequestMapping("/nation")
 @RequiredArgsConstructor
@@ -33,8 +31,6 @@ public class NationController {
     })
     public SuccessResponse create(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
                                   @RequestBody @ApiParam(value = "국가 생성 정보", required = true) NationCreateRequest nationCreateRequest) {
-        log.info("Nation Controller Layer:: create() called");
-
         String memberId = jwtProvider.extractMemberId(accessToken);
 
         nationService.create(memberId, nationCreateRequest);
@@ -50,8 +46,6 @@ public class NationController {
     })
     public SuccessResponse search(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
                                   @RequestBody @ApiParam(value = "국가 검색 정보", required = true) NationSearchRequest nationSearchRequest) {
-        log.info("Nation Controller Layer::search() called");
-
         String nationName = nationSearchRequest.getNationName();
 
         nationService.search(nationName);
@@ -69,8 +63,6 @@ public class NationController {
     })
     public SuccessResponse join(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
                                 @RequestBody @ApiParam(value = "국가 가입 정보", required = true) NationSearchRequest nationSearchRequest) {
-        log.info("Nation Controller Layer::join() called");
-
         String memberId = jwtProvider.extractMemberId(accessToken);
         String nationName = nationSearchRequest.getNationName();
 
@@ -87,8 +79,6 @@ public class NationController {
             @ApiResponse(code = 404, message = "국기 리스트 조회 실패")
     })
     public SuccessResponse flagList(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken) {
-        log.info("Nation Controller Layer::flagList() called");
-
         return SuccessResponse.builder()
                 .data(nationService.flagList())
                 .build();
@@ -101,8 +91,6 @@ public class NationController {
             @ApiResponse(code = 404, message = "국기 리스트 조회 실패")
     })
     public SuccessResponse listAllFlags(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken) {
-        log.info("Nation Controller Layer::listAllFlags() called");
-
         return SuccessResponse.builder()
                 .data(nationService.listAllFlags())
                 .build();
@@ -117,8 +105,6 @@ public class NationController {
     })
     public SuccessResponse president(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
                                      @RequestBody @ApiParam(value = "국가 가입 정보", required = true) CheckPresidentRequest checkPresidentRequest) {
-        log.info("Nation Controller Layer::checkPresident() called");
-
         String nationName = checkPresidentRequest.getNation();
         String president = checkPresidentRequest.getPresident();
 
