@@ -4,7 +4,7 @@ import com.ssafy.mini.domain.bank.dto.request.BankSubscribeRequestDTO;
 import com.ssafy.mini.domain.bank.dto.request.BankTerminateRequestDTO;
 import com.ssafy.mini.domain.bank.service.BankService;
 import com.ssafy.mini.global.auth.jwt.JwtProvider;
-import com.ssafy.mini.global.response.SuccessResponse;
+import com.ssafy.mini.global.response.EnvelopeResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -25,8 +25,8 @@ public class BankController {
             @ApiResponse(code = 404, message = "은행 상품 정보 조회 실패")
     })
     @GetMapping("/info")
-    public SuccessResponse getBankInfo(@RequestHeader("Authorization") String accessToken) {
-        return SuccessResponse.builder()
+    public EnvelopeResponse getBankInfo(@RequestHeader("Authorization") String accessToken) {
+        return EnvelopeResponse.builder()
                 .data(bankService.info())
                 .build();
     }
@@ -39,11 +39,11 @@ public class BankController {
             @ApiResponse(code = 409, message = "이미 가입한 상품")
     })
     @PostMapping("/subscribe")
-    public SuccessResponse subscribe(@RequestHeader("Authorization") String accessToken,
-                                              @RequestBody BankSubscribeRequestDTO bankSubscribeRequestDTO) {
+    public EnvelopeResponse subscribe(@RequestHeader("Authorization") String accessToken,
+                                      @RequestBody BankSubscribeRequestDTO bankSubscribeRequestDTO) {
         String memberId = jwtProvider.extractMemberId(accessToken);
 
-        return SuccessResponse.builder()
+        return EnvelopeResponse.builder()
                 .data(bankService.subscribe(memberId, bankSubscribeRequestDTO))
                 .build();
     }
@@ -54,11 +54,11 @@ public class BankController {
             @ApiResponse(code = 404, message = "은행 상품 해지 실패")
     })
     @PostMapping("/terminate")
-    public SuccessResponse terminate(@RequestHeader("Authorization") String accessToken,
-                                              @RequestBody BankTerminateRequestDTO bankTerminateRequestDTO) {
+    public EnvelopeResponse terminate(@RequestHeader("Authorization") String accessToken,
+                                      @RequestBody BankTerminateRequestDTO bankTerminateRequestDTO) {
         String memberId = jwtProvider.extractMemberId(accessToken);
 
-        return SuccessResponse
+        return EnvelopeResponse
                 .builder()
                 .data(bankService.terminate(memberId, bankTerminateRequestDTO))
                 .build();
@@ -70,10 +70,10 @@ public class BankController {
             @ApiResponse(code = 404, message = "내 자산 조회 실패")
     })
     @GetMapping()
-    public SuccessResponse myAsset(@RequestHeader("Authorization") String accessToken) {
+    public EnvelopeResponse myAsset(@RequestHeader("Authorization") String accessToken) {
         String memberId = jwtProvider.extractMemberId(accessToken);
 
-        return SuccessResponse.builder()
+        return EnvelopeResponse.builder()
                 .data(bankService.myAsset(memberId))
                 .build();
     }

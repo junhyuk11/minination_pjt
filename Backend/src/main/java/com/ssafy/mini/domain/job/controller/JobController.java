@@ -3,7 +3,7 @@ package com.ssafy.mini.domain.job.controller;
 import com.ssafy.mini.domain.job.dto.request.*;
 import com.ssafy.mini.domain.job.service.JobService;
 import com.ssafy.mini.global.auth.jwt.JwtProvider;
-import com.ssafy.mini.global.response.SuccessResponse;
+import com.ssafy.mini.global.response.EnvelopeResponse;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -27,13 +27,13 @@ public class JobController {
             @ApiResponse(code = 406, message = "주급은 0보다 작을 수 없습니다. "),
             @ApiResponse(code = 409, message = "직업 이름 중복")
     })
-    public SuccessResponse register(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
-                                    @RequestBody @ApiParam(value = "직업 등록 정보", required = true) JobRegisterRequestDTO jobRegisterRequestDTO) {
+    public EnvelopeResponse register(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
+                                     @RequestBody @ApiParam(value = "직업 등록 정보", required = true) JobRegisterRequestDTO jobRegisterRequestDTO) {
         String memberId = jwtProvider.extractMemberId(accessToken);
 
         jobService.register(memberId, jobRegisterRequestDTO);
 
-        return SuccessResponse.builder()
+        return EnvelopeResponse.builder()
                 .build();
     }
 
@@ -44,13 +44,13 @@ public class JobController {
             @ApiResponse(code = 406, message = "모집 인원이 남아있지 않습니다."),
             @ApiResponse(code = 409, message = "이미 지원했거나 근무 중인 직업입니다.")
     })
-    public SuccessResponse apply(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
-                                 @RequestBody @ApiParam(value = "직업 이름", required = true) JobApplyRequest jobApplyRequest) {
+    public EnvelopeResponse apply(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
+                                  @RequestBody @ApiParam(value = "직업 이름", required = true) JobApplyRequest jobApplyRequest) {
         String memberId = jwtProvider.extractMemberId(accessToken);
 
         jobService.apply(memberId, jobApplyRequest);
 
-        return SuccessResponse.builder()
+        return EnvelopeResponse.builder()
                 .build();
     }
 
@@ -59,13 +59,13 @@ public class JobController {
             @ApiResponse(code = 200, message = "직업 승인 성공"),
             @ApiResponse(code = 404, message = "직업 승인 실패"),
     })
-    public SuccessResponse approve(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
-                                   @RequestBody @ApiParam(value = "직업 신청 내용", required = true) JobApproveRequestDTO jobApproveRequestDTO) {
+    public EnvelopeResponse approve(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
+                                    @RequestBody @ApiParam(value = "직업 신청 내용", required = true) JobApproveRequestDTO jobApproveRequestDTO) {
         String memberId = jwtProvider.extractMemberId(accessToken);
 
         jobService.approve(memberId, jobApproveRequestDTO);
 
-        return SuccessResponse.builder()
+        return EnvelopeResponse.builder()
                 .build();
     }
 
@@ -74,10 +74,10 @@ public class JobController {
             @ApiResponse(code = 200, message = "직업 리스트 조회 성공"),
             @ApiResponse(code = 404, message = "직업 리스트 조회 실패"),
     })
-    public SuccessResponse list(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken) {
+    public EnvelopeResponse list(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken) {
         String memberId = jwtProvider.extractMemberId(accessToken);
 
-        return SuccessResponse.builder()
+        return EnvelopeResponse.builder()
                 .data(jobService.getJobList(memberId))
                 .build();
     }
@@ -87,13 +87,13 @@ public class JobController {
             @ApiResponse(code = 200, message = "직업 신청 거절 성공"),
             @ApiResponse(code = 404, message = "직업 신청 거절 실패"),
     })
-    public SuccessResponse decline(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
-                                   @RequestBody @ApiParam(value = "직업 거절 내용", required = true) JobDeclineRequestDTO jobDeclineRequestDTO) {
+    public EnvelopeResponse decline(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
+                                    @RequestBody @ApiParam(value = "직업 거절 내용", required = true) JobDeclineRequestDTO jobDeclineRequestDTO) {
         String memberId = jwtProvider.extractMemberId(accessToken);
 
         jobService.decline(memberId, jobDeclineRequestDTO);
 
-        return SuccessResponse.builder()
+        return EnvelopeResponse.builder()
                 .build();
     }
 
@@ -102,13 +102,13 @@ public class JobController {
             @ApiResponse(code = 200, message = "직업 해고 성공"),
             @ApiResponse(code = 404, message = "직업 해고 실패")
     })
-    public SuccessResponse fire(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
-                                @RequestBody @ApiParam(value = "해고할 직업 이름", required = true) JobFireRequestDTO jobFireRequestDTO) {
+    public EnvelopeResponse fire(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
+                                 @RequestBody @ApiParam(value = "해고할 직업 이름", required = true) JobFireRequestDTO jobFireRequestDTO) {
         String memberId = jwtProvider.extractMemberId(accessToken);
 
         jobService.fire(memberId, jobFireRequestDTO);
 
-        return SuccessResponse.builder()
+        return EnvelopeResponse.builder()
                 .build();
     }
 
@@ -117,12 +117,12 @@ public class JobController {
             @ApiResponse(code = 200, message = "직업 상세 조회 성공"),
             @ApiResponse(code = 404, message = "직업 상세 조회 실패")
     })
-    public SuccessResponse detail(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
-                                  @RequestBody @ApiParam(value = "직업 이름", required = true) JobDetailRequestDTO jobDetailRequestDTO) {
+    public EnvelopeResponse detail(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
+                                   @RequestBody @ApiParam(value = "직업 이름", required = true) JobDetailRequestDTO jobDetailRequestDTO) {
         String memberId = jwtProvider.extractMemberId(accessToken);
         String jobName = jobDetailRequestDTO.getJobName();
 
-        return SuccessResponse.builder()
+        return EnvelopeResponse.builder()
                 .data(jobService.getJobDetail(memberId, jobName))
                 .build();
     }
@@ -132,13 +132,13 @@ public class JobController {
             @ApiResponse(code = 200, message = "직업 삭제 성공"),
             @ApiResponse(code = 404, message = "직업 삭제 실패")
     })
-    public SuccessResponse delete(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
-                                  @RequestBody @ApiParam(value = "직업 이름", required = true) JobDeleteRequestDTO jobDeleteRequestDTO) {
+    public EnvelopeResponse delete(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
+                                   @RequestBody @ApiParam(value = "직업 이름", required = true) JobDeleteRequestDTO jobDeleteRequestDTO) {
         String memberId = jwtProvider.extractMemberId(accessToken);
 
         jobService.delete(memberId, jobDeleteRequestDTO);
 
-        return SuccessResponse.builder()
+        return EnvelopeResponse.builder()
                 .build();
     }
 

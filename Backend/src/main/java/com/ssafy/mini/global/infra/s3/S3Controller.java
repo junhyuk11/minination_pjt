@@ -1,6 +1,6 @@
 package com.ssafy.mini.global.infra.s3;
 
-import com.ssafy.mini.global.response.SuccessResponse;
+import com.ssafy.mini.global.response.EnvelopeResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,11 +16,11 @@ public class S3Controller {
     private final S3Service s3Service;
 
     @PostMapping("/upload")
-    public SuccessResponse upload(
+    public EnvelopeResponse upload(
             @RequestParam("file") MultipartFile file
     ) {
         s3Service.upload(file);
-        return SuccessResponse.<String>builder()
+        return EnvelopeResponse.<String>builder()
                 .build();
     }
 }

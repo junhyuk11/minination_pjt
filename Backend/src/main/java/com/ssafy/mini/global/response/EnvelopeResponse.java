@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class SuccessResponse<T> {
+public class EnvelopeResponse<T> {
 
     @Builder.Default
     private int code = 200;

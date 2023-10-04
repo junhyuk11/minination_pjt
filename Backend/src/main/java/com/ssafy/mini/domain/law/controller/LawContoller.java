@@ -3,7 +3,7 @@ package com.ssafy.mini.domain.law.controller;
 import com.ssafy.mini.domain.nation.dto.request.LawUpdateRequest;
 import com.ssafy.mini.domain.nation.service.NationService;
 import com.ssafy.mini.global.auth.jwt.JwtProvider;
-import com.ssafy.mini.global.response.SuccessResponse;
+import com.ssafy.mini.global.response.EnvelopeResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -25,10 +25,10 @@ public class LawContoller {
             @ApiResponse(code = 200, message = "헌법 조회 성공"),
             @ApiResponse(code = 404, message = "헌법 조회 실패")
     })
-    public SuccessResponse info(@RequestHeader("Authorization") String accessToken) {
+    public EnvelopeResponse info(@RequestHeader("Authorization") String accessToken) {
         String memberId = jwtProvider.extractMemberId(accessToken);
 
-        return SuccessResponse.builder()
+        return EnvelopeResponse.builder()
                 .data(nationService.info(memberId))
                 .build();
 
@@ -40,13 +40,13 @@ public class LawContoller {
             @ApiResponse(code = 200, message = "헌법 수정 성공"),
             @ApiResponse(code = 404, message = "헌법 수정 실패")
     })
-    public SuccessResponse update(@RequestHeader("Authorization") String accessToken,
-                                  @RequestBody @ApiParam(value = "국가 수정 정보", required = true) LawUpdateRequest lawUpdateRequest) {
+    public EnvelopeResponse update(@RequestHeader("Authorization") String accessToken,
+                                   @RequestBody @ApiParam(value = "국가 수정 정보", required = true) LawUpdateRequest lawUpdateRequest) {
         String memberId = jwtProvider.extractMemberId(accessToken);
 
         nationService.updateLaw(memberId, lawUpdateRequest);
 
-        return SuccessResponse.builder()
+        return EnvelopeResponse.builder()
                 .build();
     }
 

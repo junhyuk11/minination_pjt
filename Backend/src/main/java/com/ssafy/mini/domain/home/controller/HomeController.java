@@ -2,7 +2,7 @@ package com.ssafy.mini.domain.home.controller;
 
 import com.ssafy.mini.domain.home.service.HomeService;
 import com.ssafy.mini.global.auth.jwt.JwtProvider;
-import com.ssafy.mini.global.response.SuccessResponse;
+import com.ssafy.mini.global.response.EnvelopeResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -28,10 +28,10 @@ public class HomeController {
             @ApiResponse(code = 404, message = "홈 정보 조회 실패"),
             @ApiResponse(code = 406, message = "속한 국가 없음")
     })
-    public SuccessResponse info(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken){
+    public EnvelopeResponse info(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken){
         String memberId = jwtProvider.extractMemberId(accessToken);
 
-        return SuccessResponse.builder()
+        return EnvelopeResponse.builder()
                 .data(homeService.info(memberId))
                 .build();
     }
@@ -43,12 +43,12 @@ public class HomeController {
             @ApiResponse(code = 403, message = "유효하지 않은 토큰"),
             @ApiResponse(code = 404, message = "조회 실패")
     })
-    public SuccessResponse listCitizen (
+    public EnvelopeResponse listCitizen (
             @RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken
     ){
         String memberId = jwtProvider.extractMemberId(accessToken);
 
-        return SuccessResponse.builder()
+        return EnvelopeResponse.builder()
                 .data(homeService.listCitizen(memberId))
                 .build();
     }
@@ -60,12 +60,12 @@ public class HomeController {
             @ApiResponse(code = 403, message = "유효하지 않은 토큰"),
             @ApiResponse(code = 404, message = "조회 실패")
     })
-    public SuccessResponse getTheRich (
+    public EnvelopeResponse getTheRich (
             @RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken
     ){
         String memberId = jwtProvider.extractMemberId(accessToken);
 
-        return SuccessResponse.builder()
+        return EnvelopeResponse.builder()
                 .data(homeService.listRich(memberId))
                 .build();
     }
@@ -77,12 +77,12 @@ public class HomeController {
             @ApiResponse(code = 403, message = "유효하지 않은 토큰"),
             @ApiResponse(code = 404, message = "조회 실패")
     })
-    public SuccessResponse getProfile (
+    public EnvelopeResponse getProfile (
             @RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken
     ){
         String memberId = jwtProvider.extractMemberId(accessToken);
 
-        return SuccessResponse.builder()
+        return EnvelopeResponse.builder()
                 .data(homeService.getProfile(memberId))
                 .build();
     }
@@ -94,12 +94,12 @@ public class HomeController {
             @ApiResponse(code = 403, message = "유효하지 않은 토큰"),
             @ApiResponse(code = 404, message = "조회 실패")
     })
-    public SuccessResponse getGDP (
+    public EnvelopeResponse getGDP (
             @RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken
     ){
         String memberId = jwtProvider.extractMemberId(accessToken);
 
-        return SuccessResponse.builder()
+        return EnvelopeResponse.builder()
                 .data(homeService.getChart(memberId))
                 .build();
     }

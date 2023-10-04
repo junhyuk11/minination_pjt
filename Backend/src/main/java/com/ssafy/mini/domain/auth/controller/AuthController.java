@@ -1,9 +1,7 @@
 package com.ssafy.mini.domain.auth.controller;
 
-import com.ssafy.mini.domain.auth.dto.response.ReissueResponse;
 import com.ssafy.mini.domain.auth.service.AuthService;
-import com.ssafy.mini.global.response.SuccessResponse;
-import io.netty.handler.codec.HeadersUtils;
+import com.ssafy.mini.global.response.EnvelopeResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -23,10 +21,10 @@ public class AuthController {
             @ApiResponse(code = 200, message = "토큰 재발급 성공"),
             @ApiResponse(code = 404, message = "토큰 재발급 실패")
     })
-    public SuccessResponse reissue(
+    public EnvelopeResponse reissue(
             @RequestHeader("Authorization") String refreshToken
     ) {
-        return SuccessResponse.builder()
+        return EnvelopeResponse.builder()
                 .data(authService.reissue(refreshToken))
                 .build();
     }

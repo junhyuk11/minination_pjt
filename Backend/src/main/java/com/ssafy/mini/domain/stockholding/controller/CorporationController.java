@@ -2,7 +2,7 @@ package com.ssafy.mini.domain.stockholding.controller;
 
 import com.ssafy.mini.domain.stockholding.dto.request.CorporationRegisterRequest;
 import com.ssafy.mini.domain.stockholding.service.CorporationService;
-import com.ssafy.mini.global.response.SuccessResponse;
+import com.ssafy.mini.global.response.EnvelopeResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -26,13 +26,13 @@ public class CorporationController {
             @ApiResponse(code = 403, message = "유효하지 않은 토큰"),
             @ApiResponse(code = 403, message = "주식회사 등록 실패")
     })
-    public SuccessResponse register(
+    public EnvelopeResponse register(
             @RequestPart @ApiParam(value = "주식회사 정보", required = true) CorporationRegisterRequest corporationRegisterRequest,
             @RequestPart(required = false) @ApiParam(value = "주식회사 로고", required = true) MultipartFile logo,
             @RequestPart(required = false) @ApiParam(value = "주식회사 프로필", required = true) MultipartFile profile
             ) {
         corporationService.register(corporationRegisterRequest, logo, profile);
-        return SuccessResponse.builder()
+        return EnvelopeResponse.builder()
                 .build();
     }
 
