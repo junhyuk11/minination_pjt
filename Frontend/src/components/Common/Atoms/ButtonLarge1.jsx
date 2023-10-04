@@ -1,6 +1,6 @@
 import React from 'react';
 
-function ButtonLarge1({ title, onClick }) {
+function ButtonLarge1({ title, onClick, disabled }) {
     const buttonStyle = {
         display: 'flex',
         alignItems: 'center',
@@ -14,8 +14,24 @@ function ButtonLarge1({ title, onClick }) {
         cursor: 'pointer',
     };
 
+    const disabledStyle = {
+        backgroundColor: 'gray',
+        cursor: 'not-allowed',
+        opacity: 0.5,
+    };
+
+    const disabledButtonStyle = {
+        ...buttonStyle,
+        ...disabledStyle,
+    };
+
     return (
-        <button type="button" style={buttonStyle} onClick={onClick}>
+        <button
+            type="button"
+            style={disabled ? disabledButtonStyle : buttonStyle}
+            onClick={onClick}
+            disabled={false}
+        >
             {title}
         </button>
     );

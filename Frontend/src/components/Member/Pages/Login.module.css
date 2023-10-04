@@ -63,11 +63,19 @@
 }
 
 .error {
-    /* padding-left: 20px; */
     width: 100%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     padding-left: 10px;
     color: rgb(255, 100, 100);
+}
+
+.collect {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 10px;
+    color: #76c081;
 }
