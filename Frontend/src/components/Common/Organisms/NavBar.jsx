@@ -8,7 +8,7 @@ import { identityState } from '../../../recoil/atoms.jsx';
 import useHomeApi from '../../../api/useHomeApi.jsx';
 
 function NavBar() {
-    const { navigateToBankPage } = useNavigation();
+    const { navigateToBankPage, navigateToLogin } = useNavigation();
     const [identity, setIdentity] = useRecoilState(identityState);
     const [userInfo, setUserInfo] = useState([]);
 
@@ -39,16 +39,10 @@ function NavBar() {
                     </a>
                     <div style={{ display: 'flex' }}>
                         <ProductionButton1
-                            title="선생님으로 변경"
+                            title="로그아웃"
                             onClick={() => {
-                                setIdentity('TC');
-                            }}
-                        />
-                        <div class="gap" />
-                        <ProductionButton1
-                            title="학생으로 변경"
-                            onClick={() => {
-                                setIdentity('ST');
+                                sessionStorage.clear();
+                                navigateToLogin();
                             }}
                         />
                     </div>
