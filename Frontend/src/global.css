@@ -69,6 +69,10 @@ code {
     margin: 2px;
   }
 
+  .big-gap {
+    margin: 5px;
+  }
+
   .mega-gap {
     margin: 13px;
   }
