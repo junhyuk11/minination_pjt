@@ -2,7 +2,7 @@ import React from 'react';
 import SignupInputForm from '../Molecules/SignupInputForm.jsx';
 import styles from './Login.module.css';
 import signupImage from '../../../assets/images/signup.png';
-import MemberTitle from '../Atoms/MemberTitle';
+import MemberTitle from '../Atoms/MemberTitle.jsx';
 
 const Signup = () => {
     return (

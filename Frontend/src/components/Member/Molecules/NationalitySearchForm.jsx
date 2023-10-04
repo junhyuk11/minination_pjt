@@ -9,7 +9,7 @@ const NationalitySearchForm = ({ text, onChange, onClick, className }) => {
     };
     return (
         <div>
-            <MemberTitle title="국가명 검색 (개발의민족)" size="20" />
+            <MemberTitle title="국가명 검색" size="20" />
             <hr style={{ border: '1px solid grey' }} />
             <InputSearch1
                 text={text}

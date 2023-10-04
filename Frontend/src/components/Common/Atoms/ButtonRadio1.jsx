@@ -20,9 +20,11 @@ function ButtonRadio1({ setData }) {
                     value="ST"
                     checked={selectedOption === 'ST'}
                     onChange={handleRadioChange}
+                    className="radio-button__input"
                 />
-                학생
+                저는 학생이에요
             </label>
+            <span className="mega-gap"> </span>
             <label htmlFor="option2">
                 <input
                     type="radio"
@@ -30,8 +32,9 @@ function ButtonRadio1({ setData }) {
                     value="TC"
                     checked={selectedOption === 'TC'}
                     onChange={handleRadioChange}
+                    className="radio-button__input"
                 />
-                선생님
+                저는 선생님이에요
             </label>
         </div>
     );

@@ -191,7 +191,7 @@ const SellContent = () => {
             </div>
             <button
                 type="button"
-                className="buy-sell-btn buy-btn"
+                className="buy-sell-btn sell-btn"
                 onClick={handleSellClick}
             >
                 매도하기
