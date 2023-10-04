@@ -54,7 +54,15 @@ const Stock = () => {
     return (
         <div className="section-master">
             <NavBar username="휘진" totalBalancebalance={1000} />
-            <TickerTape />
+            <TickerTape
+                fluctList={
+                    stockList &&
+                    stockList.map(item => ({
+                        yesterday: item.yesterday,
+                        fluctDay: item.fluctDay,
+                    }))
+                }
+            />
 
             <div className="section-container">
                 {/* Comapny-Info-Section */}
