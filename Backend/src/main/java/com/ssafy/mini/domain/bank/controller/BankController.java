@@ -1,7 +1,7 @@
 package com.ssafy.mini.domain.bank.controller;
 
-import com.ssafy.mini.domain.bank.dto.request.BankSubscribeRequestDTO;
-import com.ssafy.mini.domain.bank.dto.request.BankTerminateRequestDTO;
+import com.ssafy.mini.domain.bank.dto.request.BankSubscribeRequest;
+import com.ssafy.mini.domain.bank.dto.request.BankTerminateRequest;
 import com.ssafy.mini.domain.bank.service.BankService;
 import com.ssafy.mini.global.auth.jwt.JwtProvider;
 import com.ssafy.mini.global.response.EnvelopeResponse;
@@ -40,11 +40,11 @@ public class BankController {
     })
     @PostMapping("/subscribe")
     public EnvelopeResponse subscribe(@RequestHeader("Authorization") String accessToken,
-                                      @RequestBody BankSubscribeRequestDTO bankSubscribeRequestDTO) {
+                                      @RequestBody BankSubscribeRequest bankSubscribeRequest) {
         String memberId = jwtProvider.extractMemberId(accessToken);
 
         return EnvelopeResponse.builder()
-                .data(bankService.subscribe(memberId, bankSubscribeRequestDTO))
+                .data(bankService.subscribe(memberId, bankSubscribeRequest))
                 .build();
     }
 
@@ -55,12 +55,12 @@ public class BankController {
     })
     @PostMapping("/terminate")
     public EnvelopeResponse terminate(@RequestHeader("Authorization") String accessToken,
-                                      @RequestBody BankTerminateRequestDTO bankTerminateRequestDTO) {
+                                      @RequestBody BankTerminateRequest bankTerminateRequest) {
         String memberId = jwtProvider.extractMemberId(accessToken);
 
         return EnvelopeResponse
                 .builder()
-                .data(bankService.terminate(memberId, bankTerminateRequestDTO))
+                .data(bankService.terminate(memberId, bankTerminateRequest))
                 .build();
     }
 

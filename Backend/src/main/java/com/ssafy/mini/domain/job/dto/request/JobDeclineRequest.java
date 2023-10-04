@@ -4,12 +4,12 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class JobDeclineRequestDTO {
+public class JobDeclineRequest {
     private String jobName;
     private String applicantName;
 
     @Builder
-    public JobDeclineRequestDTO(String jobName, String applicantName) {
+    public JobDeclineRequest(String jobName, String applicantName) {
         this.jobName = jobName;
         this.applicantName = applicantName;
     }

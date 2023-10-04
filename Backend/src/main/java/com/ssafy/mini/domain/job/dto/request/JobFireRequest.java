@@ -4,12 +4,12 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class JobFireRequestDTO {
+public class JobFireRequest {
     private String jobName;
     private String employeeName;
 
     @Builder
-    public JobFireRequestDTO(String jobName, String employeeName) {
+    public JobFireRequest(String jobName, String employeeName) {
         this.jobName = jobName;
         this.employeeName = employeeName;
     }

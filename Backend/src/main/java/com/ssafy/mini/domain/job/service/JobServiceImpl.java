@@ -29,31 +29,31 @@ public class JobServiceImpl implements JobService{
     private final JobRepository jobRepository;
 
     @Override
-    public void register(String memberId, JobRegisterRequestDTO jobRegisterRequestDTO) {
+    public void register(String memberId, JobRegisterRequest jobRegisterRequest) {
         // 선생님만 등록 가능
         if (!memberService.getMemberType(memberId).equals("TC"))
             throw new MNException(ErrorCode.NO_AUTHORITY);
 
         // 급여가 0원 이하일 수 없음
-        if(jobRegisterRequestDTO.getPay() <= 0)
+        if(jobRegisterRequest.getPay() <= 0)
             throw new MNException(ErrorCode.INVALID_JOB_PAY);
 
-        if(jobRegisterRequestDTO.getRecruitTotalCount() <= 0)
+        if(jobRegisterRequest.getRecruitTotalCount() <= 0)
             throw new MNException(ErrorCode.INVALID_JOB_TOTAL);
 
         // 직업 이름 중복 확인
-        jobRepository.findByJobName(jobRegisterRequestDTO.getName())
+        jobRepository.findByJobName(jobRegisterRequest.getName())
                 .ifPresent(job -> {
                     throw new MNException(ErrorCode.DUPLICATED_JOB_NAME);
                 });
 
         Job job = Job.builder()
-                .jobName(jobRegisterRequestDTO.getName())
-                .jobDesc(jobRegisterRequestDTO.getDesc())
-                .jobPay(jobRegisterRequestDTO.getPay())
-                .jobReq(jobRegisterRequestDTO.getRequirement())
-                .jobTotalCnt(jobRegisterRequestDTO.getRecruitTotalCount())
-                .jobLeftCnt(jobRegisterRequestDTO.getRecruitTotalCount())
+                .jobName(jobRegisterRequest.getName())
+                .jobDesc(jobRegisterRequest.getDesc())
+                .jobPay(jobRegisterRequest.getPay())
+                .jobReq(jobRegisterRequest.getRequirement())
+                .jobTotalCnt(jobRegisterRequest.getRecruitTotalCount())
+                .jobLeftCnt(jobRegisterRequest.getRecruitTotalCount())
                 .nation(memberService.getNationByMemberId(memberId))
                 .build();
 
@@ -98,11 +98,11 @@ public class JobServiceImpl implements JobService{
     }
 
     @Override
-    public void approve(String memberId, JobApproveRequestDTO jobApproveRequestDTO) {
+    public void approve(String memberId, JobApproveRequest jobApproveRequest) {
         Member member = memberRepository.findByMemId(memberId)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
 
-        Job job = jobRepository.findByJobName(jobApproveRequestDTO.getJobName())
+        Job job = jobRepository.findByJobName(jobApproveRequest.getJobName())
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_JOB));
 
         // 해당 지원에 해당하는 국가의 선생님만 승인 가능
@@ -114,7 +114,7 @@ public class JobServiceImpl implements JobService{
         if(job.getJobLeftCnt() == 0)
             throw new MNException(ErrorCode.NO_LEFT_JOB);
 
-        Member applicant = memberRepository.findByMemName(jobApproveRequestDTO.getApplicantName())
+        Member applicant = memberRepository.findByMemName(jobApproveRequest.getApplicantName())
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
 
 
@@ -171,11 +171,11 @@ public class JobServiceImpl implements JobService{
     }
 
     @Override
-    public void decline(String memberId, JobDeclineRequestDTO jobDeclineRequestDTO) {
+    public void decline(String memberId, JobDeclineRequest jobDeclineRequest) {
         Member member = memberRepository.findByMemId(memberId)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
 
-        Job job = jobRepository.findByJobName(jobDeclineRequestDTO.getJobName())
+        Job job = jobRepository.findByJobName(jobDeclineRequest.getJobName())
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_JOB));
 
         // 해당 지원에 해당하는 국가의 선생님만 거절 가능
@@ -183,7 +183,7 @@ public class JobServiceImpl implements JobService{
             throw new MNException(ErrorCode.NO_AUTHORITY);
         }
 
-        Member applicant = memberRepository.findByMemName(jobDeclineRequestDTO.getApplicantName())
+        Member applicant = memberRepository.findByMemName(jobDeclineRequest.getApplicantName())
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
 
         Apply apply = applyRepository.findByJobAndMember(job, applicant)
@@ -194,11 +194,11 @@ public class JobServiceImpl implements JobService{
     }
 
     @Override
-    public void fire(String memberId, JobFireRequestDTO jobFireRequestDTO) {
+    public void fire(String memberId, JobFireRequest jobFireRequest) {
         Member teacher = memberRepository.findByMemId(memberId)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
 
-        Member employee = memberRepository.findByMemName(jobFireRequestDTO.getEmployeeName())
+        Member employee = memberRepository.findByMemName(jobFireRequest.getEmployeeName())
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
 
         if(!teacher.getMemType().getExpression().equals("TC"))
@@ -207,7 +207,7 @@ public class JobServiceImpl implements JobService{
         if(teacher.getIsoSeq() != employee.getIsoSeq())
             throw new MNException(ErrorCode.NATION_NOT_MATCH);
 
-        Job job = jobRepository.findByJobName(jobFireRequestDTO.getJobName())
+        Job job = jobRepository.findByJobName(jobFireRequest.getJobName())
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_JOB));
 
         // 해당 직업에서 근무하고 있지 않은 경우
@@ -251,11 +251,11 @@ public class JobServiceImpl implements JobService{
     }
 
     @Override
-    public void delete(String memberId, JobDeleteRequestDTO jobDeleteRequestDTO) {
+    public void delete(String memberId, JobDeleteRequest jobDeleteRequest) {
         Member member = memberRepository.findByMemId(memberId)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
 
-        String jobName = jobDeleteRequestDTO.getJobName();
+        String jobName = jobDeleteRequest.getJobName();
         Job job = jobRepository.findByJobName(jobName)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_JOB));
 
@@ -267,21 +267,21 @@ public class JobServiceImpl implements JobService{
         // 해당 직업 지원자 모두 거절
         List<Apply> applicantList = applyRepository.findAllByJob(job);
         for(Apply a : applicantList){
-            JobDeclineRequestDTO jobDeclineRequestDTO = JobDeclineRequestDTO.builder()
+            JobDeclineRequest jobDeclineRequest = JobDeclineRequest.builder()
                     .applicantName(a.getMember().getMemName())
                     .jobName(jobName)
                     .build();
-            decline(memberId, jobDeclineRequestDTO);
+            decline(memberId, jobDeclineRequest);
         }
 
         // 해당 직업 근무자 모두 해고
         List<Member> employeeList = memberRepository.findAllByJobSeq(job);
         for(Member m : employeeList){
-            JobFireRequestDTO jobFireRequestDTO = JobFireRequestDTO.builder()
+            JobFireRequest jobFireRequest = JobFireRequest.builder()
                     .employeeName(m.getMemName())
                     .jobName(jobName)
                     .build();
-            fire(memberId, jobFireRequestDTO);
+            fire(memberId, jobFireRequest);
         }
 
         // 해당 직업 삭제

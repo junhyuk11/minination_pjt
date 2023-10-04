@@ -4,12 +4,12 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class FlowDTO{
+public class FlowDto {
     private String time;
     private int asset;
 
     @Builder
-    public FlowDTO(String time, int asset){
+    public FlowDto(String time, int asset){
         this.time = time;
         this.asset = asset;
     }

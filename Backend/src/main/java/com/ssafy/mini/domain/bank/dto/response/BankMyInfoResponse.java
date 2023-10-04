@@ -6,16 +6,16 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public class BankMyInfoResponseDTO {
+public class BankMyInfoResponse {
 
-    private AssetDTO asset;
+    private AssetDto asset;
     private String cardNo;
-    private List<FlowDTO> flow;
-    private List<DetailDTO> detail;
-    private List<AccountDTO> account;
+    private List<FlowDto> flow;
+    private List<DetailDto> detail;
+    private List<AccountDto> account;
 
     @Builder
-    public BankMyInfoResponseDTO(AssetDTO asset, String cardNo, List<FlowDTO> flow, List<DetailDTO> detail, List<AccountDTO> account) {
+    public BankMyInfoResponse(AssetDto asset, String cardNo, List<FlowDto> flow, List<DetailDto> detail, List<AccountDto> account) {
         this.asset = asset;
         this.cardNo = cardNo;
         this.flow = flow;

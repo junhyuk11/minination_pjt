@@ -4,21 +4,19 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class BankTerminateResponseDTO {
+public class AccountDto {
     private String type;
-    private String category;
     private String start;
     private String end;
-    private int balance;
+    private int principal;
     private int estimation;
 
     @Builder
-    BankTerminateResponseDTO(String type, String category, String start, String end, int balance, int estimation) {
+    public AccountDto(String type, String start, String end, int principal, int estimation) {
         this.type = type;
-        this.category = category;
         this.start = start;
         this.end = end;
-        this.balance = balance;
+        this.principal = principal;
         this.estimation = estimation;
     }
 }

@@ -7,13 +7,13 @@ import java.util.List;
 import java.util.Map;
 
 @Getter
-public class BankInfoResponseDTO {
+public class BankInfoResponse {
 
     private List<Map<String, String>> deposit;  // 예금
     private List<Map<String, String>> saving;   // 적금
 
     @Builder
-    public BankInfoResponseDTO(List<Map<String, String>> deposit, List<Map<String, String>> saving) {
+    public BankInfoResponse(List<Map<String, String>> deposit, List<Map<String, String>> saving) {
         this.deposit = deposit;
         this.saving = saving;
     }

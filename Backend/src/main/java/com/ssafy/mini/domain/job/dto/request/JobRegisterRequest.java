@@ -3,7 +3,7 @@ package com.ssafy.mini.domain.job.dto.request;
 import lombok.Getter;
 
 @Getter
-public class JobRegisterRequestDTO {
+public class JobRegisterRequest {
     private String name;
     private String desc;
     private int pay;

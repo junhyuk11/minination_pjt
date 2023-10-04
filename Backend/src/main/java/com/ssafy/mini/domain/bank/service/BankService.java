@@ -1,18 +1,18 @@
 package com.ssafy.mini.domain.bank.service;
 
-import com.ssafy.mini.domain.bank.dto.request.BankSubscribeRequestDTO;
-import com.ssafy.mini.domain.bank.dto.request.BankTerminateRequestDTO;
-import com.ssafy.mini.domain.bank.dto.response.BankInfoResponseDTO;
-import com.ssafy.mini.domain.bank.dto.response.BankSubscribeResponseDTO;
-import com.ssafy.mini.domain.bank.dto.response.BankTerminateResponseDTO;
-import com.ssafy.mini.domain.bank.dto.response.BankMyInfoResponseDTO;
+import com.ssafy.mini.domain.bank.dto.request.BankSubscribeRequest;
+import com.ssafy.mini.domain.bank.dto.request.BankTerminateRequest;
+import com.ssafy.mini.domain.bank.dto.response.BankInfoResponse;
+import com.ssafy.mini.domain.bank.dto.response.BankSubscribeResponse;
+import com.ssafy.mini.domain.bank.dto.response.BankTerminateResponse;
+import com.ssafy.mini.domain.bank.dto.response.BankMyInfoResponse;
 
 public interface BankService {
-    BankInfoResponseDTO info();
+    BankInfoResponse info();
 
-    BankSubscribeResponseDTO subscribe(String memberId, BankSubscribeRequestDTO bankSubscribeRequestDTO);
+    BankSubscribeResponse subscribe(String memberId, BankSubscribeRequest bankSubscribeRequest);
 
-    BankTerminateResponseDTO terminate(String memberId, BankTerminateRequestDTO bankTerminateRequestDTO);
+    BankTerminateResponse terminate(String memberId, BankTerminateRequest bankTerminateRequest);
 
-    BankMyInfoResponseDTO myAsset(String memberId);
+    BankMyInfoResponse myAsset(String memberId);
 }

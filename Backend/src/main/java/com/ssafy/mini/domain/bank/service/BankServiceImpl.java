@@ -7,8 +7,8 @@ import com.ssafy.mini.domain.account.repository.AccountRepository;
 import com.ssafy.mini.domain.account.service.AccountService;
 import com.ssafy.mini.domain.asset.entity.Asset;
 import com.ssafy.mini.domain.asset.repository.AssetRepository;
-import com.ssafy.mini.domain.bank.dto.request.BankSubscribeRequestDTO;
-import com.ssafy.mini.domain.bank.dto.request.BankTerminateRequestDTO;
+import com.ssafy.mini.domain.bank.dto.request.BankSubscribeRequest;
+import com.ssafy.mini.domain.bank.dto.request.BankTerminateRequest;
 import com.ssafy.mini.domain.bank.dto.response.*;
 import com.ssafy.mini.domain.bank.entity.Bank;
 import com.ssafy.mini.domain.bank.repository.BankRepository;
@@ -48,7 +48,7 @@ public class BankServiceImpl implements BankService {
     private final AccountService accountService;
 
     @Override
-    public BankInfoResponseDTO info() {
+    public BankInfoResponse info() {
         List<Bank> bankList = bankRepository.findAll();
 
         List<Map<String, String>> depositList = new ArrayList<>();
@@ -72,22 +72,22 @@ public class BankServiceImpl implements BankService {
             }
         }
 
-        return BankInfoResponseDTO.builder()
+        return BankInfoResponse.builder()
                 .deposit(depositList)
                 .saving(savingList)
                 .build();
     }
 
     @Override
-    public BankSubscribeResponseDTO subscribe(String memberId, BankSubscribeRequestDTO bankSubscribeRequestDTO) {
+    public BankSubscribeResponse subscribe(String memberId, BankSubscribeRequest bankSubscribeRequest) {
         // member 확인
         Member member = memberRepository.findByMemId(memberId)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
 
         // 가입 상품 정보 확인
-        String bankType = bankSubscribeRequestDTO.getType();
-        byte period = bankSubscribeRequestDTO.getTerm();
-        int amount = bankSubscribeRequestDTO.getAmount();
+        String bankType = bankSubscribeRequest.getType();
+        byte period = bankSubscribeRequest.getTerm();
+        int amount = bankSubscribeRequest.getAmount();
 
         // 사용자의 일반 계좌 가져오기
         Account normalAccount = accountRepository.getMoneyToUse(memberId);
@@ -124,7 +124,7 @@ public class BankServiceImpl implements BankService {
             expAmount = amount * (100 + rate) / 100;
             day = "NON";
         } else {
-            acctSaving = bankSubscribeRequestDTO.getAmount();
+            acctSaving = bankSubscribeRequest.getAmount();
             expAmount = amount * period * 4 * (100 + rate) / 100;
         }
 
@@ -157,7 +157,7 @@ public class BankServiceImpl implements BankService {
 
         accountRepository.save(newAccount);
 
-        return BankSubscribeResponseDTO
+        return BankSubscribeResponse
                 .builder()
                 .type(bankType)
                 .category(bankCode.getParentCode().getCodeName())
@@ -169,7 +169,7 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
-    public BankTerminateResponseDTO terminate(String memberId, BankTerminateRequestDTO bankTerminateRequestDTO) {
+    public BankTerminateResponse terminate(String memberId, BankTerminateRequest bankTerminateRequest) {
         // 사용자 조회
         Member member = memberRepository.findByMemId(memberId)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
@@ -181,8 +181,8 @@ public class BankServiceImpl implements BankService {
         log.debug("naAccountMaster: " + naAccountMaster.getCode());
 
         // 해지할 상품 코드 조회
-        Master bankAccountMaster = masterRepository.findByExpression(bankTerminateRequestDTO.getType().substring(0, 1)
-                        + bankTerminateRequestDTO.getTerm())
+        Master bankAccountMaster = masterRepository.findByExpression(bankTerminateRequest.getType().substring(0, 1)
+                        + bankTerminateRequest.getTerm())
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_CODE));
 
         log.debug("bankAccountMaster: " + bankAccountMaster.getCode());
@@ -210,8 +210,8 @@ public class BankServiceImpl implements BankService {
         // 해지할 상품 계좌 삭제
         accountRepository.delete(bankAccount);
 
-        return BankTerminateResponseDTO.builder()
-                .type(bankTerminateRequestDTO.getType())
+        return BankTerminateResponse.builder()
+                .type(bankTerminateRequest.getType())
                 .category(category)
                 .start(start)
                 .end(end)
@@ -221,25 +221,25 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
-    public BankMyInfoResponseDTO myAsset(String memberId) {
+    public BankMyInfoResponse myAsset(String memberId) {
         Member member = memberRepository.findByMemId(memberId)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
 
-        AssetDTO myAsset = getAsset(member);
+        AssetDto myAsset = getAsset(member);
 
         // cardNo
         String cardNo = member.getCardNo();
 
         // flow
-        List<FlowDTO> flow = getFlow(member);
+        List<FlowDto> flow = getFlow(member);
 
         // detail
-        List<DetailDTO> detail = getDetailList(member);
+        List<DetailDto> detail = getDetailList(member);
 
         // account
-        List<AccountDTO> account = getAccountList(member);
+        List<AccountDto> account = getAccountList(member);
 
-        return BankMyInfoResponseDTO.builder()
+        return BankMyInfoResponse.builder()
                 .cardNo(cardNo)
                 .asset(myAsset)
                 .flow(flow)
@@ -260,7 +260,7 @@ public class BankServiceImpl implements BankService {
         memberService.updateBalance(account.getMember().getMemId(), -amount);
     }
 
-    private AssetDTO getAsset(Member member) {
+    private AssetDto getAsset(Member member) {
         // Asset : cash : 일반 계좌 잔액
         int cash = accountRepository.getMoneyToUse(member.getMemId()).getAcctBalance();
 
@@ -278,35 +278,35 @@ public class BankServiceImpl implements BankService {
         }
         save -= cash;       // 일반 계좌 잔액은 빼기
 
-        return AssetDTO.builder()
+        return AssetDto.builder()
                 .cash(cash)
                 .stock(stock)
                 .save(save)
                 .build();
     }
 
-    private List<FlowDTO> getFlow(Member member) {
+    private List<FlowDto> getFlow(Member member) {
 
-        List<FlowDTO> flowDTOList = new ArrayList<>();
+        List<FlowDto> flowDtoList = new ArrayList<>();
         List<Asset> assetList = assetRepository.findTop30ByMemberOrderByAssetDtDesc(member);
 
         for (int index = assetList.size() - 1; index >= 0; index--) {
-            flowDTOList.add(FlowDTO.builder()
+            flowDtoList.add(FlowDto.builder()
                     .time(assetList.get(index).getAssetDt().toString().substring(0, 10))
                     .asset(assetList.get(index).getAssetBalance())
                     .build());
         }
 
-        return flowDTOList;
+        return flowDtoList;
     }
 
-    private List<DetailDTO> getDetailList(Member member) {
+    private List<DetailDto> getDetailList(Member member) {
 
-        List<DetailDTO> detailDTOList = new ArrayList<>();
+        List<DetailDto> detailDtoList = new ArrayList<>();
         List<AccountDetail> accountDetailList = accountDetailRepository.findAllByAccountOrderByDateDesc(accountRepository.getMoneyToUse(member.getMemId()));
 
         for (AccountDetail accountDetail : accountDetailList) {
-            detailDTOList.add(DetailDTO.builder()
+            detailDtoList.add(DetailDto.builder()
                     .org(accountDetail.getOrganization())
                     .category(accountDetail.getCategory().getCodeName())
                     .amount(accountDetail.getAmount())
@@ -315,18 +315,18 @@ public class BankServiceImpl implements BankService {
                     .build());
         }
 
-        return detailDTOList;
+        return detailDtoList;
 
     }
 
-    private List<AccountDTO> getAccountList(Member member) {
-        List<AccountDTO> accountDTOList = new ArrayList<>();
+    private List<AccountDto> getAccountList(Member member) {
+        List<AccountDto> accountDtoList = new ArrayList<>();
         List<Account> accountList = accountRepository.findByMember(member);
 
         log.debug("accountList: {}", accountList.toString());
 
         for (Account account : accountList) {
-            accountDTOList.add(AccountDTO.builder()
+            accountDtoList.add(AccountDto.builder()
                     .type(account.getBankCode().getCodeName())
                     .start(account.getAcctStartDate().toString().substring(0, 10))
                     .end(account.getAcctExpireDate().toString().substring(0, 10))
@@ -335,7 +335,7 @@ public class BankServiceImpl implements BankService {
                     .build());
         }
 
-        return accountDTOList;
+        return accountDtoList;
     }
 
     @Transactional

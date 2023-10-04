@@ -3,26 +3,22 @@ package com.ssafy.mini.domain.bank.dto.response;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.util.Date;
-
 @Getter
-public class BankSubscribeResponseDTO {
-
+public class BankTerminateResponse {
     private String type;
     private String category;
     private String start;
     private String end;
-    private int principal;
+    private int balance;
     private int estimation;
 
     @Builder
-    public BankSubscribeResponseDTO(String type, String category, String start, String end, int principal, int estimation) {
+    BankTerminateResponse(String type, String category, String start, String end, int balance, int estimation) {
         this.type = type;
         this.category = category;
         this.start = start;
         this.end = end;
-        this.principal = principal;
+        this.balance = balance;
         this.estimation = estimation;
     }
-
 }
