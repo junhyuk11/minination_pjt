@@ -25,11 +25,11 @@ const ProductionTeacher = ({ jobList }) => {
     });
     const [modalJobName, setModalJobName] = useState('');
 
-    const handleManageClick = job_name => {
+    const handleManageClick = jobName => {
         // api 요청 등 필요한 데이터 처리
         const fetchData = async () => {
             try {
-                const response = await useJobApi.jobGetDetail({job_name});
+                const response = await useJobApi.jobGetDetail({ jobName });
                 setApplicants(response.data); // API 응답을 applicants 상태에 저장합니다.
             } catch (error) {
                 console.error('API 요청 중 오류 발생:', error);
@@ -38,25 +38,54 @@ const ProductionTeacher = ({ jobList }) => {
         };
 
         fetchData();
-        setModalJobName(job_name);
+        setModalJobName(jobName);
         setIsModalOpen(true);
     };
     // ---------------------------------------------
-    const handleDeleteClick = job_name => {
+    const handleDeleteClick = jobName => {
         swal.fire({
             icon: 'warning',
             title: '삭제하시겠습니까?',
             showCancelButton: true,
             confirmButtonText: '확인',
             cancelButtonText: '취소',
-        }).then(result => {
+        }).then(async result => {
             if (result.isConfirmed) {
-                // 삭제 처리 로직을 구현하고, 필요한 API 호출을 수행합니다.
-                swal.fire({
-                    icon: 'success',
-                    title: '삭제하였습니다.',
-                    confirmButtonText: '확인',
-                });
+                try {
+                    const response = await useJobApi.jobDelete(jobName);
+                    if (response.code === 200) {
+                        swal.fire({
+                            icon: 'success',
+                            title: '삭제하였습니다.',
+                            confirmButtonText: '확인',
+                        });
+                    } else if (response.code === 403) {
+                        swal.fire({
+                            icon: 'error',
+                            title: '유효하지 않은 토큰입니다.',
+                            confirmButtonText: '확인',
+                        });
+                    } else if (response.code === 404) {
+                        swal.fire({
+                            icon: 'error',
+                            title: '삭제에 실패하였습니다.',
+                            confirmButtonText: '확인',
+                        });
+                    } else {
+                        swal.fire({
+                            icon: 'error',
+                            title: '알 수 없는 오류가 발생했습니다.',
+                            confirmButtonText: '확인',
+                        });
+                    }
+                } catch (error) {
+                    console.error('API 요청 중 오류 발생:', error);
+                    swal.fire({
+                        icon: 'error',
+                        title: '알 수 없는 오류가 발생했습니다.',
+                        confirmButtonText: '확인',
+                    });
+                }
             }
         });
     };
@@ -69,11 +98,11 @@ const ProductionTeacher = ({ jobList }) => {
             Comp3={<ProductionTitle title={`급여: ${job.pay} 만원`} />}
             Comp4={
                 <ProductionTitle
-                    title={`채용 인원: ${job.recruit_total_count}명`}
+                    title={`채용 인원: ${job.recruitTotalCount}명`}
                 />
             }
             Comp5={
-                <ProductionTitle title={`지원자 수: ${job.apply_count}명`} />
+                <ProductionTitle title={`지원자 수: ${job.applyCount}명`} />
             }
             Comp6={
                 <ProductionRequirement
@@ -107,7 +136,7 @@ const ProductionTeacher = ({ jobList }) => {
                     <ProductionApplicantModal
                         applicants={applicants} // applicants 전달
                         setIsModalOpen={setIsModalOpen}
-                        job_name={modalJobName}
+                        jobName={modalJobName}
                     />
                 </div>
             )}

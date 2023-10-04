@@ -1,12 +1,12 @@
-import useAxiosInstance from './useAxiosInstance.jsx';
 import Swal from 'sweetalert2';
+import useAxiosInstance from './useAxiosInstance.jsx';
 
-const jobPostDecline = async (job_name, applicant_id) => {
+const jobPostDecline = async (jobName, applicantName) => {
     try {
         const jwt = sessionStorage.getItem('accessToken');
         const response = await useAxiosInstance
             .authApiClient(jwt)
-            .post(`/job/decline`, { job_name, applicant_id });
+            .post(`/job/decline`, { jobName, applicantName });
         return response.data;
     } catch (e) {
         if (e.response.data.status === 404) {
@@ -21,9 +21,9 @@ const jobPostDecline = async (job_name, applicant_id) => {
     return null;
 };
 
-const jobPostFire = async (job_name, applicant_id) => {
+const jobPostFire = async (jobName, employeeName) => {
     try {
-        const form = { job_name, applicant_id };
+        const form = { jobName, employeeName };
         console.log(form);
         const jwt = sessionStorage.getItem('accessToken');
         const response = await useAxiosInstance
@@ -43,12 +43,12 @@ const jobPostFire = async (job_name, applicant_id) => {
     return null;
 };
 
-const jobPostApprove = async (job_name, applicant_id) => {
+const jobPostApprove = async (jobName, applicantName) => {
     try {
         const jwt = sessionStorage.getItem('accessToken');
         const response = await useAxiosInstance
             .authApiClient(jwt)
-            .post(`/job/approve`, { job_name, applicant_id });
+            .post(`/job/approve`, { jobName, applicantName });
         return response.data;
     } catch (e) {
         if (e.response.data.status === 404) {
@@ -63,12 +63,12 @@ const jobPostApprove = async (job_name, applicant_id) => {
     return null;
 };
 
-const jobPostApply = async job_name => {
+const jobPostApply = async jobName => {
     try {
         const jwt = sessionStorage.getItem('accessToken');
         const response = await useAxiosInstance
             .authApiClient(jwt)
-            .post(`/job/apply`, { job_name });
+            .post(`/job/apply`, { jobName });
         return response.data;
     } catch (e) {
         if (e.response.data.code === 403) {
@@ -100,12 +100,12 @@ const jobPostApply = async job_name => {
     return null;
 };
 
-const jobGetDetail = async job_name => {
+const jobGetDetail = async jobName => {
     try {
         const jwt = sessionStorage.getItem('accessToken');
         const response = await useAxiosInstance
             .authApiClient(jwt)
-            .post(`/job/detail`, job_name);
+            .post(`/job/detail`, jobName);
         return response.data;
     } catch (e) {
         if (e.response.data.status === 404) {
@@ -144,7 +144,7 @@ const jobPostRegister = async (
     name,
     desc,
     pay,
-    recruit_total_count,
+    recruitTotalCount,
     requirement,
 ) => {
     try {
@@ -155,7 +155,7 @@ const jobPostRegister = async (
                 name,
                 desc,
                 pay,
-                recruit_total_count,
+                recruitTotalCount,
                 requirement,
             });
         return response.data;
@@ -172,6 +172,21 @@ const jobPostRegister = async (
     return null;
 };
 
+const jobDelete = async jobName => {
+    const requestBody = JSON.stringify({ jobName }); // 객체를 JSON 문자열로 변환
+    const jwt = sessionStorage.getItem('accessToken');
+    console.log(requestBody);
+
+    const response = await useAxiosInstance.authApiClient(jwt).delete(`/job`, {
+        data: requestBody, // 요청 본문에 JSON 데이터 추가
+        headers: {
+            'Content-Type': 'application/json', // JSON 형식으로 요청을 보내도록 설정
+        },
+    });
+
+    return response.data;
+};
+
 export default {
     jobPostDecline,
     jobPostFire,
@@ -180,4 +195,5 @@ export default {
     jobGetDetail,
     jobGetList,
     jobPostRegister,
+    jobDelete,
 };
