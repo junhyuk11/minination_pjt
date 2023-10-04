@@ -3,6 +3,7 @@ package com.ssafy.mini.domain.stockholding.entity;
 import com.ssafy.mini.domain.member.entity.Member;
 import com.ssafy.mini.global.db.BaseEntity;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -40,4 +41,11 @@ public class Stockholding extends BaseEntity {
         this.stkBuyPrice += butPrice;
     }
 
+    @Builder
+    public Stockholding(Member member, Corporation corporation, Integer holdQty, Integer stkBuyPrice) {
+        this.member = member;
+        this.corporation = corporation;
+        this.holdQty = holdQty;
+        this.stkBuyPrice = stkBuyPrice;
+    }
 }

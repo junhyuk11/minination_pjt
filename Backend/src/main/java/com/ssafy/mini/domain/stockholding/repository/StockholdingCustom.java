@@ -4,11 +4,12 @@ import com.ssafy.mini.domain.stockholding.dto.response.PortfolioDto;
 import com.ssafy.mini.domain.stockholding.entity.Stockholding;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface StockholdingCustom {
 
     List<PortfolioDto> findAllByMemberId(String memberId);
 
-    Stockholding findByMemberIdAndCode(String memberId, String code);
+    Optional<Stockholding> findByMemberIdAndCode(String memberId, String code);
 
 }

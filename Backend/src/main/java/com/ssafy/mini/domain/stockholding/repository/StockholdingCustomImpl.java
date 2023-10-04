@@ -7,7 +7,9 @@ import com.ssafy.mini.domain.stockholding.entity.QStockholding;
 import com.ssafy.mini.domain.stockholding.entity.Stockholding;
 import lombok.RequiredArgsConstructor;
 
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class StockholdingCustomImpl implements StockholdingCustom {
@@ -31,13 +33,14 @@ public class StockholdingCustomImpl implements StockholdingCustom {
     }
 
     @Override
-    public Stockholding findByMemberIdAndCode(String memberId, String code) {
-        return queryFactory
+    public Optional<Stockholding> findByMemberIdAndCode(String memberId, String code) {
+        return Optional.ofNullable(queryFactory
                 .select(stockholding)
                 .from(stockholding)
                 .where(stockholding.member.memId.eq(memberId)
                         .and(stockholding.corporation.stkCd.eq(code)))
-                .fetchOne();
+                .fetchOne()
+        );
     }
 
 }
