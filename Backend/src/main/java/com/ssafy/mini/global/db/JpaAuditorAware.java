@@ -1,4 +1,4 @@
-package com.ssafy.mini.global.auth.security;
+package com.ssafy.mini.global.db;
 
 import com.ssafy.mini.domain.member.entity.Member;
 import org.springframework.data.domain.AuditorAware;

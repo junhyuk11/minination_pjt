@@ -4,7 +4,7 @@ import com.ssafy.mini.domain.shop.dto.request.AddProductRequest;
 import com.ssafy.mini.domain.shop.dto.request.BuyProductRequest;
 import com.ssafy.mini.domain.shop.dto.request.DeleteProductRequest;
 import com.ssafy.mini.domain.shop.service.ProductService;
-import com.ssafy.mini.global.auth.jwt.JwtProvider;
+import com.ssafy.mini.global.jwt.JwtProvider;
 import com.ssafy.mini.global.response.EnvelopeResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

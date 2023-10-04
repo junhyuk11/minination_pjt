@@ -1,4 +1,4 @@
-package com.ssafy.mini.global.auth.jwt;
+package com.ssafy.mini.global.jwt;
 
 
 import com.ssafy.mini.global.exception.ErrorCode;

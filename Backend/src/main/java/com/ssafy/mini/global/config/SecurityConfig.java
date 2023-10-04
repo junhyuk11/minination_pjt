@@ -1,7 +1,7 @@
 package com.ssafy.mini.global.config;
 
 
-import com.ssafy.mini.global.auth.jwt.JwtAuthenticationFilter;
+import com.ssafy.mini.global.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

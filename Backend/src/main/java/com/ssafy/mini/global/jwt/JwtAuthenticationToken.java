@@ -1,4 +1,4 @@
-package com.ssafy.mini.global.auth.jwt;
+package com.ssafy.mini.global.jwt;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;

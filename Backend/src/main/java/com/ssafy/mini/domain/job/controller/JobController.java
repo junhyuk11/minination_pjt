@@ -2,7 +2,7 @@ package com.ssafy.mini.domain.job.controller;
 
 import com.ssafy.mini.domain.job.dto.request.*;
 import com.ssafy.mini.domain.job.service.JobService;
-import com.ssafy.mini.global.auth.jwt.JwtProvider;
+import com.ssafy.mini.global.jwt.JwtProvider;
 import com.ssafy.mini.global.response.EnvelopeResponse;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -133,7 +133,7 @@ public class JobController {
             @ApiResponse(code = 404, message = "직업 삭제 실패")
     })
     public EnvelopeResponse delete(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
-                                   @RequestBody @ApiParam(value = "직업 이름", required = true) JobDeleteRequest jobDeleteRequest) {
+                                  @RequestBody @ApiParam(value = "직업 이름", required = true) JobDeleteRequest jobDeleteRequest) {
         String memberId = jwtProvider.extractMemberId(accessToken);
 
         jobService.delete(memberId, jobDeleteRequest);
@@ -143,4 +143,3 @@ public class JobController {
     }
 
 }
-

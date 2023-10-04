@@ -14,7 +14,7 @@ import com.ssafy.mini.domain.nation.entity.Nation;
 import com.ssafy.mini.domain.stockholding.service.StockholdingService;
 import com.ssafy.mini.global.exception.ErrorCode;
 import com.ssafy.mini.global.exception.MNException;
-import com.ssafy.mini.global.auth.jwt.JwtProvider;
+import com.ssafy.mini.global.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;

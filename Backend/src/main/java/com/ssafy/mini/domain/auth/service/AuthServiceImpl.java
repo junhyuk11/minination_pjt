@@ -1,7 +1,7 @@
 package com.ssafy.mini.domain.auth.service;
 
 import com.ssafy.mini.domain.auth.dto.response.ReissueResponse;
-import com.ssafy.mini.global.auth.jwt.JwtProvider;
+import com.ssafy.mini.global.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

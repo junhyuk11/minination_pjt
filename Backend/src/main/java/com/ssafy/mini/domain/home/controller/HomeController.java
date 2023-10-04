@@ -1,7 +1,7 @@
 package com.ssafy.mini.domain.home.controller;
 
 import com.ssafy.mini.domain.home.service.HomeService;
-import com.ssafy.mini.global.auth.jwt.JwtProvider;
+import com.ssafy.mini.global.jwt.JwtProvider;
 import com.ssafy.mini.global.response.EnvelopeResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
