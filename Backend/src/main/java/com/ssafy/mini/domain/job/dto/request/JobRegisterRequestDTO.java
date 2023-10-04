@@ -7,6 +7,6 @@ public class JobRegisterRequestDTO {
     private String name;
     private String desc;
     private int pay;
-    private Byte recruit_total_count;
+    private Byte recruitTotalCount;
     private String requirement;
 }
