@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigation } from '../../../hooks/useNavigation.jsx';
 import useMemberApi from '../../../api/useMemberApi.jsx';
 import styles from '../Pages/Login.module.css';
@@ -16,8 +16,8 @@ const SignupInputForm = () => {
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
     const [type, setType] = useState('');
-    const [idError, setIdError] = useState('');
-    const isButtonDisabled = !id || !name || !password || idError !== '';
+    const [idError, setIdError] = useState({ message: '', status: false });
+    const [isValidForm, setIsValidForm] = useState(false);
 
     const handleChange1 = event => {
         setName(event.target.value);
@@ -30,11 +30,17 @@ const SignupInputForm = () => {
     };
     const checkDuplication = async () => {
         try {
+            if (!id) {
+                return;
+            }
             const response = await useMemberApi.memberPostId(id);
             if (response.code === 200) {
-                setIdError('');
+                setIdError({
+                    message: '사용 가능한 아이디 입니다.',
+                    status: true,
+                });
             } else {
-                setIdError('중복된 아이디 입니다.');
+                setIdError({ message: '중복된 아이디 입니다.', status: false });
             }
         } catch (error) {
             console.log(error);
@@ -42,6 +48,9 @@ const SignupInputForm = () => {
     };
     const postJoinApi = async () => {
         try {
+            if (!isValidForm) {
+                return;
+            }
             const response = await useMemberApi.memberPostJoin(
                 id,
                 password,
@@ -50,6 +59,14 @@ const SignupInputForm = () => {
             );
 
             if (response.code === 200) {
+                sessionStorage.setItem(
+                    'accessToken',
+                    response.data.accessToken,
+                );
+                sessionStorage.setItem(
+                    'refreshToken',
+                    response.data.refreshToken,
+                );
                 if (type === 'ST') {
                     navigateToNationality();
                 } else {
@@ -63,44 +80,72 @@ const SignupInputForm = () => {
         }
     };
 
+    useEffect(() => {
+        if (!id) {
+            setIdError({ message: '', status: false });
+        }
+    }, [id]);
+
+    useEffect(() => {
+        if (name && id && password && type && idError.status === true) {
+            setIsValidForm(true);
+        } else {
+            setIsValidForm(false);
+        }
+    }, [name, id, password, type, idError.status]);
+
     return (
-        <div className="center">
-            <img className={styles.logo} src={headerLogo} alt="logo" />
-            <br />
-            <InputBox1
-                title="이름"
-                placeholder="이름"
-                inputText={name}
-                onChange={handleChange1}
-                type="text"
-            />
-            <br />
-            <InputBox2
-                placeholder="아이디"
-                inputText={id}
-                onChange={handleChange2}
-                onBlur={checkDuplication}
-                type="text"
-            />
+        <div>
+            <div className={styles.top}>
+                <div className={styles.logoContainer}>
+                    <img
+                        className={styles.logo}
+                        src={headerLogo}
+                        alt="logo"
+                    ></img>
+                </div>
+                <br />
+                <InputBox1
+                    placeholder="이름"
+                    inputText={name}
+                    onChange={handleChange1}
+                    type="text"
+                />
+                <br />
+                <InputBox2
+                    placeholder="아이디"
+                    inputText={id}
+                    onChange={handleChange2}
+                    onBlur={checkDuplication}
+                    type="text"
+                />
 
-            {idError && <p className={styles.error}>{idError}</p>}
+                {idError.message && (
+                    <p
+                        className={
+                            idError.status ? styles.collect : styles.error
+                        }
+                    >
+                        {idError.message}
+                    </p>
+                )}
 
-            <br />
-            <InputBox1
-                title="비밀번호"
-                placeholder="비밀번호"
-                inputText={password}
-                onChange={handleChange3}
-                type="password"
-            />
-            <br />
-            <ButtonRadio1 setData={setType} />
-            <br />
-            <ButtonLarge1
-                title="회원가입"
-                onClick={postJoinApi}
-                disabled={isButtonDisabled}
-            />
+                <br />
+                <InputBox1
+                    placeholder="비밀번호"
+                    inputText={password}
+                    onChange={handleChange3}
+                    type="password"
+                />
+                <br />
+                <ButtonRadio1 setData={setType} />
+                <br />
+                <ButtonLarge1
+                    title="회원가입"
+                    onClick={postJoinApi}
+                    disabled={!isValidForm}
+                />
+            </div>
             <MovingLoginOrSignup
                 description="이미 회원이신가요?"
                 title="로그인"

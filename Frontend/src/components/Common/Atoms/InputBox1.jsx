@@ -11,6 +11,10 @@ function InputBox1({ placeholder, inputText, onChange, type }) {
         setIsFocused(false);
     };
 
+    const formStyle = {
+        width: '100%',
+    };
+
     const inputStyle = {
         boxSizing: 'border-box',
         width: '100%',
@@ -22,17 +26,19 @@ function InputBox1({ placeholder, inputText, onChange, type }) {
     };
 
     return (
-        <input
-            value={inputText}
-            placeholder={placeholder}
-            name="text"
-            style={inputStyle}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            onChange={onChange}
-            type={type}
-            autoComplete="off"
-        />
+        <form style={formStyle}>
+            <input
+                value={inputText}
+                placeholder={placeholder}
+                name="text"
+                style={inputStyle}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+                onChange={onChange}
+                type={type}
+                autoComplete="off"
+            />
+        </form>
     );
 }
 

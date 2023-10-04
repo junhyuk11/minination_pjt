@@ -1,25 +1,39 @@
 import React from 'react';
 
-function ButtonLarge1({ title, onClick }) {
+function ButtonLarge1({ title, onClick, disabled }) {
     const buttonStyle = {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width: '300px',
-        height: '40px',
-        borderRadius: '2rem',
+        padding: '1rem',
+        width: '100%',
+        borderRadius: '1rem',
         border: 'none',
         backgroundColor: '#029664',
         color: 'white',
         cursor: 'pointer',
     };
 
+    const disabledStyle = {
+        backgroundColor: 'gray',
+        cursor: 'not-allowed',
+        opacity: 0.5,
+    };
+
+    const disabledButtonStyle = {
+        ...buttonStyle,
+        ...disabledStyle,
+    };
+
     return (
-        <div>
-            <button type="button" style={buttonStyle} onClick={onClick}>
-                {title}
-            </button>
-        </div>
+        <button
+            type="button"
+            style={disabled ? disabledButtonStyle : buttonStyle}
+            onClick={onClick}
+            disabled={false}
+        >
+            {title}
+        </button>
     );
 }
 

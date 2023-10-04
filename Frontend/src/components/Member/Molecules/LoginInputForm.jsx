@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigation } from '../../../hooks/useNavigation';
 import { useRecoilState } from 'recoil';
 import { identityState } from '../../../recoil/atoms.jsx';
@@ -14,6 +14,7 @@ const LoginInputForm = () => {
     const { navigateToSignup, navigateToDashboard } = useNavigation();
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
+    const [isValidForm, setIsValidForm] = useState(false);
 
     const handleChange1 = event => {
         setId(event.target.value);
@@ -24,9 +25,12 @@ const LoginInputForm = () => {
 
     const postLoginApi = async () => {
         try {
+            if (!isValidForm) {
+                return;
+            }
             const response = await useMemberApi.memberPostLogin(id, password);
             if (response.code === 200) {
-                setIdentity(response.data.memType);
+                setIdentity(response.data.type);
                 sessionStorage.setItem(
                     'accessToken',
                     response.data.accessToken,
@@ -44,9 +48,17 @@ const LoginInputForm = () => {
         }
     };
 
+    useEffect(() => {
+        if (id && password) {
+            setIsValidForm(true);
+        } else {
+            setIsValidForm(false);
+        }
+    }, [id, password]);
+
     return (
         <div>
-            <div class={styles.top}>
+            <div className={styles.top}>
                 <div className={styles.logoContainer}>
                     <img
                         className={styles.logo}
@@ -69,7 +81,11 @@ const LoginInputForm = () => {
                     type="password"
                 />
                 <br />
-                <ButtonLarge1 title="로그인" onClick={postLoginApi} />
+                <ButtonLarge1
+                    title="로그인"
+                    onClick={postLoginApi}
+                    disabled={!isValidForm}
+                />
             </div>
             <MovingLoginOrSignup
                 description="아직 회원이 아니신가요?"
