@@ -1,52 +1,36 @@
-/* eslint-disable react/style-prop-object */
-import React, { useState, useEffect } from 'react';
-import useStockApi from '../../../api/useStockApi.jsx';
-// import { useNavigation } from '../../../hooks/useNavigation.jsx';
+import React from 'react';
 import './CompanyContent.css';
 
-const CompanyContent1 = () => {
-    // const { navigateToLogin } = useNavigation();
-
-    const [stockList, setStockList] = useState([]);
-
-    const getStockList = async () => {
-        try {
-            const response = await useStockApi.stockGetList();
-            console.log('보냈죠?', response);
-            if (response.code === 200) {
-                setStockList(response.data);
-            } else {
-                console.log(response.code);
-            }
-        } catch (error) {
-            // navigateToLogin();
-        }
-    };
-
-    const samsungList = stockList[1];
-
-    useEffect(() => {
-        getStockList();
-    }, []);
+const CompanyContent = ({ info }) => {
+    const profileExtension =
+        info && info.profile.split('.').pop().toLowerCase();
 
     return (
         <div className="company-content-container">
-            {samsungList && (
+            {info && (
                 <>
-                    <div className="company-name">{samsungList.name}</div>
+                    <div className="company-name">{info.name}</div>
                     <div className="company-image-parent">
-                        <img
-                            src="https://biz.chosun.com/resizer/5DEr4LtJ1dSz7ZQ35ogDanBaJoE=/616x0/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosunbiz/XLYL7D7AJVHDXK57Z6RROVD4X4.gif"
-                            alt="삼성배경"
-                            className="company-coverimage"
-                        />
+                        {profileExtension === 'gif' ? (
+                            <img
+                                alt="기업 소개 프로필"
+                                src={info.profile}
+                                className="company-coverimage"
+                            />
+                        ) : (
+                            <video
+                                alt="기업 소개 프로필"
+                                src={info.profile}
+                                className="company-coverimage"
+                                controls
+                                muted
+                            ></video>
+                        )}
                     </div>
-                    <div className="company-description">
-                        {samsungList.desc}
-                    </div>
+                    <div className="company-description">{info.desc}</div>
                     <div className="outlink-btns">
                         <a
-                            href="https://comp.fnguide.com/SVO2/ASP/SVD_Finance.asp?pGB=1&gicode="
+                            href={info.report}
                             className="outlink-btn"
                             style={{ textDecoration: 'none' }}
                             target="_blank"
@@ -58,7 +42,7 @@ const CompanyContent1 = () => {
                             <span>재무제표</span>
                         </a>
                         <a
-                            href="https://www.samsung.com/sec/"
+                            href={info.product}
                             className="outlink-btn"
                             style={{ textDecoration: 'none' }}
                             target="_blank"
@@ -70,7 +54,7 @@ const CompanyContent1 = () => {
                             <span>제품정보</span>
                         </a>
                         <a
-                            href="https://www.samsung.com/sec/about-us/company-info/"
+                            href={info.inc}
                             className="outlink-btn"
                             style={{ textDecoration: 'none' }}
                             target="_blank"
@@ -88,4 +72,4 @@ const CompanyContent1 = () => {
     );
 };
 
-export default CompanyContent1;
+export default CompanyContent;
