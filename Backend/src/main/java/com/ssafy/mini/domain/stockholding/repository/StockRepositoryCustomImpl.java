@@ -35,7 +35,7 @@ public class StockRepositoryCustomImpl implements StockRepositoryCustom {
         return queryFactory
                 .select(Projections.constructor(StockPriceRateResponse.class,
                                 stock.stkDt.as("date"),
-                                stock.stkPrice.as("price"),
+                                stock.stkPrice.as("value"),
                                 stock.stkRate.as("rate")
                         )
                 )

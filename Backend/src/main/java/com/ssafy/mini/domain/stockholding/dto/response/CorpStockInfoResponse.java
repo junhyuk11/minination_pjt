@@ -9,12 +9,12 @@ import java.util.Date;
 @Getter
 public class CorpStockInfoResponse {
     private String time;
-    private int price;
+    private int value;
 
     @Builder
-    public CorpStockInfoResponse(Date date, int price) {
+    public CorpStockInfoResponse(Date date, int value) {
         this.time = formatDate(date);
-        this.price = price;
+        this.value = value;
     }
 
     private String formatDate(Date date) {
