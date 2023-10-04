@@ -149,7 +149,7 @@ public class JobController {
                 .build();
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping
     @ApiResponses({
             @ApiResponse(code = 200, message = "직업 삭제 성공"),
             @ApiResponse(code = 404, message = "직업 삭제 실패")
