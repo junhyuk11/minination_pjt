@@ -1,8 +1,8 @@
 /* 헌법 */
 import React, { useState, useEffect } from 'react';
-import useLawApi from '../../../api/useLawApi';
-import ConstitutionRow from '../Molecules/ConstitutionRow';
-import HomeCard from '../Molecules/HomeCard';
+import useLawApi from '../../../api/useLawApi.jsx';
+import ConstitutionRow from '../Molecules/ConstitutionRow.jsx';
+import HomeCard from '../Molecules/HomeCard.jsx';
 import cardGif from '../../../assets/gif/constitution.gif';
 
 const Constitution = () => {

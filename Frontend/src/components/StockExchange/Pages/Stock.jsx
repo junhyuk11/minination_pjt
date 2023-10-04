@@ -147,7 +147,6 @@ const Stock = () => {
                                 <StockChart data={stockList[2].stock} />
                             </>
                         )}
-                    // ... (이후 코드)
                 </div>
                 {/* Stock-Trading-Section */}
                 <div className="stock-trading-section">

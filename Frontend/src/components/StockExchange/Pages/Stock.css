@@ -27,7 +27,8 @@
   background-color: #262E3A;
   padding: 20px;
   overflow-y: auto; /* 세로 스크롤 허용 */
-  border-radius: 25px 25px 0 0;
+  border-radius: 25px;
+  height: 550px;
 }
 
 .stock-trading-section {
