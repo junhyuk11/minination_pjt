@@ -2,6 +2,13 @@ import React, { useRef, useEffect, useState } from 'react';
 import { createChart, PriceScaleMode } from 'lightweight-charts';
 
 function EconomyRow({ data }) {
+    const emptyStyle = {
+        height: '355px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    };
+
     const chartContainerRef = useRef();
     const chartRef = useRef(null);
     const [chartWidth, setChartWidth] = useState(0);
@@ -54,6 +61,9 @@ function EconomyRow({ data }) {
 
             return () => {
                 if (chartRef.current) {
+                    if (typeof chartRef.current.destroy === 'function') {
+                        chartRef.current.destroy();
+                    }
                     chartRef.current.remove();
                     chartRef.current = null;
                 }
@@ -61,6 +71,13 @@ function EconomyRow({ data }) {
         }
     }, [chartWidth, data]);
 
+    if (data.length === 0) {
+        return (
+            <div style={emptyStyle}>
+                <p>내일부터 표시됩니다 :)</p>
+            </div>
+        );
+    }
     return <div ref={chartContainerRef}></div>;
 }
 
