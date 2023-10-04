@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './BankContent1.css';
+import Swal from 'sweetalert2';
 import BankButtonSmall from '../Atoms/BankButtonSmall.jsx';
 import BankInput from '../Atoms/BankInput.jsx';
 import useBankApi from '../../../api/useBankApi.jsx';
-import Swal from 'sweetalert2';
 
 function BankContent3() {
     const [bankInfo, setBankInfo] = useState({ deposit: [], saving: [] });

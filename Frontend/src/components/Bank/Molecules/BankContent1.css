@@ -5,6 +5,7 @@
     max-height: 24vh; 
     overflow-y: auto;  
     overflow-x: auto;   /* 필요한 경우 수평 스크롤 표시 */
+    font-family: 'GmarketSansMedium', cursive;
 }
 
 table {
