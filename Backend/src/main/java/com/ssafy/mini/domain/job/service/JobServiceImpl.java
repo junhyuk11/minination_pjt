@@ -111,11 +111,17 @@ public class JobServiceImpl implements JobService{
         Member member = memberRepository.findByMemId(memberId)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
 
-        if(!member.getMemType().getExpression().equals("TC"))
-            throw new MNException(ErrorCode.NO_AUTHORITY);
-
         Job job = jobRepository.findByJobName(jobApproveRequestDTO.getJobName())
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_JOB));
+
+        // 해당 지원에 해당하는 국가의 선생님만 승인 가능
+        if(!member.getMemType().getExpression().equals("TC") || !member.getIsoSeq().equals(job.getNation())) {
+            throw new MNException(ErrorCode.NO_AUTHORITY);
+        }
+
+        // 직업에 지원한 인원이 모두 모였을 경우
+        if(job.getJobLeftCnt() == 0)
+            throw new MNException(ErrorCode.NO_LEFT_JOB);
 
         Member applicant = memberRepository.findByMemName(jobApproveRequestDTO.getApplicantName())
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
@@ -180,11 +186,13 @@ public class JobServiceImpl implements JobService{
         Member member = memberRepository.findByMemId(memberId)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
 
-        if(!member.getMemType().getExpression().equals("TC"))
-            throw new MNException(ErrorCode.NO_AUTHORITY);
-
         Job job = jobRepository.findByJobName(jobDeclineRequestDTO.getJobName())
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_JOB));
+
+        // 해당 지원에 해당하는 국가의 선생님만 거절 가능
+        if(!member.getMemType().getExpression().equals("TC") || !member.getIsoSeq().equals(job.getNation())) {
+            throw new MNException(ErrorCode.NO_AUTHORITY);
+        }
 
         Member applicant = memberRepository.findByMemName(jobDeclineRequestDTO.getApplicantName())
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
