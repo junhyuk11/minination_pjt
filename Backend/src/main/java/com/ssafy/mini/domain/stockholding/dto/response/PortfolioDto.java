@@ -26,7 +26,7 @@ public class PortfolioDto {
     public void setCurPrice(int curPrice) {
         this.curPrice = curPrice;
         this.profit = String.format("%+d", curPrice - buyPrice);
-        this.profitRate = String.format("%+.2f", ((float) curPrice / (float) buyPrice * 100 - 100));
+        this.profitRate = String.format("%+.2f", ((float) (curPrice - buyPrice) / (float) buyPrice) * 100);
         this.stat = (curPrice - buyPrice) > 0 ? "positive" : "negative";
     }
 }
