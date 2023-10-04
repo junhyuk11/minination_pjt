@@ -9,7 +9,7 @@ const stockGetStock = async () => {
         return response.data;
     } catch (e) {
         if (e.response.data.status === 404) {
-            console.log('404에러');
+            console.log('404');
             return e.response.data;
         }
         if (e.response.data.status === 403) {
