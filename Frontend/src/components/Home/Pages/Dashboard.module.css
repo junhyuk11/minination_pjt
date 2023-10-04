@@ -2,7 +2,7 @@
 .body {
     overflow-y: auto;
     max-height: 100vh;
-    background: radial-gradient(circle at 100% 107%, #ff89cc 0%, #9cb8ec 30%, #00ffee 60%, #62c2fe 100%);
+    background: radial-gradient(circle at 100% 120%, lavender 0%, white 30%, whitesmoke 60%, lavender 100%);
 }
 
 /* .body::-webkit-scrollbar {
