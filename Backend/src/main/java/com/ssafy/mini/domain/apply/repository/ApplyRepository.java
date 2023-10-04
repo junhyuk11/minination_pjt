@@ -11,13 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-public interface ApplyRepository extends JpaRepository<Apply, Integer>, ApplyRepositoryCustom {
+public interface ApplyRepository extends JpaRepository<Apply, Integer> {
 
     Optional<Apply> findByJobAndMember(Job job, Member member);
 
     List<Apply> findAllByJob(Job job);
 
-    List<String> findMemNameByJob(Job job);
+    @Query("select a.member.memId from Apply a where a.job = ?1")
+    List<String> findMemIdByJobSeq(Job job);
 
     @Modifying
     @Transactional

@@ -3,7 +3,6 @@ package com.ssafy.mini.domain.member.repository;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.mini.domain.home.dto.response.RichDto;
-import com.ssafy.mini.domain.job.entity.Job;
 import com.ssafy.mini.domain.member.entity.QMember;
 import lombok.RequiredArgsConstructor;
 
@@ -37,15 +36,6 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom {
                 .where(member.isoSeq.isoSeq.eq(nationSeq))
                 .orderBy(member.memBalance.desc())
                 .limit(3)
-                .fetch();
-    }
-
-    @Override
-    public List<String> findMemNameByJobSeq(Job job) {
-        return queryFactory
-                .select(member.memName)
-                .from(member)
-                .where(member.jobSeq.eq(job))
                 .fetch();
     }
 
