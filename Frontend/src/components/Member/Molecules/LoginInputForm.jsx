@@ -30,7 +30,7 @@ const LoginInputForm = () => {
             }
             const response = await useMemberApi.memberPostLogin(id, password);
             if (response.code === 200) {
-                setIdentity(response.data.type);
+                setIdentity(response.data.memType);
                 sessionStorage.setItem(
                     'accessToken',
                     response.data.accessToken,

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigation } from '../../../hooks/useNavigation.jsx';
+import { useRecoilState } from 'recoil';
+import { identityState } from '../../../recoil/atoms.jsx';
 import useMemberApi from '../../../api/useMemberApi.jsx';
 import styles from '../Pages/Login.module.css';
 import headerLogo from '../../../assets/images/header-logo.png';
@@ -60,7 +62,8 @@ const SignupInputForm = () => {
             );
 
             if (response.code === 200) {
-                setIdentity(response.data.type);
+                console.log(response);
+                setIdentity(response.data.memType);
                 sessionStorage.setItem(
                     'accessToken',
                     response.data.accessToken,
