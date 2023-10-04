@@ -11,7 +11,7 @@ function Card({ title, content, contentStyle, gif }) {
             onMouseLeave={() => setIsHovered(false)}
         >
             <div className={`${styles.title} ${isHovered && styles.imgHover}`}>
-                <img className={styles.img} src={gif} alt="image" />
+                <img className={styles.img} src={gif} alt="alternate" />
                 {title}
             </div>
             <div

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import useHomeApi from '../../../api/useHomeApi';
-import NationTitle from '../Atoms/NationTitle';
+import useHomeApi from '../../../api/useHomeApi.jsx';
+import NationTitle from '../Atoms/NationTitle.jsx';
 
 const Nation = () => {
     const [response, setResponse] = useState({ nationName: '', flag: '' });

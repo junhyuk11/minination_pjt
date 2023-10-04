@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import useHomeApi from '../../../api/useHomeApi.jsx';
 import HomeCard from '../Molecules/HomeCard.jsx';
 import cardGif from '../../../assets/gif/profile.gif';
-import ProfileRow from '../Molecules/ProfileRow';
+import ProfileRow from '../Molecules/ProfileRow.jsx';
 
 const Profile = () => {
     const [response, setResponse] = useState({});

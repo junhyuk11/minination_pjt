@@ -17,7 +17,7 @@
     width: 950px;
     height: 300px;
     border-radius: 30px;
-    background: linear-gradient(40deg, green , black 70%);
+    background: linear-gradient(40deg, #274C77 , #6096BA 70%);
     box-shadow: 15px 15px 30px #bebebe,
                -15px -15px 30px #ffffff;
 }
