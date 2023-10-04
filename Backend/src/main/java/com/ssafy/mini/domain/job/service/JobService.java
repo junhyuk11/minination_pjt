@@ -1,9 +1,6 @@
 package com.ssafy.mini.domain.job.service;
 
-import com.ssafy.mini.domain.job.dto.request.JobApproveRequestDTO;
-import com.ssafy.mini.domain.job.dto.request.JobDeclineRequestDTO;
-import com.ssafy.mini.domain.job.dto.request.JobFireRequestDTO;
-import com.ssafy.mini.domain.job.dto.request.JobRegisterRequestDTO;
+import com.ssafy.mini.domain.job.dto.request.*;
 import com.ssafy.mini.domain.job.dto.response.JobDetailResponseDTO;
 import com.ssafy.mini.domain.job.dto.response.JobListResponseDTO;
 

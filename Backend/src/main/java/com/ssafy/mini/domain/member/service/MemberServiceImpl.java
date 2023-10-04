@@ -6,14 +6,14 @@ import com.ssafy.mini.domain.master.entity.Master;
 import com.ssafy.mini.domain.master.repository.MasterRepository;
 import com.ssafy.mini.domain.member.dto.request.MemberJoinRequest;
 import com.ssafy.mini.domain.member.dto.request.MemberLoginRequest;
-import com.ssafy.mini.domain.member.dto.response.MemberTokenResponse;
+import com.ssafy.mini.domain.member.dto.response.MemberLoginResponse;
 import com.ssafy.mini.domain.member.entity.Member;
 import com.ssafy.mini.domain.member.mapper.MemberMapper;
 import com.ssafy.mini.domain.member.repository.MemberRepository;
 import com.ssafy.mini.domain.nation.entity.Nation;
+import com.ssafy.mini.global.auth.jwt.JwtProvider;
 import com.ssafy.mini.global.exception.ErrorCode;
 import com.ssafy.mini.global.exception.MNException;
-import com.ssafy.mini.global.auth.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -42,7 +42,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public MemberTokenResponse join(MemberJoinRequest memberJoinRequest) {
+    public void join(MemberJoinRequest memberJoinRequest) {
         log.info("Service Layer::join() called");
         Member member = memberMapper.memberJoinRequestToMember(memberJoinRequest);
 
@@ -73,9 +73,6 @@ public class MemberServiceImpl implements MemberService {
                 .build();
         System.out.println(account.toString());
         accountRepository.save(account);
-
-        // 토큰 발급
-        return generateToken(member);
     }
 
     @Override
@@ -88,7 +85,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberTokenResponse login(MemberLoginRequest memberLoginRequest) {
+    public MemberLoginResponse login(MemberLoginRequest memberLoginRequest) {
         log.info("Service Layer::login() called");
 
         Member member = memberRepository.findByMemId(memberLoginRequest.getId())
@@ -100,7 +97,15 @@ public class MemberServiceImpl implements MemberService {
         }
 
         // 토큰 발급
-        return generateToken(member);
+        String type = member.getMemType().getExpression();
+        String accessToken = jwtProvider.generateAccessToken(member.getMemId());
+        String refreshToken = jwtProvider.generateRefreshToken(member.getMemId());
+
+        return MemberLoginResponse.builder()
+                .memType(type)
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
     }
 
     @Override
@@ -161,23 +166,6 @@ public class MemberServiceImpl implements MemberService {
             cardNumber.append(rnd.nextInt(10));
         }
         return cardNumber.toString();
-    }
-
-    /**
-     * 회원 가입, 로그인 시 jwt 토큰 발급
-     * @param member
-     * @return
-     */
-    private MemberTokenResponse generateToken(Member member) {
-        String type = member.getMemType().getExpression();
-        String accessToken = jwtProvider.generateAccessToken(member.getMemId());
-        String refreshToken = jwtProvider.generateRefreshToken(member.getMemId());
-
-        return MemberTokenResponse.builder()
-                .memType(type)
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
-                .build();
     }
 
     @Override

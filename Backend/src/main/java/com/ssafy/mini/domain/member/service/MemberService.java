@@ -2,16 +2,16 @@ package com.ssafy.mini.domain.member.service;
 
 import com.ssafy.mini.domain.member.dto.request.MemberJoinRequest;
 import com.ssafy.mini.domain.member.dto.request.MemberLoginRequest;
-import com.ssafy.mini.domain.member.dto.response.MemberTokenResponse;
+import com.ssafy.mini.domain.member.dto.response.MemberLoginResponse;
 import com.ssafy.mini.domain.nation.entity.Nation;
 
 public interface MemberService {
 
-    MemberTokenResponse join(MemberJoinRequest memberJoinRequest);
+    void join(MemberJoinRequest memberJoinRequest);
 
     void idCheck(String id);
 
-    MemberTokenResponse login(MemberLoginRequest memberLoginRequest);
+    MemberLoginResponse login(MemberLoginRequest memberLoginRequest);
 
     void update(String memberId, String newPwd);
 
