@@ -108,7 +108,7 @@ public class NationController {
                 .build();
     }
 
-    @PostMapping("/nation/president")
+    @PostMapping("/president")
     @ApiOperation(value = "국가 대통령 이름 확인")
     @ApiResponses({
             @ApiResponse(code = 200, message = "국가 대통령 이름 확인 성공"),
