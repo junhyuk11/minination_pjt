@@ -3,6 +3,7 @@ package com.ssafy.mini.domain.member.service;
 import com.ssafy.mini.domain.member.dto.request.MemberJoinRequest;
 import com.ssafy.mini.domain.member.dto.request.MemberLoginRequest;
 import com.ssafy.mini.domain.member.dto.response.MemberLoginResponse;
+import com.ssafy.mini.domain.nation.entity.Nation;
 
 public interface MemberService {
 
@@ -17,4 +18,11 @@ public interface MemberService {
     void logout(String accessToken, String memberId);
 
     void delete(String memberId, String accessToken);
+
+    String getMemberType(String memberId);
+
+    Nation getNationByMemberId(String memberId);
+
+    void updateBalance(String memberId, int amount);
+
 }
