@@ -2,6 +2,7 @@
 import React from 'react';
 import './BuySell.css';
 import Swal from 'sweetalert2';
+import useStockApi from '../../../api/useStockApi.jsx';
 
 import SamsungLogo from '../../../assets/images/samsung-logo.png';
 import HyundaiLogo from '../../../assets/images/hyundai-logo.png';
@@ -12,6 +13,26 @@ import KakaoLogo from '../../../assets/images/kakao-logo.png';
 const BuyContent = () => {
     const handleBuyClick = () => {
         Swal.fire('매수되었습니다.');
+    };
+
+    //클릭하면 아래 요청에 (code, amount)를 담아야 함. 주식 가격 어떻게 받아오는지 모르겠네.
+    const postStockBuy = async (code, amount) => {
+        try {
+            const subData = { code: `${code}`, amount: `${amount}` };
+            console.log('subdata', subData);
+            const response = await useStockApi.stockPostBuy(subData);
+            if (response.code === 200) {
+                Swal.fire('매수되었습니다.').then(result => {
+                    if (result.isConfirmed) {
+                        window.location.reload();
+                    }
+                });
+            } else {
+                console.log(response.code);
+            }
+        } catch (error) {
+            console.log(response);
+        }
     };
 
     return (
