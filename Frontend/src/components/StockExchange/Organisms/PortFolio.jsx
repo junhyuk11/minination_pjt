@@ -22,17 +22,14 @@ function PortFolio() {
             } else {
                 console.log(response.code);
             }
-        } catch (error) {
-            // Handle error appropriately
-        }
+        } catch (error) {}
     };
 
-    // 로고 이미지를 코드에 매핑합니다.
     const logoMap = {
         '005930': samsungLogo,
         '005380': hyundaiLogo,
-        '225570': nexonLogo,
-        '352820': hybeLogo,
+        225570: nexonLogo,
+        352820: hybeLogo,
         '035720': kakaoLogo,
     };
 
@@ -46,7 +43,7 @@ function PortFolio() {
                 <div className="portfolio-item" key={index}>
                     <div className="portfolio-item-logo center">
                         <img
-                            src={logoMap[stock.code]} // 코드에 맞는 로고를 가져옵니다.
+                            src={logoMap[stock.code]}
                             alt={`${stock.name} Logo`}
                             style={{
                                 width: '40px',
@@ -62,30 +59,28 @@ function PortFolio() {
                         <div>
                             <span className="gap">현재가치</span>
                             <span className="emp">{stock.curPrice}</span>{' '}
-                            {/* Adjust this line based on the actual structure of portList items */}
                         </div>
                         <div>
                             <span className="gap">구매금액</span>
                             <span className="emp">{stock.buyPrice}</span>{' '}
-                            {/* Adjust this line based on the actual structure of portList items */}
                         </div>
                         <div>
                             <span className="gap">손익</span>
                             <span className="emp">{stock.profit}</span>{' '}
-                            {/* Adjust this line based on the actual structure of portList items */}
                         </div>
                     </div>
                     <div className="porftolio-item-status center">
                         <div
                             className={`status-box center ${
+                                !isNaN(stock.profitRate) &&
                                 stock.profitRate >= 0
                                     ? 'positive-status'
                                     : 'negative-status'
                             }`}
                         >
-                            {stock.profitRate >= 0
+                            {!isNaN(stock.profitRate)
                                 ? `${stock.profitRate}%`
-                                : `${stock.profitRate}%`}
+                                : `0%`}
                         </div>
                     </div>
                 </div>
