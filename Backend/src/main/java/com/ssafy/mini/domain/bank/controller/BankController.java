@@ -3,7 +3,7 @@ package com.ssafy.mini.domain.bank.controller;
 import com.ssafy.mini.domain.bank.dto.request.BankSubscribeRequestDTO;
 import com.ssafy.mini.domain.bank.dto.request.BankTerminateRequestDTO;
 import com.ssafy.mini.domain.bank.service.BankService;
-import com.ssafy.mini.global.jwt.JwtProvider;
+import com.ssafy.mini.global.auth.jwt.JwtProvider;
 import com.ssafy.mini.global.response.SuccessResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;

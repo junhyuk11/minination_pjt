@@ -4,7 +4,7 @@ import com.ssafy.mini.domain.nation.dto.request.CheckPresidentRequest;
 import com.ssafy.mini.domain.nation.dto.request.NationCreateRequest;
 import com.ssafy.mini.domain.nation.dto.request.NationSearchRequest;
 import com.ssafy.mini.domain.nation.service.NationService;
-import com.ssafy.mini.global.jwt.JwtProvider;
+import com.ssafy.mini.global.auth.jwt.JwtProvider;
 import com.ssafy.mini.global.response.SuccessResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

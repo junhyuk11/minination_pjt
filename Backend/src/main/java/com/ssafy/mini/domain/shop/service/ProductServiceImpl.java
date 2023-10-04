@@ -91,7 +91,9 @@ public class ProductServiceImpl implements ProductService {
         Account moneyHave = accountRepository.getMoneyToUse(memberId);
 
         if (moneyNeed > moneyHave.getAcctBalance()) throw new MNException(ErrorCode.NOT_ENOUGH_MONEY); // 돈이 부족한 경우
-        accountService.updateAccountBalance(moneyHave, -moneyNeed, SHOP_EXPRESSION , buyProductRequest.getProduct());
+        accountService.updateAccountBalance(moneyHave, -moneyNeed, SHOP_EXPRESSION , buyProductRequest.getProduct()); // account table 보유 금액 변경
+        member.updateMembalance(-moneyNeed); // member table 보유 금액 변경
+        memberRepository.save(member);
 
         // 보유한 상품 수량 변경
         Possess possess = possessRepository.findByMemberIdAndName(memberId, product.getProdName()).orElse(

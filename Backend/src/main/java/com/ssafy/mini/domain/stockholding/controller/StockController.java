@@ -3,7 +3,7 @@ package com.ssafy.mini.domain.stockholding.controller;
 import com.ssafy.mini.domain.stockholding.dto.request.TradeStockRequest;
 import com.ssafy.mini.domain.stockholding.service.CorporationService;
 import com.ssafy.mini.domain.stockholding.service.StockholdingService;
-import com.ssafy.mini.global.jwt.JwtProvider;
+import com.ssafy.mini.global.auth.jwt.JwtProvider;
 import com.ssafy.mini.global.response.SuccessResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
