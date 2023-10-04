@@ -11,7 +11,12 @@ import headerLogo from '../../../assets/images/header-logo.png';
 
 const LoginInputForm = () => {
     const [identity, setIdentity] = useRecoilState(identityState);
-    const { navigateToSignup, navigateToDashboard } = useNavigation();
+    const {
+        navigateToSignup,
+        navigateToDashboard,
+        navigateToFoundation,
+        navigateToNationality,
+    } = useNavigation();
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
     const [isValidForm, setIsValidForm] = useState(false);
@@ -39,7 +44,16 @@ const LoginInputForm = () => {
                     'refreshToken',
                     response.data.refreshToken,
                 );
-                navigateToDashboard();
+
+                if (response.data.nationName) {
+                    navigateToDashboard();
+                } else {
+                    if (response.data.memType === 'ST') {
+                        navigateToNationality();
+                    } else {
+                        navigateToFoundation();
+                    }
+                }
             } else {
                 console.log(response.code);
             }
