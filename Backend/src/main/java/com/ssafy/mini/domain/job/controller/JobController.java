@@ -11,8 +11,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-
 @Slf4j
 @RestController
 @RequestMapping("/job")
@@ -151,23 +149,23 @@ public class JobController {
                 .build();
     }
 
-//    @DeleteMapping("/delete")
-//    @ApiResponses({
-//            @ApiResponse(code = 200, message = "직업 삭제 성공"),
-//            @ApiResponse(code = 404, message = "직업 삭제 실패")
-//    })
-//    public SuccessResponse delete(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
-//                                  @RequestBody @ApiParam(value = "직업 이름", required = true)JobDeleteRequestDTO jobDeleteRequestDTO) {
-//
-//        log.info("Job Controller Layer:: delete() called");
-//
-//        String memberId = jwtProvider.extractMemberId(accessToken);
-//
-//        jobService.delete(memberId, jobDeleteRequestDTO);
-//
-//        return SuccessResponse.builder()
-//                .build();
-//    }
+    @DeleteMapping("/delete")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "직업 삭제 성공"),
+            @ApiResponse(code = 404, message = "직업 삭제 실패")
+    })
+    public SuccessResponse delete(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
+                                  @RequestBody @ApiParam(value = "직업 이름", required = true) JobDeleteRequestDTO jobDeleteRequestDTO) {
+
+        log.info("Job Controller Layer:: delete() called");
+
+        String memberId = jwtProvider.extractMemberId(accessToken);
+
+        jobService.delete(memberId, jobDeleteRequestDTO);
+
+        return SuccessResponse.builder()
+                .build();
+    }
 
 }
 
