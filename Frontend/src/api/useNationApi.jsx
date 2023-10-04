@@ -2,7 +2,6 @@ import useAxiosInstance from './useAxiosInstance.jsx';
 
 const nationPostPresident = async (nation, president) => {
     const form = { nation, president };
-    console.log(form);
     const jwt = sessionStorage.getItem('accessToken');
     const response = await useAxiosInstance
         .authApiClient(jwt)
@@ -60,11 +59,10 @@ const nationPostSearch = async nationName => {
 };
 
 const nationPostJoin = async nationName => {
-    console.log(nationName);
     const jwt = sessionStorage.getItem('accessToken');
     const response = await useAxiosInstance
         .authApiClient(jwt)
-        .post(`/nation/join`, nationName);
+        .post(`/nation/join`, { nationName });
     return response.data;
 };
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Swal from 'sweetalert2';
 import styles from './ProductionApplicantModal.module.css'; // CSS 모듈 가져오기
 import ProductionTitle from '../Atoms/ProductionTitle.jsx';
@@ -6,7 +6,7 @@ import ProductionButton1 from '../Atoms/ProductionButton1.jsx';
 import ProductionSemiTitle from '../Molecules/ProductionSemiTitle.jsx';
 import useJobApi from '../../../api/useJobApi.jsx';
 
-const ProductionApplicantModal = ({ applicants, setIsModalOpen, job_name }) => {
+const ProductionApplicantModal = ({ applicants, setIsModalOpen, jobName }) => {
     const handleCloseClick = () => {
         setIsModalOpen(false); // Close the modal
     };
@@ -21,7 +21,7 @@ const ProductionApplicantModal = ({ applicants, setIsModalOpen, job_name }) => {
             if (result.isConfirmed) {
                 try {
                     const response = await useJobApi.jobPostApprove(
-                        job_name,
+                        jobName,
                         applicantName,
                     );
                     if (response) {
@@ -55,7 +55,7 @@ const ProductionApplicantModal = ({ applicants, setIsModalOpen, job_name }) => {
             if (result.isConfirmed) {
                 try {
                     const response = await useJobApi.jobPostDecline(
-                        job_name,
+                        jobName,
                         applicantName,
                     );
                     if (response) {
@@ -89,7 +89,7 @@ const ProductionApplicantModal = ({ applicants, setIsModalOpen, job_name }) => {
             if (result.isConfirmed) {
                 try {
                     const response = await useJobApi.jobPostFire(
-                        job_name,
+                        jobName,
                         employeeName,
                     );
                     if (response) {
