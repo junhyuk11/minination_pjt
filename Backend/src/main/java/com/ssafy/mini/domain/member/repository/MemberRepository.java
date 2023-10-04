@@ -25,5 +25,5 @@ public interface MemberRepository extends JpaRepository<Member, Integer>, Member
 
     List<RichDto> listRich(short nationSeq);
 
-    List<Member> findAllByIsoSeq(Nation n);
+    Optional<Member> findByMemName(String employeeName);
 }

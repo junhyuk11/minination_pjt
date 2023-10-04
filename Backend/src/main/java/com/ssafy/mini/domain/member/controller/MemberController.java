@@ -33,7 +33,7 @@ public class MemberController {
     })
     public SuccessResponse join(
             @RequestBody @ApiParam(value = "회원가입 정보", required = true) MemberJoinRequest memberJoinRequest
-            ) {
+    ) {
         log.info("Controller Layer::join() called");
         return SuccessResponse.builder()
                 .data(memberService.join(memberJoinRequest))
@@ -81,7 +81,7 @@ public class MemberController {
     public SuccessResponse update(
             @RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
             @RequestBody @ApiParam(value = "회원 정보", required = true) MemberUpdateRequest memberUpdateRequest
-            ) {
+    ) {
         log.info("Controller Layer::update() called");
         String memberId = jwtProvider.validateToken(accessToken);
         log.debug("memberId: {}", memberId);
