@@ -66,7 +66,7 @@ public class StockServiceImpl implements StockService {
      */
     @Override
     @Transactional
-    @Scheduled(cron = "0 30 11 * * MON-FRI")
+    @Scheduled(cron = "0 30 23 * * MON-FRI")
     public void getCurrentStockInfo() {
         // 전체 종목 가져오기
         List<Corporation> corporations = corporationRepository.findAll();
@@ -76,8 +76,11 @@ public class StockServiceImpl implements StockService {
             String code = corp.getStkCd();
             Date lastDate = stockRepository.getLastDate(code);
 
-            // 각 종목에 대한 가장 최근 정보 가져오기
-            List<Item> items = currentStockPriceInfo(formatDateForStockInfoClient(lastDate), code);
+            // 각 종목의 마지막 데이터 이후 주가 정보 가져오기
+            List<Item> items = currentStockPriceInfo(formatDateForStockInfoClient(lastDate), code)
+                    .stream()
+                    .filter(item -> item.getBasDt().after(lastDate))
+                    .collect(Collectors.toList());
 
             // db에 저장하기
             stockRepository.saveAll(stockInfoToStock(corp, items));
