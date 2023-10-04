@@ -2,6 +2,8 @@ package com.ssafy.mini.domain.stockholding.service;
 
 import com.ssafy.mini.domain.account.entity.Account;
 import com.ssafy.mini.domain.account.service.AccountService;
+import com.ssafy.mini.domain.member.entity.Member;
+import com.ssafy.mini.domain.member.repository.MemberRepository;
 import com.ssafy.mini.domain.stockholding.dto.request.TradeStockRequest;
 import com.ssafy.mini.domain.stockholding.dto.response.MyStockInfoResponse;
 import com.ssafy.mini.domain.stockholding.dto.response.PortfolioDto;
@@ -27,6 +29,8 @@ public class StockholdingServiceImpl implements StockholdingService {
     private final StockholdingRepository stockholdingRepository;
     private final StockRepository stockRepository;
     private final CorporationRepository corporationRepository;
+
+    private final MemberRepository memberRepository;
 
     private final String STOCK_EXPRESSION = "SK"; // master 테이블의 주식 코드
 
@@ -66,10 +70,18 @@ public class StockholdingServiceImpl implements StockholdingService {
         Account moneyHave = accountService.getNormalAccount(memberId);
 
         if (moneyNeed > moneyHave.getAcctBalance()) throw new MNException(ErrorCode.NOT_ENOUGH_MONEY); // 돈이 부족한 경우
-        accountService.updateAccountBalance(moneyHave, -moneyNeed, STOCK_EXPRESSION,corporation);
+        accountService.updateAccountBalance(moneyHave, -moneyNeed, STOCK_EXPRESSION,corporation); // account table 잔액 update
+        updateMemberBalance(memberId, -moneyNeed); // member table 잔액 update
 
         // 주식 보유 수량 변경
-        Stockholding stockholding = stockholdingRepository.findByMemberIdAndCode(memberId, code);
+        Stockholding stockholding = stockholdingRepository.findByMemberIdAndCode(memberId, code).orElse(
+                Stockholding.builder()
+                        .member(memberRepository.findByMemId(memberId).get())
+                        .corporation(corporationRepository.findById(code).get())
+                        .holdQty(0)
+                        .stkBuyPrice(0)
+                        .build()
+        );
         upateStockholding(stockholding, amount, curPrice);
 
         return getPortfolio(memberId);
@@ -83,7 +95,8 @@ public class StockholdingServiceImpl implements StockholdingService {
         int amount = tradeStockRequest.getAmount();
 
         String corporation = corporationRepository.findById(code).get().getIncNm();
-        Stockholding stockholding = stockholdingRepository.findByMemberIdAndCode(memberId, code);
+        Stockholding stockholding = stockholdingRepository.findByMemberIdAndCode(memberId, code)
+                .orElseThrow(() -> new MNException(ErrorCode.NOT_ENOUGH_STOCK)); // 보유 주식 가져오기
 
         // 주식 매도
         int curPrice = getCurrentPrice(code);
@@ -93,8 +106,9 @@ public class StockholdingServiceImpl implements StockholdingService {
         // 보유 주식보다 많이 팔려는 경우
         if (stockholding.getHoldQty() < amount) throw new MNException(ErrorCode.NOT_ENOUGH_STOCK);
 
-        accountService.updateAccountBalance(moneyHave, moneyNeed, STOCK_EXPRESSION,corporation); // 주식 보유 수량 변경
-        upateStockholding(stockholding, -amount, -curPrice);
+        accountService.updateAccountBalance(moneyHave, moneyNeed, STOCK_EXPRESSION,corporation); // account table 잔액 update
+        updateMemberBalance(memberId, moneyNeed); // member table 잔액 update
+        upateStockholding(stockholding, -amount, -curPrice); // 주식 보유 수량 변경
 
         return getPortfolio(memberId);
     }
@@ -118,5 +132,16 @@ public class StockholdingServiceImpl implements StockholdingService {
         stockholding.updateHoldQty(amount); // 보유 주 수 변경
         stockholding.updateStkBuyPrice(amount * curPrice); // 구매 가격 변경
         stockholdingRepository.save(stockholding);
+    }
+
+    /**
+     * member table 잔액 변경
+     * @param memberId 회원 아이디
+     * @param amount 변경할 금액
+     */
+    private void updateMemberBalance(String memberId, int amount) {
+        Member member = memberRepository.findByMemId(memberId).get(); // member table 잔액 update
+        member.updateMembalance(amount);
+        memberRepository.save(member);
     }
 }
