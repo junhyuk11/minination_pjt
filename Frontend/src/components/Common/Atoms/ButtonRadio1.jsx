@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 function ButtonRadio1({ setData }) {
     const [selectedOption, setSelectedOption] = useState('ST');
@@ -7,7 +7,9 @@ function ButtonRadio1({ setData }) {
         setSelectedOption(event.target.value);
     };
 
-    setData(selectedOption);
+    useEffect(() => {
+        setData(selectedOption);
+    }, [selectedOption]);
 
     return (
         <div>

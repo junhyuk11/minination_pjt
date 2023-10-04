@@ -26,7 +26,7 @@ const LoginInputForm = () => {
         try {
             const response = await useMemberApi.memberPostLogin(id, password);
             if (response.code === 200) {
-                setIdentity(response.data.memType);
+                setIdentity(response.data.type);
                 sessionStorage.setItem(
                     'accessToken',
                     response.data.accessToken,
@@ -46,7 +46,7 @@ const LoginInputForm = () => {
 
     return (
         <div>
-            <div class={styles.top}>
+            <div className={styles.top}>
                 <div className={styles.logoContainer}>
                     <img
                         className={styles.logo}

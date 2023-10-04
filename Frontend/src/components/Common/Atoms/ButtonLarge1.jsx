@@ -5,9 +5,9 @@ function ButtonLarge1({ title, onClick }) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width: '300px',
-        height: '40px',
-        borderRadius: '2rem',
+        padding: '1rem',
+        width: '100%',
+        borderRadius: '1rem',
         border: 'none',
         backgroundColor: '#029664',
         color: 'white',
@@ -15,11 +15,9 @@ function ButtonLarge1({ title, onClick }) {
     };
 
     return (
-        <div>
-            <button type="button" style={buttonStyle} onClick={onClick}>
-                {title}
-            </button>
-        </div>
+        <button type="button" style={buttonStyle} onClick={onClick}>
+            {title}
+        </button>
     );
 }
 
