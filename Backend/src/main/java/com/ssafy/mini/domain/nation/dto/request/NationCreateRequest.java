@@ -9,5 +9,5 @@ public class NationCreateRequest {
     private String payday;
     private byte incomeTax;
     private byte vat;
-    private String flagImageUrl;
+    private String flagImgUrl;
 }
