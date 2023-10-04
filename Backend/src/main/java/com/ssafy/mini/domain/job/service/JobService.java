@@ -9,7 +9,7 @@ import java.util.List;
 public interface JobService {
     void register(String memberId, JobRegisterRequestDTO jobRegisterRequestDTO);
 
-    void apply(String memberId, String jobName);
+    void apply(String memberId, JobApplyRequest jobApplyRequest);
 
     void approve(String memberId, JobApproveRequestDTO jobApproveRequestDTO);
 

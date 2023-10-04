@@ -3,7 +3,7 @@ package com.ssafy.mini.domain.member.controller;
 import com.ssafy.mini.domain.member.dto.request.MemberJoinRequest;
 import com.ssafy.mini.domain.member.dto.request.MemberLoginRequest;
 import com.ssafy.mini.domain.member.dto.request.MemberUpdateRequest;
-import com.ssafy.mini.domain.member.dto.response.MemberLoginResponse;
+import com.ssafy.mini.domain.member.dto.response.MemberTokenResponse;
 import com.ssafy.mini.domain.member.service.MemberService;
 import com.ssafy.mini.global.auth.jwt.JwtProvider;
 import com.ssafy.mini.global.response.SuccessResponse;
@@ -33,10 +33,10 @@ public class MemberController {
     })
     public SuccessResponse join(
             @RequestBody @ApiParam(value = "회원가입 정보", required = true) MemberJoinRequest memberJoinRequest
-            ) {
+    ) {
         log.info("Controller Layer::join() called");
-        memberService.join(memberJoinRequest);
         return SuccessResponse.builder()
+                .data(memberService.join(memberJoinRequest))
                 .build();
     }
 
@@ -62,11 +62,11 @@ public class MemberController {
             @ApiResponse(code = 400, message = "잘못된 비밀번호"),
             @ApiResponse(code = 409, message = "존재하지 않는 사용자")
     })
-    public SuccessResponse<MemberLoginResponse> login(
+    public SuccessResponse<MemberTokenResponse> login(
             @RequestBody @ApiParam(value = "아이디, 비밀번호", required = true) MemberLoginRequest memberLoginRequest
     ){
         log.info("Controller Layer::login() called");
-        return SuccessResponse.<MemberLoginResponse>builder()
+        return SuccessResponse.<MemberTokenResponse>builder()
                 .data(memberService.login(memberLoginRequest))
                 .build();
     }
@@ -81,7 +81,7 @@ public class MemberController {
     public SuccessResponse update(
             @RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
             @RequestBody @ApiParam(value = "회원 정보", required = true) MemberUpdateRequest memberUpdateRequest
-            ) {
+    ) {
         log.info("Controller Layer::update() called");
         String memberId = jwtProvider.validateToken(accessToken);
         log.debug("memberId: {}", memberId);

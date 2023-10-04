@@ -10,7 +10,6 @@ import com.ssafy.mini.domain.job.repository.JobRepository;
 import com.ssafy.mini.domain.member.entity.Member;
 import com.ssafy.mini.domain.member.repository.MemberRepository;
 import com.ssafy.mini.domain.member.service.MemberService;
-import com.ssafy.mini.domain.nation.entity.Nation;
 import com.ssafy.mini.global.exception.ErrorCode;
 import com.ssafy.mini.global.exception.MNException;
 import lombok.RequiredArgsConstructor;
@@ -43,7 +42,7 @@ public class JobServiceImpl implements JobService{
         if(jobRegisterRequestDTO.getPay() <= 0)
             throw new MNException(ErrorCode.INVALID_JOB_PAY);
 
-        if(jobRegisterRequestDTO.getRecruit_total_count() <= 0)
+        if(jobRegisterRequestDTO.getRecruitTotalCount() <= 0)
             throw new MNException(ErrorCode.INVALID_JOB_TOTAL);
 
         // 직업 이름 중복 확인
@@ -57,8 +56,8 @@ public class JobServiceImpl implements JobService{
                 .jobDesc(jobRegisterRequestDTO.getDesc())
                 .jobPay(jobRegisterRequestDTO.getPay())
                 .jobReq(jobRegisterRequestDTO.getRequirement())
-                .jobTotalCnt(jobRegisterRequestDTO.getRecruit_total_count())
-                .jobLeftCnt(jobRegisterRequestDTO.getRecruit_total_count())
+                .jobTotalCnt(jobRegisterRequestDTO.getRecruitTotalCount())
+                .jobLeftCnt(jobRegisterRequestDTO.getRecruitTotalCount())
                 .nation(memberService.getNationByMemberId(memberId))
                 .build();
 
@@ -67,11 +66,13 @@ public class JobServiceImpl implements JobService{
     }
 
     @Override
-    public void apply(String memberId, String jobName) {
+    public void apply(String memberId, JobApplyRequest jobApplyRequest) {
         log.info("Job Service Layer:: apply() called");
 
         Member member = memberRepository.findByMemId(memberId)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
+
+        String jobName = jobApplyRequest.getJobName();
 
         // 회원이 가입한 국가가 없을 경우
         if(memberService.getNationByMemberId(memberId) == null)
@@ -116,7 +117,7 @@ public class JobServiceImpl implements JobService{
         Job job = jobRepository.findByJobName(jobApproveRequestDTO.getJobName())
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_JOB));
 
-        Member applicant = memberRepository.findByMemId(jobApproveRequestDTO.getApplicantId())
+        Member applicant = memberRepository.findByMemName(jobApproveRequestDTO.getApplicantName())
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
 
 
@@ -185,7 +186,7 @@ public class JobServiceImpl implements JobService{
         Job job = jobRepository.findByJobName(jobDeclineRequestDTO.getJobName())
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_JOB));
 
-        Member applicant = memberRepository.findByMemId(jobDeclineRequestDTO.getApplicantId())
+        Member applicant = memberRepository.findByMemName(jobDeclineRequestDTO.getApplicantName())
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
 
         Apply apply = applyRepository.findByJobAndMember(job, applicant)

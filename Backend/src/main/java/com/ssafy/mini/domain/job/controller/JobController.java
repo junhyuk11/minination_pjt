@@ -51,14 +51,13 @@ public class JobController {
             @ApiResponse(code = 409, message = "이미 지원했거나 근무 중인 직업입니다.")
     })
     public SuccessResponse apply(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
-                                 @RequestBody @ApiParam(value = "직업 이름", required = true) HashMap<String, String> jobInfo) {
+                                 @RequestBody @ApiParam(value = "직업 이름", required = true) JobApplyRequest jobApplyRequest) {
 
         log.info("Job Controller Layer:: apply() called");
 
         String memberId = jwtProvider.extractMemberId(accessToken);
-        String jobName = jobInfo.get("job_name");
 
-        jobService.apply(memberId, jobName);
+        jobService.apply(memberId, jobApplyRequest);
 
         return SuccessResponse.builder()
                 .build();
@@ -140,12 +139,12 @@ public class JobController {
             @ApiResponse(code = 404, message = "직업 상세 조회 실패")
     })
     public SuccessResponse detail(@RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken,
-                                  @RequestBody @ApiParam(value = "직업 이름", required = true) HashMap<String, String> jobInfo) {
+                                  @RequestBody @ApiParam(value = "직업 이름", required = true) JobDetailRequestDTO jobDetailRequestDTO) {
 
         log.info("Job Controller Layer:: detail() called");
 
         String memberId = jwtProvider.extractMemberId(accessToken);
-        String jobName = jobInfo.get("job_name");
+        String jobName = jobDetailRequestDTO.getJobName();
 
         return SuccessResponse.builder()
                 .data(jobService.getJobDetail(memberId, jobName))
