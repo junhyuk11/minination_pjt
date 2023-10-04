@@ -50,6 +50,7 @@ public enum ErrorCode {
     ALREADY_JOINED_JOB(409, "이미 가입한 직업입니다."),
     NO_SUCH_APPLY(404, "존재하지 않는 지원입니다."),
     NOT_PROPER_EMPLOYEE(404, "해당 직업에 근무하고 있지 않습니다."),
+    NATION_NOT_MATCH(402, "국가가 일치하지 않습니다."),
 
     // 주식 관련 에러
     NOT_ENOUGH_STOCK(406, "보유 주식이 부족합니다."),
@@ -63,11 +64,10 @@ public enum ErrorCode {
     ALREADY_SUBSCRIBED(409, "이미 가입한 상품입니다"),
     NO_SUCH_ACCT(406, "해당 상품 가입 내역이 없습니다. "),
 
-    // 상품 관련 에러
+    // 상품 관련 에러,
     NO_SUCH_PRODUCT(404, "존재하지 않는 상품입니다."),
-    NOT_ENOUGH_PRODUCT(406, "보유한 상품이 부족합니다."),
+    NOT_ENOUGH_PRODUCT(406, "보유한 상품이 부족합니다.");
 
-    ;
 
     private final int code;
     private final String detail;

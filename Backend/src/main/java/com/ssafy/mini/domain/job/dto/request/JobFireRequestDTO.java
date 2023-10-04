@@ -5,5 +5,5 @@ import lombok.Getter;
 @Getter
 public class JobFireRequestDTO {
     private String jobName;
-    private String employeeId;
+    private String employeeName;
 }
