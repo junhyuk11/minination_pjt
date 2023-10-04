@@ -12,7 +12,6 @@ const CompanyContent1 = () => {
     const getStockList = async () => {
         try {
             const response = await useStockApi.stockGetList();
-            console.log('보냈죠?', response);
             if (response.code === 200) {
                 setStockList(response.data);
             } else {
