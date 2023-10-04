@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import useStockApi from '../../../api/useStockApi.jsx';
 
 // Common
 import NavBar from '../../Common/Organisms/NavBar.jsx';
@@ -12,11 +13,7 @@ import TickerTape from '../Molecules/TickerTape.jsx';
 import StockChart from '../Molecules/StockChart.jsx';
 
 // Organisms
-import CompanyContent1 from '../Organisms/CompanyContent1.jsx';
-import CompanyContent2 from '../Organisms/CompanyContent2.jsx';
-import CompanyContent3 from '../Organisms/CompanyContent3.jsx';
-import CompanyContent4 from '../Organisms/CompanyContent4.jsx';
-import CompanyContent5 from '../Organisms/CompanyContent5.jsx';
+import CompanyContent from '../Organisms/CompanyContent.jsx';
 import StockTrading from '../Organisms/StockTrading.jsx';
 import PortFolio from '../Organisms/PortFolio.jsx';
 
@@ -29,10 +26,30 @@ import kakaoLogo from '../../../assets/images/kakao-logo.png';
 
 const Stock = () => {
     const [selectedButton, setSelectedButton] = useState('button1'); // 초기에는 어떤 버튼도 선택되지 않았다고 가정
+    const [stockList, setStockList] = useState([]);
 
     const handleButtonClick = buttonName => {
         setSelectedButton(buttonName);
     };
+
+    const getStockList = async () => {
+        try {
+            const response = await useStockApi.stockGetList();
+            console.log('보냈죠?', response);
+            if (response.code === 200) {
+                setStockList(response.data);
+                console.log(stockList);
+            } else {
+                console.log(response.code);
+            }
+        } catch (error) {
+            // navigateToLogin();
+        }
+    };
+
+    useEffect(() => {
+        getStockList();
+    }, []);
 
     return (
         <div className="section-master">
@@ -88,17 +105,50 @@ const Stock = () => {
                         onClick={() => handleButtonClick('button5')}
                     />
                 </div>
-
                 {/* CompanyContent Section */}
                 <div className="company-content-section">
-                    {selectedButton === 'button1' && <CompanyContent1 />}
-                    {selectedButton === 'button2' && <CompanyContent2 />}
-                    {selectedButton === 'button3' && <CompanyContent3 />}
-                    {selectedButton === 'button4' && <CompanyContent4 />}
-                    {selectedButton === 'button5' && <CompanyContent5 />}
-                    <StockChart />
+                    {selectedButton === 'button1' &&
+                        stockList.length > 1 &&
+                        stockList[1].stock && (
+                            <>
+                                <CompanyContent info={stockList[1]} />
+                                <StockChart data={stockList[1].stock} />
+                            </>
+                        )}
+                    {selectedButton === 'button2' &&
+                        stockList.length > 0 &&
+                        stockList[0].stock && (
+                            <>
+                                <CompanyContent info={stockList[0]} />
+                                <StockChart data={stockList[0].stock} />
+                            </>
+                        )}
+                    {selectedButton === 'button3' &&
+                        stockList.length > 3 &&
+                        stockList[3].stock && (
+                            <>
+                                <CompanyContent info={stockList[3]} />
+                                <StockChart data={stockList[3].stock} />
+                            </>
+                        )}
+                    {selectedButton === 'button4' &&
+                        stockList.length > 4 &&
+                        stockList[4].stock && (
+                            <>
+                                <CompanyContent info={stockList[4]} />
+                                <StockChart data={stockList[4].stock} />
+                            </>
+                        )}
+                    {selectedButton === 'button5' &&
+                        stockList.length > 2 &&
+                        stockList[2].stock && (
+                            <>
+                                <CompanyContent info={stockList[2]} />
+                                <StockChart data={stockList[2].stock} />
+                            </>
+                        )}
+                    // ... (이후 코드)
                 </div>
-
                 {/* Stock-Trading-Section */}
                 <div className="stock-trading-section">
                     <PortFolio />
