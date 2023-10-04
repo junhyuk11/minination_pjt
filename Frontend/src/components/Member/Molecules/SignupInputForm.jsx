@@ -50,6 +50,14 @@ const SignupInputForm = () => {
             );
 
             if (response.code === 200) {
+                sessionStorage.setItem(
+                    'accessToken',
+                    response.data.accessToken,
+                );
+                sessionStorage.setItem(
+                    'refreshToken',
+                    response.data.refreshToken,
+                );
                 if (type === 'ST') {
                     navigateToNationality();
                 } else {
@@ -64,43 +72,51 @@ const SignupInputForm = () => {
     };
 
     return (
-        <div className="center">
-            <img className={styles.logo} src={headerLogo} alt="logo" />
-            <br />
-            <InputBox1
-                title="이름"
-                placeholder="이름"
-                inputText={name}
-                onChange={handleChange1}
-                type="text"
-            />
-            <br />
-            <InputBox2
-                placeholder="아이디"
-                inputText={id}
-                onChange={handleChange2}
-                onBlur={checkDuplication}
-                type="text"
-            />
+        <div>
+            <div className={styles.top}>
+                <div className={styles.logoContainer}>
+                    <img
+                        className={styles.logo}
+                        src={headerLogo}
+                        alt="logo"
+                    ></img>
+                </div>
+                <br />
+                <InputBox1
+                    title="이름"
+                    placeholder="이름"
+                    inputText={name}
+                    onChange={handleChange1}
+                    type="text"
+                />
+                <br />
+                <InputBox2
+                    placeholder="아이디"
+                    inputText={id}
+                    onChange={handleChange2}
+                    onBlur={checkDuplication}
+                    type="text"
+                />
 
-            {idError && <p className={styles.error}>{idError}</p>}
+                {idError && <p className={styles.error}>{idError}</p>}
 
-            <br />
-            <InputBox1
-                title="비밀번호"
-                placeholder="비밀번호"
-                inputText={password}
-                onChange={handleChange3}
-                type="password"
-            />
-            <br />
-            <ButtonRadio1 setData={setType} />
-            <br />
-            <ButtonLarge1
-                title="회원가입"
-                onClick={postJoinApi}
-                disabled={isButtonDisabled}
-            />
+                <br />
+                <InputBox1
+                    title="비밀번호"
+                    placeholder="비밀번호"
+                    inputText={password}
+                    onChange={handleChange3}
+                    type="password"
+                />
+                <br />
+                <ButtonRadio1 setData={setType} />
+                <br />
+                <ButtonLarge1
+                    title="회원가입"
+                    onClick={postJoinApi}
+                    disabled={isButtonDisabled}
+                />
+            </div>
             <MovingLoginOrSignup
                 description="이미 회원이신가요?"
                 title="로그인"

@@ -34,7 +34,7 @@ const Constitution = () => {
         <div>
             <ConstitutionRow
                 number={1}
-                content={`국가 이름은 '${nationName}' 으로 한다.`}
+                content={`국가 이름은 '${nationName}' (으)로 한다.`}
             />
             <ConstitutionRow
                 number={2}
