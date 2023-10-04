@@ -20,7 +20,7 @@ public class PortfolioDto {
     public PortfolioDto(String code, int holdQty, int buyPrice) {
         this.code = code;
         this.holdQty = holdQty;
-        this.buyPrice = buyPrice / holdQty;
+        this.buyPrice = holdQty > 0 ? buyPrice / holdQty : 0;
     }
 
     public void setCurPrice(int curPrice) {

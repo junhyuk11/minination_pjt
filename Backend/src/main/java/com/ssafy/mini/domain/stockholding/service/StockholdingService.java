@@ -1,5 +1,6 @@
 package com.ssafy.mini.domain.stockholding.service;
 
+import com.ssafy.mini.domain.member.entity.Member;
 import com.ssafy.mini.domain.stockholding.dto.request.TradeStockRequest;
 import com.ssafy.mini.domain.stockholding.dto.response.MyStockInfoResponse;
 
@@ -11,4 +12,5 @@ public interface StockholdingService {
 
     MyStockInfoResponse sellStockItem(String memberId, TradeStockRequest tradeStockRequest);
 
+    void setInitStockholding(Member member);
 }

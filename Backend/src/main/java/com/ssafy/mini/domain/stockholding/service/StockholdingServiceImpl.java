@@ -7,6 +7,7 @@ import com.ssafy.mini.domain.member.repository.MemberRepository;
 import com.ssafy.mini.domain.stockholding.dto.request.TradeStockRequest;
 import com.ssafy.mini.domain.stockholding.dto.response.MyStockInfoResponse;
 import com.ssafy.mini.domain.stockholding.dto.response.PortfolioDto;
+import com.ssafy.mini.domain.stockholding.entity.Corporation;
 import com.ssafy.mini.domain.stockholding.entity.Stockholding;
 import com.ssafy.mini.domain.stockholding.repository.CorporationRepository;
 import com.ssafy.mini.domain.stockholding.repository.StockRepository;
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -45,7 +47,7 @@ public class StockholdingServiceImpl implements StockholdingService {
         int balance = 0;
         for (PortfolioDto p : portfolio) {
             int currentPrice = getCurrentPrice(p.getCode());
-            p.setCurPrice(currentPrice);
+            p.setCurPrice(currentPrice * p.getHoldQty());
             balance += p.getCurPrice();
         }
 
@@ -111,6 +113,28 @@ public class StockholdingServiceImpl implements StockholdingService {
         upateStockholding(stockholding, -amount, -curPrice); // 주식 보유 수량 변경
 
         return getPortfolio(memberId);
+    }
+
+    /**
+     * 회원 가입 시 보유한 종목을 모두 0으로 설정
+     * 포트폴리오 조회 시 보유하지 않은 주식 종목에 대해선 0으로 보내달라는 요청이 있어서 추가
+     * @param member
+     */
+    public void setInitStockholding(Member member) {
+        List<Corporation> corps = corporationRepository.findAll(); // 모든 주식 종목
+        List<Stockholding> newStockholdings = new ArrayList<>();
+
+        for (Corporation corp: corps) {
+            newStockholdings.add(
+                    Stockholding.builder()
+                            .member(member)
+                            .corporation(corp)
+                            .holdQty(0)
+                            .stkBuyPrice(0)
+                            .build()
+            );
+        }
+        stockholdingRepository.saveAll(newStockholdings);
     }
 
     /**
