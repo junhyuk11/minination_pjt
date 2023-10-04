@@ -65,8 +65,8 @@ public class NationServiceImpl implements NationService {
         }
 
         // 국기 url로 국기 객체 가져오기
-        log.info("flagImageUrl: " + nationCreateRequest.getFlagImageUrl());
-        Flag flag = flagService.getFlag(nationCreateRequest.getFlagImageUrl());
+        log.info("flagImgUrl: " + nationCreateRequest.getFlagImgUrl());
+        Flag flag = flagService.getFlag(nationCreateRequest.getFlagImgUrl());
         log.info("flag: " + flag.getFlagSeq());
         Nation nation = nationMapper.nationCreateRequestToNation(nationCreateRequest);
 
