@@ -10,6 +10,7 @@ import ButtonLarge1 from '../../Common/Atoms/ButtonLarge1.jsx';
 import MovingLoginOrSignup from '../Atoms/MovingLoginOrSignup.jsx';
 
 const SignupInputForm = () => {
+    const [identity, setIdentity] = useRecoilState(identityState);
     const { navigateToFoundation, navigateToNationality, navigateToLogin } =
         useNavigation();
     const [name, setName] = useState('');
@@ -59,6 +60,7 @@ const SignupInputForm = () => {
             );
 
             if (response.code === 200) {
+                setIdentity(response.data.type);
                 sessionStorage.setItem(
                     'accessToken',
                     response.data.accessToken,
