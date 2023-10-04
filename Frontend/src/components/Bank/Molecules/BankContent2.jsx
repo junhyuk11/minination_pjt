@@ -72,7 +72,7 @@ function BankContent2() {
                                 <td>{account.start}</td>
                                 <td>{account.end}</td>
                                 <td>{account.principal}</td>
-                                <td>{account.estimaion}</td>
+                                <td>{account.estimation}</td>
                                 <td>
                                     <BankButtonSmall
                                         title="해지하기"
