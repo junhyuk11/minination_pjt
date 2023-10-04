@@ -259,6 +259,45 @@ public class JobServiceImpl implements JobService{
                 .build();
     }
 
+    @Override
+    public void delete(String memberId, JobDeleteRequestDTO jobDeleteRequestDTO) {
 
+        log.info("Job Service Layer:: delete() called");
+
+        Member member = memberRepository.findByMemId(memberId)
+                .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
+
+        String jobName = jobDeleteRequestDTO.getJobName();
+        Job job = jobRepository.findByJobName(jobName)
+                .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_JOB));
+
+        // 선생님만 자기 국가의 직업 삭제 가능
+        if(!member.getMemType().getExpression().equals("TC") || !member.getIsoSeq().equals(job.getNation())) {
+            throw new MNException(ErrorCode.NO_AUTHORITY);
+        }
+
+        // 해당 직업 지원자 모두 거절
+        List<Apply> applicantList = applyRepository.findAllByJob(job);
+        for(Apply a : applicantList){
+            JobDeclineRequestDTO jobDeclineRequestDTO = JobDeclineRequestDTO.builder()
+                    .applicantName(a.getMember().getMemName())
+                    .jobName(jobName)
+                    .build();
+            decline(memberId, jobDeclineRequestDTO);
+        }
+
+        // 해당 직업 근무자 모두 해고
+        List<Member> employeeList = memberRepository.findAllByJobSeq(job);
+        for(Member m : employeeList){
+            JobFireRequestDTO jobFireRequestDTO = JobFireRequestDTO.builder()
+                    .employeeName(m.getMemName())
+                    .jobName(jobName)
+                    .build();
+            fire(memberId, jobFireRequestDTO);
+        }
+
+        // 해당 직업 삭제
+        jobRepository.delete(job);
+    }
 
 }

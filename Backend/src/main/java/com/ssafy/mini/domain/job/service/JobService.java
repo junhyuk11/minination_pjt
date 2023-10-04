@@ -20,4 +20,6 @@ public interface JobService {
     void fire(String memberId, JobFireRequestDTO jobFireRequestDTO);
 
     JobDetailResponseDTO getJobDetail(String memberId, String jobName);
+
+    void delete(String memberId, JobDeleteRequestDTO jobDeleteRequestDTO);
 }

@@ -3,6 +3,7 @@ package com.ssafy.mini.domain.apply.entity;
 import com.ssafy.mini.domain.job.entity.Job;
 import com.ssafy.mini.domain.member.entity.Member;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -10,6 +11,7 @@ import javax.persistence.*;
 
 @Entity
 @Slf4j
+@Getter
 @NoArgsConstructor
 public class Apply {
 

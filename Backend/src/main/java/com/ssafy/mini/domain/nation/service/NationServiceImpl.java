@@ -73,7 +73,7 @@ public class NationServiceImpl implements NationService {
         // 국기 저장
         nation.setFlag(flag);
         // 선생님 이름 저장
-        nation.setTeacherName(memberId);
+        nation.setTeacherName(member.getMemName());
 
         nation = nationRepository.save(nation);
 
