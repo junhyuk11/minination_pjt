@@ -1,6 +1,7 @@
 buildscript {
 	ext{
 		querydslVer = "5.0.0"
+		springCloudVersion = "2021.0.5"
 	}
 }
 
@@ -39,7 +40,14 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-aop'
 
 	// jwt
-	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+	implementation 'javax.xml.bind:jaxb-api'
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.1'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.1'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.1'
+
+	// redis
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
 	// database
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -65,9 +73,24 @@ dependencies {
 	implementation "com.querydsl:querydsl-apt:${querydslVer}"
 
 	// swagger
-	implementation("io.springfox:springfox-swagger2:2.8.0")
-	implementation("io.springfox:springfox-swagger-ui:2.8.0")
+	implementation("io.springfox:springfox-swagger2:2.9.2")
+	implementation("io.springfox:springfox-swagger-ui:2.9.2")
 
+	// s3
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
+	// openFeign
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:3.1.5'
+
+	// aop
+	implementation 'org.springframework.boot:spring-boot-starter-aop'
+}
+
+// openFeign setting
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
 }
 
 // queryDSL plugin

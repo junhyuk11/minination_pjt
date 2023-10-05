@@ -1,0 +1,17 @@
+version: "3"
+services:
+  backend:
+    container_name: mini_back
+    image: mini_back_image
+    ports:
+      - 8080:8080
+    volumes:
+      - /var/mini:/data
+    networks:
+      - deploy
+    environment:
+      - TZ=Asia/Seoul
+
+networks:
+  deploy:
+    external: true
