@@ -47,6 +47,9 @@ thead th {
     margin-bottom: 20px;
     left: 20%;
     font-size: 24px;
+    color: #1C8A51;
+    font-family: 'GmarketSansMedium', cursive;
+    font-weight: 500;
 }
 
 .marketRightText {
