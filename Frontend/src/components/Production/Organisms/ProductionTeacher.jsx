@@ -11,8 +11,8 @@ import ProductionApplicantModal from './ProductionApplicantModal.jsx';
 import ProductionCategoryTeacher from '../Molecules/ProductionCatergoryTeacher.jsx';
 import useJobApi from '../../../api/useJobApi.jsx';
 
-const ProductionTeacher = ({ jobList }) => {
-    // --------------직원 관리하기-------------------
+// 선생님에게 보여줄 채용공고 페이지
+const ProductionTeacher = ({ jobList, setJobList }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [applicants, setApplicants] = useState({
         // api 응답 전 임시 데이터
@@ -25,12 +25,13 @@ const ProductionTeacher = ({ jobList }) => {
     });
     const [modalJobName, setModalJobName] = useState('');
 
+    // 특정 직업 관리하기 클릭시 실행되는 함수
     const handleManageClick = jobName => {
         // api 요청 등 필요한 데이터 처리
         const fetchData = async () => {
             try {
                 const response = await useJobApi.jobGetDetail({ jobName });
-                setApplicants(response.data); // API 응답을 applicants 상태에 저장합니다.
+                setApplicants(response.data); // API 응답을 applicants 상태에 저장
             } catch (error) {
                 console.error('API 요청 중 오류 발생:', error);
                 // 오류 처리를 수행합니다.
@@ -58,6 +59,13 @@ const ProductionTeacher = ({ jobList }) => {
                             icon: 'success',
                             title: '삭제하였습니다.',
                             confirmButtonText: '확인',
+                        });
+                        // 삭제 성공 시 jobList 업데이트
+                        setJobList(prevJobList => {
+                            // 작업 목록에서 삭제한 작업을 제외하고 새 배열을 생성
+                            return prevJobList.filter(
+                                job => job.name !== jobName,
+                            );
                         });
                     } else if (response.code === 403) {
                         swal.fire({
@@ -101,9 +109,7 @@ const ProductionTeacher = ({ jobList }) => {
                     title={`채용 인원: ${job.recruitTotalCount}명`}
                 />
             }
-            Comp5={
-                <ProductionTitle title={`지원자 수: ${job.applyCount}명`} />
-            }
+            Comp5={<ProductionTitle title={`지원자 수: ${job.applyCount}명`} />}
             Comp6={
                 <ProductionRequirement
                     title={`자격 요건: ${job.requirement}`}
@@ -137,6 +143,7 @@ const ProductionTeacher = ({ jobList }) => {
                         applicants={applicants} // applicants 전달
                         setIsModalOpen={setIsModalOpen}
                         jobName={modalJobName}
+                        setApplicants={setApplicants}
                     />
                 </div>
             )}
