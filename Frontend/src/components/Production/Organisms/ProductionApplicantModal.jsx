@@ -6,9 +6,26 @@ import ProductionButton1 from '../Atoms/ProductionButton1.jsx';
 import ProductionSemiTitle from '../Molecules/ProductionSemiTitle.jsx';
 import useJobApi from '../../../api/useJobApi.jsx';
 
-const ProductionApplicantModal = ({ applicants, setIsModalOpen, jobName }) => {
+const ProductionApplicantModal = ({
+    applicants,
+    setApplicants,
+    setIsModalOpen,
+    jobName,
+}) => {
+    // 모달 닫기
     const handleCloseClick = () => {
-        setIsModalOpen(false); // Close the modal
+        setIsModalOpen(false);
+        window.location.reload();
+    };
+    // 승인,거절,삭제 시 api요청을 보내 직업리스트를 업데이트한다.
+    const fetchData = async () => {
+        try {
+            const response = await useJobApi.jobGetDetail({ jobName });
+            setApplicants(response.data); // API 응답을 applicants 상태에 저장
+        } catch (error) {
+            console.error('API 요청 중 오류 발생:', error);
+            // 오류 처리를 수행합니다.
+        }
     };
     const handleApprove = applicantName => {
         Swal.fire({
@@ -25,6 +42,8 @@ const ProductionApplicantModal = ({ applicants, setIsModalOpen, jobName }) => {
                         applicantName,
                     );
                     if (response) {
+                        // 정보 업데이트
+                        fetchData();
                         Swal.fire({
                             icon: 'success',
                             title: '승인하였습니다.',
@@ -59,6 +78,8 @@ const ProductionApplicantModal = ({ applicants, setIsModalOpen, jobName }) => {
                         applicantName,
                     );
                     if (response) {
+                        // 정보 업데이트
+                        fetchData();
                         Swal.fire({
                             icon: 'success',
                             title: '거절하였습니다.',
@@ -93,6 +114,8 @@ const ProductionApplicantModal = ({ applicants, setIsModalOpen, jobName }) => {
                         employeeName,
                     );
                     if (response) {
+                        // 정보 업데이트
+                        fetchData();
                         Swal.fire({
                             icon: 'success',
                             title: '해고하였습니다.',

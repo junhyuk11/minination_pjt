@@ -49,9 +49,11 @@ function NavBar() {
                         <a href="/bank/bankpage" className="navbar-btn">
                             은행
                         </a>
-                        <a href="/admin/office" className="navbar-btn">
-                            집무실
-                        </a>
+                        {identity === 'TC' && (
+                            <a href="/admin/office" className="navbar-btn">
+                                집무실
+                            </a>
+                        )}
                     </div>
                 </div>
                 <div className="right-side">

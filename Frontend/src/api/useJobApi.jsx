@@ -83,10 +83,16 @@ const jobPostApply = async jobName => {
                 title: '지원 실패.',
                 confirmButtonText: '확인',
             });
+        } else if (e.response.data.code === 406) {
+            Swal.fire({
+                icon: 'warning',
+                title: '남은 자리가 없어요.',
+                confirmButtonText: '확인',
+            });
         } else if (e.response.data.code === 400) {
             Swal.fire({
                 icon: 'warning',
-                title: '잔여 자리가 없습니다.',
+                title: '잔여 자리가 없어요.',
                 confirmButtonText: '확인',
             });
         } else {
