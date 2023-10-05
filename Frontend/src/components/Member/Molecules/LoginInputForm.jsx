@@ -12,6 +12,7 @@ import headerLogo from '../../../assets/images/header-logo.png';
 const LoginInputForm = () => {
     const [identity, setIdentity] = useRecoilState(identityState);
     const {
+        navigateToLanding,
         navigateToSignup,
         navigateToDashboard,
         navigateToFoundation,
@@ -30,8 +31,12 @@ const LoginInputForm = () => {
     };
     const handleKeyDown1 = event => {
         if (event.key === 'Enter') {
+            event.preventDefault();
             postLoginApi();
         }
+    };
+    const handleOnClick1 = event => {
+        navigateToLanding();
     };
 
     const postLoginApi = async () => {
@@ -96,6 +101,7 @@ const LoginInputForm = () => {
                         className={styles.logo}
                         src={headerLogo}
                         alt="logo"
+                        onClick={handleOnClick1}
                     ></img>
                 </div>
                 <br />
