@@ -12,7 +12,7 @@ import ProductionCategoryTeacher from '../Molecules/ProductionCatergoryTeacher.j
 import useJobApi from '../../../api/useJobApi.jsx';
 
 // 선생님에게 보여줄 채용공고 페이지
-const ProductionTeacher = ({ jobList, setJobList }) => {
+const ProductionTeacher = ({ jobList, setJobList, currency }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [applicants, setApplicants] = useState({
         // api 응답 전 임시 데이터
@@ -103,16 +103,16 @@ const ProductionTeacher = ({ jobList, setJobList }) => {
             key={uuid()} // Use a unique identifier (e.g., job.id) as the key
             Comp1={<ProductionTitle title={job.name} />}
             Comp2={<ProductionTitle title={job.desc} />}
-            Comp3={<ProductionTitle title={`급여: ${job.pay} 만원`} />}
+            Comp3={<ProductionTitle title={`${job.pay}만 ${currency}`} />}
             Comp4={
                 <ProductionTitle
-                    title={`채용 인원: ${job.recruitTotalCount}명`}
+                    title={`${job.recruitTotalCount}명`}
                 />
             }
-            Comp5={<ProductionTitle title={`지원자 수: ${job.applyCount}명`} />}
+            Comp5={<ProductionTitle title={`${job.applyCount}명`} />}
             Comp6={
                 <ProductionRequirement
-                    title={`자격 요건: ${job.requirement}`}
+                    title={`자격요건: ${job.requirement}`}
                 />
             }
             Comp7={

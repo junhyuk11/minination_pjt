@@ -8,17 +8,19 @@ import ProductionTeacher from '../Organisms/ProductionTeacher.jsx';
 import ProductionAddModal from '../Organisms/ProductionAddModal.jsx';
 import styles from './JobPosting.module.css';
 import useJobApi from '../../../api/useJobApi.jsx';
+import useLawApi from '../../../api/useLawApi.jsx';
 
 const JobPosting = () => {
     const [identity] = useRecoilState(identityState);
+    const [currency, setCurrency] = useState('');
     const [response, setResponse] = useState([
         // api요청 응답 전 렌더링 해줄 임시값
         {
             name: '직업명',
             desc: '직업설명',
             pay: '급여',
-            recruit_total_count: '',
-            apply_count: '',
+            recruit_total_count: 0,
+            apply_count: 0,
             requirement: '자격',
             employees: ['근무자'],
             status: '0',
@@ -31,10 +33,17 @@ const JobPosting = () => {
             setResponse(res.data);
         }
     };
+    const getCurrency = async () => {
+        const res = await useLawApi.lawGetInfo();
+        if (res.code === 200) {
+            setCurrency(res.data.currency);
+        }
+    };
 
     // mount시 api요청을 보낸다
     useEffect(() => {
         getLawApi();
+        getCurrency();
     }, []);
 
     return (
@@ -51,11 +60,13 @@ const JobPosting = () => {
                 <ProductionStudent
                     jobList={response}
                     setJobList={setResponse}
+                    currency={currency}
                 />
             ) : (
                 <ProductionTeacher
                     jobList={response}
                     setJobList={setResponse}
+                    currency={currency}
                 />
             )}
         </div>
