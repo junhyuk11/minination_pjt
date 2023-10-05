@@ -1,14 +1,12 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/no-unstable-nested-components */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from 'react';
-import styles from './Modal1.module.css'; // CSS 모듈 가져오기
+import styles from './FoundationModal.module.css'; // CSS 모듈 가져오기
 import AdminTitle from '../Atoms/AdminTitle.jsx';
 import useNationApi from '../../../api/useNationApi.jsx';
 
-const Modal1 = ({
+const FoundationModal = ({
     handleClick,
     payday,
     incomeTax,
@@ -84,19 +82,19 @@ const Modal1 = ({
                 alert('국가가 성공적으로 생성되었습니다.');
                 // 모달을 닫고 메인으로 이동시키는 함수
                 handleClick();
-            }
-        } catch (error) {
-            if (error.code === 402) {
+            } else if (response.code === 402) {
                 alert('선생님 접근 가능한 기능입니다.');
-            } else if (error.code === 403) {
+            } else if (response.code === 403) {
                 alert('유효하지 않은 토큰입니다.');
-            } else if (error.code === 404) {
+            } else if (response.code === 404) {
                 alert('국가 생성에 실패하였습니다.');
-            } else if (error.code === 409) {
+            } else if (response.code === 409) {
                 alert('이미 생성한 국가가 있습니다.');
             } else {
                 alert('알 수 없는 오류가 발생했습니다.');
             }
+        } catch (error) {
+            console.log(error);
         }
     };
 
@@ -170,21 +168,29 @@ const Modal1 = ({
                         />
                     ))}
                 </div>
-                <button
-                    className={styles.modalButton}
-                    onClick={handleAcceptClick}
-                    type="button"
-                >
-                    확인
-                </button>
-                <div>
-                    API로 넘겨줄 정보: <br /> 국가명 : {nationName}, 화폐명 :{' '}
-                    {currency}, 수령일 : {payday}, 소득세 : {incomeTax},
-                    부가가치세 : {vat}, 선택한 국기 번호 : {selectedFlag}
-                </div>
+                선택된 국기:
+                <br />
+                {selectedFlag !== null && (
+                    <div className={styles.selectedWrapper}>
+                        <FlagWithCheck
+                            flagNumber={selectedFlag}
+                            selected={selectedFlag}
+                            onClick={handleFlagClick}
+                            flagUrl={flags[selectedFlag - 1]?.flag}
+                            checkedFlagUrl={flags[selectedFlag - 1]?.flag}
+                        />
+                        <button
+                            className={styles.modalButton}
+                            onClick={handleAcceptClick}
+                            type="button"
+                        >
+                            확인
+                        </button>
+                    </div>
+                )}
             </div>
         </div>
     );
 };
 
-export default Modal1;
+export default FoundationModal;

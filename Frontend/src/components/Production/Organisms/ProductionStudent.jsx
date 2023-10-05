@@ -10,7 +10,7 @@ import styles from './ProductionStudent.module.css';
 import ProductionCategoryStudent from '../Molecules/ProductionCatergoryStudent.jsx';
 import useJobApi from '../../../api/useJobApi.jsx';
 
-const ProductionStudent = ({ jobList, setJobList }) => {
+const ProductionStudent = ({ jobList, setJobList, currency }) => {
     const handleApplyClick = job => {
         Swal.fire({
             icon: 'question',
@@ -52,16 +52,16 @@ const ProductionStudent = ({ jobList, setJobList }) => {
             key={uuid()} // Use a unique identifier (e.g., job.id) as the key
             Comp1={<ProductionTitle title={job.name} />}
             Comp2={<ProductionTitle title={job.desc} />}
-            Comp3={<ProductionTitle title={`급여: ${job.pay} 만원`} />}
+            Comp3={<ProductionTitle title={`${job.pay}만 ${currency}`} />}
             Comp4={
                 <ProductionTitle
-                    title={`채용 인원: ${job.recruitTotalCount}명`}
+                    title={`${job.recruitTotalCount}명`}
                 />
             }
-            Comp5={<ProductionTitle title={`지원자 수: ${job.applyCount}명`} />}
+            Comp5={<ProductionTitle title={`${job.applyCount}명`} />}
             Comp6={
                 <ProductionRequirement
-                    title={`자격 요건: ${job.requirement}`}
+                    title={`자격요건: ${job.requirement}`}
                 />
             }
             Comp7={

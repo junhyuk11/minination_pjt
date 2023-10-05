@@ -1,4 +1,4 @@
-/* Modal1.module.css */
+/* FoundationModal.module.css */
 
 .wrapper {
     position: fixed;
@@ -20,6 +20,21 @@
 .modalCards {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
+    height: auto;
+}
+
+/* FlagWithCheck 컴포넌트 스타일 */
+.flag,
+.selectedFlag {
+  width: auto;
+  height: auto;
+  display: inline-block;
+}
+
+.flagImage {
+  max-width: 100%;
+
 }
 
 .modalTitle {
@@ -38,8 +53,7 @@
     width: 85px;
     height: 35px;
     background-color: rgba(255, 255, 255, 0);
-    position: relative;
-    left: 50vw;
+    margin-left: 3vw;
 }
 
 .modalButton:hover {
@@ -68,4 +82,8 @@
     border: none;
     outline: none;
     color: #999;
+}
+
+.selectedWrapper {
+  display: flex;
 }

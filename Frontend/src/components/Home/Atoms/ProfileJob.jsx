@@ -11,8 +11,7 @@ function ProfileJob({ jobName, pay, currency }) {
                 <a className={styles.aStyle} onClick={navigateToJobPosting}>
                     {jobName}
                 </a>{' '}
-                이고, 주급은 {pay}
-                {currency} 입니다.
+                이고, 주급은 {pay}만 {currency} 입니다.
             </p>
         );
     } else {
