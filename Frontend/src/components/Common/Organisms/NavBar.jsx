@@ -16,7 +16,6 @@ function NavBar() {
         try {
             const response = await useHomeApi.homeGetProfile();
             if (response.code === 200) {
-                console.log('제발 살려주세요', response.data);
                 setUserInfo(response.data);
             } else {
                 console.log(response.code);
