@@ -10,8 +10,7 @@ import styles from './JobPosting.module.css';
 import useJobApi from '../../../api/useJobApi.jsx';
 
 const JobPosting = () => {
-    const [identity, setIdentity] = useRecoilState(identityState);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [identity] = useRecoilState(identityState);
     const [response, setResponse] = useState([
         // api요청 응답 전 렌더링 해줄 임시값
         {
@@ -25,7 +24,6 @@ const JobPosting = () => {
             status: '0',
         },
     ]);
-
     // api 요청
     const getLawApi = async () => {
         const res = await useJobApi.jobGetList();
@@ -50,12 +48,14 @@ const JobPosting = () => {
             </div>
             {/* Conditional rendering based on the identity state */}
             {identity === 'ST' ? (
-                <ProductionStudent jobList={response} />
+                <ProductionStudent
+                    jobList={response}
+                    setJobList={setResponse}
+                />
             ) : (
                 <ProductionTeacher
                     jobList={response}
-                    isModalOpen={isModalOpen}
-                    setIsModalOpen={setIsModalOpen}
+                    setJobList={setResponse}
                 />
             )}
         </div>

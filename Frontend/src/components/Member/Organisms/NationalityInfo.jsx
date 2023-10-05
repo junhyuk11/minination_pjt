@@ -9,7 +9,7 @@ import useNationApi from '../../../api/useNationApi.jsx';
 
 const NationalityInfo = () => {
     const { navigateToDashboard } = useNavigation();
-    const [nationName, setnationName] = useState('개발의민족');
+    const [nationName, setnationName] = useState('');
     const [president, setpresident] = useState('');
     const [searchResult, setSearchResult] = useState(null);
     const [showPresidentInput, setShowPresidentInput] = useState(false);

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useRecoilState } from 'recoil';
 import { useNavigation } from '../../../hooks/useNavigation.jsx';
 import NavBar from '../../Common/Organisms/NavBar.jsx';
 import styles from './OfficeFix.module.css';
@@ -10,6 +11,7 @@ import RowInput from '../Atoms/RowInput.jsx';
 import RowDescription from '../Atoms/RowDescription.jsx';
 import DropDown2 from '../../Common/Atoms/DropDown2.jsx'; // DropDown2 컴포넌트 추가
 import useLawApi from '../../../api/useLawApi.jsx';
+import { identityState } from '../../../recoil/atoms.jsx';
 
 const OfficeFix = () => {
     const [countryName, setCountryName] = useState('');
@@ -22,8 +24,20 @@ const OfficeFix = () => {
         dropdown2: false,
         dropdown3: false,
     });
-    const { navigateToOffice, navigateToLogin } = useNavigation();
+    const { navigateToOffice, navigateToLogin, navigateToDashboard } =
+        useNavigation();
     const [errorMessage, setErrorMessage] = useState('');
+
+    const [identity] = useRecoilState(identityState);
+
+    // 선생님이 아닐경우 메인으로 리디렉션
+    if (identity !== 'TC') {
+        if (!sessionStorage.getItem('accessToken')) {
+            navigateToLogin();
+        } else {
+            navigateToDashboard();
+        }
+    }
 
     // 국가명 유효성 검사
     const isCountryNameValid = value => {

@@ -10,7 +10,7 @@ import styles from './ProductionStudent.module.css';
 import ProductionCategoryStudent from '../Molecules/ProductionCatergoryStudent.jsx';
 import useJobApi from '../../../api/useJobApi.jsx';
 
-const ProductionStudent = ({ jobList }) => {
+const ProductionStudent = ({ jobList, setJobList }) => {
     const handleApplyClick = job => {
         Swal.fire({
             icon: 'question',
@@ -23,6 +23,20 @@ const ProductionStudent = ({ jobList }) => {
                 // API 호출
                 const response = await useJobApi.jobPostApply(job.name);
                 if (response && response.code === 200) {
+                    // 200번 응답이 왔을 경우 jobList 업데이트
+                    const updatedJobList = jobList.map((j) => {
+                        if (j.name === job.name) {
+                            // 해당 job의 지원자수(job.applyCount)를 하나 올려줌
+                            return {
+                                ...j,
+                                applyCount: j.applyCount + 1,
+                            };
+                        }
+                        return j;
+                    });
+
+                    // setJobList를 사용하여 상태 업데이트
+                    setJobList(updatedJobList);                    
                     Swal.fire({
                         icon: 'success',
                         title: '지원 완료',

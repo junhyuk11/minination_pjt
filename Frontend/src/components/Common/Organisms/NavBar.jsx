@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Swal from 'sweetalert2';
 import './NavBar.css';
 import { useRecoilState } from 'recoil';
 import { useNavigation } from '../../../hooks/useNavigation.jsx';
@@ -6,6 +7,7 @@ import logoimage from '../../../assets/images/header-logo.png';
 import ProductionButton1 from '../../Production/Atoms/ProductionButton1.jsx';
 import { identityState } from '../../../recoil/atoms.jsx';
 import useHomeApi from '../../../api/useHomeApi.jsx';
+import useMemberApi from '../../../api/useMemberApi.jsx';
 
 function NavBar() {
     const { navigateToBankPage, navigateToLogin } = useNavigation();
@@ -16,13 +18,30 @@ function NavBar() {
         try {
             const response = await useHomeApi.homeGetProfile();
             if (response.code === 200) {
-                console.log('제발 살려주세요', response.data);
                 setUserInfo(response.data);
             } else {
                 console.log(response.code);
             }
         } catch (error) {
             // Handle error
+        }
+    };
+
+    const handleLogout = async () => {
+        try {
+            const response = await useMemberApi.memberPostLogout();
+            if (response.code === 200) {
+                Swal.fire('로그아웃 되었습니다.').then(result => {
+                    if (result.isConfirmed) {
+                        sessionStorage.clear();
+                        navigateToLogin();
+                    }
+                });
+            } else {
+                console.log('로그아웃 실패', response.code);
+            }
+        } catch (error) {
+            console.error('로그아웃 중 문제 발생', error);
         }
     };
 
@@ -50,9 +69,11 @@ function NavBar() {
                         <a href="/bank/bankpage" className="navbar-btn">
                             은행
                         </a>
-                        <a href="/admin/office" className="navbar-btn">
-                            집무실
-                        </a>
+                        {identity === 'TC' && (
+                            <a href="/admin/office" className="navbar-btn">
+                                집무실
+                            </a>
+                        )}
                     </div>
                 </div>
                 <div className="right-side">
@@ -84,8 +105,7 @@ function NavBar() {
                         <ProductionButton1
                             title="로그아웃"
                             onClick={() => {
-                                sessionStorage.clear();
-                                navigateToLogin();
+                                handleLogout();
                             }}
                         />
                     </div>

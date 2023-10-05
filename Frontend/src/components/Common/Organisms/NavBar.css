@@ -8,17 +8,24 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
   }
 
   .left-side, .right-side {
     display: flex;
     align-items: center;
     gap: 10px;
+    flex-wrap: wrap;
   }
   
   .header .logo {
     width: 200px;
     margin-left: 10px;
+  }
+  
+  .header .links {
+    display: flex;
+    flex-wrap: wrap;
   }
   
   .header .links a {
@@ -27,6 +34,7 @@
     color: #e1e1e1;
     font-size: 1.2em;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    display: flex;
   }
 
   .navbar-btn {

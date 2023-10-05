@@ -37,6 +37,7 @@ const lawGetInfo = async () => {
             .get(`/law/info`);
         return response.data;
     } catch (e) {
+        console.log(e);
         if (e.response.data.status === 404) {
             console.log('404에러');
             return e.response.data;
