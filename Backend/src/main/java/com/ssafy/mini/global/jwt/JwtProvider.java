@@ -39,10 +39,12 @@ public class JwtProvider {
         Claims claims = Jwts.claims().setSubject(id);
         Date now = new Date();
 
+        log.info("access token 만기 시간: {}", new Date(now.getTime() + jwtProperties.getAccessTokenValidity()));
+
         return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + jwtProperties.getAccessTokenValidityInSeconds()))
+                .setExpiration(new Date(now.getTime() + jwtProperties.getAccessTokenValidity()))
                 .signWith(getSecretKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -56,10 +58,12 @@ public class JwtProvider {
         Claims claims = Jwts.claims().setSubject(id);
         Date now = new Date();
 
+        log.info("refresh token 만기 시간: {}", new Date(now.getTime() + jwtProperties.getRefreshTokenValidity()));
+
         final String refreshToken = Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + jwtProperties.getRefreshTokenValidityInSeconds()))
+                .setExpiration(new Date(now.getTime() + jwtProperties.getRefreshTokenValidity()))
                 .signWith(getSecretKey(), SignatureAlgorithm.HS256)
                 .compact();
         storeToken(refreshToken, id);
@@ -75,8 +79,8 @@ public class JwtProvider {
         redisTemplate.opsForValue().set(
                 id,
                 token,
-                jwtProperties.getRefreshTokenValidityInSeconds(),
-                TimeUnit.SECONDS);
+                jwtProperties.getRefreshTokenValidity(),
+                TimeUnit.MILLISECONDS);
     }
 
     /**
@@ -88,7 +92,7 @@ public class JwtProvider {
         redisTemplate.opsForValue().set(
                 token,
                 id,
-                jwtProperties.getAccessTokenValidityInSeconds(),
+                jwtProperties.getAccessTokenValidity(),
                 TimeUnit.SECONDS);
     }
 
