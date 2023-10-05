@@ -14,10 +14,10 @@ import MovingLoginOrSignup from '../Atoms/MovingLoginOrSignup.jsx';
 const SignupInputForm = () => {
     const [identity, setIdentity] = useRecoilState(identityState);
     const {
+        navigateToLanding,
         navigateToFoundation,
         navigateToNationality,
         navigateToLogin,
-        navigateToSignup,
     } = useNavigation();
     const [name, setName] = useState('');
     const [id, setId] = useState('');
@@ -41,6 +41,9 @@ const SignupInputForm = () => {
             event.preventDefault();
             postJoinApi();
         }
+    };
+    const handleOnClick1 = event => {
+        navigateToLanding();
     };
     const checkDuplication = async () => {
         try {
@@ -141,6 +144,7 @@ const SignupInputForm = () => {
                         className={styles.logo}
                         src={headerLogo}
                         alt="logo"
+                        onClick={handleOnClick1}
                     ></img>
                 </div>
                 <br />
