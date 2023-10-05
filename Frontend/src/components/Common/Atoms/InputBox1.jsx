@@ -11,6 +11,10 @@ function InputBox1({ placeholder, inputText, onChange, type }) {
         setIsFocused(false);
     };
 
+    const handleFormSubmit = event => {
+        event.preventDefault();
+    };
+
     const formStyle = {
         width: '100%',
     };
@@ -26,7 +30,7 @@ function InputBox1({ placeholder, inputText, onChange, type }) {
     };
 
     return (
-        <form style={formStyle}>
+        <form style={formStyle} onSubmit={handleFormSubmit}>
             <input
                 value={inputText}
                 placeholder={placeholder}
