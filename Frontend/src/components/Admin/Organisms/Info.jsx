@@ -5,7 +5,7 @@ import RowInput from '../Atoms/RowInput.jsx';
 import ButtonMiddle1 from '../../Common/Atoms/ButtonMiddle1.jsx';
 import { useNavigation } from '../../../hooks/useNavigation.jsx';
 import RowDescription from '../Atoms/RowDescription.jsx';
-import Modal1 from './Modal1.jsx';
+import FoundationModal from './FoundationModal.jsx';
 import styles from './Info.module.css';
 
 const Info = () => {
@@ -150,7 +150,7 @@ const Info = () => {
             {/* 배경 모달 */}
             {isModalOpen && (
                 <div className={styles.modalBackground}>
-                    <Modal1
+                    <FoundationModal
                         handleClick={handleModalClick}
                         payday={payday}
                         incomeTax={incomeTax}
