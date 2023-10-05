@@ -138,11 +138,11 @@ public class JobServiceImpl implements JobService{
     public List<JobListResponseDTO> getJobList(String memberId){
 
         List<JobListResponseDTO> jobListResponseDTOList = new ArrayList<>();
-        List<Job> jobList = jobRepository.findAll();
 
         Member member = memberRepository.findByMemId(memberId)
                 .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
 
+        List<Job> jobList = jobRepository.findAllByNation(member.getIsoSeq());
         for(Job j : jobList){
 
             List<Apply> applyList = applyRepository.findAllByJob(j);
