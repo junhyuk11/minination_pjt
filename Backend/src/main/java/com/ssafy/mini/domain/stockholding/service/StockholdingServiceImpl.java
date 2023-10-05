@@ -42,8 +42,7 @@ public class StockholdingServiceImpl implements StockholdingService {
         // 주식 보유 자산
         int balance = 0;
         for (PortfolioDto p : portfolio) {
-            int currentPrice = getCurrentPrice(p.getCode());
-            p.setCurPrice(currentPrice * p.getHoldQty());
+            p.setCurPrice(getCurrentPrice(p.getCode()));
             balance += p.getCurPrice();
         }
 
