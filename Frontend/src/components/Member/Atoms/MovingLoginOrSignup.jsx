@@ -1,4 +1,3 @@
-import { light } from '@mui/material/styles/createPalette';
 import React from 'react';
 
 function MovingLoginOrSignup({ description, title, onClick }) {

@@ -54,12 +54,15 @@ function InputNumber1({ onChange, initialValue }) {
             <button type="button" style={minusStyle} onClick={decrement}>
                 -
             </button>
+            <span className="gap"> </span>
             <input
                 style={inputStyle}
                 type="number"
                 value={value}
                 onChange={handleInputChange}
+                min={0}
             />
+            <span className="gap"> </span>
             <button type="button" style={minusStyle} onClick={increment}>
                 +
             </button>

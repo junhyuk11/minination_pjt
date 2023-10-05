@@ -2,9 +2,10 @@
     width: 100%; /* 원하는 너비로 조절 */
     max-width: 60%;
     margin: 0% auto 0 auto; /* 중앙 정렬 */
-    max-height: 200px; 
+    max-height: 250px; 
     overflow-y: auto;    
     overflow-x: auto; /* 필요한 경우 수평 스크롤 표시 */
+    font-family: 'GmarketSansMedium', cursive;
 }
 
 .marketHeaderContainer {
@@ -32,7 +33,7 @@ thead {
 thead th {
     position: sticky;
     top: 0;
-    background-color: #f2f2f2;  /* 배경색을 지정해주어야 sticky가 동작할 때 테이블 내용이 헤더를 가리지 않습니다. */
+    background-color: #f2f2f2;
     z-index: 1;  /* 다른 요소들 위에 올라오도록 z-index 지정 */
 }
 

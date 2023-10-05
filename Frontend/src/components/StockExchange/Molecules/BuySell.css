@@ -115,14 +115,14 @@
 }
 
 .trading-price {
-  width: 30px;
+  width: 40px;
   height: 35px;
   color: #05060f;
   background-color: #05060f0a;
   border-radius: .5rem;
   padding: 0 1rem;
   border: 2px solid transparent;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
 
   display: flex;
   justify-content: center;
@@ -130,14 +130,14 @@
 }
 
 .stock-price-quantity .input.quantity {
-  width: 27px;
+  width: 35px;
   height: 35px;
   background-color: #05060f0a;
-  text-align: center;
+  text-align: right;
   border-radius: .5rem;
   padding: 0 0.5rem;
   border: 2px solid transparent;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-family: 'GmarketSansMedium', cursive;
   transition: border-color .3s cubic-bezier(.25,.01,.25,1) 0s, color .3s cubic-bezier(.25,.01,.25,1) 0s,background .2s cubic-bezier(.25,.01,.25,1) 0s;
 }
@@ -145,7 +145,7 @@
 .stock-price-quantity .label {
   display: block;
   margin-bottom: .3rem;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-weight: bold;
   color: #05060f99;
   transition: color .3s cubic-bezier(.25,.01,.25,1) 0s;
@@ -175,7 +175,7 @@
   border-radius: .5rem;
   padding: 0 1rem;
   border: 2px solid transparent;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
 
   display: flex;
   justify-content: center;

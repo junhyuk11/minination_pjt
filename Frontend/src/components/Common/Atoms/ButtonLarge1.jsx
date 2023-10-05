@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 function ButtonLarge1({ title, onClick, disabled }) {
+    const [isHovered, setIsHovered] = useState(false);
+
     const buttonStyle = {
         display: 'flex',
         alignItems: 'center',
@@ -12,6 +14,7 @@ function ButtonLarge1({ title, onClick, disabled }) {
         backgroundColor: '#029664',
         color: 'white',
         cursor: 'pointer',
+        backgroundColor: isHovered ? '#027a51' : '#029664',
     };
 
     const disabledStyle = {
@@ -30,6 +33,8 @@ function ButtonLarge1({ title, onClick, disabled }) {
             type="button"
             style={disabled ? disabledButtonStyle : buttonStyle}
             onClick={onClick}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
             disabled={false}
         >
             {title}

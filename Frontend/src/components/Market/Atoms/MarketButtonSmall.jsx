@@ -29,8 +29,8 @@ function ButtonSmall1({ title, onClick, width, height }) {
 }
 
 ButtonSmall1.defaultProps = {
-    height: 30, // height의 기본값을 50으로 설정
-    width: 100, // width의 기본값을 100으로 설정
+    height: 30,
+    width: 100,
 };
 
 export default ButtonSmall1;

@@ -11,7 +11,7 @@ import Profile from '../Organisms/Profile.jsx';
 const Dashboard = () => {
     return (
         <div className={styles.body}>
-            <NavBar username="준혁" totalBalance="30000" />
+            <NavBar />
             <div className={styles.container}>
                 <div className={styles.nation}>
                     <Nation />

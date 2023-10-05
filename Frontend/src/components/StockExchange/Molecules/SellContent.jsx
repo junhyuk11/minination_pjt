@@ -10,36 +10,29 @@ import NexonLogo from '../../../assets/images/nexon-logo.png';
 import HybeLogo from '../../../assets/images/hybe-logo.png';
 import KakaoLogo from '../../../assets/images/kakao-logo.png';
 
-const SellContent = () => {
+const SellContent = ({ priceList }) => {
     const [companyCode, setCompanyCode] = useState('');
-    const [portList, setPortList] = useState([]);
-    const [quantity, setQuantity] = useState(0);
+    const [orderPrice, setOrderPrice] = useState(0);
+    const [quantity, setQuantity] = useState(1);
+    const [orderAmount, setOrderAmount] = useState(0);
 
     const handleRadioButtonChange = e => {
-        setCompanyCode(e.target.value);
+        const companyCode = e.target.value;
+        setCompanyCode(companyCode);
+        setOrderPrice(
+            priceList.find(stock => stock.code === companyCode)?.curPrice || 0,
+        );
+        setQuantity(1);
     };
-
-    const orderPrice =
-        portList.find(stock => stock.code === companyCode)?.curPrice || 0;
-
-    const orderAmount = orderPrice * quantity;
 
     const handleQuantityChange = e => {
-        setQuantity(Number(e.target.value));
+        const quantity = Number(e.target.value);
+        setQuantity(quantity);
     };
 
-    const getPortList = async () => {
-        try {
-            const response = await useStockApi.stockGetStock();
-            if (response.code === 200) {
-                console.log(response.data.portfolio);
-                setPortList(response.data.portfolio);
-            } else {
-                console.log(response.code);
-            }
-        } catch (error) {
-            // Handle error appropriately
-        }
+    const handleSellClick = () => {
+        postStockBuy(companyCode, quantity); // orderAmount 대신 quantity 전달
+        Swal.fire('매도되었습니다.');
     };
 
     const postStockBuy = async (code, amount) => {
@@ -53,21 +46,22 @@ const SellContent = () => {
                         window.location.reload();
                     }
                 });
+            } else if (response.code === 406) {
+                Swal.fire('잔액이 부족합니다.').then(result => {
+                    if (result.isConfirmed) {
+                        window.location.reload();
+                    }
+                });
             } else {
                 console.log(response.code);
             }
         } catch (error) {}
     };
 
-    const handleSellClick = () => {
-        postStockBuy(companyCode, quantity); // orderAmount 대신 quantity 전달
-        Swal.fire('매도되었습니다.');
-    };
-
     useEffect(() => {
-        getPortList();
-    }, []);
-    
+        setOrderAmount(orderPrice * quantity);
+    }, [orderPrice, quantity]);
+
     return (
         <div className="buy-sell-content">
             {/* 주식선택 */}

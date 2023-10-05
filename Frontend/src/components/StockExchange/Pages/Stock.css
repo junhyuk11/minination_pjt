@@ -28,6 +28,7 @@
   padding: 20px;
   overflow-y: auto; /* 세로 스크롤 허용 */
   border-radius: 25px;
+  border: 4px inset black;
   height: 550px;
 }
 
