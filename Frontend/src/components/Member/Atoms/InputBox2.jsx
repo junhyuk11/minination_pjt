@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 
-function InputBox2({ placeholder, inputText, onChange, onBlur, type }) {
+function InputBox2({
+    placeholder,
+    inputText,
+    onChange,
+    onBlur,
+    type,
+    onKeyDown,
+}) {
     const [isFocused, setIsFocused] = useState(false);
     const handleFocus = () => {
         setIsFocused(true);
@@ -8,7 +15,7 @@ function InputBox2({ placeholder, inputText, onChange, onBlur, type }) {
 
     const handleBlur = () => {
         setIsFocused(false);
-        onBlur();
+        // onBlur();
     };
 
     const formStyle = {
@@ -34,6 +41,7 @@ function InputBox2({ placeholder, inputText, onChange, onBlur, type }) {
                 style={inputStyle}
                 onChange={onChange}
                 onBlur={handleBlur}
+                onKeyDown={onKeyDown}
                 type={type}
                 onFocus={handleFocus}
             />
