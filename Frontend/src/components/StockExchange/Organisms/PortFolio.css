@@ -57,6 +57,11 @@
   height: 50px;
   color: white;
   border-radius: 13px;
+  border: 1px outset white;
+  transition: transform 0.3s ease;
+}
+.status-box:hover {
+  transform: scale(1.1);
 }
 
 .positive-status {
@@ -65,4 +70,9 @@
 
 .negative-status {
   background-color: #D34645;
+}
+
+.divider {
+  border-top: 0.5px solid #ffffff;
+  margin: 0.5px 0;
 }
