@@ -11,6 +11,7 @@ import com.ssafy.mini.domain.stockholding.dto.response.PortfolioDto;
 import com.ssafy.mini.domain.stockholding.repository.CorporationRepository;
 import com.ssafy.mini.domain.stockholding.repository.StockRepository;
 import com.ssafy.mini.domain.stockholding.repository.StockholdingRepository;
+import com.ssafy.mini.domain.stockholding.service.StockholdingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,8 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class AssetServiceImpl implements AssetService {
+
+    private final StockholdingService stockholdingService;
 
     private final MemberRepository memberRepository;
     private final NationRepository nationRepository;
@@ -41,19 +44,11 @@ public class AssetServiceImpl implements AssetService {
     @Transactional
     @Scheduled(cron = "0 40 23 * * MON-FRI")
     public void setPersonAssetInfo() {
-        // 각 주식의 가장 최근 가격 정보 가져오기
-        Map<String, Integer> currentStockInfo = getStockInfo();
-
         // 모든 회원 조회하기
         List<Member> members = memberRepository.findAll();
         for (Member member : members) {
-            // 국가 가입이 되지 않은 사람은 건너띄기
-            if (member.getIsoSeq() == null) continue;
-
-            int asset = 0;
-            asset += myStockAsset(member.getMemId(), currentStockInfo); // 각 회원의 주가 정보
-            asset += myBankAsset(member.getMemId()); // 각 회원의 통장 + 예금 + 적금 자산 정보
-
+            if (member.getIsoSeq() == null) continue; // 국가 가입이 되지 않은 사람은 건너띄기
+            int asset = myTotalAsset(member); // 각 회원의 자산 정보
             // 각 회원의 자산 정보 업데이트
             assetRepository.save(Asset.builder()
                     .member(member)
@@ -91,10 +86,24 @@ public class AssetServiceImpl implements AssetService {
     }
 
     /**
+     * 내 총 자산 구하기
+     * @param member 회원 번호
+     * @return 주식 자산 + 현금 자산 + 예적금 자산
+     */
+    @Override
+    public int myTotalAsset(Member member) {
+        int asset = 0;
+        asset += stockholdingService.getPortfolio(member.getMemId()).getBalance(); // 각 회원의 주가 정보
+        asset += myBankAsset(member.getMemId()); // 각 회원의 통장 + 예금 + 적금 자산 정보
+
+        return asset;
+    }
+
+    /**
      * 각 주식의 코드와 최근 가격
      * key: 종목 코드, value: 최근 가격
      */
-    private Map<String, Integer> getStockInfo() {
+    public Map<String, Integer> getStockInfo() {
         // 종목 코드
         List<String> corpCodes = corporationRepository.findAll().stream()
                 .map(corp -> corp.getStkCd())
@@ -114,7 +123,7 @@ public class AssetServiceImpl implements AssetService {
      * @param memberId 회원 아이디
      * @param currentStockInfo 각 주식의 코드와 최근 가격
      */
-    private int myStockAsset(String memberId, Map<String, Integer> currentStockInfo) {
+    public int myStockAsset(String memberId, Map<String, Integer> currentStockInfo) {
         int stockAsset = 0;
         List<PortfolioDto> myPortfolio = stockholdingRepository.findAllByMemberId(memberId);
         for (PortfolioDto myStock : myPortfolio) {
@@ -127,7 +136,7 @@ public class AssetServiceImpl implements AssetService {
      * 각 회원의 통장 + 예금 + 적금 자산 정보
      * @param memberId 회원 아이디
      */
-    private int myBankAsset(String memberId) {
+    public int myBankAsset(String memberId) {
         Integer bankAsset = accountRepository.getMyAccountBalance(memberId);
         return bankAsset == null ? 0 : bankAsset;
     }

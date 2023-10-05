@@ -43,7 +43,7 @@ public class StockholdingServiceImpl implements StockholdingService {
         int balance = 0;
         for (PortfolioDto p : portfolio) {
             p.setCurPrice(getCurrentPrice(p.getCode()));
-            balance += p.getCurPrice();
+            balance += p.getCurPrice() * p.getHoldQty();
         }
 
         return MyStockInfoResponse.builder()

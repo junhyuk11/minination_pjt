@@ -1,6 +1,7 @@
 package com.ssafy.mini.domain.home.service;
 
 import com.ssafy.mini.domain.asset.repository.AssetRepository;
+import com.ssafy.mini.domain.asset.service.AssetService;
 import com.ssafy.mini.domain.flag.repository.FlagRepository;
 import com.ssafy.mini.domain.home.dto.response.*;
 import com.ssafy.mini.domain.member.entity.Member;
@@ -14,10 +15,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class HomeServiceImpl implements HomeService{
+
+    private final AssetService assetService;
 
     private final MemberRepository memberRepository;
     private final NationRepository nationRepository;
@@ -84,6 +88,10 @@ public class HomeServiceImpl implements HomeService{
 
         String job = member.getJobSeq() != null ? member.getJobSeq().getJobName() : ""; // 무직인 경우 빈 문자열 반환
         int pay = member.getJobSeq() != null ? member.getJobSeq().getJobPay() : 0; // 무직인 경우 0 반환
+
+        // 내 자산
+        int totalBalance = assetService.myTotalAsset(member);
+
         Integer productAmountInteger = possessRepository.countPossessByMemberId(memberId);
         int productAmount = productAmountInteger != null ? productAmountInteger.intValue() : 0;
 
@@ -92,7 +100,7 @@ public class HomeServiceImpl implements HomeService{
                 .jobName(job)
                 .pay(pay)
                 .currency(nation.getIsoCurrency())
-                .totalBalance(member.getMemBalance())
+                .totalBalance(totalBalance)
                 .productAmount(productAmount)
                 .build();
     }
