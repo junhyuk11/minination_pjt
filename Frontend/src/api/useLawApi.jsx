@@ -5,7 +5,6 @@ const lawPutLaw = async (name, currency, payday, incomeTax, vat) => {
     try {
         const jwt = sessionStorage.getItem('accessToken');
         const form = { name, currency, payday, incomeTax, vat };
-        console.log(form);
         const response = await useAxiosInstance
             .authApiClient(jwt)
             .put(`/law`, form);
@@ -37,7 +36,6 @@ const lawGetInfo = async () => {
             .get(`/law/info`);
         return response.data;
     } catch (e) {
-        console.log(e);
         if (e.response.data.status === 404) {
             console.log('404에러');
             return e.response.data;
