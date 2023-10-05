@@ -14,7 +14,6 @@ const MarketTeacher = () => {
     const getProductList = async () => {
         try {
             const response = await useShopApi.shopGetList();
-            console.log('보냈죠?', response);
             if (response.code === 200) {
                 setProductList(response.data);
             } else {

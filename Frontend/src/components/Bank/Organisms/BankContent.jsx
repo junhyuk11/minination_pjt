@@ -28,21 +28,21 @@ const BankContent = () => {
                 <div className="bankSelectButtonWrapperStyle">
                     <BankButtonMiddle
                         type="button"
-                        title="가입한 상품조회"
+                        title="금융상품 가입"
                         className={`bankSelectButtonStyle ${
-                            selectedButton === 'button2' ? 'active' : ''
+                            selectedButton === 'button3' ? 'active' : ''
                         }`}
-                        onClick={() => handleButtonClick('button2')}
+                        onClick={() => handleButtonClick('button3')}
                     />
                 </div>
                 <div className="bankSelectButtonWrapperStyle">
                     <BankButtonMiddle
                         type="button"
-                        title="금융상품 조회"
+                        title="가입한 상품조회"
                         className={`bankSelectButtonStyle ${
-                            selectedButton === 'button3' ? 'active' : ''
+                            selectedButton === 'button2' ? 'active' : ''
                         }`}
-                        onClick={() => handleButtonClick('button3')}
+                        onClick={() => handleButtonClick('button2')}
                     />
                 </div>
             </div>
