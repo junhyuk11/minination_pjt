@@ -53,42 +53,39 @@ const NationalityInfo = () => {
     const handleConfirmButtonClick = async () => {
         setErrorMsg('');
 
+        // 대통령 이름 확인 API 요청
+        const response = await useNationApi.nationPostPresident(
+            searchResult,
+            president,
+        );
+        const statusCode = response.code;
+        // 대통령 이름이 일치하는 경우
         try {
-            // 대통령 이름 확인 API 요청
-            const response = await useNationApi.nationPostPresident(
-                searchResult,
-                president,
-            );
-
-            const statusCode = response.code;
             if (statusCode === 200) {
-                // 대통령 이름이 일치하는 경우
                 const joinResponse =
                     await useNationApi.nationPostJoin(searchResult);
+                // 국가 가입이 성공한 경우
                 if (joinResponse.code === 200) {
-                    // 국가 가입 성공
                     alert(`'${searchResult}' 국가에 가입되셨습니다.`);
                     navigateToDashboard();
+                    // 이미 가입중인 국가가 있는 경우
                 } else if (joinResponse.code === 409) {
-                    setErrorMsg('이미 가입 중인 국가입니다.');
+                    setErrorMsg('이미 가입한 국가가 있습니다.');
+                } else if (joinResponse.code === 403) {
+                    setErrorMsg('유효하지 않은 토큰입니다.');
                 } else {
                     setErrorMsg('국가 가입 중에 오류가 발생했습니다.');
                 }
-            } else if (statusCode === 400) {
+            } // 대통령 이름이 일치하지 않는 경우
+            else if (statusCode === 400) {
                 setErrorMsg('대통령 이름이 일치하지 않습니다.');
+            } else if (statusCode === 403) {
+                setErrorMsg('유효하지 않은 토큰입니다.');
             } else {
                 setErrorMsg('서버 오류가 발생했습니다.');
             }
         } catch (error) {
-            // console.log(error.response.data.status);
-            if (error.response.data.status === 404) {
-                console.log('API 요청실패, 코드 404');
-            } else if (error.response.data.status === 403) {
-                console.log('API 요청실패, 코드 403 : 유효하지 않은 토큰');
-            } else {
-                console.error('API 요청 에러:', error);
-                setErrorMsg('API 요청 중에 오류가 발생했습니다.');
-            }
+            console.log('API 요청 에러:', error);
         }
     };
 

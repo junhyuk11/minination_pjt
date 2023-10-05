@@ -14,7 +14,7 @@ const jobPostDecline = async (jobName, applicantName) => {
             return e.response.data;
         }
         if (e.response.data.status === 403) {
-            console.log('403에러');
+            console.log('403에러-유효하지 않은 토큰');
             return e.response.data;
         }
     }
@@ -36,7 +36,7 @@ const jobPostFire = async (jobName, employeeName) => {
             return e.response.data;
         }
         if (e.response.data.status === 403) {
-            console.log('403에러');
+            console.log('403에러-유효하지 않은 토큰');
             return e.response.data;
         }
     }
@@ -56,7 +56,7 @@ const jobPostApprove = async (jobName, applicantName) => {
             return e.response.data;
         }
         if (e.response.data.status === 403) {
-            console.log('403에러');
+            console.log('403에러-유효하지 않은 토큰');
             return e.response.data;
         }
     }
@@ -119,7 +119,7 @@ const jobGetDetail = async jobName => {
             return e.response.data;
         }
         if (e.response.data.status === 403) {
-            console.log('403에러');
+            console.log('403에러-유효하지 않은 토큰');
             return e.response.data;
         }
     }
@@ -139,7 +139,7 @@ const jobGetList = async () => {
             return e.response.data;
         }
         if (e.response.data.status === 403) {
-            console.log('403에러');
+            console.log('403에러-유효하지 않은 토큰');
             return e.response.data;
         }
     }
@@ -179,18 +179,25 @@ const jobPostRegister = async (
 };
 
 const jobDelete = async jobName => {
-    const requestBody = JSON.stringify({ jobName }); // 객체를 JSON 문자열로 변환
-    const jwt = sessionStorage.getItem('accessToken');
-    console.log(requestBody);
+    try {
+        const requestBody = JSON.stringify({ jobName }); // 객체를 JSON 문자열로 변환
+        const jwt = sessionStorage.getItem('accessToken');
+        console.log(requestBody);
 
-    const response = await useAxiosInstance.authApiClient(jwt).delete(`/job`, {
-        data: requestBody, // 요청 본문에 JSON 데이터 추가
-        headers: {
-            'Content-Type': 'application/json', // JSON 형식으로 요청을 보내도록 설정
-        },
-    });
+        const response = await useAxiosInstance
+            .authApiClient(jwt)
+            .delete(`/job`, {
+                data: requestBody, // 요청 본문에 JSON 데이터 추가
+                headers: {
+                    'Content-Type': 'application/json', // JSON 형식으로 요청을 보내도록 설정
+                },
+            });
 
-    return response.data;
+        return response.data;
+    } catch (error) {
+        console.log('직업 삭제 실패');
+        return error.response.data;
+    }
 };
 
 export default {
