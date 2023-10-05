@@ -28,11 +28,18 @@ function ButtonLarge1({ title, onClick, disabled }) {
         ...disabledStyle,
     };
 
+    const handleOnClick = () => {
+        if (disabled) {
+            return;
+        }
+        onClick();
+    };
+
     return (
         <button
             type="button"
             style={disabled ? disabledButtonStyle : buttonStyle}
-            onClick={onClick}
+            onClick={handleOnClick}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             disabled={false}

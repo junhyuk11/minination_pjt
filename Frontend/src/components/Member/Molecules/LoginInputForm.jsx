@@ -12,6 +12,7 @@ import headerLogo from '../../../assets/images/header-logo.png';
 const LoginInputForm = () => {
     const [identity, setIdentity] = useRecoilState(identityState);
     const {
+        navigateToLanding,
         navigateToSignup,
         navigateToDashboard,
         navigateToFoundation,
@@ -20,6 +21,7 @@ const LoginInputForm = () => {
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
     const [isValidForm, setIsValidForm] = useState(false);
+    const [idError, setIdError] = useState({ message: '', status: false });
 
     const handleChange1 = event => {
         setId(event.target.value);
@@ -27,10 +29,30 @@ const LoginInputForm = () => {
     const handleChange2 = event => {
         setPassword(event.target.value);
     };
+    const handleKeyDown1 = event => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            postLoginApi();
+        }
+    };
+    const handleOnClick1 = event => {
+        navigateToLanding();
+    };
 
     const postLoginApi = async () => {
         try {
             if (!isValidForm) {
+                if (!id) {
+                    setIdError({
+                        message: '아이디를 입력해주세요.',
+                        status: false,
+                    });
+                } else if (!password) {
+                    setIdError({
+                        message: '비밀번호를 입력해주세요.',
+                        status: false,
+                    });
+                }
                 return;
             }
             const response = await useMemberApi.memberPostLogin(id, password);
@@ -64,6 +86,7 @@ const LoginInputForm = () => {
 
     useEffect(() => {
         if (id && password) {
+            setIdError({ message: '', status: false });
             setIsValidForm(true);
         } else {
             setIsValidForm(false);
@@ -78,6 +101,7 @@ const LoginInputForm = () => {
                         className={styles.logo}
                         src={headerLogo}
                         alt="logo"
+                        onClick={handleOnClick1}
                     ></img>
                 </div>
                 <br />
@@ -85,6 +109,7 @@ const LoginInputForm = () => {
                     placeholder="아이디"
                     inputText={id}
                     onChange={handleChange1}
+                    onKeyDown={handleKeyDown1}
                     type="text"
                 />
                 <br />
@@ -92,8 +117,18 @@ const LoginInputForm = () => {
                     placeholder="비밀번호"
                     inputText={password}
                     onChange={handleChange2}
+                    onKeyDown={handleKeyDown1}
                     type="password"
                 />
+                {idError.message && (
+                    <p
+                        className={
+                            idError.status ? styles.collect : styles.error
+                        }
+                    >
+                        {idError.message}
+                    </p>
+                )}
                 <br />
                 <ButtonLarge1
                     title="로그인"

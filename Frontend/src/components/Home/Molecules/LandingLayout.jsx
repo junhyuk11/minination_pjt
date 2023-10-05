@@ -1,19 +1,45 @@
 import React from 'react';
 import { useNavigation } from '../../../hooks/useNavigation.jsx';
-// import LandingTitle from '../Atoms/LandingTitle.jsx';
-// import ButtonLending1 from '../../Common/Atoms/ButtonLending1.jsx';
+import useMemberApi from '../../../api/useMemberApi.jsx';
 import StartButton from '../../Common/Atoms/StartButton.jsx';
 import styles from '../Pages/Landing.module.css';
 import landingImage from '../../../assets/images/landing-image.png';
 
 function LandingLayout() {
-    const { navigateToLogin } = useNavigation();
+    const {
+        navigateToLogin,
+        navigateToDashboard,
+        navigateToNationality,
+        navigateToFoundation,
+    } = useNavigation();
+
+    const handleStart = () => {
+        const jwt = sessionStorage.getItem('accessToken');
+        if (jwt) {
+            try {
+                const response = useMemberApi.memberPostCheck();
+                if (response.data.nationName) {
+                    navigateToDashboard();
+                } else {
+                    if (response.data.memType === 'ST') {
+                        navigateToNationality();
+                    } else {
+                        navigateToFoundation();
+                    }
+                }
+            } catch (error) {
+                console.log(error);
+                navigateToLogin();
+            }
+        } else {
+            navigateToLogin();
+        }
+    };
 
     return (
         <div className={styles.landingLayout}>
-            {/* <LandingTitle title="내 손으로 만드는 경제" /> */}
             <img src={landingImage} className={styles.img} alt="landing" />
-            <StartButton title="지금 시작하기" onClick={navigateToLogin} />
+            <StartButton title="지금 시작하기" onClick={handleStart} />
         </div>
     );
 }
