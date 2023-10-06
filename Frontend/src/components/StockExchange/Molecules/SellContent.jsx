@@ -31,11 +31,11 @@ const SellContent = ({ priceList }) => {
     };
 
     const handleSellClick = () => {
-        postStockBuy(companyCode, quantity); // orderAmount 대신 quantity 전달
-        Swal.fire('매도되었습니다.');
+        postStockSell(companyCode, quantity); // orderAmount 대신 quantity 전달
+        // Swal.fire('매도되었습니다.');
     };
 
-    const postStockBuy = async (code, amount) => {
+    const postStockSell = async (code, amount) => {
         try {
             const subData = { code: `${code}`, amount: `${amount}` };
             console.log('subdata', subData);

@@ -28,12 +28,16 @@ const stockPostSell = async data => {
             .post(`/stock/sell`, data);
         return response.data;
     } catch (e) {
-        if (e.response.data.status === 404) {
+        if (e.response.status === 404) {
             console.log('404에러');
             return e.response.data;
         }
-        if (e.response.data.status === 403) {
+        if (e.response.status === 403) {
             console.log('403에러');
+            return e.response.data;
+        }
+        if (e.response.status === 406) {
+            console.log('406러');
             return e.response.data;
         }
     }
@@ -54,6 +58,10 @@ const stockPostBuy = async data => {
         }
         if (e.response.data.status === 403) {
             console.log('403에러');
+            return e.response.data;
+        }
+        if (e.response.data.status === 406) {
+            console.log('406러');
             return e.response.data;
         }
     }

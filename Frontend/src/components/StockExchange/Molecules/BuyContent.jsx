@@ -32,7 +32,7 @@ const BuyContent = ({ priceList }) => {
 
     const handleBuyClick = () => {
         postStockBuy(companyCode, quantity);
-        Swal.fire('매수되었습니다.');
+        // Swal.fire('매수되었습니다.');
     };
 
     const postStockBuy = async (code, amount) => {
