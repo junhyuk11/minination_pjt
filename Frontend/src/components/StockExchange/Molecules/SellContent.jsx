@@ -47,7 +47,7 @@ const SellContent = ({ priceList }) => {
                     }
                 });
             } else if (response.code === 406) {
-                Swal.fire('잔액이 부족합니다.').then(result => {
+                Swal.fire('보유 주식이 부족합니다.').then(result => {
                     if (result.isConfirmed) {
                         window.location.reload();
                     }
