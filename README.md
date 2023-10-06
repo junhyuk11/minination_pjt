@@ -9,12 +9,11 @@
 5. [시스템 아키텍쳐](#-5-시스템-아키텍쳐)
 6. [기술 스택](#-6-기술-스택)
 7. [ER Diagram](#-7-er-diagram)
-8. [Sequence Diagram](#-8-sequence-diagram)
-9. [협업툴](#-9-협업툴)
-10. [API 명세서](#-10-API-명세서)
-11. [코드 컨벤션](#-11-코드-컨벤션)
-12. [커밋 컨벤션](#-12-커밋-컨벤션)
-13. [Git Flow 브랜치 전략](#-13-git-flow-브랜치-전략)
+8. [협업툴](#-8-협업툴)
+9. [API 명세서](#-9-API-명세서)
+10. [코드 컨벤션](#-10-코드-컨벤션)
+11. [커밋 컨벤션](#-11-커밋-컨벤션)
+12. [Git Flow 브랜치 전략](#-12-git-flow-브랜치-전략)
 
 ## 💸 1. 서비스 소개
 
@@ -145,20 +144,18 @@ Minination은 초등학생을 위한 체험형 경제교육 플랫폼 서비스�
 
 <img src="./img/ERD.png" width=800px> 
 
-## 💸 8. Sequence Diagram
-
-## 💸 9. API 명세서
+## 💸 8. API 명세서
 
 https://pyh-dotcom.notion.site/API-ee059890d8e94b3eac93dee50af9810d?pvs=4
 
-## 💸 10. 협업툴
+## 💸 9. 협업툴
 
 - Gitlab
 - Jira
 - Notion
 - Mattermost
 
-## 💸 11. 코드 컨벤션
+## 💸 10. 코드 컨벤션
 
 ### 1. Front
 
@@ -195,7 +192,7 @@ https://pyh-dotcom.notion.site/API-ee059890d8e94b3eac93dee50af9810d?pvs=4
 - DTO 클래스는 요청은 xxxRequest, 응답은 xxxResponse로 명명합니다.
 - LocalDateTime 타입의 변수는 xxxAt으로 네이밍합니다.
 
-## 💸 12. 커밋 컨벤션
+## 💸 11. 커밋 컨벤션
 
 - feat: 새로운 기능 구현
 - fix: 오류 수정
@@ -207,7 +204,7 @@ https://pyh-dotcom.notion.site/API-ee059890d8e94b3eac93dee50af9810d?pvs=4
 - remove: 파일 삭제
 - ci: 배포 관련 작업
 
-## 💸 13. Git Flow 브랜치 전략
+## 💸 12. Git Flow 브랜치 전략
 
 - master
 - fe
