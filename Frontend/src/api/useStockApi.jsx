@@ -48,8 +48,8 @@ const stockPostBuy = async data => {
             .post(`/stock/buy`, data);
         return response.data;
     } catch (e) {
-        if (e.response.data.status === 404) {
-            console.log('404에러');
+        if (e.response.status === 406) {
+            console.log('406에러');
             return e.response.data;
         }
         if (e.response.data.status === 403) {

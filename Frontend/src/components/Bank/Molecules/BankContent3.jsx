@@ -33,6 +33,12 @@ function BankContent3() {
                         window.location.reload();
                     }
                 });
+            } else if (response.code === 409) {
+                Swal.fire('이미 가입한 상품입니다.').then(result => {
+                    if (result.isConfirmed) {
+                        window.location.reload();
+                    }
+                });
             } else {
                 console.log(response.code);
             }
