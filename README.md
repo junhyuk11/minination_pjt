@@ -114,10 +114,12 @@ Minination은 초등학생을 위한 체험형 경제교육 플랫폼 서비스�
 
 <img src="https://img.shields.io/badge/Spring Boot-403C42?style=for-the-badge&logo=Spring Boot&logoColor=white">
 <img src="https://img.shields.io/badge/Swagger-403C42?style=for-the-badge&logo=Swagger&logoColor=white">
+<img src="https://img.shields.io/badge/Spring Data Jpa-403C42?style=for-the-badge&logo=Spring Data Jpa&logoColor=white">
 <img src="https://img.shields.io/badge/Query Dsl-403C42?style=for-the-badge&logo=Query Dsl&logoColor=white">
 
 - Springboot로 웹 어플리케이션 서버를 구축하였습니다.
 - Spring Rest Docs는 테스트 코드 작성을 먼저 해야하므로 짧은 개발 기간에 사용하기에 부적합하다고 판단하였습니다. 따라서 api 문서 자동화 도구로 swagger를 선택하였습니다
+- Spring Data Jpa을 통해 서버와 데이터베이스 매핑을 객체지향적으로 설계하였고 BaseEntity를 통해 db의 생성시간, 생성자, 수정시간, 수정자를 기록하였습니다.
 - Query Dsl은 컴파일 시에 오류를 잡아 효율적인 개발이 가능하게 해주어서 도입하였습니다.
 
 ### 3. DB
@@ -135,6 +137,9 @@ Minination은 초등학생을 위한 체험형 경제교육 플랫폼 서비스�
 <img src="https://img.shields.io/badge/EC2-403C42?style=for-the-badge&logo=EC2&logoColor=white">
 <img src="https://img.shields.io/badge/Jenkins-403C42?style=for-the-badge&logo=Jenkins&logoColor=white">
 <img src="https://img.shields.io/badge/Docker-403C42?style=for-the-badge&logo=Docker&logoColor=white">
+
+- Docker를 통해 react app, 서버, 데이터베이스 등을 컨테이너화하였습니다. 도커 방화벽을 설정하여 도커 컨테이너에 직접적인 접근을 제한하였습니다.
+- Jenkins는 CI/CD 파이프라인을 구축하기 위해 사용하였습니다. GitLab에 Webhook을 설정하여 코드에 변경사항이 있을 때마다 서버에 반영할 수 있도록 하였습니다.
 
 ## 💸 7. ER Diagram
 
