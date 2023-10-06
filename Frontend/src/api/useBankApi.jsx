@@ -20,7 +20,7 @@ const bankGetInfo = async () => {
     return null;
 };
 
-const bankPostTerminate = async (data) => {
+const bankPostTerminate = async data => {
     try {
         const jwt = sessionStorage.getItem('accessToken');
         const response = await useAxiosInstance
@@ -40,7 +40,7 @@ const bankPostTerminate = async (data) => {
     return null;
 };
 
-const bankPostSubscribe = async (data) => {
+const bankPostSubscribe = async data => {
     try {
         const jwt = sessionStorage.getItem('accessToken');
         const response = await useAxiosInstance
@@ -48,11 +48,11 @@ const bankPostSubscribe = async (data) => {
             .post(`/bank/subscribe`, data);
         return response.data;
     } catch (e) {
-        if (e.response.data.status === 404) {
-            console.log('404에러');
+        if (e.response.status === 409) {
+            console.log('409에러');
             return e.response.data;
         }
-        if (e.response.data.status === 403) {
+        if (e.response.status === 403) {
             console.log('403에러');
             return e.response.data;
         }
