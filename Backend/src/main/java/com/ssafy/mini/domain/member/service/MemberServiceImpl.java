@@ -6,6 +6,7 @@ import com.ssafy.mini.domain.master.entity.Master;
 import com.ssafy.mini.domain.master.repository.MasterRepository;
 import com.ssafy.mini.domain.member.dto.request.MemberJoinRequest;
 import com.ssafy.mini.domain.member.dto.request.MemberLoginRequest;
+import com.ssafy.mini.domain.member.dto.response.MemberMetadataResponse;
 import com.ssafy.mini.domain.member.dto.response.MemberTokenResponse;
 import com.ssafy.mini.domain.member.entity.Member;
 import com.ssafy.mini.domain.member.mapper.MemberMapper;
@@ -199,6 +200,25 @@ public class MemberServiceImpl implements MemberService {
 
         memberRepository.save(member);
 
+    }
+
+    /**
+     * 회원 메타데이터 조회
+     * @param memberId 회원 아이디
+     * @return 회원의 멤버 타입과 소속 국가명
+     */
+    @Override
+    public MemberMetadataResponse getMemberMetadata(String memberId) {
+        Member member = memberRepository.findByMemId(memberId)
+                .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_MEMBER));
+
+        String type = member.getMemType().getExpression();
+        String nationName = member.getIsoSeq() != null ? member.getIsoSeq().getIsoName() : "";
+
+        return MemberMetadataResponse.builder()
+                .memType(type)
+                .nationName(nationName)
+                .build();
     }
 
 

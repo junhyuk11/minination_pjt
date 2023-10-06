@@ -60,7 +60,7 @@ public class MemberController {
     })
     public EnvelopeResponse<MemberTokenResponse> login(
             @RequestBody @ApiParam(value = "아이디, 비밀번호", required = true) MemberLoginRequest memberLoginRequest
-    ){
+    ) {
         return EnvelopeResponse.<MemberTokenResponse>builder()
                 .data(memberService.login(memberLoginRequest))
                 .build();
@@ -115,4 +115,19 @@ public class MemberController {
                 .build();
     }
 
+    @PostMapping("/check")
+    @ApiOperation(value = "회원 메타데이터 조회")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "조회 성공"),
+            @ApiResponse(code = 403, message = "유효하지 않은 토큰"),
+            @ApiResponse(code = 404, message = "조회 실패")
+    })
+    public EnvelopeResponse checkInfo(
+            @RequestHeader("Authorization") @ApiParam(value = "토큰", required = true) String accessToken
+    ) {
+        String memberId = jwtProvider.validateToken(accessToken);
+        return EnvelopeResponse.builder()
+                .data(memberService.getMemberMetadata(memberId))
+                .build();
+    }
 }

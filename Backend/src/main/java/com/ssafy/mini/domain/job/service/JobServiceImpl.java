@@ -119,7 +119,15 @@ public class JobServiceImpl implements JobService{
 
 
         Apply apply = applyRepository.findByJobAndMember(job, applicant)
-                .orElseThrow(()  -> new MNException(ErrorCode.NO_SUCH_APPLY));
+                .orElseThrow(() -> new MNException(ErrorCode.NO_SUCH_APPLY));
+
+        // 해당 지원자가 이미 직업을 가지고 있었을 경우 이전 직업에서 해고
+        if (applicant.getJobSeq() != null) {
+            fire(memberId, JobFireRequest.builder()
+                    .employeeName(applicant.getMemName())
+                    .jobName(applicant.getJobSeq().getJobName())
+                    .build());
+        }
 
         // member에 직업 정보 저장
         applicant.setJobSeq(job);

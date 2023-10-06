@@ -34,7 +34,8 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom {
                         member.memBalance.as("asset"))
                 )
                 .from(member)
-                .where(member.isoSeq.isoSeq.eq(nationSeq))
+                .where(member.isoSeq.isoSeq.eq(nationSeq)
+                        .and(member.memType.expression.eq("ST")))
                 .orderBy(member.memBalance.desc())
                 .limit(3)
                 .fetch();
