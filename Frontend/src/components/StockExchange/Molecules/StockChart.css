@@ -1,0 +1,12 @@
+.stockchart-container {
+  background-color: #ffffff;
+  border-radius: 15px;
+  margin-top: 15px;
+}
+
+.emptybox {
+  width: 100%;
+  height: 15px;
+  background-color: #ffffff;
+  border-radius: 15px;
+}

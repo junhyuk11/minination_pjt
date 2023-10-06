@@ -1,0 +1,66 @@
+/* Dashboard.module.css */
+.body {
+    overflow-y: auto;
+    max-height: 100vh;
+    background: radial-gradient(circle at 100% 120%, lavender 0%, white 30%, whitesmoke 60%, lavender 100%);
+}
+
+/* .body::-webkit-scrollbar {
+    width: 8px !important;
+    height: 16px !important;
+} */
+
+.body::-webkit-scrollbar-thumb {
+    background: #888;
+}
+.body::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* --- grid --- */
+.container {
+    padding: 3vw 0vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 0.5fr 0.5fr 2fr;
+    gap: 3vw 2vw;
+    grid-template-areas:
+        'nation profile ranking'
+        'economy economy constitution'
+        'population population population';
+    font-family: 'GmarketSansMedium', cursive;
+
+    margin: 0 auto;
+    max-width: 1100px;
+    width: 100%;
+    height: 90vh;
+}
+.profile {
+    grid-area: profile;
+}
+.ranking {
+    grid-area: ranking;
+}
+.nation {
+    grid-area: nation;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.5s ease-in-out;
+}
+.population {
+    grid-area: population;
+    padding-bottom: 6vw;
+}
+.economy {
+    grid-area: economy;
+}
+.constitution {
+    grid-area: constitution;
+}
+
+.nation:hover {
+    transform: scale(1.1);
+    transition-duration: 0.1s;
+}

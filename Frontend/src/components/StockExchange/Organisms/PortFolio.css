@@ -1,0 +1,78 @@
+.portfolio-container {
+  display: flex;
+  flex-direction: column;
+
+  margin: 0 0 8px 15px;
+  height: 340px;
+  background: lightgrey;
+  background: #e8e8e8;
+  box-shadow: inset 20px 20px 60px #c5c5c5, inset -20px -20px 60px #ffffff;
+  transition: all .5s ease-in-out;
+  border-radius: 1.5rem;
+  font-weight: bolder;
+  color: #8a8989;
+}
+
+.portfolio-item {
+  flex: 1;
+  display: flex;
+  gap: 10px;
+  font-size: 10px;
+  margin: 5px 14px;
+  box-sizing: border-box;
+}
+
+.portfolio-item-logo {
+  flex: 1;
+}
+.portfolio-item-logo img {
+  transition: transform 0.3s ease;
+}
+.portfolio-item-logo img:hover {
+  transform: scale(1.1);
+}
+
+
+.portfolio-item-holdings {
+  flex: 1;
+}
+.portfolio-item-value {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.portfolio-item-status {
+  flex: 1;
+}
+
+.portfolio-item-value .emp {
+  color: darkslategrey;
+  font-size: 11px;
+}
+
+
+.status-box {
+  width: 50px;
+  height: 50px;
+  color: white;
+  border-radius: 13px;
+  border: 1px outset white;
+  transition: transform 0.3s ease;
+}
+.status-box:hover {
+  transform: scale(1.1);
+}
+
+.positive-status {
+  background-color: #28CC56;
+}
+
+.negative-status {
+  background-color: #D34645;
+}
+
+.divider {
+  border-top: 0.5px solid #ffffff;
+  margin: 0.5px 0;
+}
