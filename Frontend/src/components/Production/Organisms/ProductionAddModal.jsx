@@ -14,9 +14,9 @@ const ProductionAddModal = () => {
                 <br>
                 <div>직업 설명: <input id="desc" type="text" style="border-radius: 10px; height: 30px;"></div>
                 <br>
-                <div>주급: <input id="pay" type="number" style="border-radius: 10px; height: 30px;"></div>
+                <div>주급: <input id="pay" type="number" style="border-radius: 10px; height: 30px;"> 만</div>
                 <br>
-                <div>모집인원: <input id="recruitTotalCount" type="number" style="border-radius: 10px; height: 30px;"></div>
+                <div>모집인원: <input id="recruitTotalCount" type="number" style="border-radius: 10px; height: 30px;"> 명</div>
                 <br>   
                 <div>자격요건: <input id="requirement" type="text" style="border-radius: 10px; height: 30px;"></div>
                 <hr>
