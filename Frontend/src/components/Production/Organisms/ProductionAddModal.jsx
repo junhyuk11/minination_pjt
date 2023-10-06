@@ -86,12 +86,13 @@ const ProductionAddModal = () => {
                         recruitTotalCount,
                         requirement,
                     );
-                    console.log(response);
                     if (response.code === 200) {
                         Swal.fire({
                             icon: 'success',
                             title: '등록 완료',
                             confirmButtonText: '확인',
+                        }).then(() => {
+                            window.location.reload();
                         });
                     } else {
                         Swal.fire({

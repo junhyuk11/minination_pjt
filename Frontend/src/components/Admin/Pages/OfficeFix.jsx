@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useRecoilState } from 'recoil';
 import { useNavigation } from '../../../hooks/useNavigation.jsx';
 import NavBar from '../../Common/Organisms/NavBar.jsx';
 import styles from './OfficeFix.module.css';
@@ -10,6 +11,7 @@ import RowInput from '../Atoms/RowInput.jsx';
 import RowDescription from '../Atoms/RowDescription.jsx';
 import DropDown2 from '../../Common/Atoms/DropDown2.jsx'; // DropDown2 컴포넌트 추가
 import useLawApi from '../../../api/useLawApi.jsx';
+import { identityState } from '../../../recoil/atoms.jsx';
 
 const OfficeFix = () => {
     const [countryName, setCountryName] = useState('');
@@ -22,8 +24,20 @@ const OfficeFix = () => {
         dropdown2: false,
         dropdown3: false,
     });
-    const { navigateToOffice, navigateToLogin } = useNavigation();
+    const { navigateToOffice, navigateToLogin, navigateToDashboard } =
+        useNavigation();
     const [errorMessage, setErrorMessage] = useState('');
+
+    const [identity] = useRecoilState(identityState);
+
+    // 선생님이 아닐경우 메인으로 리디렉션
+    if (identity !== 'TC') {
+        if (!sessionStorage.getItem('accessToken')) {
+            navigateToLogin();
+        } else {
+            navigateToDashboard();
+        }
+    }
 
     // 국가명 유효성 검사
     const isCountryNameValid = value => {
@@ -119,7 +133,7 @@ const OfficeFix = () => {
         setSelectedVAT(value);
     };
 
-    const handleFinishClick = () => {
+    const handleFinishClick = async () => {
         // 국가명과 화폐명의 유효성 검사
         if (
             !isCountryNameValid(countryName) ||
@@ -128,10 +142,11 @@ const OfficeFix = () => {
             setErrorMessage(
                 '국가명은 한글 기준 8자 이내이고, 화폐명은 한글 2자 이내이어야 합니다.',
             );
-            return; // 유효성 검사 실패 시, api 요청을 보내지 않고 종료
+            return;
         }
         // api 요청
-        const putLawApi = async () => {
+        try {
+            // api 요청
             await useLawApi.lawPutLaw(
                 countryName,
                 currencyName,
@@ -139,9 +154,11 @@ const OfficeFix = () => {
                 selectedIncomeTax,
                 selectedVAT,
             );
-        };
-        putLawApi();
-        navigateToOffice();
+            // 성공적으로 업데이트된 후에 navigate 실행
+            navigateToOffice();
+        } catch (error) {
+            console.error('국가 정보 업데이트 오류:', error);
+        }
     };
 
     return (

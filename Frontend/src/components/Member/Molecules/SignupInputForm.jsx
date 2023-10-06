@@ -13,14 +13,19 @@ import MovingLoginOrSignup from '../Atoms/MovingLoginOrSignup.jsx';
 
 const SignupInputForm = () => {
     const [identity, setIdentity] = useRecoilState(identityState);
-    const { navigateToFoundation, navigateToNationality, navigateToLogin } =
-        useNavigation();
+    const {
+        navigateToLanding,
+        navigateToFoundation,
+        navigateToNationality,
+        navigateToLogin,
+    } = useNavigation();
     const [name, setName] = useState('');
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
     const [type, setType] = useState('');
     const [idError, setIdError] = useState({ message: '', status: false });
     const [isValidForm, setIsValidForm] = useState(false);
+    const [formError, setFormError] = useState({ message: '', status: false });
 
     const handleChange1 = event => {
         setName(event.target.value);
@@ -30,6 +35,15 @@ const SignupInputForm = () => {
     };
     const handleChange3 = event => {
         setPassword(event.target.value);
+    };
+    const handleKeyDown1 = event => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            postJoinApi();
+        }
+    };
+    const handleOnClick1 = event => {
+        navigateToLanding();
     };
     const checkDuplication = async () => {
         try {
@@ -52,6 +66,23 @@ const SignupInputForm = () => {
     const postJoinApi = async () => {
         try {
             if (!isValidForm) {
+                if (!name) {
+                    setFormError({
+                        message: '이름을 입력해주세요.',
+                        status: false,
+                    });
+                } else if (!id) {
+                    setFormError({
+                        message: '아이디를 입력해주세요.',
+                        status: false,
+                    });
+                } else if (!password) {
+                    setFormError({
+                        message: '비밀번호를 입력해주세요.',
+                        status: false,
+                    });
+                }
+                console.log('이곳...');
                 return;
             }
             const response = await useMemberApi.memberPostJoin(
@@ -86,11 +117,18 @@ const SignupInputForm = () => {
 
     useEffect(() => {
         if (!id) {
+            // 빈문자열인 경우
+
             setIdError({ message: '', status: false });
+        } else {
+            checkDuplication();
         }
     }, [id]);
 
     useEffect(() => {
+        if (name && id && password && type) {
+            setFormError({ message: '', status: false });
+        }
         if (name && id && password && type && idError.status === true) {
             setIsValidForm(true);
         } else {
@@ -106,6 +144,7 @@ const SignupInputForm = () => {
                         className={styles.logo}
                         src={headerLogo}
                         alt="logo"
+                        onClick={handleOnClick1}
                     ></img>
                 </div>
                 <br />
@@ -113,6 +152,7 @@ const SignupInputForm = () => {
                     placeholder="이름"
                     inputText={name}
                     onChange={handleChange1}
+                    onKeyDown={handleKeyDown1}
                     type="text"
                 />
                 <br />
@@ -120,7 +160,8 @@ const SignupInputForm = () => {
                     placeholder="아이디"
                     inputText={id}
                     onChange={handleChange2}
-                    onBlur={checkDuplication}
+                    // onBlur={checkDuplication}
+                    onKeyDown={handleKeyDown1}
                     type="text"
                 />
 
@@ -139,10 +180,20 @@ const SignupInputForm = () => {
                     placeholder="비밀번호"
                     inputText={password}
                     onChange={handleChange3}
+                    onKeyDown={handleKeyDown1}
                     type="password"
                 />
                 <br />
                 <ButtonRadio1 setData={setType} />
+                {formError.message && (
+                    <p
+                        className={
+                            formError.status ? styles.collect : styles.error
+                        }
+                    >
+                        {formError.message}
+                    </p>
+                )}
                 <br />
                 <ButtonLarge1
                     title="회원가입"

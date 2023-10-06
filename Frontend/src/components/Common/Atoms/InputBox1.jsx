@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function InputBox1({ placeholder, inputText, onChange, type }) {
+function InputBox1({ placeholder, inputText, onChange, type, onKeyDown }) {
     const [isFocused, setIsFocused] = useState(false);
 
     const handleFocus = () => {
@@ -39,6 +39,7 @@ function InputBox1({ placeholder, inputText, onChange, type }) {
                 onFocus={handleFocus}
                 onBlur={handleBlur}
                 onChange={onChange}
+                onKeyDown={onKeyDown}
                 type={type}
                 autoComplete="off"
             />

@@ -5,7 +5,6 @@ const lawPutLaw = async (name, currency, payday, incomeTax, vat) => {
     try {
         const jwt = sessionStorage.getItem('accessToken');
         const form = { name, currency, payday, incomeTax, vat };
-        console.log(form);
         const response = await useAxiosInstance
             .authApiClient(jwt)
             .put(`/law`, form);

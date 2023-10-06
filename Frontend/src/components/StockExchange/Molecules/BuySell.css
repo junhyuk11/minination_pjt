@@ -219,6 +219,7 @@
   font-family: 'GmarketSansMedium', cursive;
   margin-top: 10px;
   margin-left: 10px;
+  cursor: pointer;
 }
 
 .buy-sell-btn:before {
