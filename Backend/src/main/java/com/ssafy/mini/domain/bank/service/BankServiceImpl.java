@@ -383,4 +383,23 @@ public class BankServiceImpl implements BankService {
             accountService.updateAccountBalance(savingAcct, savingAcct.getAcctSaving(), "AT", "은행");
         }
     }
+
+    @Transactional
+    @Scheduled(cron = "0 0 05 * * ?")
+    public void weeklyPay(){
+        List<Member> memberList = memberRepository.findAll();
+        for (Member member : memberList) {
+            // 무직이 아니면
+            if(member.getJobSeq() != null){
+                // 일주일 급여
+                int pay = member.getJobSeq().getJobPay() * 10000;
+                // 일주일 급여를 일반 계좌에 추가
+                accountService.updateAccountBalance(accountRepository.getMoneyToUse(member.getMemId()), pay, "PY", "급여");
+                // 회원 계좌 잔액 업데이트
+                member.updateMembalance(pay);
+                memberRepository.save(member);
+            }
+        }
+
+    }
 }
