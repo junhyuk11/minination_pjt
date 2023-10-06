@@ -59,7 +59,7 @@ function PortFolio() {
                             <div>
                                 <span className="gap">현재가치</span>
                                 <span className="emp">
-                                    {stock.curPrice}
+                                    {stock.curTotalPrice}
                                 </span>{' '}
                             </div>
                             <div>
